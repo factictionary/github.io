@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Scramble - Brain Games Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Games</a>
+        <div class="game-container">
+            <h1 style="color: #667eea; text-align: center;">🔤 Word Scramble</h1>
+            <div class="social-share">
+                <button onclick="share('twitter')" class="share-btn">🐦 Share</button>
+                <button onclick="share('facebook')" class="share-btn">📘 Share</button>
+            </div>
+            <div class="timer" id="timer">60</div>
+            <div class="score-display">Score: <span id="score">0</span></div>
+            <div id="gameArea"></div>
+            <div class="ad-rectangle"><div class="ad-placeholder">Advertisement 300x250</div></div>
+        </div>
+    </div>
+    <script src="shared.js"></script>
+    <script>
+        const scrambleWords = [
+            { word: 'BUTTERFLY', hint: 'Insect with colorful wings' },
+            { word: 'DOLPHIN', hint: 'Intelligent marine mammal' },
+            { word: 'ELEPHANT', hint: 'Largest land animal' },
+            { word: 'RAINBOW', hint: 'Colorful arc in the sky' },
+            { word: 'THUNDER', hint: 'Sound after lightning' },
+            { word: 'CRYSTAL', hint: 'Clear, transparent mineral' }
+        ];
+        
+        let currentWord = null;
+        let score = 0;
+        let timeLeft = 60;
+        let timer = null;
+        
+        function init() {
+            score = 0;
+            timeLeft = 60;
+            document.getElementById('score').textContent = '0';
+            document.getElementById('timer').textContent = '60';
+            nextWord();
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    endGame();
+                }
+            }, 1000);
+        }
+        
+        function nextWord() {
+            currentWord = scrambleWords[Math.floor(Math.random() * scrambleWords.length)];
+            const scrambled = currentWord.word.split('').sort(() => Math.random() - 0.5).join('');
+            
+            document.getElementById('gameArea').innerHTML = `
+                <div class="question-container">
+                    <p style="text-align: center; color: #666; margin-bottom: 10px;">Unscramble this word:</p>
+                    <div style="text-align: center; font-size: 2.5em; color: #667eea; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">${scrambled}</div>
+                    <p style="text-align: center; color: #666; font-style: italic;">Hint: ${currentWord.hint}</p>
+                    <input type="text" id="answer" class="word-input" placeholder="Type your answer" autocomplete="off">
+                    <button onclick="checkAnswer()" class="play-btn">Submit</button>
+                    <div id="feedback" style="text-align: center; margin-top: 15px; min-height: 30px;"></div>
+                </div>
+            `;
+            
+            document.getElementById('answer').focus();
+            document.getElementById('answer').onkeypress = (e) => { if (e.key === 'Enter') checkAnswer(); };
+        }
+        
+        function checkAnswer() {
+            const input = document.getElementById('answer').value.toUpperCase().trim();
+            if (input === currentWord.word) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                document.getElementById('feedback').innerHTML = '<p style="color: #4caf50; font-size: 1.2em;">✓ Correct!</p>';
+                setTimeout(nextWord, 1000);
+            } else if (input) {
+                document.getElementById('feedback').innerHTML = '<p style="color: #f44336; font-size: 1.2em;">✗ Try again!</p>';
+            }
+        }
+        
+        function endGame() {
+            document.getElementById('gameArea').innerHTML = `
+                <div class="result-screen">
+                    <h2 style="color: #667eea;">Time's Up!</h2>
+                    <div class="result-score">${score}</div>
+                    <button class="play-btn" onclick="submitScore('Word Scramble', ${score}); init();">Submit & Play Again</button>
+                </div>
+            `;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

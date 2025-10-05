@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Practice spelling with audio pronunciation - perfect for vocabulary learning">
+    <title>Spelling Bee - Brain Games Hub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Games</a>
+        
+        <div class="game-container">
+            <h1 style="color: #667eea; text-align: center;">🐝 Spelling Bee</h1>
+            
+            <div class="social-share">
+                <button onclick="share('twitter')" class="share-btn">🐦 Share</button>
+                <button onclick="share('facebook')" class="share-btn">📘 Share</button>
+            </div>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy</button>
+                <button class="difficulty-btn" onclick="setDifficulty('medium')">Medium</button>
+                <button class="difficulty-btn" onclick="setDifficulty('hard')">Hard</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Streak</div>
+                    <div class="stat-value" id="streak">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Progress</div>
+                    <div class="stat-value" id="progress">0/10</div>
+                </div>
+            </div>
+            
+            <div id="gameArea">
+                <div style="text-align: center; padding: 40px;">
+                    <p style="color: #666; font-size: 1.2em;">Loading words...</p>
+                </div>
+            </div>
+            
+            <div class="ad-rectangle">
+                <div class="ad-placeholder">Advertisement 300x250</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="shared.js"></script>
+    <script>
+        let difficulty = 'easy';
+        let words = [];
+        let currentIndex = 0;
+        let score = 0;
+        let streak = 0;
+        let maxStreak = 0;
+        
+        async function init() {
+            await vocabLoader.waitForLoad();
+            loadWords();
+        }
+        
+        function setDifficulty(level) {
+            difficulty = level;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            loadWords();
+        }
+        
+        function loadWords() {
+            words = vocabLoader.getWords(difficulty, 10);
+            currentIndex = 0;
+            score = 0;
+            streak = 0;
+            maxStreak = 0;
+            updateStats();
+            showQuestion();
+        }
+        
+        function updateStats() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('streak').textContent = streak;
+            document.getElementById('progress').textContent = `${currentIndex}/${words.length}`;
+        }
+        
+        function showQuestion() {
+            if (currentIndex >= words.length) {
+                endGame();
+                return;
+            }
+            
+            const word = words[currentIndex];
+            
+            document.getElementById('gameArea').innerHTML = `
+                <div class="question-container">
+                    <h2 style="text-align: center; color: #333; margin-bottom: 30px;">Listen and spell the word</h2>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <button onclick="pronounceWord()" class="play-btn" style="font-size: 1.2em; padding: 15px 40px;">
+                            🔊 Play Word
+                        </button>
+                        <button onclick="showDefinition()" class="play-btn" style="font-size: 1em; padding: 10px 30px; background: #6c757d; margin-left: 10px;">
+                            💡 Show Hint
+                        </button>
+                    </div>
+                    
+                    <div id="hintArea" style="text-align: center; min-height: 40px; margin: 20px 0; color: #666; font-style: italic;"></div>
+                    
+                    <input type="text" 
+                           id="spellingInput" 
+                           class="word-input" 
+                           placeholder="Type your spelling here" 
+                           autocomplete="off"
+                           autocapitalize="off"
+                           spellcheck="false">
+                    
+                    <button onclick="checkSpelling()" class="play-btn" style="width: 100%; margin-top: 10px;">
+                        Check Spelling
+                    </button>
+                    
+                    <div id="feedback" style="text-align: center; margin-top: 20px; min-height: 40px;"></div>
+                </div>
+            `;
+            
+            // Auto-focus input
+            document.getElementById('spellingInput').focus();
+            
+            // Allow Enter key to submit
+            document.getElementById('spellingInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkSpelling();
+                }
+            });
+            
+            // Auto-pronounce on load
+            setTimeout(() => pronounceWord(), 500);
+        }
+        
+        function pronounceWord() {
+            const word = words[currentIndex].word;
+            speak(word);
+        }
+        
+        function showDefinition() {
+            const word = words[currentIndex];
+            document.getElementById('hintArea').innerHTML = `Definition: ${escapeHtml(word.definition)}`;
+        }
+        
+        function checkSpelling() {
+            const input = document.getElementById('spellingInput').value.trim().toLowerCase();
+            const correctWord = words[currentIndex].word.toLowerCase();
+            const feedback = document.getElementById('feedback');
+            
+            if (!input) {
+                feedback.innerHTML = '<p style="color: #f44336;">Please enter a spelling!</p>';
+                return;
+            }
+            
+            document.getElementById('spellingInput').disabled = true;
+            
+            if (input === correctWord) {
+                streak++;
+                if (streak > maxStreak) maxStreak = streak;
+                
+                const points = 10 + (streak >= 3 ? 5 : 0);
+                score += points;
+                
+                feedback.innerHTML = `
+                    <p style="color: #4caf50; font-size: 1.3em; font-weight: bold;">
+                        ✓ Correct! ${streak >= 3 ? '🔥 Streak Bonus: +5 points!' : ''}
+                    </p>
+                    <p style="color: #333; margin-top: 10px;">
+                        <strong>${escapeHtml(words[currentIndex].word)}</strong> - ${escapeHtml(words[currentIndex].definition)}
+                    </p>
+                `;
+            } else {
+                streak = 0;
+                feedback.innerHTML = `
+                    <p style="color: #f44336; font-size: 1.3em; font-weight: bold;">✗ Incorrect!</p>
+                    <p style="color: #333; margin-top: 10px;">
+                        Correct spelling: <strong>${escapeHtml(words[currentIndex].word)}</strong><br>
+                        Definition: ${escapeHtml(words[currentIndex].definition)}
+                    </p>
+                `;
+            }
+            
+            updateStats();
+            
+            setTimeout(() => {
+                currentIndex++;
+                showQuestion();
+            }, 3000);
+        }
+        
+        function endGame() {
+            const percentage = Math.round((score / (words.length * 10)) * 100);
+            
+            let message = '';
+            if (percentage >= 90) message = 'Perfect Speller! 🏆';
+            else if (percentage >= 70) message = 'Great Spelling! 🌟';
+            else if (percentage >= 50) message = 'Good Try! 👍';
+            else message = 'Keep Practicing! 📚';
+            
+            document.getElementById('gameArea').innerHTML = `
+                <div class="result-screen">
+                    <h2 style="color: #667eea;">${message}</h2>
+                    <div class="result-score">${score}</div>
+                    <p style="font-size: 1.2em; color: #666; margin-bottom: 10px;">
+                        Max Streak: ${maxStreak} 🔥
+                    </p>
+                    <p style="font-size: 1.1em; color: #667eea; margin-bottom: 30px;">
+                        Accuracy: ${percentage}%
+                    </p>
+                    <button class="play-btn" onclick="submitScoreAndRestart()" style="margin-bottom: 10px;">
+                        Submit Score & Play Again
+                    </button>
+                    <button class="play-btn" onclick="loadWords()" style="background: #6c757d;">
+                        Play Again
+                    </button>
+                </div>
+            `;
+        }
+        
+        function submitScoreAndRestart() {
+            submitScore('Spelling Bee', score, difficulty);
+            loadWords();
+        }
+        
+        // Start the game
+        init();
+    </script>
+</body>
+</html>
