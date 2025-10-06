@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factictionary - Learn, Play, Create</title>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535919568420997"
+     crossorigin="anonymous"></script>
     <script>
-        // Redirect based on subdomain
+        console.log('Hostname:', window.location.hostname);
+        console.log('Full URL:', window.location.href);
+        
         const hostname = window.location.hostname;
         
         if (hostname === 'games.factictionary.in') {
+            console.log('Redirecting to /games/');
             window.location.href = '/games/';
         } else if (hostname === 'app.factictionary.in') {
+            console.log('Redirecting to /apps/');
             window.location.href = '/apps/';
         } else if (hostname === 'blog.factictionary.in') {
+            console.log('Redirecting to /blog/');
             window.location.href = '/blog/';
         }
     </script>
