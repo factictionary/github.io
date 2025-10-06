@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utility Tools - Factictionary</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- Using a different QR code library that's more reliable -->
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <style>
         * {
@@ -562,6 +563,32 @@
 
     <script>
         let currentTool = null;
+        let qrCode = null;
+
+        // Initialize QR Code generator if library is available
+        function initQRCode() {
+            if (typeof QRCodeStyling !== 'undefined') {
+                qrCode = new QRCodeStyling({
+                    width: 256,
+                    height: 256,
+                    type: "canvas",
+                    data: "https://factictionary.com",
+                    dotsOptions: {
+                        color: "#000000",
+                        type: "rounded"
+                    },
+                    backgroundOptions: {
+                        color: "#ffffff",
+                    },
+                    imageOptions: {
+                        crossOrigin: "anonymous",
+                        margin: 10
+                    }
+                });
+                return true;
+            }
+            return false;
+        }
 
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
@@ -657,11 +684,18 @@
                             </div>
                             <button onclick="generateQRCode()">Generate QR Code</button>
                         </div>
-                        <div class="qr-code-container">
+                        <div class="qr-code-container" id="qrCodeContainer">
                             <canvas id="qrCodeCanvas"></canvas>
                         </div>
+                        <div id="qrError" style="color: red; text-align: center; margin: 10px 0; display: none;"></div>
                     `;
-                    generateQRCode();
+                    // Initialize QR code and generate initial code
+                    if (initQRCode()) {
+                        generateQRCode();
+                    } else {
+                        document.getElementById('qrError').style.display = 'block';
+                        document.getElementById('qrError').textContent = 'QR Code library failed to load. Please refresh the page.';
+                    }
                     break;
                     
                 case 'qr-reader':
@@ -902,30 +936,53 @@
             return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
         }
 
-        // QR Code Generator Functions
+        // QR Code Generator Functions - FIXED VERSION
         function generateQRCode() {
             const content = document.getElementById('qrContent').value;
             const size = parseInt(document.getElementById('qrSize').value);
-            const canvas = document.getElementById('qrCodeCanvas');
+            const container = document.getElementById('qrCodeContainer');
+            const errorDiv = document.getElementById('qrError');
             
             if (!content.trim()) {
-                alert('Please enter content for the QR code');
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Please enter content for the QR code';
                 return;
             }
             
-            QRCode.toCanvas(canvas, content, {
-                width: size,
-                margin: 2,
-                color: {
-                    dark: '#000000',
-                    light: '#FFFFFF'
-                }
-            }, function(error) {
-                if (error) {
-                    console.error(error);
-                    alert('Error generating QR code: ' + error.message);
-                }
-            });
+            // Clear previous QR code
+            container.innerHTML = '<canvas id="qrCodeCanvas"></canvas>';
+            
+            if (qrCode) {
+                // Update existing QR code
+                qrCode.update({
+                    data: content,
+                    width: size,
+                    height: size
+                });
+                
+                // Append to container
+                qrCode.append(container);
+                errorDiv.style.display = 'none';
+            } else {
+                // Fallback: Try to use simple canvas method
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'QR Code functionality not available. Please try refreshing the page.';
+                
+                // Simple fallback - create a placeholder
+                const canvas = document.getElementById('qrCodeCanvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = size;
+                canvas.height = size;
+                
+                // Draw placeholder
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(0, 0, size, size);
+                ctx.fillStyle = '#666';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('QR Code Placeholder', size/2, size/2);
+                ctx.fillText('Library not loaded', size/2, size/2 + 20);
+            }
         }
 
         // QR Code Reader Functions
@@ -980,6 +1037,12 @@
 
         function decodeQRCode(dataUrl) {
             const resultArea = document.getElementById('qrResult');
+            
+            if (typeof jsQR === 'undefined') {
+                resultArea.textContent = 'QR Code reader library not loaded. Please refresh the page.';
+                return;
+            }
+            
             const img = new Image();
             
             img.onload = function() {
@@ -1287,7 +1350,16 @@
             if (currentTool === 'password') {
                 generatePassword();
             }
+            
+            // Clear QR code error
+            const qrError = document.getElementById('qrError');
+            if (qrError) qrError.style.display = 'none';
         }
+
+        // Initialize QR code on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initQRCode();
+        });
     </script>
 </body>
 </html>
