@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Hub - Free Online Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .category-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .category-card.disabled:hover {
+            transform: none;
+        }
+
+        .category-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .category-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .category-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-active {
+            background: #10b981;
+            color: white;
+        }
+
+        .status-coming {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .ad-placeholder {
+            background: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            color: #6b7280;
+            margin: 30px 0;
+            animation: fadeIn 1s ease;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛠️ Utility Hub</h1>
+            <p>Your Complete Toolkit for Media Processing</p>
+        </header>
+
+        <div class="categories">
+            <div class="category-card" onclick="navigateTo('video')">
+                <span class="category-icon">🎬</span>
+                <h2 class="category-title">Video Tools</h2>
+                <p class="category-desc">Compress, convert, trim, and extract from videos</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+
+            <div class="category-card" onclick="navigateTo('image')">
+                <span class="category-icon">🖼️</span>
+                <h2 class="category-title">Image Tools</h2>
+                <p class="category-desc">Resize, compress, convert, and enhance images</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+
+            <div class="category-card" onclick="navigateTo('pdf')">
+                <span class="category-icon">📄</span>
+                <h2 class="category-title">PDF Tools</h2>
+                <p class="category-desc">Merge, split, compress, and convert PDFs</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+
+            <div class="category-card" onclick="navigateTo('audio')">
+                <span class="category-icon">🎵</span>
+                <h2 class="category-title">Audio Tools</h2>
+                <p class="category-desc">Convert, trim, merge, and adjust audio files</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+
+            <div class="category-card" onclick="navigateTo('text')">
+                <span class="category-icon">📝</span>
+                <h2 class="category-title">Text Tools</h2>
+                <p class="category-desc">Format, analyze, and transform text</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+
+            <div class="category-card" onclick="navigateTo('code')">
+                <span class="category-icon">💻</span>
+                <h2 class="category-title">Developer Tools</h2>
+                <p class="category-desc">JSON, Base64, minify, and formatting tools</p>
+                <span class="status-badge status-coming">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="ad-placeholder">
+            <p>📢 Advertisement Space (728x90)</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Google AdSense or other ad network</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Utility Hub. All tools run locally in your browser.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">No data is uploaded to any server. Your privacy is protected.</p>
+        </footer>
+    </div>
+
+    <script>
+        function navigateTo(category) {
+            // For now, show alert. Later, navigate to actual pages
+            alert(`${category.charAt(0).toUpperCase() + category.slice(1)} tools coming soon!\n\nThis will navigate to: ${category}.html`);
+            // Uncomment when ready:
+            // window.location.href = `${category}.html`;
+        }
+
+        // Add staggered animation to cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.category-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
