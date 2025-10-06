@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle - Factictionary</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .attempts, .timer {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .hint-section {
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .hint-section.active {
+            display: block;
+        }
+
+        .hint-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hint-definition {
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .hint-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .hint-button:hover {
+            background: var(--secondary);
+        }
+
+        .hint-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .word-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .letter-cell {
+            aspect-ratio: 1;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .letter-cell.filled {
+            border-color: #9ca3af;
+            animation: pop 0.1s ease-in-out;
+        }
+
+        .letter-cell.correct {
+            background: var(--correct);
+            border-color: var(--correct);
+            color: white;
+        }
+
+        .letter-cell.present {
+            background: var(--present);
+            border-color: var(--present);
+            color: white;
+        }
+
+        .letter-cell.absent {
+            background: var(--absent);
+            border-color: var(--absent);
+            color: white;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .keyboard {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .key {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #d1d5db;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            min-width: 40px;
+        }
+
+        .key:hover {
+            background: #9ca3af;
+        }
+
+        .key.correct {
+            background: var(--correct);
+            color: white;
+        }
+
+        .key.present {
+            background: var(--present);
+            color: white;
+        }
+
+        .key.absent {
+            background: var(--absent);
+            color: white;
+        }
+
+        .key.wide {
+            padding: 12px 20px;
+            font-size: 0.9em;
+        }
+
+        .game-stats {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .key {
+                padding: 10px 12px;
+                min-width: 35px;
+                font-size: 0.9em;
+            }
+
+            .key.wide {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Include common header -->
+    <div id="header-container"></div>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>VOCABULARY WORDLE</h1>
+            <p>Guess the 5-letter word and learn new vocabulary!</p>
+        </div>
+
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" onclick="setDifficulty('easy')">Easy</button>
+            <button class="difficulty-btn" onclick="setDifficulty('medium')">Medium</button>
+            <button class="difficulty-btn" onclick="setDifficulty('hard')">Hard</button>
+        </div>
+
+        <div class="game-info">
+            <div class="attempts">Attempts: <span id="attemptCount">0/6</span></div>
+            <div class="timer">Time: <span id="timer">00:00</span></div>
+        </div>
+
+        <div class="hint-section" id="hintSection">
+            <div class="hint-title">
+                <span>💡 Word Hint</span>
+            </div>
+            <div class="hint-definition" id="hintDefinition"></div>
+            <button class="hint-button" onclick="showNextHint()" id="nextHintButton">Show Another Hint</button>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="game-board" id="gameBoard">
+            <!-- Game board will be generated by JavaScript -->
+        </div>
+
+        <div class="keyboard">
+            <div class="keyboard-row">
+                <button class="key" data-key="q">q</button>
+                <button class="key" data-key="w">w</button>
+                <button class="key" data-key="e">e</button>
+                <button class="key" data-key="r">r</button>
+                <button class="key" data-key="t">t</button>
+                <button class="key" data-key="y">y</button>
+                <button class="key" data-key="u">u</button>
+                <button class="key" data-key="i">i</button>
+                <button class="key" data-key="o">o</button>
+                <button class="key" data-key="p">p</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key" data-key="a">a</button>
+                <button class="key" data-key="s">s</button>
+                <button class="key" data-key="d">d</button>
+                <button class="key" data-key="f">f</button>
+                <button class="key" data-key="g">g</button>
+                <button class="key" data-key="h">h</button>
+                <button class="key" data-key="j">j</button>
+                <button class="key" data-key="k">k</button>
+                <button class="key" data-key="l">l</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key wide" data-key="enter">Enter</button>
+                <button class="key" data-key="z">z</button>
+                <button class="key" data-key="x">x</button>
+                <button class="key" data-key="c">c</button>
+                <button class="key" data-key="v">v</button>
+                <button class="key" data-key="b">b</button>
+                <button class="key" data-key="n">n</button>
+                <button class="key" data-key="m">m</button>
+                <button class="key wide" data-key="backspace">⌫</button>
+            </div>
+        </div>
+
+        <div class="game-stats">
+            <p>Words learned: <span id="wordsLearned">0</span></p>
+            <button class="btn" onclick="newGame()" style="margin-top: 10px;">New Game</button>
+        </div>
+    </div>
+
+    <script>
+        // Load common header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+
+        let currentRow = 0;
+        let currentCol = 0;
+        let gameOver = false;
+        let startTime;
+        let timerInterval;
+        let wordsLearned = parseInt(localStorage.getItem('wordsLearned')) || 0;
+        let currentDifficulty = 'easy';
+        let currentWordData = null;
+        let hintsUsed = 0;
+        let availableHints = [];
+
+        // This will be loaded from your vocabulary.json
+        let vocabularyData = {};
+
+        document.getElementById('wordsLearned').textContent = wordsLearned;
+
+        // Load vocabulary data
+        fetch('vocabulary.json')
+            .then(response => response.json())
+            .then(data => {
+                vocabularyData = data;
+                initializeGame();
+            })
+            .catch(error => {
+                console.error('Error loading vocabulary:', error);
+                // Fallback to sample data if vocabulary.json doesn't exist
+                vocabularyData = {
+                    "easy": [{"word": "APPLE", "definition": "A sweet fruit"}],
+                    "medium": [{"word": "BRAIN", "definition": "Thinking organ"}],
+                    "hard": [{"word": "CLOUD", "definition": "Sky feature"}]
+                };
+                initializeGame();
+            });
+
+        function setDifficulty(difficulty) {
+            currentDifficulty = difficulty;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            initializeGame();
+        }
+
+        function initializeGame() {
+            if (!vocabularyData[currentDifficulty] || vocabularyData[currentDifficulty].length === 0) {
+                showMessage('No words available for this difficulty level.', 'error');
+                return;
+            }
+
+            // Select a random word from the current difficulty
+            const words = vocabularyData[currentDifficulty];
+            currentWordData = words[Math.floor(Math.random() * words.length)];
+            
+            // Prepare multiple hints
+            availableHints = [
+                `Definition: ${currentWordData.definition}`,
+                `Starts with: ${currentWordData.word[0]}`,
+                `Ends with: ${currentWordData.word[4]}`,
+                `Word length: 5 letters`,
+                `Contains the letter: ${currentWordData.word[2]}`
+            ];
+            
+            hintsUsed = 0;
+            currentRow = 0;
+            currentCol = 0;
+            gameOver = false;
+            startTime = new Date();
+            
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            document.getElementById('attemptCount').textContent = '0/6';
+            document.getElementById('message').className = 'message';
+            document.getElementById('message').style.display = 'none';
+            document.getElementById('hintSection').classList.remove('active');
+            document.getElementById('nextHintButton').disabled = false;
+            document.getElementById('nextHintButton').textContent = 'Show Another Hint';
+            
+            createGameBoard();
+            setupKeyboard();
+        }
+
+        function createGameBoard() {
+            const gameBoard = document.getElementById('gameBoard');
+            gameBoard.innerHTML = '';
+            
+            for (let row = 0; row < 6; row++) {
+                const wordRow = document.createElement('div');
+                wordRow.className = 'word-row';
+                
+                for (let col = 0; col < 5; col++) {
+                    const letterCell = document.createElement('div');
+                    letterCell.className = 'letter-cell';
+                    letterCell.id = `cell-${row}-${col}`;
+                    wordRow.appendChild(letterCell);
+                }
+                
+                gameBoard.appendChild(wordRow);
+            }
+        }
+
+        function setupKeyboard() {
+            const keys = document.querySelectorAll('.key');
+            keys.forEach(key => {
+                key.className = 'key';
+                if (key.dataset.key === 'enter' || key.dataset.key === 'backspace') {
+                    key.className += ' wide';
+                }
+                
+                key.addEventListener('click', () => handleKeyPress(key.dataset.key));
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (gameOver) return;
+                
+                const key = e.key.toLowerCase();
+                if (key === 'enter') {
+                    handleKeyPress('enter');
+                } else if (key === 'backspace') {
+                    handleKeyPress('backspace');
+                } else if (key === 'h' && e.ctrlKey) {
+                    showNextHint();
+                    e.preventDefault();
+                } else if (/^[a-z]$/.test(key)) {
+                    handleKeyPress(key);
+                }
+            });
+        }
+
+        function handleKeyPress(key) {
+            if (gameOver) return;
+            
+            if (key === 'enter') {
+                checkGuess();
+            } else if (key === 'backspace') {
+                if (currentCol > 0) {
+                    currentCol--;
+                    const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+                    cell.textContent = '';
+                    cell.classList.remove('filled');
+                }
+            } else if (/^[a-z]$/.test(key) && currentCol < 5) {
+                // Only fill the current cell, not all cells
+                const cell = document.getElementById(`cell-${currentRow}-${currentCol}`);
+                cell.textContent = key.toUpperCase();
+                cell.classList.add('filled');
+                currentCol++;
+            }
+        }
+
+        function showNextHint() {
+            if (hintsUsed >= availableHints.length) {
+                document.getElementById('nextHintButton').disabled = true;
+                document.getElementById('nextHintButton').textContent = 'No more hints';
+                return;
+            }
+            
+            const hintSection = document.getElementById('hintSection');
+            const hintDefinition = document.getElementById('hintDefinition');
+            
+            hintDefinition.textContent = availableHints[hintsUsed];
+            hintSection.classList.add('active');
+            hintsUsed++;
+            
+            if (hintsUsed >= availableHints.length) {
+                document.getElementById('nextHintButton').disabled = true;
+                document.getElementById('nextHintButton').textContent = 'No more hints';
+            }
+        }
+
+        function checkGuess() {
+            if (currentCol !== 5) {
+                showMessage('Word must be 5 letters!', 'error');
+                return;
+            }
+            
+            let guess = '';
+            for (let col = 0; col < 5; col++) {
+                const cell = document.getElementById(`cell-${currentRow}-${col}`);
+                guess += cell.textContent;
+            }
+            
+            // Check if word exists in vocabulary
+            const wordExists = Object.values(vocabularyData).flat().some(
+                item => item.word.toUpperCase() === guess
+            );
+            
+            if (!wordExists) {
+                showMessage('Not a valid word! Try another.', 'error');
+                return;
+            }
+            
+            // Check each letter
+            const targetLetters = currentWordData.word.split('');
+            const guessLetters = guess.split('');
+            const result = [];
+            
+            // First pass: mark correct letters
+            for (let i = 0; i < 5; i++) {
+                if (guessLetters[i] === targetLetters[i]) {
+                    result[i] = 'correct';
+                    targetLetters[i] = null;
+                }
+            }
+            
+            // Second pass: mark present and absent letters
+            for (let i = 0; i < 5; i++) {
+                if (result[i]) continue;
+                
+                const index = targetLetters.indexOf(guessLetters[i]);
+                if (index !== -1) {
+                    result[i] = 'present';
+                    targetLetters[index] = null;
+                } else {
+                    result[i] = 'absent';
+                }
+            }
+            
+            // Animate results
+            for (let col = 0; col < 5; col++) {
+                const cell = document.getElementById(`cell-${currentRow}-${col}`);
+                const key = document.querySelector(`.key[data-key="${guess[col].toLowerCase()}"]`);
+                
+                setTimeout(() => {
+                    cell.classList.add(result[col]);
+                    if (!key.classList.contains('correct')) {
+                        key.classList.add(result[col]);
+                    }
+                }, col * 300);
+            }
+            
+            // Update attempts
+            const attempts = currentRow + 1;
+            document.getElementById('attemptCount').textContent = `${attempts}/6`;
+            
+            // Check win/lose conditions
+            if (guess === currentWordData.word) {
+                setTimeout(() => {
+                    gameOver = true;
+                    wordsLearned++;
+                    localStorage.setItem('wordsLearned', wordsLearned);
+                    document.getElementById('wordsLearned').textContent = wordsLearned;
+                    
+                    const message = `Congratulations! You guessed "${currentWordData.word}" in ${attempts} attempts!\n\nDefinition: ${currentWordData.definition}`;
+                    showMessage(message, 'success');
+                    clearInterval(timerInterval);
+                }, 1800);
+            } else if (currentRow === 5) {
+                setTimeout(() => {
+                    gameOver = true;
+                    const message = `Game Over! The word was "${currentWordData.word}"\n\nDefinition: ${currentWordData.definition}`;
+                    showMessage(message, 'error');
+                    clearInterval(timerInterval);
+                }, 1800);
+            } else {
+                currentRow++;
+                currentCol = 0;
+                
+                // Show hint section after first attempt
+                if (currentRow === 1 && !document.getElementById('hintSection').classList.contains('active')) {
+                    showNextHint();
+                }
+            }
+        }
+
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(diff / 60).toString().padStart(2, '0');
+            const seconds = (diff % 60).toString().padStart(2, '0');
+            document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        }
+
+        function newGame() {
+            initializeGame();
+        }
+    </script>
+</body>
+</html>
