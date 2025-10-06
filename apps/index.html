@@ -19,6 +19,100 @@
             min-height: 100vh;
             padding: 20px;
         }
+		
+		/* Common Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .logo::before {
+            content: '📚';
+        }
+
+        .logo-text h1 {
+            font-size: 1.5em;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 0.75em;
+            color: #64748b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--dark);
+        }
 
         .container {
             max-width: 1200px;
@@ -183,9 +277,32 @@
                 grid-template-columns: 1fr;
             }
         }
+		
     </style>
 </head>
 <body>
+	<!-- Common Header -->
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo-container">
+                <div class="logo"></div>
+                <div class="logo-text">
+                    <h1>Factictionary</h1>
+                    <p>Learn • Play • Create</p>
+                </div>
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="video-tools.html">Video</a>
+                <a href="image-tools.html">Image</a>
+                <a href="text-tools.html">Text</a>
+                <a href="pdf-tools.html" class="active">PDF</a>
+                <a href="audio-tools.html">Audio</a>
+            </nav>
+            <div class="mobile-menu-btn" onclick="toggleMenu()">☰</div>
+        </div>
+    </header>
+	
     <div class="container">
         <header>
             <h1>🛠️ Utility Hub</h1>
@@ -255,6 +372,10 @@
     </div>
 
     <script>
+		function toggleMenu() {
+			document.getElementById('navLinks').classList.toggle('active');
+		}
+			
         function navigateTo(category) {
             // For now, show alert. Later, navigate to actual pages
             // alert(`${category.charAt(0).toUpperCase() + category.slice(1)} tools coming soon!\n\nThis will navigate to: ${category}.html`);
