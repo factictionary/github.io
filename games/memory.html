@@ -7,6 +7,16 @@
     <title>Memory Match - Factictionary</title>
     <link rel="stylesheet" href="common.css">
     <style>
+		.center-wrapper {
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+ 		}
+
+		.container {
+			width: 60%;
+		}
+		
         .difficulty-selector {
             display: flex;
             gap: 10px;
@@ -196,7 +206,8 @@
     <!-- Include common header -->
     <div id="header-container"></div>
 
-    <div class="game-container">
+	<div class="center-wrapper">
+    <div class="container">
         <div class="game-header">
             <h1>MEMORY MATCH</h1>
             <p>Match pairs of cards to test your memory!</p>
@@ -235,6 +246,7 @@
                 <div class="score-item">Total matches: <span id="totalMatches">0</span></div>
             </div>
         </div>
+	</div>
     </div>
 
     <script>
