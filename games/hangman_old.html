@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wonder Hangman - Brain Games Hub</title>
+    <link rel="stylesheet" href="styles.css">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535919568420997"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Games</a>
+        <div class="game-container">
+            <h1 style="color: #667eea; text-align: center;">🎯 Wonder Hangman</h1>
+            <div class="social-share">
+                <button onclick="share('twitter')" class="share-btn">🐦 Share</button>
+                <button onclick="share('facebook')" class="share-btn">📘 Share</button>
+            </div>
+            <div class="stats">
+                <div class="stat"><div class="stat-label">Lives</div><div class="stat-value" id="lives">6</div></div>
+                <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="score">0</div></div>
+            </div>
+            <div id="gameArea"></div>
+            <div class="ad-rectangle"><div class="ad-placeholder">Advertisement 300x250</div></div>
+        </div>
+    </div>
+    <script src="shared.js"></script>
+    <script>
+        const hangmanWords = [
+            { word: 'AURORA', hint: 'Natural light display in polar regions' },
+            { word: 'VOLCANO', hint: 'Mountain that erupts with lava' },
+            { word: 'CANYON', hint: 'Deep gorge carved by a river' },
+            { word: 'GLACIER', hint: 'Slow-moving mass of ice' },
+            { word: 'WATERFALL', hint: 'Water cascading over a cliff' },
+            { word: 'DESERT', hint: 'Dry, barren area of land' }
+        ];
+        
+        let currentWord = null;
+        let guessed = [];
+        let lives = 6;
+        let score = 0;
+        const faces = ['😊', '😐', '😟', '😰', '😱', '💀'];
+        
+        function init() {
+            currentWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
+            guessed = [];
+            lives = 6;
+            updateDisplay();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('score').textContent = score;
+            
+            const display = currentWord.word.split('').map(l => guessed.includes(l) ? l : '_').join(' ');
+            
+            document.getElementById('gameArea').innerHTML = `
+                <div style="text-align: center; font-size: 4em; margin: 30px 0;">${faces[6 - lives]}</div>
+                <div style="text-align: center; font-size: 2em; color: #667eea; font-weight: bold; letter-spacing: 5px; margin: 30px 0;">${display}</div>
+                <p style="text-align: center; color: #666; font-style: italic; margin: 20px 0;">Hint: ${currentWord.hint}</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 10px; margin: 20px 0;">
+                    ${Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map(l => 
+                        `<button onclick="guess('${l}')" ${guessed.includes(l) ? 'disabled' : ''} style="padding: 15px; font-size: 1.2em; background: ${guessed.includes(l) ? '#ccc' : '#667eea'}; color: white; border: none; border-radius: 10px; cursor: pointer;">${l}</button>`
+                    ).join('')}
+                </div>
+            `;
+        }
+        
+        function guess(letter) {
+            guessed.push(letter);
+            if (!currentWord.word.includes(letter)) {
+                lives--;
+            }
+            
+            if (lives === 0) {
+                alert(`Game Over! The word was ${currentWord.word}`);
+                submitScore('Wonder Hangman', score);
+                score = 0;
+                init();
+            } else if (!currentWord.word.split('').some(l => !guessed.includes(l))) {
+                score += 10;
+                alert('🎉 Correct!');
+                init();
+            } else {
+                updateDisplay();
+            }
+        }
+        
+        init();
+    </script>
+</body>
+</html>

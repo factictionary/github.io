@@ -2,93 +2,399 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wonder Hangman - Brain Games Hub</title>
-    <link rel="stylesheet" href="styles.css">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535919568420997"
-     crossorigin="anonymous"></script>
+    <title>Hangman</title>
+	<meta name="robots" content="index, follow">
+	<link rel="stylesheet" href="common.css">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+		
+		.header-container {
+			position: sticky;
+		  top: 0;
+		  z-index: 1000;
+		}
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ef4444, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .game-info {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 25px;
+			padding: 15px 20px;
+			
+			/* Glassy white look */
+			background: rgba(255, 255, 255, 0.15);
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			
+			border: 1px solid rgba(255, 255, 255, 0.25);
+			border-radius: 12px;
+			
+			color: navy; /* Slightly off-white text for contrast */
+			font-weight: 500;
+			letter-spacing: 0.3px;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.game-info:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+		}
+
+        
+        .difficulty {
+            margin-bottom: 20px;
+        }
+        
+        .difficulty button {
+            background: rgba(30, 30, 46, 0.8);
+            margin: 0 5px;
+        }
+        
+        .difficulty button.active {
+            background: linear-gradient(to right, #ef4444, #f59e0b);
+        }
+        
+        .hangman-container {
+            margin: 10px 0;
+            position: relative;
+            height: 200px;
+        }
+        
+        .hangman-drawing {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+        
+        .hangman-part {
+            background: red;
+            position: absolute;
+            display: none;
+        }
+        
+        .gallows { width: 4px; height: 200px; background: #8b5cf6 !important; left: 50px; top: 0; display: block; }
+        .beam { width: 100px; height: 4px; background: #8b5cf6 !important; left: 50px; top: 0; display: block; }
+        .rope { width: 4px; height: 30px; left: 145px; top: 0; display: block; }
+        .head { width: 40px; height: 40px; border-radius: 50%; left: 125px; top: 30px; }
+        .body { width: 4px; height: 60px; left: 145px; top: 70px; }
+        .left-arm { width: 4px; height: 30px; transform: rotate(45deg); left: 135px; top: 80px; }
+        .right-arm { width: 4px; height: 30px; transform: rotate(-45deg); left: 155px; top: 80px; }
+        .left-leg { width: 4px; height: 40px; transform: rotate(45deg); left: 135px; top: 125px; }
+        .right-leg { width: 4px; height: 40px; transform: rotate(-45deg); left: 155px; top: 125px; }
+        
+        .word-display {
+			width: 100%;
+            font-size: 2rem;
+            letter-spacing: 10px;
+            margin: 10px 0;
+            min-height: 40px;
+			text-align: center;
+        }
+        
+        .letters {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			justify-content: center;
+			margin: 20px 0;
+			max-width: 500px;
+			width: 100%;
+			margin-left: auto;
+			margin-right: auto;
+			padding: 0 10px;      /* some padding so buttons don’t touch edges */
+			box-sizing: border-box;
+		}
+
+		.letter-btn {
+			width: 42px;
+			height: 42px;
+			background: linear-gradient(135deg, #4f46e5, #3b82f6);  /* purple → blue gradient */
+			color: #fff;
+			border: none;
+			border-radius: 6px;
+			font-size: 1.1rem;
+			font-weight: bold;
+			cursor: pointer;
+			transition: background 0.3s, transform 0.2s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.letter-btn:hover:not(:disabled) {
+			transform: scale(1.05);
+			background: linear-gradient(135deg, #4338ca, #2563eb);  /* slightly darker on hover */
+		}
+
+		.letter-btn:disabled {
+			background: #4b5563;  /* darker grey */
+			cursor: not-allowed;
+			color: #cbd5e1;       /* lighter grey for disabled text */
+		}
+
+		.letter-btn.correct {
+			background: #10b981;  /* emerald green */
+			color: #f0fdf4;
+		}
+
+		.letter-btn.incorrect {
+			background: #ef4444;  /* red */
+			color: #fef2f2;
+		}
+
+        
+        .game-status {
+            margin: 20px 0;
+            font-size: 1.3rem;
+            min-height: 30px;
+        }
+        
+        .hint {
+            margin: 10px 0;
+            color: #f59e0b;
+        }
+        
+        button {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">← Back to Games</a>
-        <div class="game-container">
-            <h1 style="color: #667eea; text-align: center;">🎯 Wonder Hangman</h1>
-            <div class="social-share">
-                <button onclick="share('twitter')" class="share-btn">🐦 Share</button>
-                <button onclick="share('facebook')" class="share-btn">📘 Share</button>
-            </div>
-            <div class="stats">
-                <div class="stat"><div class="stat-label">Lives</div><div class="stat-value" id="lives">6</div></div>
-                <div class="stat"><div class="stat-label">Score</div><div class="stat-value" id="score">0</div></div>
-            </div>
-            <div id="gameArea"></div>
-            <div class="ad-rectangle"><div class="ad-placeholder">Advertisement 300x250</div></div>
-        </div>
+	<!-- Include common header -->
+	<div id="header-container"></div>
+
+    <div class="game-container">
+		<a href="index.html" class="back-link">← Back to Games</a>
+        
+			<h1>Hangman</h1>
+			
+			<div class="game-info">
+				<div>Difficulty: <span id="difficulty-level">Easy</span></div>
+				<div>Wins: <span id="wins">0</span></div>
+				<div>Losses: <span id="losses">0</span></div>
+			</div>
+			
+			<div class="difficulty">
+				<button id="easy-btn" class="active">Easy</button>
+				<button id="medium-btn">Medium</button>
+				<button id="hard-btn">Hard</button>
+			</div>
+			
+			<div class="hangman-container">
+				<div class="hangman-drawing">
+					<div class="hangman-part gallows"></div>
+					<div class="hangman-part beam"></div>
+					<div class="hangman-part rope"></div>
+					<div class="hangman-part head"></div>
+					<div class="hangman-part body"></div>
+					<div class="hangman-part left-arm"></div>
+					<div class="hangman-part right-arm"></div>
+					<div class="hangman-part left-leg"></div>
+					<div class="hangman-part right-leg"></div>
+				</div>
+			</div>
+			
+			<div class="word-display" id="word-display"></div>
+			
+			<div class="hint" id="hint"></div>
+			
+			<!-- Add this to your game container -->
+			<div id="definition" class="definition" style="
+				font-style: italic; 
+				color: #666; 
+				text-align: center; 
+				margin: 10px 0; 
+				font-size: 0.9em;
+			"></div>
+			
+			<div class="game-status" id="game-status">Guess the word!</div>
+			
+			<div class="letters" id="letters-container">
+				<!-- Letters will be generated here -->
+			</div>
+			
+			<div class="controls">
+				<button id="new-game">New Game</button>
+				<button id="hint-btn">Get Hint</button>
+			</div>
     </div>
-    <script src="shared.js"></script>
-    <script>
-        const hangmanWords = [
-            { word: 'AURORA', hint: 'Natural light display in polar regions' },
-            { word: 'VOLCANO', hint: 'Mountain that erupts with lava' },
-            { word: 'CANYON', hint: 'Deep gorge carved by a river' },
-            { word: 'GLACIER', hint: 'Slow-moving mass of ice' },
-            { word: 'WATERFALL', hint: 'Water cascading over a cliff' },
-            { word: 'DESERT', hint: 'Dry, barren area of land' }
-        ];
-        
-        let currentWord = null;
-        let guessed = [];
-        let lives = 6;
-        let score = 0;
-        const faces = ['😊', '😐', '😟', '😰', '😱', '💀'];
-        
-        function init() {
-            currentWord = hangmanWords[Math.floor(Math.random() * hangmanWords.length)];
-            guessed = [];
-            lives = 6;
-            updateDisplay();
-        }
-        
-        function updateDisplay() {
-            document.getElementById('lives').textContent = lives;
-            document.getElementById('score').textContent = score;
-            
-            const display = currentWord.word.split('').map(l => guessed.includes(l) ? l : '_').join(' ');
-            
-            document.getElementById('gameArea').innerHTML = `
-                <div style="text-align: center; font-size: 4em; margin: 30px 0;">${faces[6 - lives]}</div>
-                <div style="text-align: center; font-size: 2em; color: #667eea; font-weight: bold; letter-spacing: 5px; margin: 30px 0;">${display}</div>
-                <p style="text-align: center; color: #666; font-style: italic; margin: 20px 0;">Hint: ${currentWord.hint}</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 10px; margin: 20px 0;">
-                    ${Array.from('ABCDEFGHIJKLMNOPQRSTUVWXYZ').map(l => 
-                        `<button onclick="guess('${l}')" ${guessed.includes(l) ? 'disabled' : ''} style="padding: 15px; font-size: 1.2em; background: ${guessed.includes(l) ? '#ccc' : '#667eea'}; color: white; border: none; border-radius: 10px; cursor: pointer;">${l}</button>`
-                    ).join('')}
-                </div>
-            `;
-        }
-        
-        function guess(letter) {
-            guessed.push(letter);
-            if (!currentWord.word.includes(letter)) {
-                lives--;
-            }
-            
-            if (lives === 0) {
-                alert(`Game Over! The word was ${currentWord.word}`);
-                submitScore('Wonder Hangman', score);
-                score = 0;
-                init();
-            } else if (!currentWord.word.split('').some(l => !guessed.includes(l))) {
-                score += 10;
-                alert('🎉 Correct!');
-                init();
-            } else {
-                updateDisplay();
-            }
-        }
-        
-        init();
-    </script>
+
+	<script src="shared.js"></script>
+	<script>
+		// Load common header
+	fetch('header.html')
+		.then(response => response.text())
+		.then(data => {
+			document.getElementById('header-container').innerHTML = data;
+		});
+		
+		const gameStatus = document.getElementById('game-status');
+		const wordDisplay = document.getElementById('word-display');
+		const lettersContainer = document.getElementById('letters-container');
+		const hintElement = document.getElementById('hint');
+		const winsElement = document.getElementById('wins');
+		const lossesElement = document.getElementById('losses');
+		const difficultyLevel = document.getElementById('difficulty-level');
+		const newGameBtn = document.getElementById('new-game');
+		const hintBtn = document.getElementById('hint-btn');
+		const difficultyBtns = document.querySelectorAll('.difficulty button');
+		const hangmanParts = document.querySelectorAll('.hangman-part:not(.gallows):not(.beam):not(.rope)');
+
+		let currentWord = '';
+		let displayedWord = [];
+		let incorrectGuesses = 0;
+		let maxIncorrectGuesses = 6;
+		let gameActive = false;
+		let wins = parseInt(localStorage.getItem('hangmanWins')) || 0;
+		let losses = parseInt(localStorage.getItem('hangmanLosses')) || 0;
+		let currentDifficulty = 'easy';
+		let currentHint = '';
+
+		winsElement.textContent = wins;
+		lossesElement.textContent = losses;
+
+		async function initGame() {
+			// Wait until vocabulary.json is loaded
+			await vocabLoader.waitForLoad();
+
+			// Get random word from shared.js loader
+			const randomWordObj = vocabLoader.getRandomWord(currentDifficulty);
+			if (!randomWordObj) {
+				alert("No words found for difficulty: " + currentDifficulty);
+				return;
+			}
+
+			currentWord = randomWordObj.word.toUpperCase();
+			currentHint = randomWordObj.hint || randomWordObj.definition || "No hint available";
+
+			displayedWord = Array(currentWord.length).fill('_');
+			updateWordDisplay();
+
+			incorrectGuesses = 0;
+			gameActive = true;
+			hintElement.textContent = '';
+			gameStatus.textContent = 'Guess the word!';
+
+			hangmanParts.forEach(part => part.style.display = 'none');
+			createLetterButtons();
+			hintBtn.disabled = false;
+		}
+
+		function createLetterButtons() {
+			lettersContainer.innerHTML = '';
+			const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			for (let letter of letters) {
+				const button = document.createElement('button');
+				button.className = 'letter-btn';
+				button.textContent = letter;
+				button.addEventListener('click', () => handleLetterClick(letter, button));
+				lettersContainer.appendChild(button);
+			}
+		}
+
+		function handleLetterClick(letter, button) {
+			if (!gameActive || button.disabled) return;
+
+			button.disabled = true;
+
+			if (currentWord.includes(letter)) {
+				button.classList.add('correct');
+				updateDisplayedWord(letter);
+				if (!displayedWord.includes('_')) {
+					gameActive = false;
+					wins++;
+					winsElement.textContent = wins;
+					localStorage.setItem('hangmanWins', wins);
+					gameStatus.textContent = 'You won! 🎉';
+					hintElement.textContent = `The word was: ${currentWord}`;
+				}
+			} else {
+				button.classList.add('incorrect');
+				incorrectGuesses++;
+				updateHangman();
+				if (incorrectGuesses >= maxIncorrectGuesses) {
+					gameActive = false;
+					losses++;
+					lossesElement.textContent = losses;
+					localStorage.setItem('hangmanLosses', losses);
+					gameStatus.textContent = 'Game Over! 💀';
+					hintElement.textContent = `The word was: ${currentWord}`;
+					revealWord();
+				}
+			}
+		}
+
+		function updateDisplayedWord(letter) {
+			for (let i = 0; i < currentWord.length; i++) {
+				if (currentWord[i] === letter) displayedWord[i] = letter;
+			}
+			updateWordDisplay();
+		}
+
+		function updateWordDisplay() {
+			wordDisplay.textContent = displayedWord.join(' ');
+		}
+
+		function updateHangman() {
+			if (incorrectGuesses <= maxIncorrectGuesses) {
+				hangmanParts[incorrectGuesses - 1].style.display = 'block';
+			}
+		}
+
+		function revealWord() {
+			displayedWord = currentWord.split('');
+			updateWordDisplay();
+		}
+
+		function getHint() {
+			if (!gameActive) return;
+			hintElement.textContent = `Hint: ${currentHint}`;
+			hintBtn.disabled = true;
+		}
+
+		function setDifficulty(level) {
+			currentDifficulty = level;
+			difficultyLevel.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+			difficultyBtns.forEach(btn => btn.classList.remove('active'));
+			event.target.classList.add('active');
+			initGame();
+		}
+
+		newGameBtn.addEventListener('click', initGame);
+		hintBtn.addEventListener('click', getHint);
+		difficultyBtns.forEach(btn => {
+			btn.addEventListener('click', (e) => setDifficulty(e.target.id.replace('-btn', '')));
+		});
+
+		// Start the game once vocabulary is loaded
+		vocabLoader.waitForLoad().then(initGame);
+	</script>
 </body>
 </html>
