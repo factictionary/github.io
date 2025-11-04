@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame Extractor Tool | Extract Video Frames as Images | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online video frame extractor. Extract individual frames from videos in PNG, JPG, or WebP format. Perfect for filmmakers, content creators, and educators. 100% privacy-protected, works entirely in your browser.">
+    <meta name="keywords" content="frame extractor, video frame extraction, extract frames from video, video to image, frame capture, video frame downloader, video analysis tool">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Frame Extractor Tool | Extract Video Frames as Images | Factictionary">
+    <meta property="og:description" content="Professional video frame extractor tool. Extract individual frames or frame sequences from videos in various formats. Free and privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/frame_extractor.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Frame Extractor Tool | Factictionary">
+    <meta name="twitter:description" content="Extract video frames as images. Supports PNG, JPG, WebP formats with timeline scrubbing.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/frame_extractor.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Frame Extractor",
+        "description": "Free online video frame extractor tool to extract individual frames or frame sequences from videos in PNG, JPG, or WebP format.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header">
+            <div class="container">
+                <div class="tool-header-content">
+                    <h3 class="tool-title">🎬 Frame Extractor Tool</h3>
+                    <p class="tool-subtitle">Extract individual frames or frame sequences from videos in PNG, JPG, or WebP format. Perfect for filmmakers, content creators, educators, and video analysis professionals who need high-quality frame extraction instantly.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">Timeline Scrubbing</span>
+                        <span class="feature-tag">Single Frame</span>
+                        <span class="feature-tag">Frame Range</span>
+                        <span class="feature-tag">Batch Extraction</span>
+                        <span class="feature-tag">Multiple Formats</span>
+                        <span class="feature-tag">Canvas Processing</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <!-- Video Upload Section -->
+                <div class="upload-section">
+                    <label class="input-label">Video File</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content" id="uploadContent">
+                            <div class="upload-icon">📹</div>
+                            <div class="upload-text">
+                                <p class="upload-title">Drag & drop your video here</p>
+                                <p class="upload-subtitle">or click to browse files</p>
+                            </div>
+                        </div>
+                        <input type="file" id="videoInput" accept="video/*" style="display: none;">
+                    </div>
+                    <div class="input-help">
+                        Supported formats: MP4, AVI, MOV, MKV, WebM, and other common video formats. Maximum file size: 500MB
+                    </div>
+                </div>
+
+                <!-- Video Preview and Controls -->
+                <div class="video-section" id="videoSection" style="display: none;">
+                    <div class="video-container">
+                        <video id="videoPlayer" controls class="video-player">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Timeline Controls -->
+                        <div class="timeline-container">
+                            <div class="timeline-header">
+                                <span class="current-time" id="currentTime">00:00</span>
+                                <span class="total-time" id="totalTime">00:00</span>
+                            </div>
+                            <input type="range" class="timeline-slider" id="timelineSlider" min="0" max="100" value="0" step="0.1">
+                            <div class="timeline-scrubber">
+                                <div class="scrubber-time" id="scrubberTime">00:00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Extraction Options -->
+                    <div class="extraction-options">
+                        <h3 class="section-title">Extraction Settings</h3>
+                        
+                        <div class="options-grid">
+                            <!-- Extraction Mode -->
+                            <div class="option-card">
+                                <h4 class="option-title">🎯 Extraction Mode</h4>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="extractionMode" value="single" checked>
+                                        <span class="radio-label">Single Frame</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="extractionMode" value="range">
+                                        <span class="radio-label">Frame Range</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="extractionMode" value="every">
+                                        <span class="radio-label">Every N Seconds</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Output Format -->
+                            <div class="option-card">
+                                <h4 class="option-title">🖼️ Output Format</h4>
+                                <div class="format-selector">
+                                    <select id="outputFormat" class="format-select">
+                                        <option value="png">PNG (High Quality)</option>
+                                        <option value="jpg">JPG (Compressed)</option>
+                                        <option value="webp">WebP (Modern)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Frame Range Settings -->
+                            <div class="option-card" id="rangeSettings" style="display: none;">
+                                <h4 class="option-title">⏰ Frame Range</h4>
+                                <div class="range-inputs">
+                                    <div class="range-input-group">
+                                        <label>Start Time:</label>
+                                        <input type="text" id="startTime" placeholder="00:00" class="time-input">
+                                    </div>
+                                    <div class="range-input-group">
+                                        <label>End Time:</label>
+                                        <input type="text" id="endTime" placeholder="00:00" class="time-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Interval Settings -->
+                            <div class="option-card" id="intervalSettings" style="display: none;">
+                                <h4 class="option-title">⏱️ Interval Settings</h4>
+                                <div class="interval-input-group">
+                                    <label>Extract every:</label>
+                                    <div class="interval-controls">
+                                        <input type="number" id="intervalValue" min="0.1" step="0.1" value="1" class="interval-input">
+                                        <select id="intervalUnit" class="interval-select">
+                                            <option value="seconds">seconds</option>
+                                            <option value="minutes">minutes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="extraction-actions">
+                            <button class="btn btn-primary" id="extractButton" onclick="extractFrames()">
+                                🎬 Extract Frames
+                            </button>
+                            <button class="btn btn-secondary" id="downloadAllButton" onclick="downloadAllFrames()" style="display: none;">
+                                📦 Download All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extraction Results -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h3 class="section-title">Extracted Frames</h3>
+                    <div class="results-summary" id="resultsSummary">
+                        <!-- Results summary will be populated here -->
+                    </div>
+                    <div class="frames-grid" id="framesGrid">
+                        <!-- Extracted frames will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Privacy Notice -->
+                <div class="privacy-notice">
+                    <div class="privacy-content">
+                        <div class="privacy-icon">🔒</div>
+                        <div class="privacy-text">
+                            <h4>Privacy Protected</h4>
+                            <p>Your video files are processed entirely in your browser. No data is uploaded to our servers, ensuring complete privacy and security of your content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Container -->
+        <div class="ad-container bottom-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Video Tools</h3>
+                <div class="related-grid">
+                    <a href="video_compressor.html" class="related-card">
+                        <div class="related-icon">🗜️</div>
+                        <div class="related-content">
+                            <h4>Video Compressor</h4>
+                            <p>Compress video files to reduce size while maintaining quality and compatibility</p>
+                        </div>
+                    </a>
+                    <a href="video_converter.html" class="related-card">
+                        <div class="related-icon">🔄</div>
+                        <div class="related-content">
+                            <h4>Video Converter</h4>
+                            <p>Convert videos between different formats with customizable quality settings</p>
+                        </div>
+                    </a>
+                    <a href="gif_maker.html" class="related-card">
+                        <div class="related-icon">🎞️</div>
+                        <div class="related-content">
+                            <h4>GIF Maker</h4>
+                            <p>Create animated GIFs from video clips with customizable frame rates and effects</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let currentVideo = null;
+        let extractedFrames = [];
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+        });
+
+        function initializeEventListeners() {
+            // File upload handlers
+            const uploadArea = document.getElementById('uploadArea');
+            const videoInput = document.getElementById('videoInput');
+            const videoSection = document.getElementById('videoSection');
+
+            // Drag and drop handlers
+            uploadArea.addEventListener('click', () => videoInput.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            videoInput.addEventListener('change', handleFileSelect);
+
+            // Video control handlers
+            const videoPlayer = document.getElementById('videoPlayer');
+            const timelineSlider = document.getElementById('timelineSlider');
+
+            videoPlayer.addEventListener('loadedmetadata', updateVideoInfo);
+            videoPlayer.addEventListener('timeupdate', updateTimeline);
+            timelineSlider.addEventListener('input', seekVideo);
+
+            // Extraction mode handlers
+            const extractionModes = document.querySelectorAll('input[name="extractionMode"]');
+            extractionModes.forEach(mode => {
+                mode.addEventListener('change', toggleExtractionOptions);
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('uploadArea').classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processVideoFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processVideoFile(file);
+            }
+        }
+
+        function processVideoFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('video/')) {
+                showNotification('❌ Please select a valid video file');
+                return;
+            }
+
+            // Validate file size (500MB limit)
+            if (file.size > 500 * 1024 * 1024) {
+                showNotification('❌ File size too large. Maximum 500MB allowed.');
+                return;
+            }
+
+            // Create video URL
+            const videoURL = URL.createObjectURL(file);
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = videoURL;
+            
+            // Show video section
+            document.getElementById('videoSection').style.display = 'block';
+            
+            showNotification('📹 Video loaded successfully!');
+        }
+
+        function updateVideoInfo() {
+            const video = document.getElementById('videoPlayer');
+            const duration = formatTime(video.duration);
+            
+            document.getElementById('totalTime').textContent = duration;
+            document.getElementById('scrubberTime').textContent = '00:00';
+        }
+
+        function updateTimeline() {
+            const video = document.getElementById('videoPlayer');
+            const current = formatTime(video.currentTime);
+            const total = formatTime(video.duration);
+            const progress = (video.currentTime / video.duration) * 100;
+            
+            document.getElementById('currentTime').textContent = current;
+            document.getElementById('timelineSlider').value = progress;
+            document.getElementById('scrubberTime').textContent = current;
+        }
+
+        function seekVideo() {
+            const video = document.getElementById('videoPlayer');
+            const slider = document.getElementById('timelineSlider');
+            const seekTime = (slider.value / 100) * video.duration;
+            
+            video.currentTime = seekTime;
+        }
+
+        function toggleExtractionOptions() {
+            const mode = document.querySelector('input[name="extractionMode"]:checked').value;
+            const rangeSettings = document.getElementById('rangeSettings');
+            const intervalSettings = document.getElementById('intervalSettings');
+            
+            // Hide all option sections
+            rangeSettings.style.display = 'none';
+            intervalSettings.style.display = 'none';
+            
+            // Show relevant options
+            if (mode === 'range') {
+                rangeSettings.style.display = 'block';
+            } else if (mode === 'every') {
+                intervalSettings.style.display = 'block';
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function parseTime(timeStr) {
+            const parts = timeStr.split(':');
+            if (parts.length === 2) {
+                return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            }
+            return 0;
+        }
+
+        async function extractFrames() {
+            const video = document.getElementById('videoPlayer');
+            const mode = document.querySelector('input[name="extractionMode"]:checked').value;
+            const format = document.getElementById('outputFormat').value;
+            
+            if (!video.src) {
+                showNotification('❌ Please load a video first');
+                return;
+            }
+
+            // Disable extract button during processing
+            const extractButton = document.getElementById('extractButton');
+            extractButton.disabled = true;
+            extractButton.textContent = '⏳ Extracting...';
+            
+            try {
+                let frameTimes = [];
+                
+                if (mode === 'single') {
+                    frameTimes = [video.currentTime];
+                } else if (mode === 'range') {
+                    const startTime = parseTime(document.getElementById('startTime').value);
+                    const endTime = parseTime(document.getElementById('endTime').value);
+                    
+                    if (startTime >= endTime) {
+                        throw new Error('End time must be greater than start time');
+                    }
+                    
+                    // Extract frames every second within range
+                    for (let t = startTime; t <= endTime; t++) {
+                        frameTimes.push(t);
+                    }
+                } else if (mode === 'every') {
+                    const intervalValue = parseFloat(document.getElementById('intervalValue').value);
+                    const intervalUnit = document.getElementById('intervalUnit').value;
+                    
+                    let interval = intervalValue;
+                    if (intervalUnit === 'minutes') {
+                        interval *= 60;
+                    }
+                    
+                    for (let t = 0; t <= video.duration; t += interval) {
+                        frameTimes.push(t);
+                    }
+                }
+                
+                extractedFrames = [];
+                
+                // Show progress
+                showNotification(`🎬 Extracting ${frameTimes.length} frames...`);
+                
+                for (let i = 0; i < frameTimes.length; i++) {
+                    const time = frameTimes[i];
+                    video.currentTime = time;
+                    
+                    // Wait for video to seek
+                    await new Promise(resolve => {
+                        video.addEventListener('seeked', resolve, { once: true });
+                    });
+                    
+                    // Extract frame using Canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    
+                    // Convert to blob
+                    const blob = await new Promise(resolve => {
+                        canvas.toBlob(resolve, `image/${format}`, format === 'jpg' ? 0.9 : 1);
+                    });
+                    
+                    const frameData = {
+                        blob: blob,
+                        url: URL.createObjectURL(blob),
+                        time: time,
+                        filename: `frame_${formatTime(time).replace(':', '-')}.${format}`
+                    };
+                    
+                    extractedFrames.push(frameData);
+                    
+                    // Update progress
+                    if (i % 5 === 0) {
+                        showNotification(`🎬 Extracted ${i + 1}/${frameTimes.length} frames...`);
+                    }
+                }
+                
+                displayExtractedFrames();
+                showNotification(`✅ Successfully extracted ${extractedFrames.length} frames!`);
+                
+            } catch (error) {
+                console.error('Extraction error:', error);
+                showNotification('❌ Error extracting frames: ' + error.message);
+            } finally {
+                // Re-enable extract button
+                extractButton.disabled = false;
+                extractButton.textContent = '🎬 Extract Frames';
+            }
+        }
+
+        function displayExtractedFrames() {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsSummary = document.getElementById('resultsSummary');
+            const framesGrid = document.getElementById('framesGrid');
+            const downloadAllButton = document.getElementById('downloadAllButton');
+            
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Update summary
+            resultsSummary.innerHTML = `
+                <div class="summary-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${extractedFrames.length}</span>
+                        <span class="stat-label">Frames Extracted</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${formatTime(extractedFrames[extractedFrames.length - 1].time)}</span>
+                        <span class="stat-label">Max Time</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${extractedFrames.length > 0 ? Math.round(extractedFrames[0].blob.size / 1024) : 0}KB</span>
+                        <span class="stat-label">Avg Size</span>
+                    </div>
+                </div>
+            `;
+            
+            // Display frames in grid
+            framesGrid.innerHTML = '';
+            extractedFrames.forEach((frame, index) => {
+                const frameCard = document.createElement('div');
+                frameCard.className = 'frame-card';
+                frameCard.innerHTML = `
+                    <div class="frame-image-container">
+                        <img src="${frame.url}" alt="Frame ${index + 1}" class="frame-image">
+                        <div class="frame-overlay">
+                            <span class="frame-time">${formatTime(frame.time)}</span>
+                        </div>
+                    </div>
+                    <div class="frame-info">
+                        <span class="frame-filename">${frame.filename}</span>
+                        <button class="btn btn-small" onclick="downloadSingleFrame(${index})">
+                            💾 Download
+                        </button>
+                    </div>
+                `;
+                framesGrid.appendChild(frameCard);
+            });
+            
+            // Show download all button
+            downloadAllButton.style.display = 'inline-block';
+        }
+
+        function downloadSingleFrame(index) {
+            const frame = extractedFrames[index];
+            const link = document.createElement('a');
+            link.href = frame.url;
+            link.download = frame.filename;
+            link.click();
+            
+            showNotification(`💾 Downloaded ${frame.filename}`);
+        }
+
+        function downloadAllFrames() {
+            if (extractedFrames.length === 0) return;
+            
+            // Create a zip-like behavior by triggering downloads
+            extractedFrames.forEach((frame, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = frame.url;
+                    link.download = frame.filename;
+                    link.click();
+                }, index * 100); // Small delay between downloads
+            });
+            
+            showNotification(`📦 Downloading ${extractedFrames.length} frames...`);
+        }
+
+        function showNotification(message) {
+            // Create and show a temporary notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--color-success);
+                color: white;
+                padding: 12px 20px;
+                border-radius: var(--radius-button);
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+
+        // Add CSS animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <style>
+        /* Tool-specific styles */
+        .upload-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-button);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            background: var(--color-neutral-50);
+        }
+
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: #F59E0B;
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+        }
+
+        .upload-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        .upload-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin: 0;
+        }
+
+        .upload-subtitle {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin: 0;
+        }
+
+        .video-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .video-container {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .video-player {
+            width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-button);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .timeline-container {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-button);
+            padding: var(--spacing-md);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .timeline-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--color-neutral-200);
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #F59E0B;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timeline-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #F59E0B;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timeline-scrubber {
+            text-align: center;
+        }
+
+        .scrubber-time {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: #F59E0B;
+        }
+
+        .extraction-options {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .option-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            padding: var(--spacing-md);
+        }
+
+        .option-title {
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs);
+            cursor: pointer;
+            border-radius: var(--radius-input);
+            transition: background-color var(--duration-fast);
+        }
+
+        .radio-option:hover {
+            background: var(--color-neutral-50);
+        }
+
+        .format-selector {
+            margin-top: var(--spacing-sm);
+        }
+
+        .format-select {
+            width: 100%;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            background: var(--color-surface);
+        }
+
+        .range-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-sm);
+        }
+
+        .range-input-group label,
+        .interval-input-group label {
+            display: block;
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .time-input,
+        .interval-input {
+            width: 100%;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+        }
+
+        .interval-controls {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .interval-select {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+        }
+
+        .extraction-actions {
+            text-align: center;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--color-neutral-200);
+        }
+
+        .results-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .results-summary {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .summary-stats .stat-item {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-button);
+        }
+
+        .summary-stats .stat-value {
+            display: block;
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #F59E0B;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .summary-stats .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .frames-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .frame-card {
+            background: var(--color-neutral-50);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            padding: var(--spacing-sm);
+            transition: transform var(--duration-fast);
+        }
+
+        .frame-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .frame-image-container {
+            position: relative;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .frame-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius-input);
+        }
+
+        .frame-overlay {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .frame-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .frame-filename {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            font-weight: var(--font-weight-medium);
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-small {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: var(--font-size-small);
+            border-radius: var(--radius-input);
+        }
+
+        .privacy-notice {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 1px solid #F59E0B;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .privacy-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .privacy-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .privacy-text h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .privacy-text p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        .input-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .related-tools {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .related-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .related-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: all var(--duration-standard) var(--easing-standard);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: #F59E0B;
+        }
+
+        .related-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .related-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .related-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        /* Color scheme override for orange gradient */
+        .tool-header {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+        }
+
+        .stat-value,
+        .scrubber-time {
+            color: #F59E0B;
+        }
+
+        .summary-stats .stat-value {
+            color: #F59E0B;
+        }
+
+        @media (max-width: 768px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .frames-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .privacy-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .frame-info {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</body>
+</html>

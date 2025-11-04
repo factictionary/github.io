@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Preview Generator | Create Video Thumbnails & Previews | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online video preview generator. Create video thumbnails, preview images, and multiple frames from video files. Perfect for content creators, YouTubers, and marketers. 100% privacy-protected, works entirely in your browser.">
+    <meta name="keywords" content="video preview generator, video thumbnail creator, video frame extractor, YouTube thumbnail, video screenshots, video to image, video frames, thumbnail maker">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Video Preview Generator | Create Video Thumbnails & Previews | Factictionary">
+    <meta property="og:description" content="Professional video preview generator with thumbnail creation, frame extraction, and social media optimization. Free and privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/video_preview.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Video Preview Generator | Factictionary">
+    <meta name="twitter:description" content="Create video thumbnails and previews instantly. Free and privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/video_preview.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Video Preview Generator",
+        "description": "Free online video preview generator to create thumbnails, extract frames, and generate video previews for social media.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header" style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);">
+            <div class="container">
+                <div class="tool-header-content">
+                    <h3 class="tool-title">Video Preview Generator</h3>
+                    <p class="tool-subtitle">Create stunning video thumbnails, extract multiple frames, and generate previews optimized for social media. Perfect for YouTubers, content creators, and marketers who need professional-looking video previews instantly.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">Drag & Drop Upload</span>
+                        <span class="feature-tag">Multiple Frame Extraction</span>
+                        <span class="feature-tag">Social Media Optimized</span>
+                        <span class="feature-tag">Batch Download</span>
+                        <span class="feature-tag">Canvas API Processing</span>
+                        <span class="feature-tag">Custom Dimensions</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <!-- Video Upload Section -->
+                <div class="upload-section">
+                    <label class="upload-label">Upload Video File</label>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📹</div>
+                            <div class="upload-text">
+                                <div class="upload-title">Drag & drop your video file here</div>
+                                <div class="upload-subtitle">or click to browse</div>
+                                <div class="upload-formats">Supports MP4, WebM, AVI, MOV (Max 100MB)</div>
+                            </div>
+                        </div>
+                        <input type="file" id="videoFile" class="upload-input" accept="video/*">
+                    </div>
+                    <div class="upload-help">
+                        Select a video file to generate thumbnails and previews. All processing happens locally in your browser.
+                    </div>
+                </div>
+
+                <!-- Video Information -->
+                <div class="video-info-section" id="videoInfoSection" style="display: none;">
+                    <h3 class="section-title">Video Information</h3>
+                    <div class="video-info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Duration:</span>
+                            <span class="info-value" id="videoDuration">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Resolution:</span>
+                            <span class="info-value" id="videoResolution">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">File Size:</span>
+                            <span class="info-value" id="videoFileSize">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Format:</span>
+                            <span class="info-value" id="videoFormat">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thumbnail Settings -->
+                <div class="settings-section" id="settingsSection" style="display: none;">
+                    <h3 class="section-title">Thumbnail Settings</h3>
+                    <div class="settings-grid">
+                        <!-- Position Settings -->
+                        <div class="setting-group">
+                            <h4 class="setting-title">⏰ Capture Position</h4>
+                            <div class="option-group">
+                                <label class="option-label">
+                                    <input type="radio" name="capturePosition" value="start" checked>
+                                    <span class="option-text">Start (0:00)</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="capturePosition" value="middle">
+                                    <span class="option-text">Middle</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="capturePosition" value="end">
+                                    <span class="option-text">End</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="capturePosition" value="custom">
+                                    <span class="option-text">Custom Time</span>
+                                </label>
+                            </div>
+                            <div class="custom-time-input" id="customTimeInput" style="display: none;">
+                                <input type="text" id="customTime" placeholder="mm:ss" class="time-input">
+                                <div class="time-help">Enter time in MM:SS format</div>
+                            </div>
+                        </div>
+
+                        <!-- Size Settings -->
+                        <div class="setting-group">
+                            <h4 class="setting-title">📐 Thumbnail Size</h4>
+                            <div class="size-presets">
+                                <button class="size-btn" data-size="128x72">
+                                    <div class="size-label">Tiny</div>
+                                    <div class="size-dim">128×72</div>
+                                </button>
+                                <button class="size-btn" data-size="320x180">
+                                    <div class="size-label">Small</div>
+                                    <div class="size-dim">320×180</div>
+                                </button>
+                                <button class="size-btn active" data-size="640x360">
+                                    <div class="size-label">Medium</div>
+                                    <div class="size-dim">640×360</div>
+                                </button>
+                                <button class="size-btn" data-size="custom">
+                                    <div class="size-label">Custom</div>
+                                    <div class="size-dim">Your Size</div>
+                                </button>
+                            </div>
+                            <div class="custom-size-input" id="customSizeInput" style="display: none;">
+                                <div class="size-inputs">
+                                    <div class="size-input-group">
+                                        <label>Width:</label>
+                                        <input type="number" id="customWidth" placeholder="640" min="50" max="1920" class="dimension-input">
+                                    </div>
+                                    <div class="size-input-group">
+                                        <label>Height:</label>
+                                        <input type="number" id="customHeight" placeholder="360" min="50" max="1080" class="dimension-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Multiple Thumbs -->
+                        <div class="setting-group">
+                            <h4 class="setting-title">🔢 Multiple Thumbnails</h4>
+                            <label class="option-label">
+                                <input type="checkbox" id="generateMultiple" checked>
+                                <span class="option-text">Generate 5 thumbnails at equal intervals</span>
+                            </label>
+                            <div class="thumbs-count">
+                                <label>Number of thumbnails:</label>
+                                <select id="thumbsCount" class="count-select">
+                                    <option value="3">3 thumbnails</option>
+                                    <option value="5" selected>5 thumbnails</option>
+                                    <option value="8">8 thumbnails</option>
+                                    <option value="10">10 thumbnails</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Optimization -->
+                        <div class="setting-group">
+                            <h4 class="setting-title">📱 Social Media Presets</h4>
+                            <div class="social-presets">
+                                <button class="social-btn" data-preset="youtube">
+                                    <div class="social-icon">📺</div>
+                                    <div class="social-name">YouTube</div>
+                                    <div class="social-size">1280×720</div>
+                                </button>
+                                <button class="social-btn" data-preset="instagram">
+                                    <div class="social-icon">📷</div>
+                                    <div class="social-name">Instagram</div>
+                                    <div class="social-size">1080×1080</div>
+                                </button>
+                                <button class="social-btn" data-preset="twitter">
+                                    <div class="social-icon">🐦</div>
+                                    <div class="social-name">Twitter</div>
+                                    <div class="social-size">1200×675</div>
+                                </button>
+                                <button class="social-btn" data-preset="facebook">
+                                    <div class="social-icon">👥</div>
+                                    <div class="social-name">Facebook</div>
+                                    <div class="social-size">1200×630</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="generate-actions">
+                        <button class="btn btn-primary" id="generateBtn" onclick="generateThumbnails()">
+                            🎬 Generate Thumbnails
+                        </button>
+                        <button class="btn btn-secondary" id="downloadAllBtn" onclick="downloadAllThumbnails()" style="display: none;">
+                            📦 Download All
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <h3 class="section-title">Generating Thumbnails...</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">0%</div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <h3 class="section-title">Generated Thumbnails</h3>
+                    <div class="thumbnails-grid" id="thumbnailsGrid">
+                        <!-- Thumbnails will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Container -->
+        <div class="ad-container bottom-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Privacy Notice -->
+        <section class="privacy-notice">
+            <div class="container">
+                <div class="privacy-content">
+                    <div class="privacy-icon">🔒</div>
+                    <div class="privacy-text">
+                        <h3>Privacy Protected</h3>
+                        <p>Your video files are processed entirely in your browser and never uploaded to any server. All thumbnail generation happens locally, ensuring your content remains completely private and secure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Video & Audio Tools</h3>
+                <div class="related-grid">
+                    <a href="video_resizer.html" class="related-card">
+                        <div class="related-icon">📏</div>
+                        <div class="related-content">
+                            <h4>Video Resizer</h4>
+                            <p>Resize and compress video files to optimize for different platforms and devices</p>
+                        </div>
+                    </a>
+                    <a href="audio_extractor.html" class="related-card">
+                        <div class="related-icon">🎵</div>
+                        <div class="related-content">
+                            <h4>Audio Extractor</h4>
+                            <p>Extract audio from video files and convert to different audio formats</p>
+                        </div>
+                    </a>
+                    <a href="gif_maker.html" class="related-card">
+                        <div class="related-icon">🎭</div>
+                        <div class="related-content">
+                            <h4>GIF Maker</h4>
+                            <p>Create animated GIFs from video clips and image sequences</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let currentVideo = null;
+        let generatedThumbnails = [];
+        let selectedSize = { width: 640, height: 360 };
+
+        // Video processing functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupDragAndDrop();
+            setupSettingsHandlers();
+        });
+
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('videoFile');
+
+            // Drag and drop events
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('drag-over');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleVideoFile(files[0]);
+                }
+            });
+
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleVideoFile(e.target.files[0]);
+                }
+            });
+        }
+
+        function setupSettingsHandlers() {
+            // Position selection
+            const positionInputs = document.querySelectorAll('input[name="capturePosition"]');
+            positionInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const customTimeInput = document.getElementById('customTimeInput');
+                    if (this.value === 'custom') {
+                        customTimeInput.style.display = 'block';
+                    } else {
+                        customTimeInput.style.display = 'none';
+                    }
+                });
+            });
+
+            // Size presets
+            const sizeButtons = document.querySelectorAll('.size-btn');
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    sizeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const customSizeInput = document.getElementById('customSizeInput');
+                    if (this.dataset.size === 'custom') {
+                        customSizeInput.style.display = 'block';
+                    } else {
+                        customSizeInput.style.display = 'none';
+                        const [width, height] = this.dataset.size.split('x').map(Number);
+                        selectedSize = { width, height };
+                    }
+                });
+            });
+
+            // Social media presets
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    socialButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const preset = this.dataset.preset;
+                    applySocialMediaPreset(preset);
+                });
+            });
+        }
+
+        function handleVideoFile(file) {
+            // Validate file
+            if (!file.type.startsWith('video/')) {
+                showError('Please select a valid video file.');
+                return;
+            }
+
+            if (file.size > 100 * 1024 * 1024) { // 100MB limit
+                showError('File size too large. Please select a video under 100MB.');
+                return;
+            }
+
+            // Create video element
+            const video = document.createElement('video');
+            video.src = URL.createObjectURL(file);
+            video.style.display = 'none';
+            document.body.appendChild(video);
+
+            video.addEventListener('loadedmetadata', function() {
+                currentVideo = video;
+                displayVideoInfo(file, video);
+                showSettings();
+            });
+
+            video.addEventListener('error', function() {
+                showError('Error loading video file. Please try a different format.');
+            });
+        }
+
+        function displayVideoInfo(file, video) {
+            const duration = formatTime(video.duration);
+            const resolution = `${video.videoWidth}×${video.videoHeight}`;
+            const fileSize = formatFileSize(file.size);
+            const format = file.name.split('.').pop().toUpperCase();
+
+            document.getElementById('videoDuration').textContent = duration;
+            document.getElementById('videoResolution').textContent = resolution;
+            document.getElementById('videoFileSize').textContent = fileSize;
+            document.getElementById('videoFormat').textContent = format;
+        }
+
+        function showSettings() {
+            document.getElementById('videoInfoSection').style.display = 'block';
+            document.getElementById('settingsSection').style.display = 'block';
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function generateThumbnails() {
+            if (!currentVideo) {
+                showError('Please upload a video file first.');
+                return;
+            }
+
+            const customWidth = document.getElementById('customWidth').value;
+            const customHeight = document.getElementById('customHeight').value;
+            
+            if (document.querySelector('.size-btn.active').dataset.size === 'custom') {
+                if (!customWidth || !customHeight) {
+                    showError('Please enter custom width and height.');
+                    return;
+                }
+                selectedSize = { width: parseInt(customWidth), height: parseInt(customHeight) };
+            }
+
+            showProgress();
+            generatedThumbnails = [];
+
+            const generateMultiple = document.getElementById('generateMultiple').checked;
+            const thumbsCount = parseInt(document.getElementById('thumbsCount').value);
+            const thumbnailsToGenerate = generateMultiple ? thumbsCount : 1;
+
+            // Calculate timestamps
+            const timestamps = generateTimestamps(currentVideo.duration, thumbnailsToGenerate);
+            
+            // Generate thumbnails sequentially
+            let currentIndex = 0;
+            function generateNext() {
+                if (currentIndex >= timestamps.length) {
+                    hideProgress();
+                    showResults();
+                    return;
+                }
+
+                const timestamp = timestamps[currentIndex];
+                generateSingleThumbnail(timestamp, currentIndex).then(() => {
+                    currentIndex++;
+                    updateProgress((currentIndex / timestamps.length) * 100);
+                    setTimeout(generateNext, 100); // Small delay to prevent UI blocking
+                });
+            }
+
+            generateNext();
+        }
+
+        function generateTimestamps(duration, count) {
+            if (count === 1) {
+                // Single thumbnail at selected position
+                const position = document.querySelector('input[name="capturePosition"]:checked').value;
+                let timestamp = 0;
+                
+                switch (position) {
+                    case 'start': timestamp = 0; break;
+                    case 'middle': timestamp = duration / 2; break;
+                    case 'end': timestamp = duration - 1; break;
+                    case 'custom': 
+                        const customTime = document.getElementById('customTime').value;
+                        if (customTime) {
+                            const [mm, ss] = customTime.split(':');
+                            timestamp = (parseInt(mm) * 60) + parseInt(ss);
+                        }
+                        break;
+                }
+                return [Math.min(timestamp, duration - 1)];
+            } else {
+                // Multiple thumbnails at equal intervals
+                const interval = duration / (count + 1);
+                return Array.from({length: count}, (_, i) => (i + 1) * interval);
+            }
+        }
+
+        function generateSingleThumbnail(timestamp, index) {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = selectedSize.width;
+                canvas.height = selectedSize.height;
+
+                currentVideo.currentTime = timestamp;
+                
+                currentVideo.addEventListener('seeked', function() {
+                    // Calculate scaling to maintain aspect ratio
+                    const videoAspect = currentVideo.videoWidth / currentVideo.videoHeight;
+                    const canvasAspect = selectedSize.width / selectedSize.height;
+                    
+                    let drawWidth, drawHeight, drawX, drawY;
+                    
+                    if (videoAspect > canvasAspect) {
+                        // Video is wider - fit to height
+                        drawHeight = selectedSize.height;
+                        drawWidth = selectedSize.height * videoAspect;
+                        drawX = (selectedSize.width - drawWidth) / 2;
+                        drawY = 0;
+                    } else {
+                        // Video is taller - fit to width
+                        drawWidth = selectedSize.width;
+                        drawHeight = selectedSize.width / videoAspect;
+                        drawX = 0;
+                        drawY = (selectedSize.height - drawHeight) / 2;
+                    }
+                    
+                    // Clear canvas and draw video frame
+                    ctx.clearRect(0, 0, selectedSize.width, selectedSize.height);
+                    ctx.drawImage(currentVideo, drawX, drawY, drawWidth, drawHeight);
+                    
+                    // Convert to blob and create download link
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const timestampStr = formatTime(timestamp).replace(':', '-');
+                        
+                        generatedThumbnails.push({
+                            url: url,
+                            blob: blob,
+                            filename: `thumbnail_${timestampStr}_${selectedSize.width}x${selectedSize.height}.png`,
+                            timestamp: timestamp,
+                            index: index
+                        });
+                        
+                        resolve();
+                    }, 'image/png');
+                }, { once: true });
+            });
+        }
+
+        function showProgress() {
+            document.getElementById('progressSection').style.display = 'block';
+            document.getElementById('resultsSection').style.display = 'none';
+            updateProgress(0);
+        }
+
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = Math.round(percentage) + '%';
+        }
+
+        function hideProgress() {
+            document.getElementById('progressSection').style.display = 'none';
+        }
+
+        function showResults() {
+            const grid = document.getElementById('thumbnailsGrid');
+            const resultsSection = document.getElementById('resultsSection');
+            const downloadAllBtn = document.getElementById('downloadAllBtn');
+            
+            grid.innerHTML = '';
+            
+            generatedThumbnails.forEach((thumb, index) => {
+                const card = document.createElement('div');
+                card.className = 'thumbnail-card';
+                
+                card.innerHTML = `
+                    <div class="thumbnail-preview">
+                        <img src="${thumb.url}" alt="Thumbnail ${index + 1}" loading="lazy">
+                        <div class="thumbnail-overlay">
+                            <button class="btn btn-small" onclick="downloadSingleThumbnail(${index})">
+                                📥 Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="thumbnail-info">
+                        <div class="thumbnail-time">⏰ ${formatTime(thumb.timestamp)}</div>
+                        <div class="thumbnail-size">${selectedSize.width}×${selectedSize.height}</div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            resultsSection.style.display = 'block';
+            downloadAllBtn.style.display = 'inline-block';
+        }
+
+        function downloadSingleThumbnail(index) {
+            const thumb = generatedThumbnails[index];
+            const link = document.createElement('a');
+            link.href = thumb.url;
+            link.download = thumb.filename;
+            link.click();
+        }
+
+        function downloadAllThumbnails() {
+            // Create a zip-like download experience (sequential downloads)
+            generatedThumbnails.forEach((thumb, index) => {
+                setTimeout(() => {
+                    downloadSingleThumbnail(index);
+                }, index * 200); // Stagger downloads
+            });
+            
+            showNotification('📦 Download started! Check your downloads folder.');
+        }
+
+        function applySocialMediaPreset(preset) {
+            const presets = {
+                youtube: { width: 1280, height: 720 },
+                instagram: { width: 1080, height: 1080 },
+                twitter: { width: 1200, height: 675 },
+                facebook: { width: 1200, height: 630 }
+            };
+            
+            if (presets[preset]) {
+                selectedSize = presets[preset];
+                // Update size buttons to show selection
+                document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('customWidth').value = selectedSize.width;
+                document.getElementById('customHeight').value = selectedSize.height;
+            }
+        }
+
+        function showError(message) {
+            showNotification('❌ ' + message, 'error');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#EF4444' : '#10B981'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 12px;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 4000);
+        }
+
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+
+        // Add CSS animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <style>
+        /* Tool-specific styles */
+        .upload-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .upload-label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-body);
+        }
+
+        .upload-area {
+            position: relative;
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            background: var(--color-neutral-50);
+        }
+
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: var(--color-primary-500);
+            background: var(--color-primary-50);
+        }
+
+        .upload-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            justify-content: center;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            opacity: 0.6;
+        }
+
+        .upload-text {
+            text-align: left;
+        }
+
+        .upload-title {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .upload-subtitle {
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .upload-formats {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-500);
+        }
+
+        .upload-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-help {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-top: var(--spacing-sm);
+            text-align: center;
+            font-style: italic;
+        }
+
+        .video-info-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .video-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-700);
+        }
+
+        .info-value {
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+
+        .settings-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .setting-group {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .setting-title {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: var(--radius-button);
+            transition: background-color var(--duration-fast);
+        }
+
+        .option-label:hover {
+            background: var(--color-neutral-100);
+        }
+
+        .option-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-700);
+        }
+
+        .custom-time-input {
+            margin-top: var(--spacing-md);
+        }
+
+        .time-input {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+        }
+
+        .time-help {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-top: var(--spacing-xs);
+        }
+
+        .size-presets {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .size-btn {
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            background: var(--color-surface);
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            text-align: center;
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--color-primary-500);
+            background: var(--color-primary-50);
+        }
+
+        .size-label {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .size-dim {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        .custom-size-input {
+            margin-top: var(--spacing-md);
+        }
+
+        .size-inputs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .size-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .size-input-group label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+        }
+
+        .dimension-input {
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+        }
+
+        .thumbs-count {
+            margin-top: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .count-select {
+            padding: var(--spacing-xs);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+        }
+
+        .social-presets {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+        }
+
+        .social-btn {
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            background: var(--color-surface);
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            text-align: center;
+        }
+
+        .social-btn:hover,
+        .social-btn.active {
+            border-color: var(--color-primary-500);
+            background: var(--color-primary-50);
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .social-name {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .social-size {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        .generate-actions {
+            margin-top: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .progress-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            border-radius: 4px;
+            transition: width var(--duration-standard);
+        }
+
+        .progress-text {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary-600);
+            min-width: 40px;
+        }
+
+        .results-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .thumbnail-card {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            transition: transform var(--duration-fast);
+        }
+
+        .thumbnail-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .thumbnail-preview {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+        }
+
+        .thumbnail-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--duration-fast);
+        }
+
+        .thumbnail-preview:hover .thumbnail-overlay {
+            opacity: 1;
+        }
+
+        .thumbnail-info {
+            padding: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .thumbnail-time {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+        }
+
+        .thumbnail-size {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        .privacy-notice {
+            padding: var(--spacing-xl) 0;
+            background: linear-gradient(135deg, var(--color-primary-50), var(--color-primary-100));
+        }
+
+        .privacy-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            background: var(--color-surface);
+            border: 1px solid var(--color-primary-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .privacy-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .privacy-text h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary-600);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .privacy-text p {
+            color: var(--color-neutral-700);
+            margin: 0;
+        }
+
+        .btn-small {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: var(--font-size-small);
+            border-radius: var(--radius-button);
+        }
+
+        @media (max-width: 768px) {
+            .upload-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .upload-text {
+                text-align: center;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .size-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .generate-actions {
+                flex-direction: column;
+            }
+            
+            .thumbnails-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .privacy-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .thumbnails-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

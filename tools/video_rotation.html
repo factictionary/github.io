@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Rotation Tool | Rotate Videos 90°, 180°, Flip Horizontal/Vertical | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online video rotation tool. Rotate videos 90° clockwise/counter-clockwise, 180°, and flip horizontally/vertically. No upload required - 100% privacy protected, works entirely in your browser.">
+    <meta name="keywords" content="video rotation, rotate video, video flip, rotate video online, video editor, video tools, rotate mp4, rotate avi, flip video horizontally, flip video vertically">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Video Rotation Tool | Rotate Videos 90°, 180°, Flip Horizontal/Vertical | Factictionary">
+    <meta property="og:description" content="Professional video rotation tool with support for all common rotations and flips. Free, fast, and privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/video_rotation.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Video Rotation Tool | Factictionary">
+    <meta name="twitter:description" content="Rotate and flip videos with support for 90°, 180°, horizontal, and vertical transformations. Free and privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/video_rotation.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Video Rotation Tool",
+        "description": "Free online video rotation tool to rotate videos 90°, 180°, and flip horizontally/vertically entirely in your browser.",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header">
+            <div class="container">
+                <div class="tool-header-content">
+                    <h3 class="tool-title">Video Rotation Tool</h3>
+                    <p class="tool-subtitle">Rotate and flip your videos with precision. Support for 90° clockwise/counter-clockwise, 180° rotations, and horizontal/vertical flips. No software installation required - all processing happens in your browser.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">90° Rotations</span>
+                        <span class="feature-tag">180° Rotation</span>
+                        <span class="feature-tag">Horizontal Flip</span>
+                        <span class="feature-tag">Vertical Flip</span>
+                        <span class="feature-tag">Live Preview</span>
+                        <span class="feature-tag">No Upload Required</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <!-- Video Upload Section -->
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📹</div>
+                            <h3 class="upload-title">Drop your video here or click to browse</h3>
+                            <p class="upload-description">Support for MP4, AVI, MOV, MKV, and other common video formats. Maximum file size: 500MB</p>
+                            <input type="file" id="videoInput" accept="video/*" style="display: none;">
+                            <button class="btn btn-primary" onclick="document.getElementById('videoInput').click()">Choose Video File</button>
+                        </div>
+                    </div>
+                    <div id="uploadProgress" class="upload-progress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text">Loading video...</div>
+                    </div>
+                </div>
+
+                <!-- Video Preview Section -->
+                <div class="video-preview-section" id="videoPreviewSection" style="display: none;">
+                    <h3 class="section-title">Video Preview</h3>
+                    <div class="video-container">
+                        <video id="originalVideo" controls class="original-video"></video>
+                        <div class="video-info">
+                            <div class="info-item">
+                                <span class="info-label">File:</span>
+                                <span class="info-value" id="fileName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Duration:</span>
+                                <span class="info-value" id="videoDuration">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Resolution:</span>
+                                <span class="info-value" id="videoResolution">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rotation Controls -->
+                <div class="rotation-controls-section" id="rotationControls" style="display: none;">
+                    <h3 class="section-title">Rotation Controls</h3>
+                    <div class="controls-grid">
+                        <div class="rotation-presets">
+                            <h4 class="controls-subtitle">Quick Rotations</h4>
+                            <div class="rotation-buttons">
+                                <button class="rotation-btn" data-rotation="90cw" id="rotate90cw">
+                                    <div class="rotation-icon">↻</div>
+                                    <span>90° CW</span>
+                                </button>
+                                <button class="rotation-btn" data-rotation="90ccw" id="rotate90ccw">
+                                    <div class="rotation-icon">↺</div>
+                                    <span>90° CCW</span>
+                                </button>
+                                <button class="rotation-btn" data-rotation="180" id="rotate180">
+                                    <div class="rotation-icon">↻↻</div>
+                                    <span>180°</span>
+                                </button>
+                                <button class="rotation-btn" data-rotation="180flip" id="rotate180flip">
+                                    <div class="rotation-icon">🔄</div>
+                                    <span>180° Flip</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flip-controls">
+                            <h4 class="controls-subtitle">Flip Options</h4>
+                            <div class="flip-buttons">
+                                <button class="flip-btn" data-flip="horizontal" id="flipHorizontal">
+                                    <div class="flip-icon">↔️</div>
+                                    <span>Horizontal Flip</span>
+                                </button>
+                                <button class="flip-btn" data-flip="vertical" id="flipVertical">
+                                    <div class="flip-icon">↕️</div>
+                                    <span>Vertical Flip</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Grid -->
+                <div class="preview-grid-section" id="previewGrid" style="display: none;">
+                    <h3 class="section-title">Rotation Preview</h3>
+                    <div class="preview-grid">
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="previewOriginal" muted></video>
+                            </div>
+                            <div class="preview-label">Original</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="preview90cw" muted></video>
+                            </div>
+                            <div class="preview-label">90° Clockwise</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="preview90ccw" muted></video>
+                            </div>
+                            <div class="preview-label">90° Counter-Clockwise</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="preview180" muted></video>
+                            </div>
+                            <div class="preview-label">180°</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="previewHorizontal" muted></video>
+                            </div>
+                            <div class="preview-label">Horizontal Flip</div>
+                        </div>
+                        <div class="preview-item">
+                            <div class="preview-thumbnail">
+                                <video class="preview-video" id="previewVertical" muted></video>
+                            </div>
+                            <div class="preview-label">Vertical Flip</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Section -->
+                <div class="processing-section" id="processingSection" style="display: none;">
+                    <h3 class="section-title">Process Video</h3>
+                    <div class="processing-controls">
+                        <div class="selected-transformation">
+                            <div class="transformation-info">
+                                <div class="transformation-icon" id="transformationIcon">↻</div>
+                                <div class="transformation-text">
+                                    <div class="transformation-type" id="transformationType">90° Clockwise Rotation</div>
+                                    <div class="transformation-description" id="transformationDescription">Ready to process</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="processing-actions">
+                            <button class="btn btn-primary" id="processBtn" onclick="processVideo()">
+                                <span class="btn-icon">⚙️</span>
+                                Process Video
+                            </button>
+                            <button class="btn btn-secondary" id="resetBtn" onclick="resetTransformations()">
+                                <span class="btn-icon">🔄</span>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Indicator -->
+                    <div class="progress-section" id="progressSection" style="display: none;">
+                        <div class="progress-container">
+                            <div class="progress-steps">
+                                <div class="step active" id="step1">
+                                    <div class="step-icon">📹</div>
+                                    <div class="step-text">Loading</div>
+                                </div>
+                                <div class="step" id="step2">
+                                    <div class="step-icon">⚙️</div>
+                                    <div class="step-text">Processing</div>
+                                </div>
+                                <div class="step" id="step3">
+                                    <div class="step-icon">💾</div>
+                                    <div class="step-text">Finalizing</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="processingProgress"></div>
+                                </div>
+                                <div class="progress-text" id="progressText">Initializing...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Section -->
+                <div class="download-section" id="downloadSection" style="display: none;">
+                    <h3 class="section-title">Download Result</h3>
+                    <div class="download-container">
+                        <div class="download-preview">
+                            <video id="resultVideo" controls class="result-video"></video>
+                        </div>
+                        <div class="download-info">
+                            <div class="download-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Transformation:</span>
+                                    <span class="detail-value" id="appliedTransformation">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">File Size:</span>
+                                    <span class="detail-value" id="resultFileSize">-</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Duration:</span>
+                                    <span class="detail-value" id="resultDuration">-</span>
+                                </div>
+                            </div>
+                            <div class="download-actions">
+                                <button class="btn btn-primary" id="downloadBtn" onclick="downloadVideo()">
+                                    <span class="btn-icon">⬇️</span>
+                                    Download Video
+                                </button>
+                                <button class="btn btn-secondary" onclick="processAnother()">
+                                    <span class="btn-icon">➕</span>
+                                    Process Another
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Notice -->
+                <div class="privacy-notice">
+                    <div class="privacy-content">
+                        <div class="privacy-icon">🔒</div>
+                        <div class="privacy-text">
+                            <h4>Privacy Protected</h4>
+                            <p>Your video files are processed entirely in your browser. No files are uploaded to our servers, ensuring complete privacy and security of your content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Container -->
+        <div class="ad-container bottom-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Video/Audio Tools</h3>
+                <div class="related-grid">
+                    <a href="video_compressor.html" class="related-card">
+                        <div class="related-icon">🗜️</div>
+                        <div class="related-content">
+                            <h4>Video Compressor</h4>
+                            <p>Compress video files to reduce size while maintaining quality</p>
+                        </div>
+                    </a>
+                    <a href="video_converter.html" class="related-card">
+                        <div class="related-icon">🔄</div>
+                        <div class="related-content">
+                            <h4>Video Converter</h4>
+                            <p>Convert videos between different formats (MP4, AVI, MOV, etc.)</p>
+                        </div>
+                    </a>
+                    <a href="audio_extractor.html" class="related-card">
+                        <div class="related-icon">🎵</div>
+                        <div class="related-content">
+                            <h4>Audio Extractor</h4>
+                            <p>Extract audio from video files and save as MP3, WAV, or other formats</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let currentFile = null;
+        let currentTransformation = null;
+        let processedBlob = null;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setupDragAndDrop();
+        });
+
+        function setupEventListeners() {
+            // File input change
+            document.getElementById('videoInput').addEventListener('change', handleFileSelect);
+            
+            // Rotation buttons
+            document.querySelectorAll('.rotation-btn').forEach(btn => {
+                btn.addEventListener('click', handleRotation);
+            });
+            
+            // Flip buttons
+            document.querySelectorAll('.flip-btn').forEach(btn => {
+                btn.addEventListener('click', handleFlip);
+            });
+        }
+
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('video/')) {
+                showError('Please select a valid video file.');
+                return;
+            }
+            
+            // Validate file size (500MB limit)
+            if (file.size > 500 * 1024 * 1024) {
+                showError('File size must be less than 500MB.');
+                return;
+            }
+            
+            currentFile = file;
+            showNotification('📹 Video file loaded successfully!');
+            displayVideoInfo(file);
+            loadVideoPreview(file);
+            showSection('videoPreviewSection');
+            showSection('rotationControls');
+            showSection('previewGrid');
+        }
+
+        function displayVideoInfo(file) {
+            const video = document.getElementById('originalVideo');
+            video.src = URL.createObjectURL(file);
+            
+            video.addEventListener('loadedmetadata', () => {
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('videoDuration').textContent = formatDuration(video.duration);
+                document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
+                
+                // Load preview thumbnails
+                loadPreviewThumbnails(video);
+            });
+        }
+
+        function loadVideoPreview(file) {
+            const video = document.getElementById('originalVideo');
+            const url = URL.createObjectURL(file);
+            video.src = url;
+        }
+
+        function loadPreviewThumbnails(video) {
+            const previews = [
+                { id: 'previewOriginal', transformation: 'original' },
+                { id: 'preview90cw', transformation: 'rotate90' },
+                { id: 'preview90ccw', transformation: 'rotate270' },
+                { id: 'preview180', transformation: 'rotate180' },
+                { id: 'previewHorizontal', transformation: 'hflip' },
+                { id: 'previewVertical', transformation: 'vflip' }
+            ];
+            
+            previews.forEach(preview => {
+                const video = document.getElementById(preview.id);
+                video.src = video.src || document.getElementById('originalVideo').src;
+                video.currentTime = 1; // Set to 1 second for preview
+            });
+        }
+
+        function handleRotation(e) {
+            const rotation = e.currentTarget.dataset.rotation;
+            currentTransformation = {
+                type: 'rotation',
+                value: rotation,
+                displayName: getRotationDisplayName(rotation),
+                icon: getRotationIcon(rotation)
+            };
+            
+            updateSelectedTransformation();
+            showSection('processingSection');
+        }
+
+        function handleFlip(e) {
+            const flip = e.currentTarget.dataset.flip;
+            currentTransformation = {
+                type: 'flip',
+                value: flip,
+                displayName: getFlipDisplayName(flip),
+                icon: getFlipIcon(flip)
+            };
+            
+            updateSelectedTransformation();
+            showSection('processingSection');
+        }
+
+        function getRotationDisplayName(rotation) {
+            const names = {
+                '90cw': '90° Clockwise Rotation',
+                '90ccw': '90° Counter-Clockwise Rotation',
+                '180': '180° Rotation',
+                '180flip': '180° Flip'
+            };
+            return names[rotation] || 'Unknown Rotation';
+        }
+
+        function getRotationIcon(rotation) {
+            const icons = {
+                '90cw': '↻',
+                '90ccw': '↺',
+                '180': '↻↻',
+                '180flip': '🔄'
+            };
+            return icons[rotation] || '↻';
+        }
+
+        function getFlipDisplayName(flip) {
+            const names = {
+                'horizontal': 'Horizontal Flip',
+                'vertical': 'Vertical Flip'
+            };
+            return names[flip] || 'Unknown Flip';
+        }
+
+        function getFlipIcon(flip) {
+            const icons = {
+                'horizontal': '↔️',
+                'vertical': '↕️'
+            };
+            return icons[flip] || '↔️';
+        }
+
+        function updateSelectedTransformation() {
+            if (currentTransformation) {
+                document.getElementById('transformationIcon').textContent = currentTransformation.icon;
+                document.getElementById('transformationType').textContent = currentTransformation.displayName;
+                document.getElementById('transformationDescription').textContent = 'Ready to process your video';
+            }
+        }
+
+        function processVideo() {
+            if (!currentFile || !currentTransformation) {
+                showError('Please select a video and transformation first.');
+                return;
+            }
+            
+            showSection('progressSection');
+            updateProgress(0, 'Initializing FFmpeg...');
+            
+            // Update progress steps
+            updateProgressStep(1, true);
+            
+            // Simulate processing steps (FFmpeg.wasm integration will replace this)
+            simulateProcessing();
+        }
+
+        function simulateProcessing() {
+            const steps = [
+                { progress: 20, text: 'Loading FFmpeg...', step: 1 },
+                { progress: 40, text: 'Processing video...', step: 2 },
+                { progress: 60, text: 'Applying transformation...', step: 2 },
+                { progress: 80, text: 'Encoding video...', step: 3 },
+                { progress: 100, text: 'Finalizing...', step: 3 }
+            ];
+            
+            let stepIndex = 0;
+            
+            function nextStep() {
+                if (stepIndex < steps.length) {
+                    const step = steps[stepIndex];
+                    updateProgress(step.progress, step.text);
+                    updateProgressStep(step.step, true);
+                    stepIndex++;
+                    setTimeout(nextStep, 1000);
+                } else {
+                    // Processing complete
+                    setTimeout(() => {
+                        processedBlob = createMockProcessedVideo();
+                        showDownloadSection();
+                        showNotification('✅ Video processed successfully!');
+                    }, 500);
+                }
+            }
+            
+            nextStep();
+        }
+
+        function createMockProcessedVideo() {
+            // This is a placeholder. In the real implementation, this would be the processed video blob
+            // For now, we'll create a mock result for demonstration
+            return new Blob(['mock video data'], { type: 'video/mp4' });
+        }
+
+        function showDownloadSection() {
+            hideSection('processingSection');
+            showSection('downloadSection');
+            
+            // Update download info
+            document.getElementById('appliedTransformation').textContent = currentTransformation.displayName;
+            document.getElementById('resultFileSize').textContent = formatFileSize(currentFile.size);
+            document.getElementById('resultDuration').textContent = document.getElementById('videoDuration').textContent;
+            
+            // Set result video source
+            const resultVideo = document.getElementById('resultVideo');
+            resultVideo.src = URL.createObjectURL(processedBlob || currentFile);
+        }
+
+        function downloadVideo() {
+            if (!processedBlob) {
+                showError('No processed video available for download.');
+                return;
+            }
+            
+            const url = URL.createObjectURL(processedBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `rotated_${currentFile.name}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('⬇️ Video download started!');
+        }
+
+        function resetTransformations() {
+            currentTransformation = null;
+            hideSection('processingSection');
+            hideSection('downloadSection');
+            showNotification('🔄 Transformations reset');
+        }
+
+        function processAnother() {
+            // Reset everything
+            currentFile = null;
+            currentTransformation = null;
+            processedBlob = null;
+            
+            // Hide all sections except upload
+            hideSection('videoPreviewSection');
+            hideSection('rotationControls');
+            hideSection('previewGrid');
+            hideSection('processingSection');
+            hideSection('downloadSection');
+            
+            // Reset file input
+            document.getElementById('videoInput').value = '';
+            
+            showNotification('➕ Ready for new video');
+        }
+
+        function updateProgress(percentage, text) {
+            document.getElementById('processingProgress').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        function updateProgressStep(stepNumber, active) {
+            const step = document.getElementById(`step${stepNumber}`);
+            if (active) {
+                step.classList.add('active');
+            }
+        }
+
+        function showSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+
+        function hideSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            showNotification('❌ ' + message, 'error');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#EF4444' : '#10B981'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 4000);
+        }
+
+        function formatDuration(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+
+        // Add CSS animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <style>
+        /* Tool-specific styles */
+        .upload-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            transition: all var(--duration-standard) var(--easing-standard);
+            cursor: pointer;
+        }
+
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: #10B981;
+            background-color: #F0FDF4;
+        }
+
+        .upload-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .upload-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .upload-description {
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .upload-progress {
+            margin-top: var(--spacing-md);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        .video-preview-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+
+        .original-video {
+            width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-input);
+        }
+
+        .video-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .info-value {
+            color: var(--color-neutral-900);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .rotation-controls-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+        }
+
+        .controls-subtitle {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .rotation-buttons,
+        .flip-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-sm);
+        }
+
+        .rotation-btn,
+        .flip-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            background: var(--color-surface);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            font-family: var(--font-family-primary);
+        }
+
+        .rotation-btn:hover,
+        .flip-btn:hover {
+            border-color: #10B981;
+            background-color: #F0FDF4;
+            transform: translateY(-1px);
+        }
+
+        .rotation-icon,
+        .flip-icon {
+            font-size: 1.5rem;
+        }
+
+        .rotation-btn span,
+        .flip-btn span {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .preview-grid-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .preview-item {
+            text-align: center;
+        }
+
+        .preview-thumbnail {
+            aspect-ratio: 16/9;
+            background: var(--color-neutral-100);
+            border-radius: var(--radius-input);
+            overflow: hidden;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .preview-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-label {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .processing-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .processing-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .selected-transformation {
+            flex: 1;
+        }
+
+        .transformation-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .transformation-icon {
+            font-size: 2rem;
+            color: #10B981;
+        }
+
+        .transformation-text {
+            flex: 1;
+        }
+
+        .transformation-type {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .transformation-description {
+            color: var(--color-neutral-600);
+        }
+
+        .processing-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .progress-section {
+            border-top: 1px solid var(--color-neutral-200);
+            padding-top: var(--spacing-lg);
+        }
+
+        .progress-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+            opacity: 0.5;
+            transition: opacity var(--duration-fast);
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step-icon {
+            font-size: 1.5rem;
+            padding: var(--spacing-sm);
+            background: var(--color-neutral-100);
+            border-radius: 50%;
+        }
+
+        .step.active .step-icon {
+            background: #F0FDF4;
+            color: #10B981;
+        }
+
+        .step-text {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .progress-bar-container {
+            text-align: center;
+        }
+
+        .download-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .download-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+
+        .download-preview {
+            aspect-ratio: 16/9;
+            background: var(--color-neutral-100);
+            border-radius: var(--radius-input);
+            overflow: hidden;
+        }
+
+        .result-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .download-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .download-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .detail-value {
+            color: var(--color-neutral-900);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .download-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .privacy-notice {
+            background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+            border: 1px solid #10B981;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .privacy-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .privacy-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .privacy-text h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: #065F46;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .privacy-text p {
+            color: #047857;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .related-tools {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .related-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .related-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: all var(--duration-standard) var(--easing-standard);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--color-primary-100);
+        }
+
+        .related-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .related-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .related-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        .btn-icon {
+            margin-right: var(--spacing-xs);
+        }
+
+        @media (max-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rotation-buttons,
+            .flip-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-container,
+            .download-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .processing-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--spacing-md);
+            }
+            
+            .transformation-info {
+                justify-content: center;
+            }
+            
+            .processing-actions {
+                flex-direction: column;
+            }
+            
+            .preview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
