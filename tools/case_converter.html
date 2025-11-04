@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Convert text case online for free. Transform text to UPPERCASE, lowercase, Title Case, Sentence case, or Toggle Case instantly. 100% privacy-protected, client-side processing.">
+    <meta name="keywords" content="case converter, text case converter, uppercase, lowercase, title case, sentence case, toggle case, text formatting, text tools">
+    <meta name="author" content="Factictionary Team">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Case Converter Tool | Factictionary">
+    <meta property="og:description" content="Convert text between different cases instantly. Supports UPPERCASE, lowercase, Title Case, Sentence case, and Toggle Case.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/case_converter.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Case Converter Tool | Factictionary">
+    <meta name="twitter:description" content="Professional text case conversion tool with multiple formatting options.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/case_converter.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Case Converter",
+        "description": "Professional text case conversion tool supporting UPPERCASE, lowercase, Title Case, Sentence case, and Toggle Case transformations.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+            <ol class="breadcrumb-list">
+                <li><a href="/">Home</a></li>
+                <li><a href="/tools/">Tools</a></li>
+                <li aria-current="page">Case Converter</li>
+            </ol>
+        </nav>
+
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header" style="background: linear-gradient(135deg, #3B82F6 0%, #3B82F6CC 100%);">
+            <div class="container">
+                <div class="tool-header-content">
+                    <div class="tool-icon">🔤</div>
+                    <h1 class="tool-title">Case Converter Tool</h1>
+                    <p class="tool-subtitle">Transform text between different cases instantly. Convert to UPPERCASE, lowercase, Title Case, Sentence case, or Toggle Case with just one click.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">UPPERCASE</span>
+                        <span class="feature-tag">lowercase</span>
+                        <span class="feature-tag">Title Case</span>
+                        <span class="feature-tag">Sentence case</span>
+                        <span class="feature-tag">tOGGLE cASE</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <div class="workspace-content">
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <label class="input-label">Text to Convert</label>
+                        <textarea id="textInput" class="text-input-area" placeholder="Enter or paste your text here to convert between different cases..."></textarea>
+                        <div class="input-actions">
+                            <button class="btn btn-secondary" onclick="loadSampleText()">📄 Load Sample</button>
+                            <button class="btn btn-secondary" onclick="clearText()">🗑️ Clear Text</button>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 class="controls-title">Choose Case Conversion</h3>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="convertCase('upper')">UPPERCASE</button>
+                            <button class="btn btn-primary" onclick="convertCase('lower')">lowercase</button>
+                            <button class="btn btn-primary" onclick="convertCase('title')">Title Case</button>
+                            <button class="btn btn-primary" onclick="convertCase('sentence')">Sentence case</button>
+                            <button class="btn btn-primary" onclick="convertCase('toggle')">tOGGLE cASE</button>
+                        </div>
+                    </div>
+
+                    <!-- Output Section -->
+                    <div class="output-section">
+                        <label class="input-label">Converted Text</label>
+                        <div id="outputDisplay" class="output-display" style="display: none;">
+                            <div id="convertedText"></div>
+                        </div>
+                        <div id="outputActions" class="output-actions" style="display: none;">
+                            <button class="btn btn-secondary" onclick="copyToClipboard()">📋 Copy</button>
+                            <button class="btn btn-secondary" onclick="selectAllText()">🔘 Select All</button>
+                            <button class="btn btn-secondary" onclick="clearOutput()">🗑️ Clear Output</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Text Tools</h3>
+                <div class="related-grid">
+                    <a href="text_formatter.html" class="related-card">
+                        <div class="related-icon">📝</div>
+                        <div class="related-content">
+                            <h4>Text Formatter</h4>
+                            <p>Format, clean, and enhance text with case conversion and cleaning tools</p>
+                        </div>
+                    </a>
+                    <a href="text_analyzer.html" class="related-card">
+                        <div class="related-icon">🔍</div>
+                        <div class="related-content">
+                            <h4>Text Analyzer</h4>
+                            <p>Analyze text readability, keywords, sentiment, and statistics</p>
+                        </div>
+                    </a>
+                    <a href="word_games.html" class="related-card">
+                        <div class="related-icon">🎮</div>
+                        <div class="related-content">
+                            <h4>Word Games</h4>
+                            <p>Play word games and puzzles to improve vocabulary</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Case conversion functions
+        function convertCase(type) {
+            const text = document.getElementById('textInput').value;
+            let result = '';
+            
+            if (!text.trim()) {
+                showToast('Please enter some text to convert');
+                return;
+            }
+            
+            switch(type) {
+                case 'upper':
+                    result = text.toUpperCase();
+                    break;
+                case 'lower':
+                    result = text.toLowerCase();
+                    break;
+                case 'title':
+                    result = text.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+                    break;
+                case 'sentence':
+                    result = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+                    break;
+                case 'toggle':
+                    result = text.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('');
+                    break;
+            }
+            
+            showOutput(result);
+        }
+
+        function showOutput(text) {
+            const outputDisplay = document.getElementById('outputDisplay');
+            const outputActions = document.getElementById('outputActions');
+            const convertedText = document.getElementById('convertedText');
+            
+            convertedText.textContent = text;
+            outputDisplay.style.display = 'block';
+            outputActions.style.display = 'flex';
+            
+            showToast('Text converted successfully!');
+        }
+
+        function copyToClipboard() {
+            const convertedText = document.getElementById('convertedText');
+            if (convertedText.textContent) {
+                navigator.clipboard.writeText(convertedText.textContent).then(() => {
+                    showToast('Text copied to clipboard!');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = convertedText.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast('Text copied to clipboard!');
+                });
+            }
+        }
+
+        function selectAllText() {
+            const convertedText = document.getElementById('convertedText');
+            if (convertedText.textContent) {
+                const range = document.createRange();
+                range.selectNode(convertedText);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                showToast('Text selected!');
+            }
+        }
+
+        function clearOutput() {
+            document.getElementById('convertedText').textContent = '';
+            document.getElementById('outputDisplay').style.display = 'none';
+            document.getElementById('outputActions').style.display = 'none';
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            clearOutput();
+            document.getElementById('textInput').focus();
+        }
+
+        function loadSampleText() {
+            const sampleText = `This is a sample text that demonstrates different case conversions.
+            
+You can convert this text to:
+- UPPERCASE (all capital letters)
+- lowercase (all small letters) 
+- Title Case (First Letter Of Each Word Capitalized)
+- Sentence case (First letter of each sentence capitalized)
+- tOGGLE cASE (iNVERTED cAPS)
+
+Try converting this text using the buttons above!`;
+            
+            document.getElementById('textInput').value = sampleText;
+            document.getElementById('textInput').focus();
+        }
+
+        function showToast(message) {
+            // Remove existing toast
+            const existingToast = document.querySelector('.toast-message');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            // Create new toast
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+    </script>
+
+    <style>
+        /* Tool-specific styles */
+        .workspace-content {
+            display: grid;
+            gap: var(--spacing-xl);
+        }
+
+        .input-section, .output-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .input-label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-body);
+        }
+
+        .text-input-area {
+            width: 100%;
+            min-height: 250px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            font-family: var(--font-family-primary);
+            resize: vertical;
+            transition: border-color var(--duration-fast);
+        }
+
+        .text-input-area:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .controls-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .controls-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .output-display {
+            background: var(--color-neutral-50);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            padding: var(--spacing-md);
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-family: var(--font-family-primary);
+            font-size: var(--font-size-body);
+            overflow-x: auto;
+        }
+
+        .output-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .related-tools {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .related-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .related-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: all var(--duration-standard) var(--easing-standard);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--color-primary-100);
+        }
+
+        .related-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .related-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .related-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        .toast-message {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-button);
+            font-weight: var(--font-weight-medium);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .input-actions {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .output-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>

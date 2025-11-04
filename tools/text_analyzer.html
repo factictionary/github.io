@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer & Statistics | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Comprehensive text analysis tool. Analyze readability, extract keywords, count words/characters, measure sentiment, and get detailed linguistic statistics. 100% privacy-protected.">
+    <meta name="keywords" content="text analyzer, readability score, keyword extraction, sentiment analysis, text statistics, word count, character count">
+    <meta name="author" content="Factictionary Team">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Text Analyzer & Statistics | Factictionary">
+    <meta property="og:description" content="Advanced text analysis with readability scoring, keyword extraction, and detailed statistics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/text_analyzer.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Text Analyzer & Statistics | Factictionary">
+    <meta name="twitter:description" content="Professional text analysis with readability, keywords, and sentiment analysis.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/text_analyzer.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Text Analyzer",
+        "description": "Comprehensive text analysis tool with readability scoring, keyword extraction, and linguistic statistics.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+            <ol class="breadcrumb-list">
+                <li><a href="/">Home</a></li>
+                <li><a href="/tools/">Tools</a></li>
+                <li aria-current="page">Text Analyzer</li>
+            </ol>
+        </nav>
+
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header" style="background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);">
+            <div class="container">
+                <div class="tool-header-content">
+                    <div class="tool-icon">🔍</div>
+                    <h1 class="tool-title">Text Analyzer & Statistics</h1>
+                    <p class="tool-subtitle">Comprehensive text analysis with readability scoring, keyword extraction, sentiment analysis, and detailed linguistic statistics.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">Readability Score</span>
+                        <span class="feature-tag">Keyword Extraction</span>
+                        <span class="feature-tag">Sentiment Analysis</span>
+                        <span class="feature-tag">Word Statistics</span>
+                        <span class="feature-tag">Linguistic Patterns</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <!-- Input Section -->
+                <div class="input-section">
+                    <label class="input-label">Text to Analyze</label>
+                    <textarea id="textInput" class="text-input-area" placeholder="Enter or paste your text here to analyze readability, keywords, sentiment, and statistics..."></textarea>
+                    <div class="input-actions">
+                        <button class="btn btn-secondary" onclick="loadSampleText()">📄 Load Sample</button>
+                        <button class="btn btn-secondary" onclick="clearText()">🗑️ Clear Text</button>
+                        <button class="btn btn-primary" onclick="analyzeText()">🔍 Analyze Text</button>
+                    </div>
+                </div>
+
+                <!-- Analysis Results -->
+                <div id="analysisResults" class="analysis-results" style="display: none;">
+                    <!-- Tab Navigation -->
+                    <div class="analysis-tabs">
+                        <button class="tab-button active" onclick="showAnalysisTab('statistics')">📊 Statistics</button>
+                        <button class="tab-button" onclick="showAnalysisTab('readability')">📖 Readability</button>
+                        <button class="tab-button" onclick="showAnalysisTab('keywords')">🔑 Keywords</button>
+                        <button class="tab-button" onclick="showAnalysisTab('sentiment')">😊 Sentiment</button>
+                        <button class="tab-button" onclick="showAnalysisTab('patterns')">🔍 Patterns</button>
+                    </div>
+
+                    <!-- Statistics Tab -->
+                    <div id="statistics" class="analysis-tab active">
+                        <h3 class="tab-title">Text Statistics</h3>
+                        <div class="stats-grid" id="textStats">
+                            <!-- Stats will be populated here -->
+                        </div>
+                        
+                        <h4 class="section-subtitle">Most Common Words</h4>
+                        <div class="word-frequency" id="wordFrequency">
+                            <!-- Word frequency will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Readability Tab -->
+                    <div id="readability" class="analysis-tab">
+                        <h3 class="tab-title">Readability Analysis</h3>
+                        <div class="readability-scores" id="readabilityScores">
+                            <!-- Readability scores will be populated here -->
+                        </div>
+                        
+                        <div class="readability-explanation" id="readabilityExplanation">
+                            <!-- Explanation will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Keywords Tab -->
+                    <div id="keywords" class="analysis-tab">
+                        <h3 class="tab-title">Keyword Analysis</h3>
+                        <div class="keyword-sections">
+                            <div class="keyword-section">
+                                <h4 class="section-subtitle">Top Keywords</h4>
+                                <div class="keyword-list" id="topKeywords">
+                                    <!-- Keywords will be populated here -->
+                                </div>
+                            </div>
+                            
+                            <div class="keyword-section">
+                                <h4 class="section-subtitle">Noun Phrases</h4>
+                                <div class="keyword-list" id="nounPhrases">
+                                    <!-- Noun phrases will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sentiment Tab -->
+                    <div id="sentiment" class="analysis-tab">
+                        <h3 class="tab-title">Sentiment Analysis</h3>
+                        <div class="sentiment-summary" id="sentimentSummary">
+                            <!-- Sentiment summary will be populated here -->
+                        </div>
+                        
+                        <div class="sentiment-details" id="sentimentDetails">
+                            <!-- Sentiment details will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Patterns Tab -->
+                    <div id="patterns" class="analysis-tab">
+                        <h3 class="tab-title">Linguistic Patterns</h3>
+                        <div class="pattern-sections">
+                            <div class="pattern-section">
+                                <h4 class="section-subtitle">Sentence Structure</h4>
+                                <div class="pattern-list" id="sentencePatterns">
+                                    <!-- Sentence patterns will be populated here -->
+                                </div>
+                            </div>
+                            
+                            <div class="pattern-section">
+                                <h4 class="section-subtitle">Writing Style</h4>
+                                <div class="pattern-list" id="writingStyle">
+                                    <!-- Writing style will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Container -->
+        <div class="ad-container bottom-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Text Tools</h3>
+                <div class="related-grid">
+                    <a href="text_formatter.html" class="related-card">
+                        <div class="related-icon">📝</div>
+                        <div class="related-content">
+                            <h4>Text Formatter</h4>
+                            <p>Format, clean, and enhance text with case conversion and cleaning tools</p>
+                        </div>
+                    </a>
+                    <a href="image_converter.html" class="related-card">
+                        <div class="related-icon">🖼️</div>
+                        <div class="related-content">
+                            <h4>Image Converter</h4>
+                            <p>Convert between different image formats with quality control</p>
+                        </div>
+                    </a>
+                    <a href="pdf_merger.html" class="related-card">
+                        <div class="related-icon">📄</div>
+                        <div class="related-content">
+                            <h4>PDF Merger</h4>
+                            <p>Combine multiple PDF files into a single document</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let currentAnalysisTab = 'statistics';
+
+        // Initialize the analyzer
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-analyze text as user types
+            const textInput = document.getElementById('textInput');
+            let typingTimer;
+            
+            textInput.addEventListener('input', function() {
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(() => {
+                    if (this.value.trim()) {
+                        analyzeText();
+                    }
+                }, 1000); // Auto-analyze after 1 second of inactivity
+            });
+        });
+
+        function loadSampleText() {
+            const sampleText = `Artificial intelligence is transforming the way we live and work. Machine learning algorithms can now process vast amounts of data to identify patterns and make predictions. Natural language processing enables computers to understand and generate human language. This technology has applications in healthcare, finance, education, and many other fields. The potential benefits are enormous, but we must also consider the ethical implications and ensure that AI systems are developed responsibly.`;
+            
+            document.getElementById('textInput').value = sampleText;
+            analyzeText();
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('analysisResults').style.display = 'none';
+        }
+
+        function analyzeText() {
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) return;
+            
+            // Show loading state
+            document.getElementById('analysisResults').style.display = 'block';
+            
+            // Perform analysis
+            const analysis = performTextAnalysis(text);
+            
+            // Display results
+            displayStatistics(analysis);
+            displayReadability(analysis);
+            displayKeywords(analysis);
+            displaySentiment(analysis);
+            displayPatterns(analysis);
+        }
+
+        function performTextAnalysis(text) {
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            const paragraphs = text.split(/\n\n+/).filter(p => p.trim().length > 0);
+            
+            // Basic statistics
+            const stats = {
+                characters: text.length,
+                charactersNoSpaces: text.replace(/\s/g, '').length,
+                words: words.length,
+                sentences: sentences.length,
+                paragraphs: paragraphs.length,
+                avgWordsPerSentence: words.length / Math.max(sentences.length, 1),
+                avgCharactersPerWord: text.replace(/\s/g, '').length / Math.max(words.length, 1),
+                uniqueWords: new Set(words.map(w => w.toLowerCase())).size,
+                wordFrequency: getWordFrequency(words)
+            };
+
+            // Readability scores
+            const readability = calculateReadabilityScores(stats);
+            
+            // Keywords
+            const keywords = extractKeywords(words);
+            
+            // Sentiment (simplified)
+            const sentiment = analyzeSentiment(words);
+            
+            // Patterns
+            const patterns = analyzePatterns(text, stats);
+
+            return {
+                stats,
+                readability,
+                keywords,
+                sentiment,
+                patterns
+            };
+        }
+
+        function getWordFrequency(words) {
+            const frequency = {};
+            words.forEach(word => {
+                const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
+                if (cleanWord.length > 2) {
+                    frequency[cleanWord] = (frequency[cleanWord] || 0) + 1;
+                }
+            });
+            
+            return Object.entries(frequency)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 20)
+                .map(([word, count]) => ({ word, count }));
+        }
+
+        function calculateReadabilityScores(stats) {
+            // Flesch Reading Ease
+            const fleschEase = 206.835 - (1.015 * stats.avgWordsPerSentence) - (84.6 * (stats.avgCharactersPerWord / 4.7));
+            
+            // Flesch-Kincaid Grade Level
+            const fleschKincaid = (0.39 * stats.avgWordsPerSentence) + (11.8 * (stats.avgCharactersPerWord / 4.7)) - 15.59;
+            
+            // Gunning Fog Index
+            const complexWords = Object.entries(stats.wordFrequency)
+                .filter(([word, count]) => word.length > 6).length;
+            const complexWordRatio = complexWords / stats.words;
+            const gunningFog = 0.4 * (stats.avgWordsPerSentence + (complexWordRatio * 100));
+            
+            return {
+                fleschEase: Math.max(0, Math.min(100, fleschEase)),
+                fleschKincaid: Math.max(0, fleschKincaid),
+                gunningFog: Math.max(0, gunningFog)
+            };
+        }
+
+        function extractKeywords(words) {
+            const stopWords = new Set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'this', 'that', 'these', 'those', 'a', 'an']);
+            
+            const wordFreq = {};
+            words.forEach(word => {
+                const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
+                if (cleanWord.length > 2 && !stopWords.has(cleanWord)) {
+                    wordFreq[cleanWord] = (wordFreq[cleanWord] || 0) + 1;
+                }
+            });
+            
+            const topKeywords = Object.entries(wordFreq)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 15)
+                .map(([word, count]) => ({ word, count }));
+            
+            // Simple noun phrase extraction
+            const nounPhrases = extractNounPhrases(words);
+            
+            return { topKeywords, nounPhrases };
+        }
+
+        function extractNounPhrases(words) {
+            const phrases = [];
+            for (let i = 0; i < words.length - 1; i++) {
+                if (words[i].length > 3 && words[i + 1].length > 3) {
+                    phrases.push(`${words[i]} ${words[i + 1]}`);
+                }
+            }
+            return phrases.slice(0, 10);
+        }
+
+        function analyzeSentiment(words) {
+            const positiveWords = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 'positive', 'benefit', 'advantage', 'success', 'improve', 'enhance'];
+            const negativeWords = ['bad', 'terrible', 'awful', 'horrible', 'negative', 'problem', 'issue', 'difficulty', 'challenge', 'fail', 'worse', 'decline'];
+            
+            let positiveScore = 0;
+            let negativeScore = 0;
+            
+            words.forEach(word => {
+                const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
+                if (positiveWords.includes(cleanWord)) positiveScore++;
+                if (negativeWords.includes(cleanWord)) negativeScore++;
+            });
+            
+            let sentiment = 'neutral';
+            if (positiveScore > negativeScore) sentiment = 'positive';
+            else if (negativeScore > positiveScore) sentiment = 'negative';
+            
+            return {
+                sentiment,
+                positiveScore,
+                negativeScore,
+                confidence: Math.abs(positiveScore - negativeScore) / Math.max(words.length, 1)
+            };
+        }
+
+        function analyzePatterns(text, stats) {
+            const sentenceLengths = text.split(/[.!?]+/).map(s => s.split(/\s+/).length).filter(n => n > 0);
+            const avgSentenceLength = sentenceLengths.reduce((a, b) => a + b, 0) / sentenceLengths.length;
+            
+            // Writing style indicators
+            const hasQuestions = text.includes('?');
+            const hasExclamations = text.includes('!');
+            const hasQuotes = text.includes('"') || text.includes("'");
+            const hasNumbers = /\d/.test(text);
+            const longWords = Object.entries(stats.wordFrequency)
+                .filter(([word, count]) => word.length > 8).length;
+            
+            return {
+                avgSentenceLength,
+                sentenceLengths: sentenceLengths.slice(0, 10),
+                hasQuestions,
+                hasExclamations,
+                hasQuotes,
+                hasNumbers,
+                longWords,
+                writingStyle: {
+                    formality: avgSentenceLength > 20 ? 'Formal' : 'Casual',
+                    complexity: longWords > stats.words * 0.1 ? 'Complex' : 'Simple',
+                    tone: hasExclamations ? 'Enthusiastic' : 'Neutral'
+                }
+            };
+        }
+
+        function displayStatistics(analysis) {
+            const stats = analysis.stats;
+            const statsGrid = document.getElementById('textStats');
+            
+            statsGrid.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${stats.words}</div>
+                    <div class="stat-label">Words</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.characters}</div>
+                    <div class="stat-label">Characters</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.charactersNoSpaces}</div>
+                    <div class="stat-label">Characters (no spaces)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.sentences}</div>
+                    <div class="stat-label">Sentences</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.paragraphs}</div>
+                    <div class="stat-label">Paragraphs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.avgWordsPerSentence.toFixed(1)}</div>
+                    <div class="stat-label">Avg Words/Sentence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.avgCharactersPerWord.toFixed(1)}</div>
+                    <div class="stat-label">Avg Characters/Word</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.uniqueWords}</div>
+                    <div class="stat-label">Unique Words</div>
+                </div>
+            `;
+            
+            // Display word frequency
+            const wordFreq = document.getElementById('wordFrequency');
+            wordFreq.innerHTML = stats.wordFrequency.slice(0, 10).map(({word, count}) => 
+                `<span class="word-tag">${word} (${count})</span>`
+            ).join('');
+        }
+
+        function displayReadability(analysis) {
+            const readability = analysis.readability;
+            const scoresDiv = document.getElementById('readabilityScores');
+            
+            scoresDiv.innerHTML = `
+                <div class="readability-score">
+                    <h4>Flesch Reading Ease</h4>
+                    <div class="score-value">${readability.fleschEase.toFixed(1)}</div>
+                    <div class="score-description">${getReadingEaseDescription(readability.fleschEase)}</div>
+                </div>
+                <div class="readability-score">
+                    <h4>Flesch-Kincaid Grade</h4>
+                    <div class="score-value">${readability.fleschKincaid.toFixed(1)}</div>
+                    <div class="score-description">Grade Level ${Math.ceil(readability.fleschKincaid)}</div>
+                </div>
+                <div class="readability-score">
+                    <h4>Gunning Fog Index</h4>
+                    <div class="score-value">${readability.gunningFog.toFixed(1)}</div>
+                    <div class="score-description">${getFogDescription(readability.gunningFog)}</div>
+                </div>
+            `;
+        }
+
+        function getReadingEaseDescription(score) {
+            if (score >= 90) return 'Very Easy';
+            if (score >= 80) return 'Easy';
+            if (score >= 70) return 'Fairly Easy';
+            if (score >= 60) return 'Standard';
+            if (score >= 50) return 'Fairly Difficult';
+            if (score >= 30) return 'Difficult';
+            return 'Very Difficult';
+        }
+
+        function getFogDescription(score) {
+            if (score <= 8) return 'Very Easy';
+            if (score <= 12) return 'Easy';
+            if (score <= 16) return 'Fairly Difficult';
+            return 'Difficult';
+        }
+
+        function displayKeywords(analysis) {
+            const keywords = analysis.keywords;
+            
+            const topKeywords = document.getElementById('topKeywords');
+            topKeywords.innerHTML = keywords.topKeywords.map(({word, count}) => 
+                `<span class="keyword-tag">${word} (${count})</span>`
+            ).join('');
+            
+            const nounPhrases = document.getElementById('nounPhrases');
+            nounPhrases.innerHTML = keywords.nounPhrases.map(phrase => 
+                `<span class="keyword-tag">${phrase}</span>`
+            ).join('');
+        }
+
+        function displaySentiment(analysis) {
+            const sentiment = analysis.sentiment;
+            const summaryDiv = document.getElementById('sentimentSummary');
+            
+            const sentimentEmoji = sentiment.sentiment === 'positive' ? '😊' : 
+                                 sentiment.sentiment === 'negative' ? '😞' : '😐';
+            
+            summaryDiv.innerHTML = `
+                <div class="sentiment-overview">
+                    <div class="sentiment-emoji">${sentimentEmoji}</div>
+                    <div class="sentiment-text">
+                        <h4>Overall Sentiment: ${sentiment.sentiment.charAt(0).toUpperCase() + sentiment.sentiment.slice(1)}</h4>
+                        <p>Confidence: ${(sentiment.confidence * 100).toFixed(1)}%</p>
+                    </div>
+                </div>
+            `;
+            
+            const detailsDiv = document.getElementById('sentimentDetails');
+            detailsDiv.innerHTML = `
+                <div class="sentiment-scores">
+                    <div class="sentiment-score positive">
+                        <span class="score-label">Positive</span>
+                        <span class="score-value">${sentiment.positiveScore}</span>
+                    </div>
+                    <div class="sentiment-score negative">
+                        <span class="score-label">Negative</span>
+                        <span class="score-value">${sentiment.negativeScore}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayPatterns(analysis) {
+            const patterns = analysis.patterns;
+            
+            const sentencePatterns = document.getElementById('sentencePatterns');
+            sentencePatterns.innerHTML = `
+                <div class="pattern-item">
+                    <span class="pattern-label">Average Sentence Length:</span>
+                    <span class="pattern-value">${patterns.avgSentenceLength.toFixed(1)} words</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Questions:</span>
+                    <span class="pattern-value">${patterns.hasQuestions ? 'Yes' : 'No'}</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Exclamations:</span>
+                    <span class="pattern-value">${patterns.hasExclamations ? 'Yes' : 'No'}</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Quotes:</span>
+                    <span class="pattern-value">${patterns.hasQuotes ? 'Yes' : 'No'}</span>
+                </div>
+            `;
+            
+            const writingStyle = document.getElementById('writingStyle');
+            writingStyle.innerHTML = `
+                <div class="pattern-item">
+                    <span class="pattern-label">Formality:</span>
+                    <span class="pattern-value">${patterns.writingStyle.formality}</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Complexity:</span>
+                    <span class="pattern-value">${patterns.writingStyle.complexity}</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Tone:</span>
+                    <span class="pattern-value">${patterns.writingStyle.tone}</span>
+                </div>
+                <div class="pattern-item">
+                    <span class="pattern-label">Long Words:</span>
+                    <span class="pattern-value">${patterns.longWords} words</span>
+                </div>
+            `;
+        }
+
+        function showAnalysisTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.analysis-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.analysis-tab .tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            currentAnalysisTab = tabName;
+        }
+
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+    </script>
+
+    <style>
+        /* Tool-specific styles */
+        .input-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .input-label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-body);
+        }
+
+        .text-input-area {
+            width: 100%;
+            min-height: 300px;
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            font-family: var(--font-family-primary);
+            resize: vertical;
+            transition: border-color var(--duration-fast);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .text-input-area:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+        }
+
+        .input-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .analysis-results {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .analysis-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--color-neutral-200);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .tab-button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-button) var(--radius-button) 0 0;
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--easing-standard);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        .tab-button:hover {
+            color: var(--color-primary-500);
+            background: var(--color-primary-50);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary-600);
+            background: var(--color-primary-50);
+            border-bottom: 2px solid var(--color-primary-500);
+        }
+
+        .analysis-tab {
+            display: none;
+        }
+
+        .analysis-tab.active {
+            display: block;
+        }
+
+        .tab-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-subtitle {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin: var(--spacing-lg) 0 var(--spacing-md);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            background: var(--color-neutral-50);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-button);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-500);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+        }
+
+        .word-frequency {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+        }
+
+        .word-tag {
+            background: var(--color-primary-50);
+            color: var(--color-primary-600);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .readability-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .readability-score {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+        }
+
+        .readability-score h4 {
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .score-value {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-500);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .score-description {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+        }
+
+        .keyword-sections {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .keyword-section {
+            background: var(--color-neutral-50);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-card);
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .keyword-tag {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .sentiment-summary {
+            background: var(--color-neutral-50);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .sentiment-overview {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .sentiment-emoji {
+            font-size: 3rem;
+        }
+
+        .sentiment-text h4 {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .sentiment-scores {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .sentiment-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-button);
+            min-width: 120px;
+        }
+
+        .sentiment-score.positive {
+            background: #10B98120;
+            color: var(--color-success);
+        }
+
+        .sentiment-score.negative {
+            background: #EF444420;
+            color: var(--color-error);
+        }
+
+        .score-label {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .pattern-sections {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .pattern-section {
+            background: var(--color-neutral-50);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-card);
+        }
+
+        .pattern-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .pattern-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .pattern-item:last-child {
+            border-bottom: none;
+        }
+
+        .pattern-label {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-700);
+        }
+
+        .pattern-value {
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-900);
+        }
+
+        .related-tools {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .related-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .related-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: all var(--duration-standard) var(--easing-standard);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--color-primary-100);
+        }
+
+        .related-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .related-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .related-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .input-actions {
+                flex-direction: column;
+            }
+            
+            .analysis-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .sentiment-overview {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .sentiment-scores {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>

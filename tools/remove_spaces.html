@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Spaces Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Remove spaces from text online for free. Remove extra spaces, all spaces, line breaks, or duplicate lines. 100% privacy-protected, client-side processing.">
+    <meta name="keywords" content="remove spaces, remove extra spaces, text cleaner, text formatter, clean text, remove line breaks, remove duplicate lines, text tools">
+    <meta name="author" content="Factictionary Team">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Remove Spaces Tool | Factictionary">
+    <meta property="og:description" content="Clean and format text by removing extra spaces, line breaks, or duplicate lines instantly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/remove_spaces.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Remove Spaces Tool | Factictionary">
+    <meta name="twitter:description" content="Professional text cleaning tool to remove spaces, line breaks, and duplicate lines.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/remove_spaces.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Factictionary Remove Spaces Tool",
+        "description": "Professional text cleaning tool to remove extra spaces, all spaces, line breaks, and duplicate lines from text instantly.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb navigation">
+            <ol class="breadcrumb-list">
+                <li><a href="/">Home</a></li>
+                <li><a href="/tools/">Tools</a></li>
+                <li aria-current="page">Remove Spaces</li>
+            </ol>
+        </nav>
+
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Tool Header -->
+        <header class="tool-header" style="background: linear-gradient(135deg, #6366F1 0%, #6366F1CC 100%);">
+            <div class="container">
+                <div class="tool-header-content">
+                    <div class="tool-icon">🧹</div>
+                    <h1 class="tool-title">Remove Spaces Tool</h1>
+                    <p class="tool-subtitle">Clean and format text instantly by removing extra spaces, line breaks, or duplicate lines. All processing happens in your browser for complete privacy.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">Remove Extra Spaces</span>
+                        <span class="feature-tag">Remove All Spaces</span>
+                        <span class="feature-tag">Remove Line Breaks</span>
+                        <span class="feature-tag">Remove Duplicate Lines</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="container">
+                <div class="workspace-content">
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <label class="input-label">Text to Clean</label>
+                        <textarea id="textInput" class="text-input-area" placeholder="Enter or paste your text here to remove spaces, line breaks, or duplicate lines..."></textarea>
+                        <div class="input-actions">
+                            <button class="btn btn-secondary" onclick="loadSampleText()">📄 Load Sample</button>
+                            <button class="btn btn-secondary" onclick="clearText()">🗑️ Clear Text</button>
+                        </div>
+                    </div>
+
+                    <!-- Controls Section -->
+                    <div class="controls-section">
+                        <h3 class="controls-title">Choose Cleaning Option</h3>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="removeSpaces('extra')">Remove Extra Spaces</button>
+                            <button class="btn btn-primary" onclick="removeSpaces('all')">Remove All Spaces</button>
+                            <button class="btn btn-primary" onclick="removeSpaces('breaks')">Remove Line Breaks</button>
+                            <button class="btn btn-primary" onclick="removeSpaces('duplicates')">Remove Duplicate Lines</button>
+                        </div>
+                        <div class="controls-hint">
+                            <p>💡 <strong>Extra Spaces:</strong> Collapses multiple spaces into one • <strong>All Spaces:</strong> Removes every space character • <strong>Line Breaks:</strong> Converts breaks to spaces • <strong>Duplicate Lines:</strong> Removes identical consecutive lines</p>
+                        </div>
+                    </div>
+
+                    <!-- Output Section -->
+                    <div class="output-section">
+                        <label class="input-label">Cleaned Text</label>
+                        <div id="outputDisplay" class="output-display" style="display: none;">
+                            <div id="cleanedText"></div>
+                        </div>
+                        <div id="outputActions" class="output-actions" style="display: none;">
+                            <button class="btn btn-secondary" onclick="copyToClipboard()">📋 Copy</button>
+                            <button class="btn btn-secondary" onclick="selectAllText()">🔘 Select All</button>
+                            <button class="btn btn-secondary" onclick="clearOutput()">🗑️ Clear Output</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Text Tools</h3>
+                <div class="related-grid">
+                    <a href="case_converter.html" class="related-card">
+                        <div class="related-icon">🔤</div>
+                        <div class="related-content">
+                            <h4>Case Converter</h4>
+                            <p>Convert text to UPPERCASE, lowercase, Title Case, or Sentence case instantly</p>
+                        </div>
+                    </a>
+                    <a href="text_formatter.html" class="related-card">
+                        <div class="related-icon">📝</div>
+                        <div class="related-content">
+                            <h4>Text Formatter</h4>
+                            <p>Format, clean, and enhance text with various formatting options</p>
+                        </div>
+                    </a>
+                    <a href="word_counter.html" class="related-card">
+                        <div class="related-icon">🔢</div>
+                        <div class="related-content">
+                            <h4>Word Counter</h4>
+                            <p>Count words, characters, sentences, and paragraphs with detailed statistics</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Text cleaning functions
+        function removeSpaces(type) {
+            const text = document.getElementById('textInput').value;
+            let result = '';
+            
+            if (!text.trim()) {
+                showToast('Please enter some text to clean');
+                return;
+            }
+            
+            switch(type) {
+                case 'extra':
+                    // Remove extra spaces - collapse multiple spaces into one
+                    result = text.replace(/\s+/g, ' ').trim();
+                    showToast('Extra spaces removed successfully!');
+                    break;
+                case 'all':
+                    // Remove all spaces including regular spaces, tabs, etc.
+                    result = text.replace(/\s/g, '');
+                    showToast('All spaces removed successfully!');
+                    break;
+                case 'breaks':
+                    // Remove line breaks - convert to spaces then clean
+                    result = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+                    showToast('Line breaks removed successfully!');
+                    break;
+                case 'duplicates':
+                    // Remove duplicate lines - keep only unique consecutive lines
+                    const lines = text.split('\n');
+                    result = [...new Set(lines)].join('\n');
+                    showToast('Duplicate lines removed successfully!');
+                    break;
+            }
+            
+            showOutput(result);
+        }
+
+        function showOutput(text) {
+            const outputDisplay = document.getElementById('outputDisplay');
+            const outputActions = document.getElementById('outputActions');
+            const cleanedText = document.getElementById('cleanedText');
+            
+            cleanedText.textContent = text;
+            outputDisplay.style.display = 'block';
+            outputActions.style.display = 'flex';
+        }
+
+        function copyToClipboard() {
+            const cleanedText = document.getElementById('cleanedText');
+            if (cleanedText.textContent) {
+                navigator.clipboard.writeText(cleanedText.textContent).then(() => {
+                    showToast('Text copied to clipboard!');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = cleanedText.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast('Text copied to clipboard!');
+                });
+            }
+        }
+
+        function selectAllText() {
+            const cleanedText = document.getElementById('cleanedText');
+            if (cleanedText.textContent) {
+                const range = document.createRange();
+                range.selectNode(cleanedText);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                showToast('Text selected! Use Ctrl+C or Cmd+C to copy.');
+            }
+        }
+
+        function clearOutput() {
+            document.getElementById('outputDisplay').style.display = 'none';
+            document.getElementById('outputActions').style.display = 'none';
+            document.getElementById('cleanedText').textContent = '';
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('textInput').focus();
+            clearOutput();
+            showToast('Text cleared');
+        }
+
+        function loadSampleText() {
+            const sampleText = `This    text    has    extra    spaces
+
+This line has some text
+This line has some text
+This line has some text
+This is a unique line
+This is a unique line
+
+This text has
+multiple line breaks
+
+And    multiple    spaces    between    words`;
+            
+            document.getElementById('textInput').value = sampleText;
+            document.getElementById('textInput').focus();
+            showToast('Sample text loaded');
+        }
+
+        function showToast(message) {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--color-success, #10B981);
+                color: white;
+                padding: 12px 20px;
+                border-radius: var(--radius-button, 12px);
+                box-shadow: var(--shadow-modal, 0 20px 25px rgba(0, 0, 0, 0.1));
+                z-index: 1000;
+                font-family: var(--font-family-primary, 'Inter', sans-serif);
+                font-size: 14px;
+                font-weight: 500;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all var(--duration-standard, 250ms) var(--easing-standard, ease-out);
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // Hide toast
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 250);
+            }, 3000);
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            
+            this.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.querySelector('.nav-links');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Ctrl/Cmd + Enter to apply first cleaning option
+            if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                event.preventDefault();
+                removeSpaces('extra');
+            }
+            
+            // Escape to clear text
+            if (event.key === 'Escape') {
+                const textInput = document.getElementById('textInput');
+                if (textInput === document.activeElement) {
+                    clearText();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

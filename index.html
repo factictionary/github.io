@@ -2,908 +2,398 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-	<meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factictionary - Learn, Play, Create</title>
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3535919568420997"
-     crossorigin="anonymous"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #ec4899;
-            --dark: #1e293b;
-            --light: #f8fafc;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            color: var(--dark);
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 20s infinite;
-        }
-
-        .shape1 { top: 10%; left: 10%; width: 100px; height: 100px; background: white; border-radius: 50%; animation-delay: 0s; }
-        .shape2 { top: 60%; left: 80%; width: 150px; height: 150px; background: white; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; animation-delay: 5s; }
-        .shape3 { top: 80%; left: 20%; width: 80px; height: 80px; background: white; border-radius: 20%; animation-delay: 10s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-50px) rotate(180deg); }
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo::before {
-            content: '📚';
-            font-size: 32px;
-        }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-text h1 {
-            font-size: 1.8em;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-text p {
-            font-size: 0.85em;
-            color: #64748b;
-            font-weight: 500;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 30px;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h2 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.8s ease;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .hero p {
-            font-size: 1.3em;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Categories Grid */
-        .categories {
-            max-width: 1400px;
-            margin: 0 auto 60px;
-            padding: 0 30px;
-        }
-
-        .section-title {
-            text-align: center;
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .category-card {
-            background: white;
-            border-radius: 20px;
-            padding: 35px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.6s;
-        }
-
-        .category-card:hover::before {
-            left: 100%;
-        }
-
-        .category-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-        }
-
-        .card-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            display: block;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-		
-		.content-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-        }
-
-        .content-card h3 {
-            color: var(--primary);
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .content-card p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .feature-box {
-            background: #f8f9ff;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 1.3em;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .feature-desc {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .stat-box {
-            background: black; 
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 10px;
-			color: white;
-        }
-
-        .stat-label {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-		
-
-        .category-card:hover .card-icon {
-            animation: none;
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        .card-title {
-            font-size: 1.6em;
-            margin-bottom: 12px;
-            color: var(--dark);
-            font-weight: 700;
-        }
-
-        .card-desc {
-            color: #64748b;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-size: 0.95em;
-        }
-
-        .card-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 28px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        .card-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        /* Feature Cards */
-        .feature-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.5);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: start;
-            gap: 15px;
-        }
-
-        .feature-icon {
-            font-size: 2em;
-            flex-shrink: 0;
-        }
-
-        .feature-content h3 {
-            font-size: 1.2em;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-
-        .feature-content p {
-            color: #64748b;
-            font-size: 0.9em;
-            line-height: 1.5;
-        }
-
-        /* Stats Section */
-        .stats {
-            max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 30px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            text-align: center;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #64748b;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(30, 41, 59, 0.95);
-            color: white;
-            padding: 40px 30px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 1.3em;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            font-size: 1.3em;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 2.2em;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .section-title {
-                font-size: 2em;
-            }
-        }
-
-        /* Mobile Menu Button */
-        .mobile-menu {
-            display: none;
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu {
-                display: block;
-            }
-        }
-    </style>
+    <title>Factictionary - Learn, Create, Play | Privacy-First Educational Platform</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Transform your productivity and learn new skills with Factictionary's privacy-first educational content and browser-based tools. No uploads, no tracking, just results.">
+    <meta name="keywords" content="productivity, learning, education, browser tools, privacy-first, tutorials, guides">
+    <meta name="author" content="Factictionary Team">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Factictionary - Learn, Create, Play | Privacy-First Educational Platform">
+    <meta property="og:description" content="Transform your productivity and learn new skills with our privacy-first educational content and browser-based tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Factictionary - Learn, Create, Play">
+    <meta name="twitter:description" content="Privacy-first educational platform with browser tools and comprehensive guides.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Factictionary",
+        "description": "Privacy-first educational platform with browser-based tools and comprehensive learning content.",
+        "url": "https://factictionary.github.io",
+        "logo": "https://factictionary.github.io/assets/images/logo.png",
+        "sameAs": [
+            "https://twitter.com/factictionary",
+            "https://linkedin.com/company/factictionary"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "email": "contact@factictionary.in"
+        }
+    }
+    </script>
 </head>
 <body>
-    <div class="animated-bg">
-        <div class="floating-shape shape1"></div>
-        <div class="floating-shape shape2"></div>
-        <div class="floating-shape shape3"></div>
-    </div>
-
-    <header>
-        <div class="header-content">
-            <div class="logo-container">
-                <div class="logo"></div>
-                <div class="logo-text">
-                    <h1>Factictionary</h1>
-                    <p>Learn • Play • Create</p>
-                </div>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" aria-label="Factictionary Home">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/tools/" class="btn btn-primary">Try Tools Free</a>
             </div>
-            <nav class="nav-links">
-                <a href="#games">Games</a>
-                <a href="#utilities">Utilities</a>
-                <a href="#content">Content</a>
-                <a href="#books">Books</a>
-                <a href="/about.html">About</a>
-            </nav>
-            <div class="mobile-menu">☰</div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
         </div>
-    </header>
-
-    <section class="hero">
-        <h2>Welcome to Factictionary</h2>
-        <p>Your one-stop destination for learning, entertainment, and productivity tools</p>
-    </section>
-
-    <section class="categories" id="games">
-        <h2 class="section-title">🎮 Interactive Games</h2>
-        <div class="cards-grid">
-            <div class="category-card">
-                <span class="card-icon">🎯</span>
-                <h3 class="card-title">Brain Teasers</h3>
-                <p class="card-desc">Challenge your mind with puzzles, quizzes, and logic games designed to boost cognitive skills</p>
-                <a href="games/index.html" class="card-link">Play Now →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">🎲</span>
-                <h3 class="card-title">Word Games</h3>
-                <p class="card-desc">Expand your vocabulary with engaging word puzzles, crosswords, and language challenges</p>
-                <a href="games/index.html" class="card-link">Play Now →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">🧩</span>
-                <h3 class="card-title">Memory Games</h3>
-                <p class="card-desc">Improve memory and concentration with fun matching games and recall challenges</p>
-                <a href="games/index.html" class="card-link">Play Now →</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="categories" id="utilities">
-        <h2 class="section-title">🛠️ Free Utilities</h2>
-        <div class="cards-grid">
-			<div class="category-card">
-                <span class="card-icon">🎬</span>
-                <h3 class="card-title">Video Tools</h3>
-                <p class="card-desc">Compress, convert, trim, and extract from videos</p>
-                <a href="/apps/video.html" class="card-link">Try Tools →</a>
-            </div>
-			
-            <div class="category-card">
-                <span class="card-icon">🖼️</span>
-                <h3 class="card-title">Image Tools</h3>
-                <p class="card-desc">Resize, compress, convert, and edit images with professional-grade browser tools</p>
-                <a href="/apps/image.html" class="card-link">Try Tools →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">📄</span>
-                <h3 class="card-title">PDF Tools</h3>
-                <p class="card-desc">Merge, split, compress, and convert PDF documents quickly and securely</p>
-                <a href="/apps/pdf.html" class="card-link">Try Tools →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">📝</span>
-                <h3 class="card-title">Text Tools</h3>
-                <p class="card-desc">Format, analyze, and transform text with powerful editing utilities</p>
-                <a href="/apps/text.html" class="card-link">Try Tools →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">🎵</span>
-                <h3 class="card-title">Audio Tools</h3>
-                <p class="card-desc">Edit, convert, and enhance audio files with easy-to-use online tools</p>
-                <a href="/apps/audio.html" class="card-link">Try Tools →</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="categories" id="content">
-        <h2 class="section-title">📺 YouTube Shorts</h2>
-        <div class="feature-card">
-            <p style="text-align: center; font-size: 1.2em; color: var(--dark); margin-bottom: 30px;">
-                Discover bite-sized educational content, fun facts, and quick tutorials
-            </p>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <span class="feature-icon">🎬</span>
-                    <div class="feature-content">
-                        <h3>Quick Learning</h3>
-                        <p>Educational shorts covering science, history, technology, and more</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">💡</span>
-                    <div class="feature-content">
-                        <h3>Daily Facts</h3>
-                        <p>Interesting facts and trivia delivered in engaging 60-second videos</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🎓</span>
-                    <div class="feature-content">
-                        <h3>How-To Guides</h3>
-                        <p>Quick tutorials and tips for productivity and daily life hacks</p>
+    </nav>
+    
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Learn, Create, Play.<br><span style="color: var(--color-primary-500);">Privacy-First.</span></h1>
+                    <p class="hero-subtitle lead-text">Transform your productivity with comprehensive educational content and browser-based tools. No uploads required, no tracking, just results.</p>
+                    
+                    <div class="hero-cta">
+                        <a href="/blog/" class="btn btn-primary btn-lg">Explore Articles</a>
+                        <a href="/tools/" class="btn btn-secondary btn-lg">Try Our Tools</a>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="/playlist.html" class="card-link" target="_blank">Visit Channel →</a>
+        </section>
+        
+        <!-- AdSense Container - Hero Below -->
+        <div class="adsense-container">
+            <div class="adsense-label">Advertisement</div>
+            <!-- Replace with actual AdSense code -->
+            <div style="background: #f0f0f0; padding: 20px; text-align: center; color: #666;">
+                728×90 Leaderboard Ad Space
             </div>
         </div>
-    </section>
-
-    <section class="categories" id="books">
-        <h2 class="section-title">📚 Books & Software</h2>
-        <div class="cards-grid">
-            <div class="category-card">
-                <span class="card-icon">📖</span>
-                <h3 class="card-title">Amazon KDP Books</h3>
-                <p class="card-desc">Explore our collection of educational books, guides, and reference materials on Amazon</p>
-                <a href="https://www.amazon.com/s?i=stripbooks&rh=p_27%3AFactictionary%2BTeam&s=relevancerank&text=Factictionary+Team&ref=dp_byline_sr_book_1" class="card-link" target="_blank">Browse Books →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">📦</span>
-                <h3 class="card-title">Gumroad Store</h3>
-                <p class="card-desc">Premium ebooks, templates, software tools, and digital products for creators</p>
-                <a href="https://factictionary.gumroad.com/" class="card-link" target="_blank">Visit Store →</a>
-            </div>
-
-            <div class="category-card">
-                <span class="card-icon">💎</span>
-                <h3 class="card-title">Digital Products</h3>
-                <p class="card-desc">Exclusive resources, courses, and tools to enhance your productivity and skills</p>
-                <a href="#" class="card-link">Explore →</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="content-card">
-            <h3>📊 By The Numbers</h3>
-            <div class="stats-row">
-                <div class="stat-box">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Free Tools</div>
+        
+        <!-- Value Proposition -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <h2>Why Choose Factictionary?</h2>
+                    <p class="lead-text">We're building the future of online learning with privacy and quality at the forefront.</p>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Privacy Protected</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Data Uploaded</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Usage Limit</div>
+                
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="mb-md">
+                                <img src="/assets/images/professional_learning_education_book_knowledge_illustration.jpg" alt="Educational Content" class="responsive-image" style="height: 200px; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title">Educational Excellence</h3>
+                            <p class="card-excerpt">32 comprehensive articles covering productivity, technology, business, and learning. Each guide provides practical, actionable insights you can implement immediately.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="mb-md">
+                                <img src="/assets/images/modern_digital_privacy_security_shield_illustration.jpg" alt="Privacy First" class="responsive-image" style="height: 200px; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title">Privacy-First Tools</h3>
+                            <p class="card-excerpt">50+ browser-based utilities that process everything locally on your device. Your files never leave your computer, ensuring complete privacy and security.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="mb-md">
+                                <img src="/assets/images/modern_technology_innovation_circuit_board_illustration.jpg" alt="Modern Technology" class="responsive-image" style="height: 200px; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title">No-Installation Required</h3>
+                            <p class="card-excerpt">All tools work directly in your browser. No downloads, no software installation, no account required. Just open and start creating.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+        
+        <!-- AdSense Container - Between Sections -->
+        <div class="adsense-container">
+            <div class="adsense-label">Advertisement</div>
+            <!-- Replace with actual AdSense code -->
+            <div style="background: #f0f0f0; padding: 20px; text-align: center; color: #666;">
+                336×280 Rectangle Ad Space
+            </div>
         </div>
-
-        <div class="content-card">
-            <h3>🔐 Privacy & Security</h3>
-            <p>Your privacy is our top priority. All our tools run 100% in your browser using JavaScript. This means:</p>
-            <ul style="color: #666; line-height: 2; margin-left: 30px; margin-top: 15px;">
-                <li>✅ Your files never leave your device</li>
-                <li>✅ No server uploads or storage</li>
-                <li>✅ No data collection or tracking</li>
-                <li>✅ Works offline once loaded</li>
-                <li>✅ Completely free and secure</li>
-            </ul>
-        </div>
-    </section>
-	
-	<section class="hero">
-		<div class="content-card" style="text-align: center; background: linear-gradient(135deg, #f8f9ff, #f0f2ff);">
-			<h3 style="margin-bottom: 20px;">💝 Support Our Work</h3>
-			<p>Factictionary is completely free and ad-supported. Your support helps us keep it that way!</p>
-			<div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-				<a href="https://factictionary.gumroad.com/" target="_blank" class="submit-btn">Visit Our Store</a>
-				<a href="https://www.amazon.com/s?i=stripbooks&rh=p_27%3AFactictionary%2BTeam&s=relevancerank&text=Factictionary+Team&ref=dp_byline_sr_book_1" target="_blank" class="submit-btn" style="background: linear-gradient(135deg, #f59e0b, #ea580c);">Amazon KDP Books</a>
-			</div>
-		</div>
-	</section>
-	
-	<section class="categories" id="about-site" style="background:#f8f9ff;padding:30px 30px;margin-top:30px;">
-        <h2 class="section-title" style="color:#1e293b;">💡 About Factictionary.in</h2>
-        <div class="content-card">
-            <p><strong>Factictionary.in</strong> is a comprehensive digital resource that unites interactive browser-based tools, utilities, and educational games under one roof. Our goal is to make learning, creativity, and productivity accessible to everyone without compromising on data privacy. Every application and game operates entirely in your web browser using modern JavaScript technology, ensuring that your personal files and usage data remain securely on your device.</p>
-            <p>By integrating diverse functions such as PDF management, image editing, audio conversion, and cognitive skill games, Factictionary.in helps students, professionals, and casual users perform essential daily tasks efficiently. The site aims to encourage curiosity, improve problem-solving, and provide a seamless environment for both work and recreation.</p>
-        </div>
-    </section>
-
-    <section class="categories" id="use-cases" style="background:white;padding:30px 30px;">
-        <h2 class="section-title" style="color:#1e293b;">🎯 Use Cases and Applications</h2>
-        <div class="content-card">
-            <p>The utilities and games on Factictionary.in are suitable for a wide range of users and purposes:</p>
-            <ul style="margin-left:30px;list-style:disc;">
-                <li><strong>Students and Educators:</strong> Use the PDF and text tools for preparing study materials and assignments, and engage with word and memory games to enhance focus and language skills.</li>
-                <li><strong>Professionals:</strong> Compress images, convert audio or video files, and manage documents securely without installing software.</li>
-                <li><strong>General Users:</strong> Enjoy free, ad-supported browser games for relaxation and cognitive exercise while exploring daily fact-based content on our YouTube channel.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="categories" id="why-factictionary" style="background:#f0f4ff;padding:30px 30px;">
-        <h2 class="section-title" style="color:#1e293b;">🔍 Why Choose Factictionary?</h2>
-        <div class="content-card">
-            <p>Unlike most online converters or casual gaming platforms, Factictionary.in is developed with a clear focus on user trust, educational benefit, and accessibility. We avoid intrusive pop-ups, unnecessary permissions, and third-party data sharing.</p>
-            <ul style="margin-left:30px;list-style:disc;">
-                <li>✔ <strong>Zero Upload Policy:</strong> All tools function locally, ensuring your content never leaves your browser.</li>
-                <li>✔ <strong>Cross-Platform Access:</strong> Works on desktop, tablet, and mobile devices with modern browsers.</li>
-                <li>✔ <strong>Educational Integration:</strong> Our games and short-form videos are designed to complement real-world learning.</li>
-                <li>✔ <strong>Continuous Development:</strong> New utilities and knowledge modules are introduced regularly.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="categories" id="faq" style="background:white;padding:30px 30px;">
-        <h2 class="section-title" style="color:#1e293b;">❓ Frequently Asked Questions</h2>
-        <div class="content-card">
-            <p><strong>1. Is Factictionary free to use?</strong><br>Yes. All games and tools are completely free. Optional premium resources, such as eBooks or templates, are available through our Gumroad store and Amazon listings.</p>
-            <p><strong>2. Does Factictionary collect any user data?</strong><br>No. All utilities run in-browser and require no uploads or user accounts. We maintain a strict no-tracking and no-storage policy.</p>
-            <p><strong>3. What makes Factictionary different from other online tools?</strong><br>Factictionary combines utility, creativity, and education on one platform. Each tool is curated and tested for accuracy, reliability, and data safety.</p>
-            <p><strong>4. How often is new content added?</strong><br>We publish regular feature updates, games, and short educational videos to ensure the platform stays fresh and relevant.</p>
-            <p><strong>5. Can I suggest a new tool or report an issue?</strong><br>Yes. Visitors can use the contact page to propose new utilities or report bugs. We value community input and transparency.</p>
-        </div>
-    </section>
-	
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Factictionary</h3>
-                <p>Empowering learners and creators with free tools, games, and educational content.</p>
-                <div class="social-links">
-                    <a href="#" title="YouTube">📺</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="Facebook">📘</a>
+        
+        <!-- Featured Articles -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <h2>Latest Educational Articles</h2>
+                    <p class="lead-text">Dive deep into topics that matter for your personal and professional growth.</p>
+                </div>
+                
+                <div class="grid grid-3">
+                    <article class="card">
+                        <div class="card-content">
+                            <span class="category-badge">Productivity</span>
+                            <h3 class="card-title">The Future of Productivity: AI-Powered Workflow Optimization</h3>
+                            <p class="card-excerpt">Discover how agentic AI, hybrid work models, and pragmatic AI integration are reshaping workplace productivity in 2025. Learn practical strategies for AI tool adoption that enhance rather than replace human creativity.</p>
+                            <div class="card-meta">8 min read • Nov 1, 2025</div>
+                            <a href="/blog/articles/ai_powered_productivity.html" class="btn btn-ghost">Read Article →</a>
+                        </div>
+                    </article>
+                    
+                    <article class="card">
+                        <div class="card-content">
+                            <span class="category-badge">Technology</span>
+                            <h3 class="card-title">API-First Development: Building Modern Applications</h3>
+                            <p class="card-excerpt">Explore the API-first development paradigm that's transforming how applications are built and integrated. Learn architectural patterns, best practices, and implementation strategies for scalable, flexible systems.</p>
+                            <div class="card-meta">12 min read • Oct 28, 2025</div>
+                            <a href="/blog/articles/api_first_development.html" class="btn btn-ghost">Read Article →</a>
+                        </div>
+                    </article>
+                    
+                    <article class="card">
+                        <div class="card-content">
+                            <span class="category-badge">Business</span>
+                            <h3 class="card-title">Profitable Online Business Models for 2025</h3>
+                            <p class="card-excerpt">Analyze the most successful online business models and revenue streams for 2025. From subscription services to digital marketplaces, discover proven strategies for sustainable online profitability.</p>
+                            <div class="card-meta">10 min read • Oct 25, 2025</div>
+                            <a href="/blog/articles/profitable_online_business_2025.html" class="btn btn-ghost">Read Article →</a>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="text-center mt-lg">
+                    <a href="/blog/" class="btn btn-primary">View All Articles</a>
                 </div>
             </div>
-
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#games">Games</a></li>
-                    <li><a href="#utilities">Utilities</a></li>
-                    <li><a href="#content">YouTube</a></li>
-                    <li><a href="#books">Books</a></li>
-                </ul>
+        </section>
+        
+        <!-- Tools Overview -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <h2>Free Browser Tools</h2>
+                    <p class="lead-text">Powerful tools that work entirely in your browser. No uploads, no tracking, just results.</p>
+                </div>
+                
+                <div class="grid grid-3">
+                    <div class="card">
+                        <div class="card-content text-center">
+                            <div class="mb-md">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Image Tools</h3>
+                            <p class="card-excerpt">Resize, compress, convert, and edit images without uploads. Professional editing capabilities right in your browser.</p>
+                            <a href="/tools/categories/image.html" class="btn btn-ghost">Explore →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content text-center">
+                            <div class="mb-md">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14,2 14,8 20,8"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">PDF Tools</h3>
+                            <p class="card-excerpt">Merge, split, compress, and convert PDF files. All processing happens locally for maximum privacy.</p>
+                            <a href="/tools/categories/pdf.html" class="btn btn-ghost">Explore →</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content text-center">
+                            <div class="mb-md">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-500)" stroke-width="2">
+                                    <polygon points="23 7 16 12 23 17 23 7"/>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Video & Audio</h3>
+                            <p class="card-excerpt">Compress, convert, and edit media files. Advanced processing capabilities without complex software.</p>
+                            <a href="/tools/categories/video.html" class="btn btn-ghost">Explore →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-lg">
+                    <a href="/tools/" class="btn btn-primary">View All Tools</a>
+                </div>
             </div>
-
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Tutorials</a></li>
-                    <li><a href="#">API Docs</a></li>
-                    <li><a href="#">Support</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul>
-                    <li><a href="privacy.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Terms of Service</a></li>
-                    <li><a href="cookie.html">Cookie Policy</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
+        </section>
+        
+        <!-- AdSense Container - Before Stats -->
+        <div class="adsense-container">
+            <div class="adsense-label">Advertisement</div>
+            <!-- Replace with actual AdSense code -->
+            <div style="background: #f0f0f0; padding: 20px; text-align: center; color: #666;">
+                336×280 Rectangle Ad Space
             </div>
         </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2025 Factictionary. All rights reserved</p>
+        
+        <!-- Stats Section -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <h2>Trusted by Learners Worldwide</h2>
+                    <p class="lead-text">Join thousands of professionals enhancing their skills with Factictionary.</p>
+                </div>
+                
+                <div class="grid grid-4">
+                    <div class="text-center">
+                        <h3 style="color: var(--color-primary-500); font-size: 48px; margin-bottom: 8px;">32</h3>
+                        <p class="small-text">Comprehensive Articles</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 style="color: var(--color-primary-500); font-size: 48px; margin-bottom: 8px;">50+</h3>
+                        <p class="small-text">Browser Tools</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 style="color: var(--color-primary-500); font-size: 48px; margin-bottom: 8px;">100%</h3>
+                        <p class="small-text">Privacy Guarantee</p>
+                    </div>
+                    <div class="text-center">
+                        <h3 style="color: var(--color-primary-500); font-size: 48px; margin-bottom: 8px;">0</h3>
+                        <p class="small-text">Required Uploads</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Signup -->
+        <section class="section-sm">
+            <div class="container">
+                <div class="card" style="text-align: center; background: var(--color-primary-50);">
+                    <div class="card-content">
+                        <h3>Stay Updated with Latest Content</h3>
+                        <p class="card-excerpt">Get notified when we publish new articles and release new tools. No spam, just quality content.</p>
+                        
+                        <form class="newsletter-form mt-md" style="max-width: 400px; margin: 0 auto;">
+                            <div style="display: flex; gap: 12px;">
+                                <input type="email" placeholder="Enter your email" required style="flex: 1;">
+                                <button type="submit" class="btn btn-primary">Subscribe</button>
+                            </div>
+                        </form>
+                        
+                        <p class="caption-text mt-sm">We respect your privacy. Unsubscribe anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final CTA -->
+        <section class="section">
+            <div class="container">
+                <div class="text-center">
+                    <h2>Ready to Transform Your Workflow?</h2>
+                    <p class="lead-text">Start with our comprehensive guides or jump straight into our privacy-first tools.</p>
+                    
+                    <div class="hero-cta mt-lg">
+                        <a href="/blog/" class="btn btn-primary btn-lg">Start Learning</a>
+                        <a href="/tools/" class="btn btn-secondary btn-lg">Try Tools</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
         </div>
     </footer>
-
-    <script>
-        // Smooth scroll for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.category-card, .stat-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const nav = document.querySelector('.nav-links');
-            if (nav.style.display === 'flex') {
-                nav.style.display = 'none';
-            } else {
-                nav.style.display = 'flex';
-                nav.style.flexDirection = 'column';
-                nav.style.position = 'absolute';
-                nav.style.top = '100%';
-                nav.style.right = '0';
-                nav.style.background = 'white';
-                nav.style.padding = '20px';
-                nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
-                nav.style.borderRadius = '10px';
-            }
-        });
-    </script>
+    
+    <!-- JavaScript -->
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

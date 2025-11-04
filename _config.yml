@@ -1,7 +1,94 @@
-title: Factictionary
-description: Free browser-based tools and games.
-baseurl: "" 
-url: "https://factictionary.in"
+# Factictionary GitHub Pages Configuration
+# Privacy-first educational platform
+
+# Site Configuration
+title: "Factictionary"
+description: "Privacy-first educational platform with browser tools and comprehensive learning content"
+author: "Factictionary Team"
+url: "https://factictionary.github.io"
+baseurl: ""
+lang: "en"
+
+# Repository Configuration
+repository: "factictionary/factictionary.github.io"
+
+# Build Settings
 markdown: kramdown
-theme: null
-permalink: pretty
+highlighter: rouge
+permalink: /:title/
+timezone: UTC
+
+# Collections
+collections:
+  articles:
+    output: true
+    permalink: /blog/articles/:title/
+  tools:
+    output: true
+    permalink: /tools/:title/
+
+# Defaults
+defaults:
+  - scope:
+      path: "blog/articles"
+      type: "articles"
+    values:
+      layout: "article"
+      category: "article"
+  - scope:
+      path: "tools"
+      type: "tools"
+    values:
+      layout: "tool"
+      category: "tool"
+
+# Exclude from processing
+exclude:
+  - README.md
+  - .gitignore
+  - .jekyll-cache
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include files
+include:
+  - "_redirects"
+  - ".htaccess"
+  - "CNAME"
+
+# Performance and SEO
+gems:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Analytics (Privacy-friendly)
+google_analytics: ""
+
+# Social Media (if needed)
+social:
+  name: "Factictionary"
+  links:
+    - "mailto:contact@factictionary.in"
+
+# Front Matter Defaults
+frontmatter_defaults:
+  - scope:
+      path: ""
+    values:
+      image: "/assets/images/modern_educational_platform_hero_illustration.jpg"
+      author: "Factictionary Team"
+      date: "2025-11-01"
+
+# Time
+future: true
+show_drafts: false
+
+# Plugins Configuration
+plugins_dir: "_plugins"
+
+# Paginate (if needed for blog)
+paginate: 12
+paginate_path: "/blog/page:num/"
