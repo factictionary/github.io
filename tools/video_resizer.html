@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -435,6 +439,8 @@
         let originalDimensions = { width: 0, height: 0 };
         let outputBlob = null;
         let aspectRatioLocked = true;
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
 
         // Platform presets
         const platformPresets = {
@@ -447,7 +453,32 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             initializeVideoResizer();
+            initializeFFmpeg();
         });
+
+        function initializeFFmpeg() {
+            // Initialize FFmpeg
+            ffmpeg = FFmpeg.createFFmpeg({
+                log: false,
+                corePath: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+            });
+        }
+
+        async function loadFFmpeg() {
+            if (!ffmpegLoaded) {
+                try {
+                    updateProgress(10, 'Loading FFmpeg engine...');
+                    await ffmpeg.load();
+                    ffmpegLoaded = true;
+                    return true;
+                } catch (error) {
+                    console.error('Failed to load FFmpeg:', error);
+                    showError('Failed to load video processing engine. Please try again.');
+                    return false;
+                }
+            }
+            return true;
+        }
 
         function initializeVideoResizer() {
             // File upload handlers
@@ -669,7 +700,7 @@
             showNotification('🔄 All settings reset');
         }
 
-        function resizeVideo() {
+        async function resizeVideo() {
             if (!selectedFile) {
                 showError('Please select a video file first.');
                 return;
@@ -688,48 +719,132 @@
             document.getElementById('progressSection').style.display = 'block';
             updateProgress(0, 'Initializing video processing...');
             
-            // TODO: Implement actual FFmpeg.wasm integration here
-            // For now, simulate processing
-            simulateVideoProcessing(targetWidth, targetHeight, resizeMode);
-        }
-
-        function simulateVideoProcessing(width, height, mode) {
-            const stages = [
-                { progress: 20, text: 'Loading video data...' },
-                { progress: 40, text: 'Analyzing video format...' },
-                { progress: 60, text: `Resizing to ${width} × ${height}...` },
-                { progress: 80, text: 'Encoding video...' },
-                { progress: 100, text: 'Finalizing output...' }
-            ];
-            
-            let currentStage = 0;
-            
-            function processStage() {
-                if (currentStage < stages.length) {
-                    const stage = stages[currentStage];
-                    updateProgress(stage.progress, stage.text);
-                    setTimeout(processStage, 1000);
-                    currentStage++;
-                } else {
-                    // Processing complete
-                    completeProcessing();
+            try {
+                // Load FFmpeg if not already loaded
+                const ffmpegLoaded = await loadFFmpeg();
+                if (!ffmpegLoaded) {
+                    return;
                 }
+                
+                updateProgress(20, 'Loading video data...');
+                
+                // Write input file to FFmpeg filesystem
+                const inputFileName = 'input.' + selectedFile.name.split('.').pop();
+                const outputFileName = 'output.mp4';
+                
+                await ffmpeg.FS('writeFile', inputFileName, await fetchFile(selectedFile));
+                
+                updateProgress(40, 'Analyzing video format...');
+                
+                // Build FFmpeg command based on resize mode
+                let ffmpegArgs = [];
+                
+                switch (resizeMode) {
+                    case 'maintain':
+                        // Scale while maintaining aspect ratio with padding
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-vf', `scale=${targetWidth}:${targetHeight}:force_original_aspect_ratio=decrease,pad=${targetWidth}:${targetHeight}:(ow-iw)/2:(oh-ih)/2`,
+                            '-c:v', 'libx264',
+                            '-crf', '23',
+                            '-preset', 'medium',
+                            '-c:a', 'aac',
+                            '-b:a', '128k',
+                            '-y', outputFileName
+                        ];
+                        break;
+                    case 'crop':
+                        // Crop to exact dimensions
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-vf', `scale=${targetWidth}:${targetHeight}:force_original_aspect_ratio=increase,crop=${targetWidth}:${targetHeight}`,
+                            '-c:v', 'libx264',
+                            '-crf', '23',
+                            '-preset', 'medium',
+                            '-c:a', 'aac',
+                            '-b:a', '128k',
+                            '-y', outputFileName
+                        ];
+                        break;
+                    case 'stretch':
+                        // Stretch to fit dimensions (may distort)
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-vf', `scale=${targetWidth}:${targetHeight}`,
+                            '-c:v', 'libx264',
+                            '-crf', '23',
+                            '-preset', 'medium',
+                            '-c:a', 'aac',
+                            '-b:a', '128k',
+                            '-y', outputFileName
+                        ];
+                        break;
+                    case 'pad':
+                        // Add black bars to maintain aspect ratio
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-vf', `scale=${targetWidth}:${targetHeight}:force_original_aspect_ratio=decrease,pad=${targetWidth}:${targetHeight}:(ow-iw)/2:(oh-ih)/2:black`,
+                            '-c:v', 'libx264',
+                            '-crf', '23',
+                            '-preset', 'medium',
+                            '-c:a', 'aac',
+                            '-b:a', '128k',
+                            '-y', outputFileName
+                        ];
+                        break;
+                }
+                
+                updateProgress(60, `Resizing to ${targetWidth} × ${targetHeight}...`);
+                
+                // Execute FFmpeg command
+                await ffmpeg.run(...ffmpegArgs);
+                
+                updateProgress(80, 'Encoding video...');
+                
+                // Read output file
+                const data = ffmpeg.FS('readFile', outputFileName);
+                outputBlob = new Blob([data.buffer], { type: 'video/mp4' });
+                
+                updateProgress(100, 'Finalizing output...');
+                
+                // Clean up
+                ffmpeg.FS('unlink', inputFileName);
+                ffmpeg.FS('unlink', outputFileName);
+                
+                // Complete processing
+                completeProcessing();
+                
+            } catch (error) {
+                console.error('FFmpeg error:', error);
+                showError(`Video processing failed: ${error.message}`);
+                document.getElementById('progressSection').style.display = 'none';
             }
-            
-            processStage();
         }
 
         function updateProgress(percentage, text) {
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressText').textContent = text;
+            
+            // Update stage indicators
+            const stages = document.querySelectorAll('.stage-item');
+            stages.forEach(stage => stage.classList.remove('active'));
+            
+            if (percentage <= 33) {
+                stages[0].classList.add('active'); // Upload stage
+            } else if (percentage <= 66) {
+                stages[0].classList.add('active');
+                stages[1].classList.add('active'); // Process stage
+            } else {
+                stages[0].classList.add('active');
+                stages[1].classList.add('active');
+                stages[2].classList.add('active'); // Complete stage
+            }
         }
 
         function completeProcessing() {
             // Hide progress section
             document.getElementById('progressSection').style.display = 'none';
             
-            // Create a mock output file for demonstration
-            // In real implementation, this would be the actual resized video
             const targetWidth = parseInt(document.getElementById('width').value);
             const targetHeight = parseInt(document.getElementById('height').value);
             
@@ -742,20 +857,24 @@
                 `${originalDimensions.width} × ${originalDimensions.height}`;
             document.getElementById('outputDimensions').textContent = 
                 `${targetWidth} × ${targetHeight}`;
-            document.getElementById('outputFileSize').textContent = 'Calculating...';
+            document.getElementById('outputFileSize').textContent = formatFileSize(outputBlob.size);
             
-            // For demo purposes, show the original video in preview
+            // Show the processed video in preview
             const previewVideo = document.getElementById('previewVideo');
-            previewVideo.src = URL.createObjectURL(selectedFile);
+            const previewUrl = URL.createObjectURL(outputBlob);
+            previewVideo.src = previewUrl;
             previewVideo.load();
             
             showNotification('✅ Video processing complete!');
         }
 
         function downloadVideo() {
-            // TODO: Implement actual download with processed video
-            // For demo, download the original file
-            const url = URL.createObjectURL(selectedFile);
+            if (!outputBlob) {
+                showError('No processed video available for download.');
+                return;
+            }
+            
+            const url = URL.createObjectURL(outputBlob);
             const a = document.createElement('a');
             a.href = url;
             a.download = `resized_${selectedFile.name}`;
@@ -768,8 +887,34 @@
         }
 
         function shareVideo() {
-            // TODO: Implement sharing functionality
-            showNotification('🔗 Share feature coming soon!');
+            if (!outputBlob) {
+                showError('No processed video available for sharing.');
+                return;
+            }
+            
+            // Create a shareable link (in a real implementation, you might upload to a temporary server)
+            if (navigator.share) {
+                const file = new File([outputBlob], `resized_${selectedFile.name}`, { type: 'video/mp4' });
+                navigator.share({
+                    title: 'Resized Video',
+                    text: 'Check out my resized video!',
+                    files: [file]
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    fallbackShare();
+                });
+            } else {
+                fallbackShare();
+            }
+        }
+
+        function fallbackShare() {
+            const url = URL.createObjectURL(outputBlob);
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('🔗 Share link copied to clipboard!');
+            }).catch(() => {
+                showNotification('🔗 Share feature not supported on this device');
+            });
         }
 
         function showNotification(message) {
@@ -787,6 +932,7 @@
                 font-weight: 500;
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
+                max-width: 300px;
             `;
             
             document.body.appendChild(notification);
@@ -794,7 +940,9 @@
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 3000);
         }
@@ -814,6 +962,7 @@
                 font-weight: 500;
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
+                max-width: 300px;
             `;
             
             document.body.appendChild(notification);
@@ -821,7 +970,9 @@
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 5000);
         }
@@ -834,15 +985,23 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
+        // Helper function to convert File to Uint8Array for FFmpeg
+        async function fetchFile(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            return new Uint8Array(arrayBuffer);
+        }
+
         // Mobile menu functionality
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
         
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
-        });
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+            });
+        }
 
         // Add CSS animations for notifications
         const style = document.createElement('style');

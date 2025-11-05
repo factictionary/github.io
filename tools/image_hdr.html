@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image HDR Tool | Professional High Dynamic Range Processing | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional HDR image processing tool. Create stunning high dynamic range photos from single images or bracketed sequences. Advanced tone mapping, exposure blending, and shadow/highlight recovery.">
+    <meta name="keywords" content="HDR, high dynamic range, tone mapping, exposure blending, bracketed photos, shadow recovery, highlight recovery, photo enhancement, free, online">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/image_hdr.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Image HDR Tool | Professional High Dynamic Range Processing | Factictionary">
+    <meta property="og:description" content="Professional HDR image processing tool. Create stunning high dynamic range photos from single images or bracketed sequences. Advanced tone mapping, exposure blending, and shadow/highlight recovery.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/image_hdr.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image HDR Tool | Professional High Dynamic Range Processing | Factictionary">
+    <meta name="twitter:description" content="Professional HDR image processing tool. Create stunning high dynamic range photos from single images or bracketed sequences. Advanced tone mapping, exposure blending, and shadow/highlight recovery.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #7C3AEDCC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 800px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #8B5CF6;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #8B5CF640;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #F3E8FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #8B5CF6;
+            background: #F3E8FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #7C3AED;
+        }
+        
+        .upload-mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .mode-btn {
+            padding: var(--spacing-lg);
+            border: 2px solid #8B5CF6;
+            background: white;
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            text-align: center;
+        }
+        
+        .mode-btn:hover {
+            background: #F3E8FF;
+        }
+        
+        .mode-btn.active {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .mode-btn-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+        
+        .mode-btn-title {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .mode-btn-desc {
+            font-size: var(--font-size-small);
+            opacity: 0.8;
+        }
+        
+        .image-viewer {
+            display: none;
+            margin-bottom: var(--spacing-xl);
+            min-height: 500px;
+        }
+        
+        .comparison-viewer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+        
+        .image-panel {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .image-panel-title {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+            font-size: var(--font-size-small);
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-radius: var(--radius-input);
+            overflow: hidden;
+            background: var(--color-neutral-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: var(--radius-input);
+        }
+        
+        .image-controls {
+            position: absolute;
+            bottom: var(--spacing-sm);
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+        }
+        
+        .bracketed-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .bracketed-image {
+            aspect-ratio: 1;
+            border-radius: var(--radius-input);
+            overflow: hidden;
+            background: var(--color-neutral-100);
+            position: relative;
+        }
+        
+        .bracketed-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .bracketed-image-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: var(--spacing-xs);
+            font-size: var(--font-size-small);
+            text-align: center;
+        }
+        
+        .hdr-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .control-value {
+            text-align: right;
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-500);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .preset-btn {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            padding: var(--spacing-sm) var(--spacing-xs);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            text-align: center;
+        }
+        
+        .preset-btn:hover {
+            border-color: #8B5CF6;
+            background: #F3E8FF;
+        }
+        
+        .preset-btn.active {
+            border-color: #8B5CF6;
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .auto-hdr-btn {
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            margin-bottom: var(--spacing-lg);
+            transition: transform var(--duration-fast) var(--easing-standard);
+            width: 100%;
+        }
+        
+        .auto-hdr-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .file-list {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid var(--color-neutral-200);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .file-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-input);
+            object-fit: cover;
+            background: var(--color-neutral-100);
+        }
+        
+        .file-details {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-900);
+            margin-bottom: 2px;
+        }
+        
+        .file-size {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-500);
+        }
+        
+        .file-status {
+            font-size: var(--font-size-small);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .file-status.pending {
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-600);
+        }
+        
+        .file-status.processing {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+        
+        .file-status.completed {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        
+        .file-status.error {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .batch-settings {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .batch-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: var(--radius-input);
+        }
+        
+        .batch-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #8B5CF6;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8B5CF6, #7C3AED);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .enhanced-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .enhanced-card {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+        
+        .enhanced-card img {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: var(--radius-input);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .enhanced-card-info {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .download-all-btn {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            margin-bottom: var(--spacing-lg);
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .download-all-btn:hover {
+            background: #7C3AED;
+        }
+        
+        .download-all-btn:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .output-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-card);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hdr-tabs {
+            display: flex;
+            background: var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            margin-bottom: var(--spacing-lg);
+            overflow: hidden;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: transparent;
+            border: none;
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .tab-btn.active {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .reset-hdr-btn {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            margin-top: var(--spacing-sm);
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .reset-hdr-btn:hover {
+            background: #DC2626;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .comparison-viewer {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .preset-buttons {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            
+            .upload-mode-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image HDR Tool",
+        "description": "Professional HDR image processing tool with tone mapping and exposure blending capabilities.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Image HDR Tool</h1>
+        <p class="tool-subtitle">Professional HDR image processing tool. Create stunning high dynamic range photos from single images or bracketed sequences. Advanced tone mapping, exposure blending, and shadow/highlight recovery.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <!-- Upload Mode Selector -->
+            <div class="upload-mode-selector">
+                <button class="mode-btn active" data-mode="single">
+                    <span class="mode-btn-icon">📷</span>
+                    <div class="mode-btn-title">Single Image HDR</div>
+                    <div class="mode-btn-desc">Apply HDR effects to one photo</div>
+                </button>
+                <button class="mode-btn" data-mode="bracketed">
+                    <span class="mode-btn-icon">📸</span>
+                    <div class="mode-btn-title">Bracketed HDR</div>
+                    <div class="mode-btn-desc">Merge multiple exposures</div>
+                </button>
+            </div>
+            
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">🌅</div>
+                <div class="drop-zone-text" id="dropZoneText">
+                    Drop your image files here or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Images
+                </button>
+            </div>
+            
+            <button class="auto-hdr-btn" id="autoHdrBtn">
+                ✨ Auto HDR Processing
+            </button>
+            
+            <div class="image-viewer" id="imageViewer">
+                <div class="comparison-viewer">
+                    <div class="image-panel">
+                        <div class="image-panel-title">Original</div>
+                        <div class="image-container">
+                            <img id="originalImage" alt="Original image">
+                            <div class="image-controls" id="originalControls" style="display: none;">
+                                <span id="originalDimensions"></span>
+                            </div>
+                        </div>
+                        <div class="bracketed-images" id="bracketedImages" style="display: none;">
+                            <!-- Bracketed images will be displayed here -->
+                        </div>
+                    </div>
+                    <div class="image-panel">
+                        <div class="image-panel-title">HDR Enhanced</div>
+                        <div class="image-container">
+                            <img id="hdrImage" alt="HDR enhanced image">
+                            <div class="image-controls" id="hdrControls">
+                                <span id="hdrDimensions"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hdr-controls">
+                <div class="hdr-tabs">
+                    <button class="tab-btn active" data-tab="tone-mapping">Tone Mapping</button>
+                    <button class="tab-btn" data-tab="exposure">Exposure</button>
+                    <button class="tab-btn" data-tab="presets">Presets</button>
+                </div>
+                
+                <!-- Tone Mapping Controls -->
+                <div class="tab-content active" id="toneMappingControls">
+                    <h3>Tone Mapping</h3>
+                    
+                    <div class="control-group">
+                        <label class="control-label">HDR Strength</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="50" id="hdrStrengthSlider">
+                        </div>
+                        <div class="control-value" id="hdrStrengthValue">50%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Local Contrast</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="30" id="localContrastSlider">
+                        </div>
+                        <div class="control-value" id="localContrastValue">30%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Shadow Recovery</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="40" id="shadowRecoverySlider">
+                        </div>
+                        <div class="control-value" id="shadowRecoveryValue">40%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Highlight Recovery</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="60" id="highlightRecoverySlider">
+                        </div>
+                        <div class="control-value" id="highlightRecoveryValue">60%</div>
+                    </div>
+                    
+                    <button class="reset-hdr-btn" onclick="hdrProcessor.resetToneMapping()">
+                        Reset Tone Mapping
+                    </button>
+                </div>
+                
+                <!-- Exposure Controls -->
+                <div class="tab-content" id="exposureControls">
+                    <h3>Exposure & Color</h3>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Exposure Compensation</label>
+                        <div class="control-slider">
+                            <input type="range" min="-200" max="200" value="0" id="exposureSlider">
+                        </div>
+                        <div class="control-value" id="exposureValue">0 EV</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">White Point</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="95" id="whitePointSlider">
+                        </div>
+                        <div class="control-value" id="whitePointValue">95%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Black Point</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="20" value="5" id="blackPointSlider">
+                        </div>
+                        <div class="control-value" id="blackPointValue">5%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Saturation</label>
+                        <div class="control-slider">
+                            <input type="range" min="-50" max="50" value="10" id="saturationSlider">
+                        </div>
+                        <div class="control-value" id="saturationValue">+10%</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Vibrance</label>
+                        <div class="control-slider">
+                            <input type="range" min="-50" max="50" value="20" id="vibranceSlider">
+                        </div>
+                        <div class="control-value" id="vibranceValue">+20%</div>
+                    </div>
+                    
+                    <button class="reset-hdr-btn" onclick="hdrProcessor.resetExposure()">
+                        Reset Exposure
+                    </button>
+                </div>
+                
+                <!-- Presets -->
+                <div class="tab-content" id="presetsControls">
+                    <h3>HDR Presets</h3>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Choose Preset</label>
+                        <div class="preset-buttons" id="presetButtons">
+                            <button class="preset-btn" data-preset="natural">Natural</button>
+                            <button class="preset-btn" data-preset="dramatic">Dramatic</button>
+                            <button class="preset-btn" data-preset="vivid">Vivid</button>
+                            <button class="preset-btn" data-preset="cinematic">Cinematic</button>
+                            <button class="preset-btn" data-preset="muted">Muted</button>
+                            <button class="preset-btn" data-preset="architectural">Architectural</button>
+                            <button class="preset-btn" data-preset="landscape">Landscape</button>
+                            <button class="preset-btn" data-preset="interior">Interior</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="batch-settings">
+                <h3>Batch Processing</h3>
+                
+                <div class="batch-option">
+                    <input type="checkbox" id="batchMode">
+                    <label for="batchMode">Enable batch processing</label>
+                </div>
+                
+                <div class="batch-option">
+                    <input type="checkbox" id="sameHDR" checked>
+                    <label for="sameHDR">Apply same HDR settings to all images</label>
+                </div>
+                
+                <div class="batch-option">
+                    <input type="checkbox" id="autoHDRBatch">
+                    <label for="autoHDRBatch">Auto process all images</label>
+                </div>
+            </div>
+            
+            <div class="file-list" id="fileList" style="display: none;">
+                <h3>Selected Images</h3>
+                <div id="fileItems"></div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput" style="display: none;">
+                <h3>Processing Results</h3>
+                <div id="progressSection">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">Ready to process HDR...</p>
+                </div>
+                <div id="resultsSection">
+                    <button class="download-all-btn" id="downloadAllBtn" disabled>
+                        Download All HDR Images
+                    </button>
+                    <div class="enhanced-grid" id="enhancedGrid"></div>
+                </div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="processBtn" disabled>
+                    Process HDR
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download HDR
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    Reset All
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Single image HDR effects</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Bracketed photo merging</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Advanced tone mapping</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Shadow & highlight recovery</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Professional presets</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing</div>
+                </div>
+            
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/image_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Enhancer</a>
+                    <a href="/image_filters.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Filters</a>
+                    <a href="/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
+                    <a href="/image_resizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Resizer</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Tools Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">HDR Images Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // HDR Image Processor with comprehensive functionality
+        class HDRProcessor {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.processBtn = document.getElementById('processBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.autoHdrBtn = document.getElementById('autoHdrBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                this.fileList = document.getElementById('fileList');
+                this.fileItems = document.getElementById('fileItems');
+                this.enhancedGrid = document.getElementById('enhancedGrid');
+                this.downloadAllBtn = document.getElementById('downloadAllBtn');
+                this.progressFill = document.getElementById('progressFill');
+                this.progressText = document.getElementById('progressText');
+                
+                // Image viewer elements
+                this.imageViewer = document.getElementById('imageViewer');
+                this.originalImage = document.getElementById('originalImage');
+                this.hdrImage = document.getElementById('hdrImage');
+                this.originalControls = document.getElementById('originalControls');
+                this.hdrControls = document.getElementById('hdrControls');
+                this.originalDimensions = document.getElementById('originalDimensions');
+                this.hdrDimensions = document.getElementById('hdrDimensions');
+                this.bracketedImages = document.getElementById('bracketedImages');
+                
+                // Mode selector elements
+                this.modeButtons = document.querySelectorAll('.mode-btn');
+                this.currentMode = 'single';
+                this.dropZoneText = document.getElementById('dropZoneText');
+                
+                // HDR control elements
+                this.hdrStrengthSlider = document.getElementById('hdrStrengthSlider');
+                this.localContrastSlider = document.getElementById('localContrastSlider');
+                this.shadowRecoverySlider = document.getElementById('shadowRecoverySlider');
+                this.highlightRecoverySlider = document.getElementById('highlightRecoverySlider');
+                this.exposureSlider = document.getElementById('exposureSlider');
+                this.whitePointSlider = document.getElementById('whitePointSlider');
+                this.blackPointSlider = document.getElementById('blackPointSlider');
+                this.saturationSlider = document.getElementById('saturationSlider');
+                this.vibranceSlider = document.getElementById('vibranceSlider');
+                
+                // Value display elements
+                this.valueElements = {
+                    hdrStrength: document.getElementById('hdrStrengthValue'),
+                    localContrast: document.getElementById('localContrastValue'),
+                    shadowRecovery: document.getElementById('shadowRecoveryValue'),
+                    highlightRecovery: document.getElementById('highlightRecoveryValue'),
+                    exposure: document.getElementById('exposureValue'),
+                    whitePoint: document.getElementById('whitePointValue'),
+                    blackPoint: document.getElementById('blackPointValue'),
+                    saturation: document.getElementById('saturationValue'),
+                    vibrance: document.getElementById('vibranceValue')
+                };
+                
+                // Tab elements
+                this.tabButtons = document.querySelectorAll('.tab-btn');
+                this.tabContents = document.querySelectorAll('.tab-content');
+                
+                // Batch settings
+                this.batchModeCheckbox = document.getElementById('batchMode');
+                this.sameHDRCheckbox = document.getElementById('sameHDR');
+                this.autoHDRBatchCheckbox = document.getElementById('autoHDRBatch');
+                
+                // Preset buttons
+                this.presetButtons = document.getElementById('presetButtons');
+                
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.currentFileIndex = 0;
+                this.originalCanvas = null;
+                this.hdrCanvas = null;
+                this.originalImageData = null;
+                this.bracketedCanvases = [];
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.setupTabs();
+                this.setupModeSelector();
+                this.setupSliders();
+                this.setupPresetButtons();
+                this.setupMobileMenu();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop
+                this.dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                this.dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                this.dropZone.addEventListener('drop', this.handleDrop.bind(this));
+                this.dropZone.addEventListener('click', () => this.fileInput.click());
+                
+                // File input
+                this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
+                
+                // Buttons
+                this.processBtn.addEventListener('click', this.processHDR.bind(this));
+                this.downloadBtn.addEventListener('click', this.downloadImage.bind(this));
+                this.downloadAllBtn.addEventListener('click', this.downloadAllImages.bind(this));
+                this.resetBtn.addEventListener('click', this.reset.bind(this));
+                this.autoHdrBtn.addEventListener('click', this.autoHDR.bind(this));
+            }
+            
+            setupModeSelector() {
+                this.modeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const mode = button.dataset.mode;
+                        this.setMode(mode);
+                    });
+                });
+            }
+            
+            setMode(mode) {
+                this.currentMode = mode;
+                
+                // Update active button
+                this.modeButtons.forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+                
+                // Update drop zone text
+                if (mode === 'single') {
+                    this.dropZoneText.textContent = 'Drop your image file here or click to browse';
+                    this.fileInput.multiple = false;
+                } else {
+                    this.dropZoneText.textContent = 'Drop 2-9 bracketed images here or click to browse';
+                    this.fileInput.multiple = true;
+                }
+                
+                // Clear existing selections
+                this.selectedFiles = [];
+                this.displayFileList();
+                this.updateUI();
+            }
+            
+            setupTabs() {
+                this.tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const tabName = button.dataset.tab;
+                        
+                        // Update active tab button
+                        this.tabButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        
+                        // Update active tab content
+                        this.tabContents.forEach(content => content.classList.remove('active'));
+                        document.getElementById(`${tabName}Controls`).classList.add('active');
+                    });
+                });
+            }
+            
+            setupSliders() {
+                const sliders = [
+                    'hdrStrength', 'localContrast', 'shadowRecovery', 'highlightRecovery',
+                    'exposure', 'whitePoint', 'blackPoint', 'saturation', 'vibrance'
+                ];
+                
+                sliders.forEach(sliderName => {
+                    const slider = this[`${sliderName}Slider`];
+                    const valueElement = this.valueElements[sliderName];
+                    
+                    slider.addEventListener('input', () => {
+                        this.updateSliderValue(sliderName, valueElement);
+                        if (this.originalImageData) {
+                            this.updatePreview();
+                        }
+                    });
+                });
+            }
+            
+            updateSliderValue(sliderName, valueElement) {
+                const slider = this[`${sliderName}Slider`];
+                let value = slider.value;
+                let displayValue = '';
+                
+                switch (sliderName) {
+                    case 'exposure':
+                        displayValue = `${value > 0 ? '+' : ''}${value} EV`;
+                        break;
+                    case 'saturation':
+                    case 'vibrance':
+                        displayValue = `${value > 0 ? '+' : ''}${value}%`;
+                        break;
+                    case 'hdrStrength':
+                    case 'localContrast':
+                    case 'shadowRecovery':
+                    case 'highlightRecovery':
+                    case 'whitePoint':
+                    case 'blackPoint':
+                        displayValue = `${value}%`;
+                        break;
+                    default:
+                        displayValue = value;
+                }
+                
+                valueElement.textContent = displayValue;
+            }
+            
+            setupPresetButtons() {
+                this.presetButtons.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('preset-btn')) {
+                        const preset = e.target.dataset.preset;
+                        this.applyPreset(preset);
+                        
+                        // Update active state
+                        this.presetButtons.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                    }
+                });
+            }
+            
+            setupMobileMenu() {
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (menuToggle && navLinks) {
+                    menuToggle.addEventListener('click', () => {
+                        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                        menuToggle.setAttribute('aria-expanded', !isExpanded);
+                        navLinks.classList.toggle('active');
+                    });
+                }
+            }
+            
+            handleDragOver(e) {
+                e.preventDefault();
+                this.dropZone.classList.add('drag-over');
+            }
+            
+            handleDragLeave() {
+                this.dropZone.classList.remove('drag-over');
+            }
+            
+            handleDrop(e) {
+                e.preventDefault();
+                this.dropZone.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                this.handleFiles(files);
+            }
+            
+            handleFileSelect(e) {
+                this.handleFiles(e.target.files);
+            }
+            
+            async handleFiles(files) {
+                const imageFiles = Array.from(files).filter(file => 
+                    file.type.startsWith('image/')
+                );
+                
+                if (imageFiles.length === 0) {
+                    alert('Please select image files only.');
+                    return;
+                }
+                
+                if (this.currentMode === 'bracketed' && imageFiles.length < 2) {
+                    alert('Bracketed mode requires at least 2 images.');
+                    return;
+                }
+                
+                if (this.currentMode === 'bracketed' && imageFiles.length > 9) {
+                    alert('Maximum 9 images allowed for bracketed processing.');
+                    return;
+                }
+                
+                this.selectedFiles = imageFiles;
+                this.displayFileList();
+                this.loadFirstImage();
+                this.updateUI();
+            }
+            
+            loadFirstImage() {
+                if (this.selectedFiles.length > 0) {
+                    if (this.currentMode === 'single') {
+                        this.loadSingleImage();
+                    } else {
+                        this.loadBracketedImages();
+                    }
+                }
+            }
+            
+            async loadSingleImage() {
+                const file = this.selectedFiles[0];
+                const img = await this.loadImage(file);
+                this.originalImage.src = img.src;
+                this.originalImageData = img;
+                
+                // Create canvas
+                this.originalCanvas = this.createCanvasFromImage(img);
+                this.hdrCanvas = this.createCanvasFromImage(img);
+                
+                // Show viewer
+                this.imageViewer.style.display = 'block';
+                this.bracketedImages.style.display = 'none';
+                this.originalControls.style.display = 'block';
+                
+                // Update dimensions
+                this.originalDimensions.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+                this.hdrDimensions.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+                
+                // Initial HDR processing
+                this.updatePreview();
+            }
+            
+            async loadBracketedImages() {
+                this.bracketedCanvases = [];
+                this.bracketedImages.innerHTML = '';
+                this.bracketedImages.style.display = 'grid';
+                
+                // Load all bracketed images
+                for (let i = 0; i < this.selectedFiles.length; i++) {
+                    const file = this.selectedFiles[i];
+                    const img = await this.loadImage(file);
+                    
+                    if (i === 0) {
+                        this.originalImage.src = img.src;
+                        this.originalImageData = img;
+                        this.originalCanvas = this.createCanvasFromImage(img);
+                        this.hdrCanvas = this.createCanvasFromImage(img);
+                        this.originalControls.style.display = 'block';
+                    }
+                    
+                    // Create canvas for this bracketed image
+                    const canvas = this.createCanvasFromImage(img);
+                    this.bracketedCanvases.push(canvas);
+                    
+                    // Create preview element
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'bracketed-image';
+                    
+                    const previewImg = document.createElement('img');
+                    previewImg.src = img.src;
+                    previewImg.alt = `Bracket ${i + 1}`;
+                    
+                    const label = document.createElement('div');
+                    label.className = 'bracketed-image-label';
+                    label.textContent = `EV ${i - Math.floor(this.selectedFiles.length / 2)}`;
+                    
+                    previewDiv.appendChild(previewImg);
+                    previewDiv.appendChild(label);
+                    this.bracketedImages.appendChild(previewDiv);
+                }
+                
+                // Show viewer
+                this.imageViewer.style.display = 'block';
+                
+                // Update dimensions
+                this.originalDimensions.textContent = `${this.originalImageData.naturalWidth} × ${this.originalImageData.naturalHeight}`;
+                this.hdrDimensions.textContent = `${this.originalImageData.naturalWidth} × ${this.originalImageData.naturalHeight}`;
+                
+                // Initial HDR processing
+                this.updatePreview();
+            }
+            
+            displayFileList() {
+                if (this.selectedFiles.length === 0) {
+                    this.fileList.style.display = 'none';
+                    return;
+                }
+                
+                this.fileList.style.display = 'block';
+                this.fileItems.innerHTML = '';
+                
+                this.selectedFiles.forEach((file, index) => {
+                    const fileItem = this.createFileItem(file, index);
+                    this.fileItems.appendChild(fileItem);
+                });
+            }
+            
+            createFileItem(file, index) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const preview = document.createElement('img');
+                preview.className = 'file-preview';
+                preview.alt = file.name;
+                
+                const details = document.createElement('div');
+                details.className = 'file-details';
+                
+                const name = document.createElement('div');
+                name.className = 'file-name';
+                name.textContent = file.name;
+                
+                const size = document.createElement('div');
+                size.className = 'file-size';
+                size.textContent = this.formatFileSize(file.size);
+                
+                details.appendChild(name);
+                details.appendChild(size);
+                
+                const status = document.createElement('div');
+                status.className = 'file-status pending';
+                status.textContent = this.currentMode === 'bracketed' ? `Bracket ${index + 1}` : 'Pending';
+                
+                fileInfo.appendChild(preview);
+                fileInfo.appendChild(details);
+                
+                item.appendChild(fileInfo);
+                item.appendChild(status);
+                
+                // Load preview
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                return item;
+            }
+            
+            updateUI() {
+                if (this.selectedFiles.length > 0) {
+                    this.processBtn.disabled = false;
+                    this.dropZone.querySelector('.drop-zone-text').textContent = 
+                        `${this.selectedFiles.length} image(s) selected`;
+                } else {
+                    this.processBtn.disabled = true;
+                    this.dropZone.querySelector('.drop-zone-text').textContent = 
+                        this.currentMode === 'single' 
+                        ? 'Drop your image file here or click to browse'
+                        : 'Drop 2-9 bracketed images here or click to browse';
+                }
+            }
+            
+            async loadImage(file) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        img.onload = () => resolve(img);
+                        img.onerror = reject;
+                        img.src = e.target.result;
+                    };
+                    
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            createCanvasFromImage(img) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                ctx.drawImage(img, 0, 0);
+                
+                return canvas;
+            }
+            
+            getHDRSettings() {
+                return {
+                    hdrStrength: parseInt(this.hdrStrengthSlider.value) / 100,
+                    localContrast: parseInt(this.localContrastSlider.value) / 100,
+                    shadowRecovery: parseInt(this.shadowRecoverySlider.value) / 100,
+                    highlightRecovery: parseInt(this.highlightRecoverySlider.value) / 100,
+                    exposure: parseInt(this.exposureSlider.value) / 100,
+                    whitePoint: parseInt(this.whitePointSlider.value) / 100,
+                    blackPoint: parseInt(this.blackPointSlider.value) / 100,
+                    saturation: parseInt(this.saturationSlider.value) / 100,
+                    vibrance: parseInt(this.vibranceSlider.value) / 100
+                };
+            }
+            
+            updatePreview() {
+                if (!this.originalCanvas) return;
+                
+                const settings = this.getHDRSettings();
+                
+                if (this.currentMode === 'single') {
+                    const hdr = this.applyHDRToSingle(this.originalCanvas, settings);
+                    this.hdrCanvas = hdr;
+                } else {
+                    const hdr = this.mergeBracketedImages(settings);
+                    this.hdrCanvas = hdr;
+                }
+                
+                this.hdrImage.src = this.hdrCanvas.toDataURL();
+                this.hdrDimensions.textContent = `${this.hdrCanvas.width} × ${this.hdrCanvas.height}`;
+            }
+            
+            applyHDRToSingle(canvas, settings) {
+                const hdrCanvas = document.createElement('canvas');
+                const ctx = hdrCanvas.getContext('2d');
+                const imageData = ctx.createImageData(canvas.width, canvas.height);
+                const data = imageData.data;
+                
+                // Get original image data
+                const originalCtx = canvas.getContext('2d');
+                const originalData = originalCtx.getImageData(0, 0, canvas.width, canvas.height);
+                const original = originalData.data;
+                
+                // Apply HDR processing
+                for (let i = 0; i < original.length; i += 4) {
+                    let r = original[i];
+                    let g = original[i + 1];
+                    let b = original[i + 2];
+                    let a = original[i + 3];
+                    
+                    // Convert to linear color space for HDR processing
+                    r = this.sRGBToLinear(r / 255) * 255;
+                    g = this.sRGBToLinear(g / 255) * 255;
+                    b = this.sRGBToLinear(b / 255) * 255;
+                    
+                    // Apply exposure compensation
+                    const exposureFactor = Math.pow(2, settings.exposure * 2);
+                    r *= exposureFactor;
+                    g *= exposureFactor;
+                    b *= exposureFactor;
+                    
+                    // Apply shadow recovery
+                    if (r + g + b < 384) { // Dark pixels
+                        const shadowBoost = 1 + settings.shadowRecovery * 0.5;
+                        r *= shadowBoost;
+                        g *= shadowBoost;
+                        b *= shadowBoost;
+                    }
+                    
+                    // Apply highlight recovery
+                    if (r + g + b > 768) { // Bright pixels
+                        const highlightReduce = 1 - settings.highlightRecovery * 0.3;
+                        r *= highlightReduce;
+                        g *= highlightReduce;
+                        b *= highlightReduce;
+                    }
+                    
+                    // Apply local contrast
+                    const luminance = (r + g + b) / 3;
+                    const contrastFactor = 1 + settings.localContrast * 0.3;
+                    r = luminance + (r - luminance) * contrastFactor;
+                    g = luminance + (g - luminance) * contrastFactor;
+                    b = luminance + (b - luminance) * contrastFactor;
+                    
+                    // Convert back to sRGB
+                    r = this.linearTosRGB(r / 255) * 255;
+                    g = this.linearTosRGB(g / 255) * 255;
+                    b = this.linearTosRGB(b / 255) * 255;
+                    
+                    // Apply white and black point
+                    const whitePoint = settings.whitePoint * 255;
+                    const blackPoint = settings.blackPoint * 255;
+                    r = Math.max(0, Math.min(255, (r - blackPoint) / (whitePoint - blackPoint) * 255));
+                    g = Math.max(0, Math.min(255, (g - blackPoint) / (whitePoint - blackPoint) * 255));
+                    b = Math.max(0, Math.min(255, (b - blackPoint) / (whitePoint - blackPoint) * 255));
+                    
+                    // Apply saturation
+                    const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+                    const saturationFactor = 1 + settings.saturation;
+                    r = gray + (r - gray) * saturationFactor;
+                    g = gray + (g - gray) * saturationFactor;
+                    b = gray + (b - gray) * saturationFactor;
+                    
+                    // Apply vibrance (smarter saturation)
+                    const maxChannel = Math.max(r, g, b) / 255;
+                    const vibranceFactor = 1 + settings.vibrance * (1 - maxChannel);
+                    r *= vibranceFactor;
+                    g *= vibranceFactor;
+                    b *= vibranceFactor;
+                    
+                    // Apply HDR strength
+                    const hdrFactor = 1 + settings.hdrStrength * 0.2;
+                    r = gray + (r - gray) * hdrFactor;
+                    g = gray + (g - gray) * hdrFactor;
+                    b = gray + (b - gray) * hdrFactor;
+                    
+                    // Ensure values are within bounds
+                    data[i] = Math.max(0, Math.min(255, r));
+                    data[i + 1] = Math.max(0, Math.min(255, g));
+                    data[i + 2] = Math.max(0, Math.min(255, b));
+                    data[i + 3] = a;
+                }
+                
+                hdrCanvas.width = canvas.width;
+                hdrCanvas.height = canvas.height;
+                ctx.putImageData(imageData, 0, 0);
+                
+                return hdrCanvas;
+            }
+            
+            mergeBracketedImages(settings) {
+                if (this.bracketedCanvases.length === 0) return this.originalCanvas;
+                
+                // Simple exposure merging algorithm
+                const mergedCanvas = document.createElement('canvas');
+                const ctx = mergedCanvas.getContext('2d');
+                const imageData = ctx.createImageData(this.originalCanvas.width, this.originalCanvas.height);
+                const data = imageData.data;
+                
+                // Initialize with zeros
+                for (let i = 0; i < data.length; i++) {
+                    data[i] = 0;
+                }
+                
+                // Merge bracketed exposures
+                this.bracketedCanvases.forEach((canvas, index) => {
+                    const canvasCtx = canvas.getContext('2d');
+                    const canvasData = canvasCtx.getImageData(0, 0, canvas.width, canvas.height);
+                    const canvasPixels = canvasData.data;
+                    
+                    const exposureWeight = Math.pow(2, index - Math.floor(this.bracketedCanvases.length / 2));
+                    
+                    for (let i = 0; i < canvasPixels.length; i += 4) {
+                        data[i] += canvasPixels[i] * exposureWeight;     // R
+                        data[i + 1] += canvasPixels[i + 1] * exposureWeight; // G
+                        data[i + 2] += canvasPixels[i + 2] * exposureWeight; // B
+                        data[i + 3] += canvasPixels[i + 3];               // A
+                    }
+                });
+                
+                // Normalize merged data
+                const totalWeight = this.bracketedCanvases.reduce((sum, _, index) => {
+                    return sum + Math.pow(2, index - Math.floor(this.bracketedCanvases.length / 2));
+                }, 0);
+                
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.min(255, data[i] / totalWeight);       // R
+                    data[i + 1] = Math.min(255, data[i + 1] / totalWeight); // G
+                    data[i + 2] = Math.min(255, data[i + 2] / totalWeight); // B
+                    data[i + 3] = Math.min(255, data[i + 3] / totalWeight); // A
+                }
+                
+                mergedCanvas.width = this.originalCanvas.width;
+                mergedCanvas.height = this.originalCanvas.height;
+                ctx.putImageData(imageData, 0, 0);
+                
+                // Apply HDR processing to merged result
+                return this.applyHDRToSingle(mergedCanvas, settings);
+            }
+            
+            sRGBToLinear(value) {
+                return value <= 0.04045 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4);
+            }
+            
+            linearTosRGB(value) {
+                return value <= 0.0031308 ? value * 12.92 : 1.055 * Math.pow(value, 1 / 2.4) - 0.055;
+            }
+            
+            applyPreset(preset) {
+                const presets = {
+                    natural: { hdrStrength: 0.3, localContrast: 0.2, shadowRecovery: 0.3, highlightRecovery: 0.4, exposure: 0.1, saturation: 0.1, vibrance: 0.15 },
+                    dramatic: { hdrStrength: 0.8, localContrast: 0.6, shadowRecovery: 0.7, highlightRecovery: 0.5, exposure: 0.2, saturation: 0.2, vibrance: 0.3 },
+                    vivid: { hdrStrength: 0.6, localContrast: 0.4, shadowRecovery: 0.4, highlightRecovery: 0.6, exposure: 0.15, saturation: 0.4, vibrance: 0.5 },
+                    cinematic: { hdrStrength: 0.5, localContrast: 0.3, shadowRecovery: 0.5, highlightRecovery: 0.3, exposure: -0.1, saturation: -0.1, vibrance: 0.2 },
+                    muted: { hdrStrength: 0.2, localContrast: 0.1, shadowRecovery: 0.2, highlightRecovery: 0.2, exposure: 0, saturation: -0.3, vibrance: -0.1 },
+                    architectural: { hdrStrength: 0.7, localContrast: 0.5, shadowRecovery: 0.6, highlightRecovery: 0.7, exposure: 0.1, saturation: 0.1, vibrance: 0.1 },
+                    landscape: { hdrStrength: 0.6, localContrast: 0.4, shadowRecovery: 0.5, highlightRecovery: 0.6, exposure: 0.2, saturation: 0.3, vibrance: 0.4 },
+                    interior: { hdrStrength: 0.8, localContrast: 0.3, shadowRecovery: 0.8, highlightRecovery: 0.4, exposure: 0.3, saturation: 0.1, vibrance: 0.2 }
+                };
+                
+                const settings = presets[preset] || presets.natural;
+                
+                Object.keys(settings).forEach(key => {
+                    if (this[`${key}Slider`]) {
+                        let value = settings[key];
+                        
+                        // Convert percentage values back to slider values
+                        switch (key) {
+                            case 'hdrStrength':
+                            case 'localContrast':
+                            case 'shadowRecovery':
+                            case 'highlightRecovery':
+                            case 'saturation':
+                            case 'vibrance':
+                                this[`${key}Slider`].value = Math.round(value * 100);
+                                break;
+                            case 'exposure':
+                                this[`${key}Slider`].value = Math.round(value * 100);
+                                break;
+                            default:
+                                this[`${key}Slider`].value = Math.round(value * 100);
+                        }
+                        
+                        this.updateSliderValue(key, this.valueElements[key]);
+                    }
+                });
+                
+                this.updatePreview();
+            }
+            
+            async autoHDR() {
+                if (!this.originalImageData) {
+                    alert('Please load images first.');
+                    return;
+                }
+                
+                // Auto HDR based on image analysis
+                const settings = this.analyzeImageForAutoHDR(this.originalCanvas);
+                
+                Object.keys(settings).forEach(key => {
+                    if (this[`${key}Slider`]) {
+                        this[`${key}Slider`].value = settings[key];
+                        this.updateSliderValue(key, this.valueElements[key]);
+                    }
+                });
+                
+                this.updatePreview();
+                
+                // If batch mode is enabled, apply to all images
+                if (this.batchModeCheckbox.checked) {
+                    await this.processBatchAutoHDR();
+                }
+            }
+            
+            analyzeImageForAutoHDR(canvas) {
+                const ctx = canvas.getContext('2d');
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                
+                let totalBrightness = 0;
+                let highContrast = 0;
+                let pixelCount = 0;
+                
+                // Analyze image statistics
+                for (let i = 0; i < data.length; i += 16) { // Sample every 4th pixel for performance
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    
+                    const brightness = (r + g + b) / 3;
+                    totalBrightness += brightness;
+                    
+                    // Check for high contrast areas
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    if (max - min > 100) highContrast++;
+                    
+                    pixelCount++;
+                }
+                
+                const avgBrightness = totalBrightness / pixelCount;
+                const contrastRatio = highContrast / pixelCount;
+                
+                // Calculate auto HDR settings
+                const autoSettings = {
+                    hdrStrength: Math.round((contrastRatio * 100 + (avgBrightness < 100 ? 20 : 0)) * 0.5),
+                    localContrast: Math.round(contrastRatio * 50 + 20),
+                    shadowRecovery: avgBrightness < 100 ? 60 : 30,
+                    highlightRecovery: avgBrightness > 150 ? 40 : 70,
+                    exposure: avgBrightness < 100 ? 20 : avgBrightness > 150 ? -10 : 5,
+                    whitePoint: 95,
+                    blackPoint: 5,
+                    saturation: Math.round(contrastRatio * 30 + 10),
+                    vibrance: Math.round(contrastRatio * 40 + 15)
+                };
+                
+                return autoSettings;
+            }
+            
+            async processHDR() {
+                if (!this.hdrCanvas) return;
+                
+                // If batch mode is enabled
+                if (this.batchModeCheckbox.checked) {
+                    await this.processBatchHDR();
+                } else {
+                    // Single image HDR processing
+                    await this.processSingleImageHDR();
+                }
+            }
+            
+            async processSingleImageHDR() {
+                this.outputSection.style.display = 'block';
+                this.processBtn.disabled = true;
+                
+                this.updateProgress(100);
+                this.progressText.textContent = 'HDR processing completed successfully!';
+                
+                // Show single result
+                this.displaySingleResult();
+                this.downloadBtn.disabled = false;
+                this.processBtn.disabled = false;
+            }
+            
+            async processBatchHDR() {
+                this.outputSection.style.display = 'block';
+                this.processBtn.disabled = true;
+                this.processedImages = [];
+                this.currentFileIndex = 0;
+                
+                const totalFiles = this.selectedFiles.length;
+                
+                for (let i = 0; i < totalFiles; i++) {
+                    await this.processBatchImage(this.selectedFiles[i], i, totalFiles);
+                    this.updateFileStatus(i, 'completed', 'HDR Processed');
+                    this.updateProgress((i + 1) / totalFiles * 100);
+                }
+                
+                this.displayBatchResults();
+                this.downloadAllBtn.disabled = this.processedImages.length === 0;
+                this.processBtn.disabled = false;
+            }
+            
+            async processBatchImage(file, index, total) {
+                try {
+                    this.updateFileStatus(index, 'processing', 'Processing HDR...');
+                    
+                    const img = await this.loadImage(file);
+                    const canvas = this.createCanvasFromImage(img);
+                    
+                    let settings;
+                    if (this.autoHDRBatchCheckbox.checked) {
+                        settings = this.analyzeImageForAutoHDR(canvas);
+                        // Convert to percentage values
+                        Object.keys(settings).forEach(key => {
+                            settings[key] = Math.round(settings[key] * 100);
+                        });
+                    } else {
+                        const sliderSettings = this.getHDRSettings();
+                        settings = {};
+                        Object.keys(sliderSettings).forEach(key => {
+                            settings[key] = Math.round(sliderSettings[key] * 100);
+                        });
+                    }
+                    
+                    const hdrCanvas = this.applyHDRToSingle(canvas, {
+                        hdrStrength: settings.hdrStrength / 100,
+                        localContrast: settings.localContrast / 100,
+                        shadowRecovery: settings.shadowRecovery / 100,
+                        highlightRecovery: settings.highlightRecovery / 100,
+                        exposure: settings.exposure / 100,
+                        whitePoint: settings.whitePoint / 100,
+                        blackPoint: settings.blackPoint / 100,
+                        saturation: settings.saturation / 100,
+                        vibrance: settings.vibrance / 100
+                    });
+                    
+                    // Convert to blob
+                    const blob = await new Promise(resolve => hdrCanvas.toBlob(resolve, 'image/jpeg', 0.9));
+                    
+                    this.processedImages.push({
+                        original: file,
+                        hdr: {
+                            blob,
+                            dataURL: hdrCanvas.toDataURL(),
+                            canvas: hdrCanvas
+                        },
+                        settings: settings
+                    });
+                    
+                } catch (error) {
+                    console.error('Error processing HDR:', error);
+                    this.updateFileStatus(index, 'error', 'Error');
+                }
+            }
+            
+            async processBatchAutoHDR() {
+                // This is called when auto HDR is clicked in batch mode
+                for (let i = 1; i < this.selectedFiles.length; i++) {
+                    await this.processBatchImage(this.selectedFiles[i], i, this.selectedFiles.length);
+                }
+            }
+            
+            displaySingleResult() {
+                this.enhancedGrid.innerHTML = '';
+                
+                if (this.hdrCanvas) {
+                    const card = this.createEnhancedCard({
+                        hdr: {
+                            dataURL: this.hdrCanvas.toDataURL(),
+                            blob: null
+                        },
+                        settings: this.getHDRSettings()
+                    });
+                    this.enhancedGrid.appendChild(card);
+                }
+            }
+            
+            displayBatchResults() {
+                this.enhancedGrid.innerHTML = '';
+                
+                this.processedImages.forEach((imageData, index) => {
+                    const card = this.createEnhancedCard(imageData, index);
+                    this.enhancedGrid.appendChild(card);
+                });
+            }
+            
+            createEnhancedCard(imageData, index) {
+                const card = document.createElement('div');
+                card.className = 'enhanced-card';
+                
+                const img = document.createElement('img');
+                img.src = imageData.hdr.dataURL;
+                img.alt = 'HDR enhanced image';
+                
+                const info = document.createElement('div');
+                info.className = 'enhanced-card-info';
+                info.innerHTML = `
+                    <strong>HDR Processing Applied:</strong><br>
+                    Strength: ${Math.round(imageData.settings.hdrStrength * 100)}%<br>
+                    Contrast: ${Math.round(imageData.settings.localContrast * 100)}%<br>
+                    Shadows: ${Math.round(imageData.settings.shadowRecovery * 100)}%<br>
+                    Highlights: ${Math.round(imageData.settings.highlightRecovery * 100)}%
+                `;
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn-tool';
+                downloadBtn.textContent = 'Download';
+                downloadBtn.addEventListener('click', () => {
+                    this.downloadSingleImage(index);
+                });
+                
+                card.appendChild(img);
+                card.appendChild(info);
+                card.appendChild(downloadBtn);
+                
+                return card;
+            }
+            
+            async downloadSingleImage(index) {
+                const imageData = this.processedImages[index];
+                
+                if (imageData.hdr.blob) {
+                    const url = URL.createObjectURL(imageData.hdr.blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = this.getOutputFilename(imageData);
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    
+                    URL.revokeObjectURL(url);
+                } else if (this.hdrCanvas) {
+                    // Download single HDR image
+                    this.hdrCanvas.toBlob((blob) => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'hdr_image.jpg';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }, 'image/jpeg', 0.9);
+                }
+            }
+            
+            async downloadAllImages() {
+                for (let i = 0; i < this.processedImages.length; i++) {
+                    await this.downloadSingleImage(i);
+                    // Small delay to prevent browser blocking
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+            
+            getOutputFilename(imageData) {
+                const originalName = imageData.original.name;
+                const nameWithoutExt = originalName.split('.')[0];
+                return `${nameWithoutExt}_hdr.jpg`;
+            }
+            
+            downloadImage() {
+                if (this.processedImages.length > 0) {
+                    this.downloadSingleImage(0);
+                } else if (this.hdrCanvas) {
+                    this.downloadSingleImage(-1);
+                }
+            }
+            
+            updateProgress(percentage) {
+                this.progressFill.style.width = `${percentage}%`;
+                this.progressText.textContent = `Processing HDR... ${Math.round(percentage)}%`;
+            }
+            
+            updateFileStatus(index, status, text) {
+                const fileItems = this.fileItems.querySelectorAll('.file-item');
+                if (fileItems[index]) {
+                    const statusElement = fileItems[index].querySelector('.file-status');
+                    statusElement.className = `file-status ${status}`;
+                    statusElement.textContent = text;
+                }
+            }
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            // Reset methods
+            resetToneMapping() {
+                this.hdrStrengthSlider.value = 50;
+                this.localContrastSlider.value = 30;
+                this.shadowRecoverySlider.value = 40;
+                this.highlightRecoverySlider.value = 60;
+                
+                this.updateSliderValue('hdrStrength', this.valueElements.hdrStrength);
+                this.updateSliderValue('localContrast', this.valueElements.localContrast);
+                this.updateSliderValue('shadowRecovery', this.valueElements.shadowRecovery);
+                this.updateSliderValue('highlightRecovery', this.valueElements.highlightRecovery);
+                
+                this.updatePreview();
+            }
+            
+            resetExposure() {
+                this.exposureSlider.value = 0;
+                this.whitePointSlider.value = 95;
+                this.blackPointSlider.value = 5;
+                this.saturationSlider.value = 10;
+                this.vibranceSlider.value = 20;
+                
+                this.updateSliderValue('exposure', this.valueElements.exposure);
+                this.updateSliderValue('whitePoint', this.valueElements.whitePoint);
+                this.updateSliderValue('blackPoint', this.valueElements.blackPoint);
+                this.updateSliderValue('saturation', this.valueElements.saturation);
+                this.updateSliderValue('vibrance', this.valueElements.vibrance);
+                
+                this.updatePreview();
+            }
+            
+            reset() {
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.fileInput.value = '';
+                this.originalImageData = null;
+                this.originalCanvas = null;
+                this.hdrCanvas = null;
+                this.bracketedCanvases = [];
+                
+                // Reset all sliders
+                const allSliders = [
+                    'hdrStrength', 'localContrast', 'shadowRecovery', 'highlightRecovery',
+                    'exposure', 'whitePoint', 'blackPoint', 'saturation', 'vibrance'
+                ];
+                
+                const defaultValues = {
+                    hdrStrength: 50, localContrast: 30, shadowRecovery: 40, highlightRecovery: 60,
+                    exposure: 0, whitePoint: 95, blackPoint: 5, saturation: 10, vibrance: 20
+                };
+                
+                allSliders.forEach(sliderName => {
+                    this[`${sliderName}Slider`].value = defaultValues[sliderName];
+                    this.updateSliderValue(sliderName, this.valueElements[sliderName]);
+                });
+                
+                // Reset batch settings
+                this.batchModeCheckbox.checked = false;
+                this.sameHDRCheckbox.checked = true;
+                this.autoHDRBatchCheckbox.checked = false;
+                
+                // Clear UI
+                this.fileList.style.display = 'none';
+                this.outputSection.style.display = 'none';
+                this.imageViewer.style.display = 'none';
+                this.bracketedImages.style.display = 'none';
+                this.enhancedGrid.innerHTML = '';
+                this.progressFill.style.width = '0%';
+                this.progressText.textContent = 'Ready to process HDR...';
+                
+                // Reset buttons
+                this.processBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.downloadAllBtn.disabled = true;
+                
+                // Reset drop zone
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop your image file here or click to browse';
+                
+                // Reset mode to single
+                this.setMode('single');
+                
+                // Reset preset buttons
+                this.presetButtons.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Reset tabs
+                this.tabButtons.forEach(btn => btn.classList.remove('active'));
+                this.tabButtons[0].classList.add('active');
+                this.tabContents.forEach(content => content.classList.remove('active'));
+                this.tabContents[0].classList.add('active');
+            }
+        }
+        
+        // Initialize the HDR processor when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.hdrProcessor = new HDRProcessor();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Filters | Professional Photo Effects | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Apply professional photo filters and effects to your images. Vintage, sepia, black & white, high contrast, and custom filters. 100% client-side processing.">
+    <meta name="keywords" content="image filters, photo effects, vintage filter, sepia, black white, image editor, free, online">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/image_filters.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Image Filters | Professional Photo Effects | Factictionary">
+    <meta property="og:description" content="Apply professional photo filters and effects to your images. Vintage, sepia, black & white, high contrast, and custom filters.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/image_filters.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image Filters | Professional Photo Effects | Factictionary">
+    <meta name="twitter:description" content="Apply professional photo filters and effects to your images. Vintage, sepia, black & white, high contrast, and custom filters.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 700px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #8B5CF6;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #8B5CF640;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #F3E8FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #8B5CF6;
+            background: #F3E8FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #8B5CF6E6;
+        }
+        
+        .preview-container {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .comparison-container {
+            position: relative;
+            display: none;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .comparison-slider {
+            position: relative;
+            height: 400px;
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            overflow: hidden;
+        }
+        
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .comparison-after {
+            clip-path: inset(0 0 0 50%);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: white;
+            cursor: ew-resize;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: -12px;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: ew-resize;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .filters-panel {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .filters-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--color-neutral-200);
+            margin-bottom: var(--spacing-lg);
+            overflow-x: auto;
+        }
+        
+        .filter-tab {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-600);
+            transition: all var(--duration-fast) var(--easing-standard);
+            white-space: nowrap;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .filter-tab.active {
+            color: #8B5CF6;
+            border-bottom-color: #8B5CF6;
+        }
+        
+        .filter-tab:hover {
+            color: #8B5CF6;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .filter-preset {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .filter-preset:hover {
+            border-color: #8B5CF6;
+            transform: translateY(-2px);
+        }
+        
+        .filter-preset.active {
+            border-color: #8B5CF6;
+            background: #F3E8FF;
+        }
+        
+        .filter-preset-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .filter-preset-name {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .custom-controls {
+            display: none;
+        }
+        
+        .custom-controls.active {
+            display: block;
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .filter-preview {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xs);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .filter-value {
+            font-weight: var(--font-weight-semibold);
+            color: #8B5CF6;
+            margin-left: auto;
+        }
+        
+        .file-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .batch-info {
+            background: var(--color-neutral-50);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .applied-filters {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .applied-filter-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-button);
+        }
+        
+        .applied-filter-name {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+        
+        .applied-filter-intensity {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .remove-filter-btn {
+            background: none;
+            border: none;
+            color: #EF4444;
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            border-radius: 4px;
+            transition: background-color var(--duration-fast);
+        }
+        
+        .remove-filter-btn:hover {
+            background: #FEE2E2;
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .output-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-card);
+        }
+        
+        .output-text {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .tool-main {
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .filter-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .filters-tabs {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Filters",
+        "description": "Apply professional photo filters and effects to your images including vintage, sepia, black & white, and custom filters.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "890"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Image Filters</h1>
+        <p class="tool-subtitle">Apply professional photo filters and effects. Real-time preview with vintage, sepia, black & white, and custom filters. 100% client-side processing.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📷</div>
+                <div class="drop-zone-text">
+                    Drop your image files here or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+            </div>
+            
+            <div class="preview-container" id="previewContainer">
+                <div id="emptyPreview">
+                    <div style="text-align: center; color: var(--color-neutral-500);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+                        <p>Upload an image to see the preview</p>
+                    </div>
+                </div>
+                <img id="previewImage" class="preview-image" style="display: none;">
+            </div>
+            
+            <div class="comparison-container" id="comparisonContainer">
+                <div class="comparison-slider" id="comparisonSlider">
+                    <img id="comparisonBefore" class="comparison-image" alt="Original">
+                    <img id="comparisonAfter" class="comparison-image comparison-after" alt="Filtered">
+                    <div class="slider-handle" id="sliderHandle">
+                        <div class="slider-button">⚮</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filters-panel">
+                <h3>Photo Filters</h3>
+                
+                <div class="filters-tabs">
+                    <button class="filter-tab active" data-tab="presets">Presets</button>
+                    <button class="filter-tab" data-tab="basic">Basic</button>
+                    <button class="filter-tab" data-tab="color">Color</button>
+                    <button class="filter-tab" data-tab="effects">Effects</button>
+                </div>
+                
+                <!-- Filter Presets -->
+                <div class="filter-grid" id="presetsTab">
+                    <div class="filter-preset" data-filter="none">
+                        <div class="filter-preset-icon">🖼️</div>
+                        <div class="filter-preset-name">Original</div>
+                    </div>
+                    <div class="filter-preset" data-filter="vintage">
+                        <div class="filter-preset-icon">📷</div>
+                        <div class="filter-preset-name">Vintage</div>
+                    </div>
+                    <div class="filter-preset" data-filter="sepia">
+                        <div class="filter-preset-icon">🟤</div>
+                        <div class="filter-preset-name">Sepia</div>
+                    </div>
+                    <div class="filter-preset" data-filter="grayscale">
+                        <div class="filter-preset-icon">⚫</div>
+                        <div class="filter-preset-name">B&W</div>
+                    </div>
+                    <div class="filter-preset" data-filter="high-contrast">
+                        <div class="filter-preset-icon">🔆</div>
+                        <div class="filter-preset-name">High Contrast</div>
+                    </div>
+                    <div class="filter-preset" data-filter="warm">
+                        <div class="filter-preset-icon">🔥</div>
+                        <div class="filter-preset-name">Warm</div>
+                    </div>
+                    <div class="filter-preset" data-filter="cool">
+                        <div class="filter-preset-icon">❄️</div>
+                        <div class="filter-preset-name">Cool</div>
+                    </div>
+                    <div class="filter-preset" data-filter="dramatic">
+                        <div class="filter-preset-icon">🌑</div>
+                        <div class="filter-preset-name">Dramatic</div>
+                    </div>
+                    <div class="filter-preset" data-filter="vivid">
+                        <div class="filter-preset-icon">🌈</div>
+                        <div class="filter-preset-name">Vivid</div>
+                    </div>
+                    <div class="filter-preset" data-filter="soft">
+                        <div class="filter-preset-icon">☁️</div>
+                        <div class="filter-preset-name">Soft</div>
+                    </div>
+                    <div class="filter-preset" data-filter="noir">
+                        <div class="filter-preset-icon">🎬</div>
+                        <div class="filter-preset-name">Film Noir</div>
+                    </div>
+                    <div class="filter-preset" data-filter="cross-process">
+                        <div class="filter-preset-icon">📸</div>
+                        <div class="filter-preset-name">Cross Process</div>
+                    </div>
+                </div>
+                
+                <!-- Basic Controls -->
+                <div class="custom-controls" id="basicTab">
+                    <div class="control-group">
+                        <label class="control-label">Brightness</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="200" value="100" id="brightnessSlider">
+                            <div class="filter-preview">
+                                <span>Adjust brightness</span>
+                                <span class="filter-value" id="brightnessValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Contrast</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="200" value="100" id="contrastSlider">
+                            <div class="filter-preview">
+                                <span>Adjust contrast</span>
+                                <span class="filter-value" id="contrastValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Saturation</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="200" value="100" id="saturationSlider">
+                            <div class="filter-preview">
+                                <span>Adjust saturation</span>
+                                <span class="filter-value" id="saturationValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Hue Rotate</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="360" value="0" id="hueSlider">
+                            <div class="filter-preview">
+                                <span>Rotate hue</span>
+                                <span class="filter-value" id="hueValue">0°</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Color Controls -->
+                <div class="custom-controls" id="colorTab">
+                    <div class="control-group">
+                        <label class="control-label">Temperature</label>
+                        <div class="control-slider">
+                            <input type="range" min="-100" max="100" value="0" id="temperatureSlider">
+                            <div class="filter-preview">
+                                <span>Cool ← Warm →</span>
+                                <span class="filter-value" id="temperatureValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Tint</label>
+                        <div class="control-slider">
+                            <input type="range" min="-100" max="100" value="0" id="tintSlider">
+                            <div class="filter-preview">
+                                <span>Green ← Pink →</span>
+                                <span class="filter-value" id="tintValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Shadows</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="0" id="shadowsSlider">
+                            <div class="filter-preview">
+                                <span>Adjust shadows</span>
+                                <span class="filter-value" id="shadowsValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Highlights</label>
+                        <div class="control-slider">
+                            <input type="range" min="-100" max="100" value="0" id="highlightsSlider">
+                            <div class="filter-preview">
+                                <span>Adjust highlights</span>
+                                <span class="filter-value" id="highlightsValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Effects Controls -->
+                <div class="custom-controls" id="effectsTab">
+                    <div class="control-group">
+                        <label class="control-label">Blur</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="20" value="0" id="blurSlider">
+                            <div class="filter-preview">
+                                <span>Add blur effect</span>
+                                <span class="filter-value" id="blurValue">0px</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Vignette</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="0" id="vignetteSlider">
+                            <div class="filter-preview">
+                                <span>Darken edges</span>
+                                <span class="filter-value" id="vignetteValue">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Grain</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="50" value="0" id="grainSlider">
+                            <div class="filter-preview">
+                                <span>Add film grain</span>
+                                <span class="filter-value" id="grainValue">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Opacity</label>
+                        <div class="control-slider">
+                            <input type="range" min="10" max="100" value="100" id="opacitySlider">
+                            <div class="filter-preview">
+                                <span>Adjust opacity</span>
+                                <span class="filter-value" id="opacityValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="applied-filters" id="appliedFilters" style="display: none;">
+                <h4>Applied Filters</h4>
+                <div id="appliedFiltersList"></div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput">
+                <h3>Result</h3>
+                <div id="outputContent"></div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="toggleComparisonBtn" style="display: none;">
+                    Show Comparison
+                </button>
+                <button class="btn-tool" id="processBtn" disabled>
+                    Apply Filters
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">12 filter presets</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Custom filter controls</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Real-time preview</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Before/after comparison</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multiple filter layers</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing</div>
+                </div>
+        
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/image_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Editor</a>
+                    <a href="/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
+                    <a href="/image_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Converter</a>
+                    <a href="/image_resizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Resizer</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">12+</div>
+                    <div class="stat-label">Filter Presets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Custom Controls</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Image Filters Tool - Complete Implementation
+        class ImageFilters {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.previewImage = document.getElementById('previewImage');
+                this.previewContainer = document.getElementById('previewContainer');
+                this.emptyPreview = document.getElementById('emptyPreview');
+                this.processBtn = document.getElementById('processBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.toggleComparisonBtn = document.getElementById('toggleComparisonBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                this.outputContent = document.getElementById('outputContent');
+                this.comparisonContainer = document.getElementById('comparisonContainer');
+                this.comparisonSlider = document.getElementById('comparisonSlider');
+                this.comparisonBefore = document.getElementById('comparisonBefore');
+                this.comparisonAfter = document.getElementById('comparisonAfter');
+                this.sliderHandle = document.getElementById('sliderHandle');
+                
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.originalImage = null;
+                this.filteredImage = null;
+                this.appliedFilters = [];
+                this.activeTab = 'presets';
+                this.isComparisonMode = false;
+                this.comparisonSliderPos = 50;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.setupTabs();
+                this.setupFilterPresets();
+                this.setupCustomControls();
+                this.setupComparisonSlider();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop functionality
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('drag-over');
+                });
+                
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('drag-over');
+                });
+                
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('drag-over');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+                
+                this.dropZone.addEventListener('click', () => {
+                    this.fileInput.click();
+                });
+                
+                this.fileInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+                
+                // Buttons
+                this.processBtn.addEventListener('click', () => {
+                    this.processImages();
+                });
+                
+                this.downloadBtn.addEventListener('click', () => {
+                    this.downloadImages();
+                });
+                
+                this.resetBtn.addEventListener('click', () => {
+                    this.reset();
+                });
+                
+                this.toggleComparisonBtn.addEventListener('click', () => {
+                    this.toggleComparisonMode();
+                });
+            }
+            
+            setupTabs() {
+                const tabs = document.querySelectorAll('.filter-tab');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        // Update active tab
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        // Show corresponding content
+                        const tabName = tab.dataset.tab;
+                        this.showTab(tabName);
+                    });
+                });
+            }
+            
+            showTab(tabName) {
+                this.activeTab = tabName;
+                
+                // Hide all custom controls
+                document.querySelectorAll('.custom-controls').forEach(control => {
+                    control.classList.remove('active');
+                });
+                
+                // Show selected tab
+                if (tabName !== 'presets') {
+                    document.getElementById(tabName + 'Tab').classList.add('active');
+                }
+            }
+            
+            setupFilterPresets() {
+                const filterPresets = document.querySelectorAll('.filter-preset');
+                filterPresets.forEach(preset => {
+                    preset.addEventListener('click', () => {
+                        // Update active preset
+                        filterPresets.forEach(p => p.classList.remove('active'));
+                        preset.classList.add('active');
+                        
+                        // Apply filter
+                        const filterType = preset.dataset.filter;
+                        this.applyFilterPreset(filterType);
+                    });
+                });
+            }
+            
+            setupCustomControls() {
+                // Basic controls
+                const sliders = {
+                    brightness: { slider: 'brightnessSlider', value: 'brightnessValue', suffix: '%' },
+                    contrast: { slider: 'contrastSlider', value: 'contrastValue', suffix: '%' },
+                    saturation: { slider: 'saturationSlider', value: 'saturationValue', suffix: '%' },
+                    hue: { slider: 'hueSlider', value: 'hueValue', suffix: '°' },
+                    temperature: { slider: 'temperatureSlider', value: 'temperatureValue', suffix: '' },
+                    tint: { slider: 'tintSlider', value: 'tintValue', suffix: '' },
+                    shadows: { slider: 'shadowsSlider', value: 'shadowsValue', suffix: '' },
+                    highlights: { slider: 'highlightsSlider', value: 'highlightsValue', suffix: '' },
+                    blur: { slider: 'blurSlider', value: 'blurValue', suffix: 'px' },
+                    vignette: { slider: 'vignetteSlider', value: 'vignetteValue', suffix: '%' },
+                    grain: { slider: 'grainSlider', value: 'grainValue', suffix: '%' },
+                    opacity: { slider: 'opacitySlider', value: 'opacityValue', suffix: '%' }
+                };
+                
+                Object.keys(sliders).forEach(key => {
+                    const { slider, value, suffix } = sliders[key];
+                    const sliderElement = document.getElementById(slider);
+                    const valueElement = document.getElementById(value);
+                    
+                    if (sliderElement && valueElement) {
+                        sliderElement.addEventListener('input', () => {
+                            const val = sliderElement.value;
+                            valueElement.textContent = val + suffix;
+                            this.updatePreview();
+                        });
+                    }
+                });
+            }
+            
+            setupComparisonSlider() {
+                let isDragging = false;
+                
+                this.comparisonSlider.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    this.updateComparisonSlider(e);
+                });
+                
+                this.comparisonSlider.addEventListener('mousemove', (e) => {
+                    if (isDragging) {
+                        this.updateComparisonSlider(e);
+                    }
+                });
+                
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+            }
+            
+            updateComparisonSlider(e) {
+                const rect = this.comparisonSlider.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                x = Math.max(0, Math.min(x, rect.width));
+                
+                const percentage = (x / rect.width) * 100;
+                this.comparisonSliderPos = percentage;
+                
+                this.comparisonAfter.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+                this.sliderHandle.style.left = percentage + '%';
+            }
+            
+            handleFiles(files) {
+                const imageFiles = Array.from(files).filter(file => {
+                    const isImage = file.type.startsWith('image/');
+                    if (!isImage) {
+                        console.warn(`Skipping non-image file: ${file.name}`);
+                    }
+                    return isImage;
+                });
+                
+                if (imageFiles.length === 0) {
+                    alert('Please select valid image files (JPG, PNG, WebP, GIF)');
+                    return;
+                }
+                
+                this.selectedFiles = [...this.selectedFiles, ...imageFiles];
+                this.updateFileDisplay();
+                
+                if (this.selectedFiles.length > 0) {
+                    this.loadImage(this.selectedFiles[0]);
+                    this.processBtn.disabled = false;
+                    this.toggleComparisonBtn.style.display = 'block';
+                }
+            }
+            
+            loadImage(file) {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    this.originalImage = new Image();
+                    
+                    this.originalImage.onload = () => {
+                        this.previewImage.src = e.target.result;
+                        this.previewImage.style.display = 'block';
+                        this.emptyPreview.style.display = 'none';
+                        
+                        // Setup comparison images
+                        this.comparisonBefore.src = e.target.result;
+                        this.comparisonAfter.src = e.target.result;
+                        
+                        this.updatePreview();
+                    };
+                    
+                    this.originalImage.src = e.target.result;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            updatePreview() {
+                if (!this.originalImage) return;
+                
+                const filter = this.getCurrentFilter();
+                this.previewImage.style.filter = filter;
+                this.comparisonAfter.style.filter = filter;
+            }
+            
+            getCurrentFilter() {
+                const activePreset = document.querySelector('.filter-preset.active');
+                const activeTab = this.activeTab;
+                
+                if (activeTab === 'presets' && activePreset && activePreset.dataset.filter !== 'none') {
+                    return this.getPresetFilter(activePreset.dataset.filter);
+                }
+                
+                // Get custom filter values
+                const brightness = document.getElementById('brightnessSlider').value;
+                const contrast = document.getElementById('contrastSlider').value;
+                const saturation = document.getElementById('saturationSlider').value;
+                const hue = document.getElementById('hueSlider').value;
+                const blur = document.getElementById('blurSlider').value;
+                
+                return `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%) hue-rotate(${hue}deg) blur(${blur}px)`;
+            }
+            
+            getPresetFilter(filterType) {
+                const filters = {
+                    'none': 'none',
+                    'vintage': 'sepia(0.8) contrast(1.1) brightness(0.9) saturate(0.9)',
+                    'sepia': 'sepia(1) contrast(1.2) brightness(1.1)',
+                    'grayscale': 'grayscale(1) contrast(1.1)',
+                    'high-contrast': 'contrast(2) brightness(1.1)',
+                    'warm': 'sepia(0.4) saturate(1.2) hue-rotate(-10deg)',
+                    'cool': 'hue-rotate(180deg) saturate(0.8) brightness(1.1)',
+                    'dramatic': 'contrast(1.5) brightness(0.8) saturate(1.1)',
+                    'vivid': 'saturate(1.8) contrast(1.2)',
+                    'soft': 'blur(0.5px) brightness(1.05) contrast(0.9)',
+                    'noir': 'grayscale(1) contrast(1.3) brightness(0.9)',
+                    'cross-process': 'sepia(0.5) contrast(1.3) saturate(1.2) hue-rotate(15deg)'
+                };
+                
+                return filters[filterType] || 'none';
+            }
+            
+            applyFilterPreset(filterType) {
+                this.appliedFilters = [{ type: 'preset', name: filterType, intensity: 100 }];
+                this.updateAppliedFilters();
+                this.updatePreview();
+            }
+            
+            updateAppliedFilters() {
+                if (this.appliedFilters.length === 0) {
+                    document.getElementById('appliedFilters').style.display = 'none';
+                    return;
+                }
+                
+                document.getElementById('appliedFilters').style.display = 'block';
+                
+                const filtersList = document.getElementById('appliedFiltersList');
+                filtersList.innerHTML = this.appliedFilters.map((filter, index) => `
+                    <div class="applied-filter-item">
+                        <span class="applied-filter-name">${filter.name}</span>
+                        <span class="applied-filter-intensity">${filter.intensity}%</span>
+                        <button class="remove-filter-btn" onclick="imageFilters.removeFilter(${index})">×</button>
+                    </div>
+                `).join('');
+            }
+            
+            removeFilter(index) {
+                this.appliedFilters.splice(index, 1);
+                this.updateAppliedFilters();
+                this.updatePreview();
+            }
+            
+            updateFileDisplay() {
+                const fileCount = this.selectedFiles.length;
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+                    `${fileCount} image file(s) selected`;
+            }
+            
+            async processImages() {
+                if (!this.originalImage) return;
+                
+                this.processBtn.disabled = true;
+                this.processBtn.textContent = 'Processing...';
+                this.outputSection.style.display = 'block';
+                
+                try {
+                    const filter = this.getCurrentFilter();
+                    const filteredBlob = await this.applyFilterToCanvas(this.originalImage, filter);
+                    
+                    this.processedImages = [{
+                        originalFile: this.selectedFiles[0],
+                        filteredBlob: filteredBlob,
+                        filter: filter
+                    }];
+                    
+                    this.displayResults();
+                    this.downloadBtn.disabled = false;
+                    
+                } catch (error) {
+                    console.error('Error processing image:', error);
+                    alert('Error processing image: ' + error.message);
+                }
+                
+                this.processBtn.disabled = false;
+                this.processBtn.textContent = 'Apply Filters';
+            }
+            
+            async applyFilterToCanvas(image, filter) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        
+                        // Apply filter and draw image
+                        ctx.filter = filter;
+                        ctx.drawImage(image, 0, 0);
+                        
+                        // Convert to blob
+                        canvas.toBlob((blob) => {
+                            if (blob) {
+                                resolve(blob);
+                            } else {
+                                reject(new Error('Failed to create filtered image'));
+                            }
+                        }, 'image/jpeg', 0.95);
+                        
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            }
+            
+            displayResults() {
+                if (this.processedImages.length === 0) return;
+                
+                const result = this.processedImages[0];
+                const originalUrl = URL.createObjectURL(result.originalFile);
+                const filteredUrl = URL.createObjectURL(result.filteredBlob);
+                
+                this.outputContent.innerHTML = `
+                    <div class="filter-results">
+                        <div class="comparison-container" style="margin-bottom: 20px;">
+                            <h4>Before & After</h4>
+                            <div class="image-comparison">
+                                <div class="image-column">
+                                    <h5>Original</h5>
+                                    <img src="${originalUrl}" alt="Original" class="comparison-image">
+                                </div>
+                                <div class="image-column">
+                                    <h5>Filtered</h5>
+                                    <img src="${filteredUrl}" alt="Filtered" class="comparison-image">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-info">
+                            <p><strong>Applied Filter:</strong> ${this.getFilterDescription(this.getCurrentFilter())}</p>
+                            <p><strong>Format:</strong> ${result.originalFile.type}</p>
+                            <p><strong>Dimensions:</strong> ${result.originalFile.width || 'Original'} × ${result.originalFile.height || 'Original'}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            getFilterDescription(filter) {
+                const descriptions = {
+                    'sepia(0.8) contrast(1.1) brightness(0.9) saturate(0.9)': 'Vintage',
+                    'sepia(1) contrast(1.2) brightness(1.1)': 'Sepia',
+                    'grayscale(1) contrast(1.1)': 'Black & White',
+                    'contrast(2) brightness(1.1)': 'High Contrast',
+                    'sepia(0.4) saturate(1.2) hue-rotate(-10deg)': 'Warm',
+                    'hue-rotate(180deg) saturate(0.8) brightness(1.1)': 'Cool',
+                    'contrast(1.5) brightness(0.8) saturate(1.1)': 'Dramatic',
+                    'saturate(1.8) contrast(1.2)': 'Vivid',
+                    'blur(0.5px) brightness(1.05) contrast(0.9)': 'Soft',
+                    'grayscale(1) contrast(1.3) brightness(0.9)': 'Film Noir',
+                    'sepia(0.5) contrast(1.3) saturate(1.2) hue-rotate(15deg)': 'Cross Process'
+                };
+                
+                return descriptions[filter] || 'Custom Filter';
+            }
+            
+            downloadImages() {
+                if (this.processedImages.length === 0) return;
+                
+                const result = this.processedImages[0];
+                const url = URL.createObjectURL(result.filteredBlob);
+                const a = document.createElement('a');
+                
+                const originalName = result.originalFile.name.replace(/\.[^/.]+$/, '');
+                a.href = url;
+                a.download = `${originalName}_filtered.jpg`;
+                
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            toggleComparisonMode() {
+                this.isComparisonMode = !this.isComparisonMode;
+                
+                if (this.isComparisonMode) {
+                    this.previewContainer.style.display = 'none';
+                    this.comparisonContainer.style.display = 'block';
+                    this.toggleComparisonBtn.textContent = 'Hide Comparison';
+                    this.updateComparisonSliderPosition();
+                } else {
+                    this.previewContainer.style.display = 'flex';
+                    this.comparisonContainer.style.display = 'none';
+                    this.toggleComparisonBtn.textContent = 'Show Comparison';
+                }
+            }
+            
+            updateComparisonSliderPosition() {
+                this.comparisonAfter.style.clipPath = `inset(0 0 0 ${this.comparisonSliderPos}%)`;
+                this.sliderHandle.style.left = this.comparisonSliderPos + '%';
+            }
+            
+            reset() {
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.originalImage = null;
+                this.filteredImage = null;
+                this.appliedFilters = [];
+                this.fileInput.value = '';
+                this.processBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.toggleComparisonBtn.style.display = 'none';
+                this.outputSection.style.display = 'none';
+                this.previewContainer.style.display = 'flex';
+                this.comparisonContainer.style.display = 'none';
+                this.isComparisonMode = false;
+                
+                // Reset preview
+                this.previewImage.style.display = 'none';
+                this.emptyPreview.style.display = 'block';
+                
+                // Reset filter presets
+                document.querySelectorAll('.filter-preset').forEach(p => p.classList.remove('active'));
+                document.querySelector('.filter-preset[data-filter="none"]').classList.add('active');
+                
+                // Reset tabs
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.filter-tab[data-tab="presets"]').classList.add('active');
+                this.showTab('presets');
+                
+                // Reset sliders
+                const sliders = [
+                    { id: 'brightness', value: 100 },
+                    { id: 'contrast', value: 100 },
+                    { id: 'saturation', value: 100 },
+                    { id: 'hue', value: 0 },
+                    { id: 'temperature', value: 0 },
+                    { id: 'tint', value: 0 },
+                    { id: 'shadows', value: 0 },
+                    { id: 'highlights', value: 0 },
+                    { id: 'blur', value: 0 },
+                    { id: 'vignette', value: 0 },
+                    { id: 'grain', value: 0 },
+                    { id: 'opacity', value: 100 }
+                ];
+                
+                sliders.forEach(slider => {
+                    const element = document.getElementById(slider.id + 'Slider');
+                    if (element) {
+                        element.value = slider.value;
+                    }
+                    
+                    // Update value displays
+                    const valueElement = document.getElementById(slider.id + 'Value');
+                    if (valueElement) {
+                        const suffix = slider.id === 'hue' ? '°' : slider.id === 'blur' ? 'px' : '%';
+                        valueElement.textContent = slider.value + suffix;
+                    }
+                });
+                
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop your image files here or click to browse';
+            }
+        }
+        
+        // Initialize the image filters tool when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.imageFilters = new ImageFilters();
+        });
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

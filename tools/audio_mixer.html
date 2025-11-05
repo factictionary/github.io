@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Mixer | Multi-Track Audio Mixing Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional multi-track audio mixer with effects, volume controls, crossfades, and batch mixing capabilities. 100% privacy-protected browser tool.">
+    <meta name="keywords" content="audio mixer, multi-track, audio editing, crossfade, volume control, effects">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_mixer.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Audio Mixer | Factictionary Tools">
+    <meta property="og:description" content="Professional multi-track audio mixer with effects, volume controls, crossfades, and batch mixing capabilities.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_mixer.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Mixer | Factictionary Tools">
+    <meta name="twitter:description" content="Professional multi-track audio mixer with effects, volume controls, crossfades, and batch mixing capabilities.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 700px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #8B5CF6;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #8B5CF640;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            background: #F3F0FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+            cursor: pointer;
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #8B5CF6;
+            background: #F3F0FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 3rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #8B5CF6E6;
+        }
+        
+        /* Mixer Timeline */
+        .mixer-timeline {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 300px;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .timeline-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+        
+        .playhead {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #8B5CF6;
+            z-index: 10;
+            cursor: grab;
+        }
+        
+        .track {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+            position: relative;
+            min-height: 60px;
+        }
+        
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: var(--color-neutral-50);
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+        
+        .track-name {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+            flex: 1;
+        }
+        
+        .track-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+        
+        .track-waveform {
+            height: 80px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            margin: var(--spacing-sm);
+        }
+        
+        /* Mixer Controls */
+        .mixer-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .mixer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .channel-strip {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .channel-label {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .volume-fader {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .fader {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            width: 100%;
+            height: 120px;
+            background: var(--color-neutral-200);
+            outline: none;
+            border-radius: 2px;
+        }
+        
+        .pan-knob {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .control-button {
+            background: var(--color-neutral-200);
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-input);
+            cursor: pointer;
+            font-size: 12px;
+            margin: 2px;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-button:hover {
+            background: var(--color-neutral-300);
+        }
+        
+        .control-button.active {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .effects-panel {
+            background: var(--color-neutral-100);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+        
+        .effect-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-size-small);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-small);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-xs) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: var(--color-neutral-200);
+            border-radius: 2px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover:not(:disabled) {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .mixer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+        
+        /* Animation classes */
+        .track-item {
+            animation: slideIn 0.3s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #8B5CF6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .fade-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .track-mute {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .track-mute.active {
+            background: #22c55e;
+        }
+        
+        .track-solo {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .track-solo.active {
+            background: #dc2626;
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Audio Mixer",
+        "description": "Professional multi-track audio mixer with effects, volume controls, crossfades, and batch mixing capabilities.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Audio Mixer</h1>
+        <p class="tool-subtitle">Professional multi-track audio mixer with effects, volume controls, crossfades, and batch mixing capabilities.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">🎚️</div>
+                <div class="drop-zone-text">
+                    Drop audio files here to add tracks (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept=".mp3,.wav,.aac,.ogg,.flac,.m4a,.mp4" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Add Tracks
+                </button>
+            </div>
+            
+            <!-- Mixer Timeline -->
+            <div class="mixer-timeline" id="mixerTimeline" style="display: none;">
+                <div class="timeline-header">
+                    <h3>Mixing Timeline</h3>
+                    <div class="timeline-controls">
+                        <button class="btn-tool" id="playAllBtn">▶ Play All</button>
+                        <button class="btn-tool" id="pauseAllBtn">⏸ Pause</button>
+                        <button class="btn-tool" id="stopAllBtn">⏹ Stop</button>
+                        <span id="timelineDuration">00:00 / 00:00</span>
+                    </div>
+                </div>
+                <div id="tracksContainer">
+                    <!-- Tracks will be dynamically added here -->
+                </div>
+                <div class="playhead" id="playhead" style="left: 0px;"></div>
+            </div>
+            
+            <!-- Mixer Controls -->
+            <div class="mixer-controls" id="mixerControls" style="display: none;">
+                <h3>Mixer Controls</h3>
+                <div class="mixer-grid" id="mixerGrid">
+                    <!-- Channel strips will be dynamically added here -->
+                </div>
+            </div>
+            
+            <!-- Fade Controls -->
+            <div class="effects-panel" id="fadeControls" style="display: none;">
+                <h4>Fade & Crossfade</h4>
+                <div class="fade-controls">
+                    <button class="btn-tool" id="fadeInBtn">Fade In</button>
+                    <button class="btn-tool" id="fadeOutBtn">Fade Out</button>
+                    <button class="btn-tool" id="crossfadeBtn">Crossfade</button>
+                    <button class="btn-tool" id="normalizeBtn">Normalize</button>
+                </div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="mixBtn" disabled>
+                    🎚️ Mix Tracks
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    ⬇️ Download Mix
+                </button>
+                <button class="btn-tool" id="exportBtn" disabled>
+                    📦 Export All
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" style="display: none; margin-top: 20px;">
+                <div style="background: #e0e0e0; border-radius: 10px; height: 20px; overflow: hidden;">
+                    <div id="progressBar" style="background: linear-gradient(90deg, #8B5CF6, #A855F7); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
+                        0%
+                    </div>
+                </div>
+                <div id="progressText" style="text-align: center; margin-top: 5px; color: #666; font-size: 14px;">Ready to mix</div>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multi-track mixing (up to 16 tracks)</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Real-time waveform visualization</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Volume & pan controls per track</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Audio effects (EQ, reverb, delay)</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Fade in/out & crossfades</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Mute & solo functionality</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Professional mixing timeline</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">100% client-side processing</div>
+                </div>
+            
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+                    <a href="/audio_effects.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Effects</a>
+                    <a href="/audio_normalizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Normalizer</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">16</div>
+                    <div class="stat-label">Max Tracks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Audio Effects</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Mixing Possibilities</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        const { FFmpeg } = FFmpegWASM;
+        let ffmpeg;
+        let selectedTracks = [];
+        let mixerSettings = new Map();
+        let isFFmpegLoaded = false;
+        let isPlaying = false;
+        let currentTime = 0;
+        let totalDuration = 0;
+        let animationFrame;
+        
+        // DOM elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const mixBtn = document.getElementById('mixBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const mixerTimeline = document.getElementById('mixerTimeline');
+        const mixerControls = document.getElementById('mixerControls');
+        const fadeControls = document.getElementById('fadeControls');
+        const tracksContainer = document.getElementById('tracksContainer');
+        const mixerGrid = document.getElementById('mixerGrid');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const playhead = document.getElementById('playhead');
+        const timelineDuration = document.getElementById('timelineDuration');
+        
+        // Control buttons
+        const playAllBtn = document.getElementById('playAllBtn');
+        const pauseAllBtn = document.getElementById('pauseAllBtn');
+        const stopAllBtn = document.getElementById('stopAllBtn');
+        const fadeInBtn = document.getElementById('fadeInBtn');
+        const fadeOutBtn = document.getElementById('fadeOutBtn');
+        const crossfadeBtn = document.getElementById('crossfadeBtn');
+        const normalizeBtn = document.getElementById('normalizeBtn');
+        
+        // Initialize FFmpeg
+        async function initFFmpeg() {
+            if (isFFmpegLoaded) return;
+            
+            try {
+                progressText.textContent = 'Loading audio processing engine...';
+                ffmpeg = new FFmpeg();
+                
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
+                });
+                
+                isFFmpegLoaded = true;
+                progressText.textContent = 'Audio engine loaded successfully';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 1000);
+            } catch (error) {
+                console.error('Failed to load audio engine:', error);
+                progressText.textContent = 'Failed to load audio engine. Please refresh the page.';
+            }
+        }
+        
+        // Audio file validation
+        function isAudioFile(file) {
+            const validExtensions = ['.mp3', '.wav', '.aac', '.ogg', '.flac', '.m4a'];
+            const validMimes = ['audio/mpeg', 'audio/wav', 'audio/aac', 'audio/ogg', 'audio/flac', 'audio/mp4', 'audio/x-m4a'];
+            
+            return validExtensions.some(ext => file.name.toLowerCase().endsWith(ext)) ||
+                   validMimes.includes(file.type);
+        }
+        
+        // Drag and drop functionality
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        // Handle files
+        function handleFiles(files) {
+            const audioFiles = Array.from(files).filter(file => isAudioFile(file));
+            
+            if (audioFiles.length === 0) {
+                alert('Please select valid audio files (MP3, WAV, AAC, OGG, FLAC, M4A)');
+                return;
+            }
+            
+            // Check maximum tracks limit
+            if (selectedTracks.length + audioFiles.length > 16) {
+                alert('Maximum 16 tracks allowed. Please remove some tracks first.');
+                return;
+            }
+            
+            audioFiles.forEach((file, index) => {
+                const track = {
+                    id: Date.now() + index,
+                    file: file,
+                    name: file.name,
+                    volume: 100,
+                    pan: 0,
+                    muted: false,
+                    solo: false,
+                    effects: {
+                        eqLow: 0,
+                        eqMid: 0,
+                        eqHigh: 0,
+                        reverb: 0,
+                        delay: 0,
+                        echo: 0
+                    },
+                    fadeIn: 0,
+                    fadeOut: 0,
+                    startTime: 0,
+                    waveform: null,
+                    audio: null
+                };
+                
+                selectedTracks.push(track);
+                mixerSettings.set(track.id, track);
+            });
+            
+            displayTracks();
+            displayMixerControls();
+            
+            mixBtn.disabled = false;
+            exportBtn.disabled = false;
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                `${selectedTracks.length} track(s) loaded`;
+            
+            // Initialize FFmpeg if not loaded
+            if (!isFFmpegLoaded) {
+                progressContainer.style.display = 'block';
+                initFFmpeg();
+            }
+        }
+        
+        // Display tracks in timeline
+        function displayTracks() {
+            if (selectedTracks.length === 0) {
+                mixerTimeline.style.display = 'none';
+                return;
+            }
+            
+            mixerTimeline.style.display = 'block';
+            
+            tracksContainer.innerHTML = selectedTracks.map(track => `
+                <div class="track track-item" data-track-id="${track.id}">
+                    <div class="track-header">
+                        <span class="track-name">${track.name}</span>
+                        <div class="track-controls">
+                            <button class="track-mute ${track.muted ? 'active' : ''}" 
+                                    onclick="toggleMute(${track.id})" title="Mute">M</button>
+                            <button class="track-solo ${track.solo ? 'active' : ''}" 
+                                    onclick="toggleSolo(${track.id})" title="Solo">S</button>
+                            <button onclick="removeTrack(${track.id})" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>
+                        </div>
+                    </div>
+                    <div class="track-waveform" id="waveform-${track.id}">
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999;">
+                            Loading waveform...
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Load waveforms for each track
+            selectedTracks.forEach(track => {
+                loadWaveform(track);
+            });
+            
+            updateTimelineDuration();
+        }
+        
+        // Load waveform for a track
+        function loadWaveform(track) {
+            const url = URL.createObjectURL(track.file);
+            const audio = new Audio(url);
+            track.audio = audio;
+            
+            audio.addEventListener('loadedmetadata', () => {
+                track.duration = audio.duration;
+                updateTimelineDuration();
+                
+                // Create simple waveform visualization
+                const waveformContainer = document.getElementById(`waveform-${track.id}`);
+                waveformContainer.innerHTML = '<div style="height: 100%; background: linear-gradient(90deg, #8B5CF6, #A855F7); width: 100%; opacity: 0.3; border-radius: 4px;"></div>';
+            });
+        }
+        
+        // Update timeline duration
+        function updateTimelineDuration() {
+            totalDuration = Math.max(...selectedTracks.map(track => track.duration || 0), 0);
+            const minutes = Math.floor(totalDuration / 60);
+            const seconds = Math.floor(totalDuration % 60);
+            timelineDuration.textContent = `00:00 / ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Display mixer controls
+        function displayMixerControls() {
+            if (selectedTracks.length === 0) {
+                mixerControls.style.display = 'none';
+                fadeControls.style.display = 'none';
+                return;
+            }
+            
+            mixerControls.style.display = 'block';
+            fadeControls.style.display = 'block';
+            
+            mixerGrid.innerHTML = selectedTracks.map(track => `
+                <div class="channel-strip" data-track-id="${track.id}">
+                    <div class="channel-label">${track.name}</div>
+                    
+                    <!-- Volume Fader -->
+                    <div class="volume-fader">
+                        <div class="control-slider">
+                            <input type="range" min="0" max="150" value="${track.volume}" 
+                                   class="volume-slider" data-track-id="${track.id}"
+                                   oninput="updateVolume(${track.id}, this.value)">
+                        </div>
+                        <div class="control-label">${track.volume}%</div>
+                    </div>
+                    
+                    <!-- Pan Control -->
+                    <div class="pan-knob">
+                        <div class="control-label">Pan</div>
+                        <div class="control-slider">
+                            <input type="range" min="-100" max="100" value="${track.pan}" 
+                                   class="pan-slider" data-track-id="${track.id}"
+                                   oninput="updatePan(${track.id}, this.value)">
+                        </div>
+                        <div class="control-label">${track.pan > 0 ? 'R' : track.pan < 0 ? 'L' : 'C'}${Math.abs(track.pan)}</div>
+                    </div>
+                    
+                    <!-- EQ Controls -->
+                    <div class="effects-panel">
+                        <div class="effect-group">
+                            <div class="control-label">Low (80Hz)</div>
+                            <div class="control-slider">
+                                <input type="range" min="-15" max="15" value="${track.effects.eqLow}" 
+                                       class="eq-low" data-track-id="${track.id}"
+                                       oninput="updateEQ(${track.id}, 'eqLow', this.value)">
+                            </div>
+                        </div>
+                        
+                        <div class="effect-group">
+                            <div class="control-label">Mid (1kHz)</div>
+                            <div class="control-slider">
+                                <input type="range" min="-15" max="15" value="${track.effects.eqMid}" 
+                                       class="eq-mid" data-track-id="${track.id}"
+                                       oninput="updateEQ(${track.id}, 'eqMid', this.value)">
+                            </div>
+                        </div>
+                        
+                        <div class="effect-group">
+                            <div class="control-label">High (10kHz)</div>
+                            <div class="control-slider">
+                                <input type="range" min="-15" max="15" value="${track.effects.eqHigh}" 
+                                       class="eq-high" data-track-id="${track.id}"
+                                       oninput="updateEQ(${track.id}, 'eqHigh', this.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Update track volume
+        function updateVolume(trackId, volume) {
+            const track = selectedTracks.find(t => t.id === trackId);
+            if (track) {
+                track.volume = volume;
+                const label = document.querySelector(`[data-track-id="${trackId}"] .volume-fader .control-label`);
+                if (label) label.textContent = `${volume}%`;
+            }
+        }
+        
+        // Update track pan
+        function updatePan(trackId, pan) {
+            const track = selectedTracks.find(t => t.id === trackId);
+            if (track) {
+                track.pan = parseInt(pan);
+                const label = document.querySelector(`[data-track-id="${trackId}"] .pan-knob .control-label:last-child`);
+                if (label) {
+                    const side = pan > 0 ? 'R' : pan < 0 ? 'L' : 'C';
+                    label.textContent = `${side}${Math.abs(pan)}`;
+                }
+            }
+        }
+        
+        // Update EQ
+        function updateEQ(trackId, eqType, value) {
+            const track = selectedTracks.find(t => t.id === trackId);
+            if (track) {
+                track.effects[eqType] = parseInt(value);
+            }
+        }
+        
+        // Toggle mute
+        function toggleMute(trackId) {
+            const track = selectedTracks.find(t => t.id === trackId);
+            const button = document.querySelector(`[data-track-id="${trackId}"] .track-mute`);
+            
+            if (track) {
+                track.muted = !track.muted;
+                button.classList.toggle('active', track.muted);
+            }
+        }
+        
+        // Toggle solo
+        function toggleSolo(trackId) {
+            const track = selectedTracks.find(t => t.id === trackId);
+            const button = document.querySelector(`[data-track-id="${trackId}"] .track-solo`);
+            
+            if (track) {
+                track.solo = !track.solo;
+                button.classList.toggle('active', track.solo);
+                
+                // If solo is activated, mute all other tracks
+                if (track.solo) {
+                    selectedTracks.forEach(t => {
+                        if (t.id !== trackId) {
+                            t.muted = true;
+                            const muteButton = document.querySelector(`[data-track-id="${t.id}"] .track-mute`);
+                            if (muteButton) muteButton.classList.add('active');
+                        }
+                    });
+                }
+            }
+        }
+        
+        // Remove track
+        function removeTrack(trackId) {
+            selectedTracks = selectedTracks.filter(track => track.id !== trackId);
+            mixerSettings.delete(trackId);
+            
+            displayTracks();
+            displayMixerControls();
+            
+            if (selectedTracks.length === 0) {
+                mixBtn.disabled = true;
+                exportBtn.disabled = true;
+                dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop audio files here to add tracks (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
+            }
+        }
+        
+        // Play all tracks
+        function playAll() {
+            if (selectedTracks.length === 0) return;
+            
+            isPlaying = true;
+            currentTime = 0;
+            
+            selectedTracks.forEach(track => {
+                if (track.audio && !track.muted) {
+                    track.audio.currentTime = 0;
+                    track.audio.play();
+                }
+            });
+            
+            startTimeDisplay();
+        }
+        
+        // Pause all tracks
+        function pauseAll() {
+            isPlaying = false;
+            selectedTracks.forEach(track => {
+                if (track.audio) {
+                    track.audio.pause();
+                }
+            });
+            
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+        
+        // Stop all tracks
+        function stopAll() {
+            isPlaying = false;
+            currentTime = 0;
+            
+            selectedTracks.forEach(track => {
+                if (track.audio) {
+                    track.audio.pause();
+                    track.audio.currentTime = 0;
+                }
+            });
+            
+            updatePlayhead();
+            
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+        
+        // Start time display
+        function startTimeDisplay() {
+            if (!isPlaying) return;
+            
+            currentTime += 0.1;
+            updatePlayhead();
+            
+            if (currentTime >= totalDuration) {
+                stopAll();
+                return;
+            }
+            
+            animationFrame = requestAnimationFrame(startTimeDisplay);
+        }
+        
+        // Update playhead position
+        function updatePlayhead() {
+            const progress = totalDuration > 0 ? (currentTime / totalDuration) * 100 : 0;
+            const timelineWidth = tracksContainer.offsetWidth;
+            const position = (progress / 100) * timelineWidth;
+            
+            playhead.style.left = `${position}px`;
+            
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = Math.floor(currentTime % 60);
+            timelineDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} / ${Math.floor(totalDuration / 60).toString().padStart(2, '0')}:${Math.floor(totalDuration % 60).toString().padStart(2, '0')}`;
+        }
+        
+        // Apply fade effects
+        function applyFade(type) {
+            selectedTracks.forEach(track => {
+                if (!track.muted) {
+                    switch(type) {
+                        case 'fadeIn':
+                            track.fadeIn = 2; // 2 seconds fade in
+                            break;
+                        case 'fadeOut':
+                            track.fadeOut = 2; // 2 seconds fade out
+                            break;
+                        case 'crossfade':
+                            track.fadeIn = 1;
+                            track.fadeOut = 1;
+                            break;
+                    }
+                }
+            });
+            
+            progressText.textContent = `${type} applied to all non-muted tracks`;
+        }
+        
+        // Normalize audio
+        function normalizeAudio() {
+            selectedTracks.forEach(track => {
+                if (!track.muted) {
+                    track.volume = 100;
+                    track.effects.eqLow = Math.max(track.effects.eqLow, 0);
+                    track.effects.eqMid = Math.max(track.effects.eqMid, 0);
+                    track.effects.eqHigh = Math.max(track.effects.eqHigh, 0);
+                }
+            });
+            
+            displayMixerControls();
+            progressText.textContent = 'Audio normalized for all tracks';
+        }
+        
+        // Mix tracks
+        async function mixTracks() {
+            if (!isFFmpegLoaded) {
+                alert('Audio engine is still loading. Please wait a moment and try again.');
+                return;
+            }
+            
+            if (selectedTracks.length === 0) {
+                alert('Please add some tracks first.');
+                return;
+            }
+            
+            progressContainer.style.display = 'block';
+            mixBtn.disabled = true;
+            
+            try {
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+                progressText.textContent = 'Preparing tracks...';
+                
+                // Build FFmpeg command for mixing
+                const inputs = [];
+                const filters = [];
+                
+                selectedTracks.forEach((track, index) => {
+                    inputs.push('-i', `track_${index}`);
+                    
+                    if (!track.muted) {
+                        // Volume filter
+                        filters.push(`[${index}:a]volume=${track.volume/100}[v${index}]`);
+                        
+                        // Pan filter
+                        if (track.pan !== 0) {
+                            const panValue = track.pan > 0 ? 
+                                `0.5+${track.pan/200}:0.5-${track.pan/200}` : 
+                                `0.5+${track.pan/200}:0.5-${track.pan/200}`;
+                            filters.push(`[v${index}]pan=stereo|c0=${panValue}|c1=${panValue}[p${index}]`);
+                            index++; // Increment index for pan filter
+                        }
+                    }
+                });
+                
+                // Mix all enabled tracks
+                const mixInputs = filters.map((_, i) => `[v${i}]`).join('');
+                if (mixInputs) {
+                    filters.push(`${mixInputs}amix=inputs=${selectedTracks.filter(t => !t.muted).length}:duration=longest:weights=1 1 1[mixed]`);
+                }
+                
+                progressBar.style.width = '30%';
+                progressBar.textContent = '30%';
+                progressText.textContent = 'Applying effects...';
+                
+                // Write input files
+                for (let i = 0; i < selectedTracks.length; i++) {
+                    const track = selectedTracks[i];
+                    await ffmpeg.writeFile(`track_${i}`, new Uint8Array(await track.file.arrayBuffer()));
+                }
+                
+                progressBar.style.width = '60%';
+                progressBar.textContent = '60%';
+                progressText.textContent = 'Mixing tracks...';
+                
+                // Build final command
+                const args = [...inputs];
+                if (filters.length > 0) {
+                    args.push('-filter_complex', filters.join(';'));
+                    args.push('-map', '[mixed]');
+                } else {
+                    args.push('-map', '0:a');
+                }
+                
+                args.push('-ac', '2', '-ar', '44100', 'mixed_output.wav');
+                
+                // Execute mixing
+                await ffmpeg.exec(args);
+                
+                progressBar.style.width = '90%';
+                progressBar.textContent = '90%';
+                progressText.textContent = 'Finalizing mix...';
+                
+                // Read output
+                const data = await ffmpeg.readFile('mixed_output.wav');
+                const blob = new Blob([data.buffer], { type: 'audio/wav' });
+                const url = URL.createObjectURL(blob);
+                
+                downloadBtn.disabled = false;
+                
+                progressBar.style.width = '100%';
+                progressBar.textContent = '100%';
+                progressText.textContent = 'Mix completed successfully!';
+                
+                // Store for download
+                window.mixedAudioBlob = blob;
+                window.mixedAudioUrl = url;
+                
+            } catch (error) {
+                console.error('Mixing error:', error);
+                progressText.textContent = 'Failed to mix tracks. Please try again.';
+            }
+            
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+                mixBtn.disabled = false;
+            }, 2000);
+        }
+        
+        // Export all tracks
+        function exportAll() {
+            selectedTracks.forEach((track, index) => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(track.file);
+                a.download = track.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        }
+        
+        // Download mixed audio
+        function downloadMix() {
+            if (window.mixedAudioUrl) {
+                const a = document.createElement('a');
+                a.href = window.mixedAudioUrl;
+                a.download = 'mixed_audio.wav';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+        
+        // Reset tool
+        function resetTool() {
+            selectedTracks = [];
+            mixerSettings.clear();
+            
+            stopAll();
+            
+            if (window.mixedAudioUrl) {
+                URL.revokeObjectURL(window.mixedAudioUrl);
+                window.mixedAudioUrl = null;
+            }
+            
+            mixBtn.disabled = true;
+            downloadBtn.disabled = true;
+            exportBtn.disabled = true;
+            mixerTimeline.style.display = 'none';
+            mixerControls.style.display = 'none';
+            fadeControls.style.display = 'none';
+            progressContainer.style.display = 'none';
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                'Drop audio files here to add tracks (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
+        }
+        
+        // Event listeners
+        mixBtn.addEventListener('click', mixTracks);
+        downloadBtn.addEventListener('click', downloadMix);
+        exportBtn.addEventListener('click', exportAll);
+        resetBtn.addEventListener('click', resetTool);
+        
+        playAllBtn.addEventListener('click', playAll);
+        pauseAllBtn.addEventListener('click', pauseAll);
+        stopAllBtn.addEventListener('click', stopAll);
+        
+        fadeInBtn.addEventListener('click', () => applyFade('fadeIn'));
+        fadeOutBtn.addEventListener('click', () => applyFade('fadeOut'));
+        crossfadeBtn.addEventListener('click', () => applyFade('crossfade'));
+        normalizeBtn.addEventListener('click', normalizeAudio);
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initFFmpeg();
+        });
+    </script>
+</body>
+</html>

@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/ffmpeg.min.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/ffmpeg-util.min.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -321,7 +325,26 @@
                     <div class="privacy-icon">🔒</div>
                     <div class="privacy-content">
                         <h3>Privacy Protected</h3>
-                        <p>Your video never leaves your device. All processing happens locally in your browser using FFmpeg.wasm. No data is uploaded to our servers, ensuring complete privacy and security.</p>
+                        <p>Your video never leaves your device. All processing happens locally in your browser using FFmpeg.wasm, the same powerful video processing engine used by millions worldwide. No data is uploaded to our servers, ensuring complete privacy and security.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="tips-section">
+            <div class="container">
+                <div class="tips-card">
+                    <div class="tips-icon">💡</div>
+                    <div class="tips-content">
+                        <h3>Pro Tips for Best Results</h3>
+                        <ul class="tips-list">
+                            <li><strong>Frame Rate:</strong> Use 8-15 FPS for web GIFs to balance quality and file size</li>
+                            <li><strong>Duration:</strong> Keep GIFs under 10 seconds for better performance</li>
+                            <li><strong>Resolution:</strong> 400px width is optimal for most use cases</li>
+                            <li><strong>Colors:</strong> Use 64 colors for the best balance of quality and size</li>
+                            <li><strong>File Size:</strong> Videos under 50MB process faster and use less memory</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -420,6 +443,8 @@
         // Global variables
         let currentVideo = null;
         let generatedGif = null;
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
 
         // DOM elements
         const videoInput = document.getElementById('videoInput');
@@ -434,9 +459,27 @@
 
         // Initialize tool
         document.addEventListener('DOMContentLoaded', function() {
+            checkBrowserCompatibility();
             initializeEventListeners();
             initializeRangeInputs();
         });
+
+        function checkBrowserCompatibility() {
+            // Check for required APIs
+            const requiredFeatures = [
+                'FileReader',
+                'URL',
+                'Blob',
+                'Uint8Array'
+            ];
+            
+            const missingFeatures = requiredFeatures.filter(feature => !(feature in window));
+            
+            if (missingFeatures.length > 0) {
+                showError('Your browser does not support required features for video conversion. Please use a modern browser like Chrome, Firefox, Safari, or Edge.');
+                document.querySelector('.convert-section').style.display = 'none';
+            }
+        }
 
         function initializeEventListeners() {
             // File input change
@@ -503,14 +546,15 @@
             if (!file) return;
 
             // Validate file type
-            if (!file.type.startsWith('video/')) {
+            const validTypes = ['video/mp4', 'video/mov', 'video/avi', 'video/webm', 'video/quicktime'];
+            if (!validTypes.some(type => file.type.includes(type.split('/')[1]) || file.type === type)) {
                 showError('Please select a valid video file (MP4, MOV, AVI, WebM)');
                 return;
             }
 
             // Validate file size (100MB limit)
             if (file.size > 100 * 1024 * 1024) {
-                showError('File size must be less than 100MB');
+                showError('File size must be less than 100MB. Please compress your video and try again.');
                 return;
             }
 
@@ -520,6 +564,12 @@
 
         function loadVideo(file) {
             currentVideo = file;
+            
+            // Check if video is too large for processing
+            if (!checkVideoProcessingCapability(file)) {
+                showError('This video is too large to process in your browser. Please try a smaller video or reduce the quality settings.');
+                return;
+            }
             
             // Create video URL and set preview
             const videoUrl = URL.createObjectURL(file);
@@ -536,6 +586,14 @@
                 document.getElementById('endTime').value = videoPreview.duration.toFixed(1);
                 updateSizeEstimation();
             });
+        }
+
+        function checkVideoProcessingCapability(file) {
+            // Estimate if video can be processed based on size and duration
+            const estimatedFrames = (file.size / (1024 * 1024)) * 10; // Rough estimation
+            const maxRecommendedFrames = 5000; // Prevent memory issues
+            
+            return estimatedFrames <= maxRecommendedFrames;
         }
 
         function displayVideoMetadata() {
@@ -623,55 +681,136 @@
             progressSection.style.display = 'block';
             resultSection.style.display = 'none';
             convertBtn.disabled = true;
+            convertBtn.textContent = '🔄 Initializing...';
             
             try {
-                // Initialize FFmpeg (placeholder - will be implemented with actual FFmpeg.wasm)
+                // Initialize FFmpeg
                 await initializeFFmpeg();
                 
-                // Phase 1: Analyze video
-                updateProgress(0, 'Analyzing video...');
-                await simulateProgress(1000);
+                convertBtn.textContent = '🎬 Converting...';
                 
-                // Phase 2: Generate palette
-                updateProgress(25, 'Generating color palette...');
-                await simulateProgress(2000);
-                
-                // Phase 3: Create frames
-                updateProgress(50, 'Creating frames...');
-                await simulateProgress(3000);
-                
-                // Phase 4: Optimize GIF
-                updateProgress(75, 'Optimizing GIF...');
+                // Convert video to GIF
                 const gifBlob = await convertVideoToGif();
-                updateProgress(100, 'Complete!');
                 
                 // Show result
                 showResult(gifBlob);
                 
             } catch (error) {
+                console.error('Conversion failed:', error);
                 showError('Conversion failed: ' + error.message);
                 resetProgress();
+            } finally {
+                convertBtn.textContent = '🎬 Convert to GIF';
             }
         }
 
         async function initializeFFmpeg() {
-            // Placeholder for FFmpeg.wasm initialization
-            // This will be replaced with actual FFmpeg.wasm integration
-            updateProgress(5, 'Loading FFmpeg...');
-            await simulateProgress(500);
+            if (ffmpegLoaded) return;
+            
+            try {
+                updateProgress(5, 'Initializing FFmpeg...');
+                
+                const { FFmpeg } = FFmpegWASM;
+                ffmpeg = new FFmpeg();
+                
+                // Set up progress tracking
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+                
+                ffmpeg.on('progress', ({ progress }) => {
+                    updateProgress(Math.min(95, 15 + (progress * 80)), 'Processing...');
+                });
+                
+                // Load FFmpeg
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.wasm',
+                });
+                
+                ffmpegLoaded = true;
+                updateProgress(15, 'FFmpeg ready!');
+                
+            } catch (error) {
+                console.error('FFmpeg initialization error:', error);
+                throw new Error('Failed to initialize FFmpeg. Please check your internet connection and try again.');
+            }
         }
 
         async function convertVideoToGif() {
-            // Placeholder for actual conversion logic
-            // This will be replaced with FFmpeg.wasm commands
             const settings = getConversionSettings();
             console.log('Converting with settings:', settings);
             
-            // Simulate conversion
-            await simulateProgress(2000);
+            try {
+                // Phase 1: Analyze video
+                updateProgress(10, 'Analyzing video...');
+                
+                // Write input file to FFmpeg filesystem
+                const inputFileName = 'input.' + getFileExtension(currentVideo.name);
+                const outputFileName = 'output.gif';
+                
+                const videoData = new Uint8Array(await currentVideo.arrayBuffer());
+                await ffmpeg.writeFile(inputFileName, videoData);
+                
+                // Phase 2: Generate palette
+                updateProgress(25, 'Generating color palette...');
+                const paletteFileName = 'palette.png';
+                
+                // Build FFmpeg filter complex for GIF conversion
+                const filterComplex = buildFilterComplex(settings);
+                
+                // Phase 3: Create frames and convert to GIF
+                updateProgress(50, 'Converting to GIF...');
+                
+                // First generate palette
+                await ffmpeg.exec([
+                    '-i', inputFileName,
+                    '-vf', `fps=${settings.frameRate},scale=${settings.width}:-1:flags=lanczos,palettegen=stats_mode=diff`,
+                    '-y', paletteFileName
+                ]);
+                
+                // Phase 4: Generate final GIF using the palette
+                updateProgress(75, 'Creating optimized GIF...');
+                
+                await ffmpeg.exec([
+                    '-i', inputFileName,
+                    '-i', paletteFileName,
+                    '-lavfi', filterComplex,
+                    '-loop', settings.loopCount.toString(),
+                    '-y', outputFileName
+                ]);
+                
+                // Read the output file
+                const gifData = await ffmpeg.readFile(outputFileName);
+                const gifBlob = new Blob([gifData], { type: 'image/gif' });
+                
+                // Cleanup
+                await ffmpeg.deleteFile(inputFileName);
+                await ffmpeg.deleteFile(paletteFileName);
+                await ffmpeg.deleteFile(outputFileName);
+                
+                updateProgress(100, 'Conversion complete!');
+                return gifBlob;
+                
+            } catch (error) {
+                console.error('Conversion error:', error);
+                throw new Error('Failed to convert video to GIF: ' + error.message);
+            }
+        }
+        
+        function buildFilterComplex(settings) {
+            const { width, frameRate, startTime, endTime } = settings;
+            const duration = endTime - startTime;
             
-            // Return a dummy result for now
-            return new Blob(['dummy gif data'], { type: 'image/gif' });
+            // Build complex filter for high-quality GIF conversion
+            let filter = `trim=start=${startTime}:end=${endTime},setpts=PTS-STARTPTS,fps=${frameRate},scale=${width}:-1:flags=lanczos[x];`;
+            filter += `[x][1:v]paletteuse=new=1:diff_mode=rectangle`;
+            
+            return filter;
+        }
+        
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
         }
 
         function getConversionSettings() {
@@ -692,6 +831,20 @@
         function updateProgress(percent, text) {
             document.getElementById('progressBar').style.width = percent + '%';
             document.getElementById('progressText').textContent = text;
+            
+            // Update phase indicators
+            const phases = document.querySelectorAll('.phase');
+            phases.forEach(phase => phase.classList.remove('active'));
+            
+            if (percent < 25) {
+                document.getElementById('phase1').classList.add('active');
+            } else if (percent < 50) {
+                document.getElementById('phase2').classList.add('active');
+            } else if (percent < 75) {
+                document.getElementById('phase3').classList.add('active');
+            } else {
+                document.getElementById('phase4').classList.add('active');
+            }
         }
 
         function showResult(gifBlob) {
@@ -740,6 +893,17 @@
             document.getElementById('sizeEstimation').style.display = 'none';
             convertBtn.disabled = true;
             clearError();
+            
+            // Clear FFmpeg file system if initialized
+            if (ffmpegLoaded) {
+                try {
+                    ffmpeg.terminate();
+                } catch (e) {
+                    console.warn('Error terminating FFmpeg:', e);
+                }
+                ffmpeg = null;
+                ffmpegLoaded = false;
+            }
         }
 
         function showError(message) {
@@ -1275,6 +1439,48 @@
             line-height: 1.6;
         }
 
+        .tips-section {
+            background: var(--color-neutral-50);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .tips-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+        }
+
+        .tips-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+            margin-top: var(--spacing-xs);
+        }
+
+        .tips-content h3 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--color-neutral-900);
+            font-size: var(--font-size-subtitle);
+        }
+
+        .tips-list {
+            margin: 0;
+            padding-left: var(--spacing-lg);
+            color: var(--color-neutral-700);
+            line-height: 1.6;
+        }
+
+        .tips-list li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .tips-list strong {
+            color: var(--color-primary-600);
+        }
+
         .related-tools {
             padding: var(--spacing-3xl) 0;
             background: var(--color-neutral-50);
@@ -1354,6 +1560,11 @@
             }
             
             .privacy-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tips-card {
                 flex-direction: column;
                 text-align: center;
             }

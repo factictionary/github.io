@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -128,7 +132,8 @@
                         <input type="file" id="videoInput" multiple accept="video/*" class="file-input">
                     </div>
                     <div id="uploadHelp" class="input-help">
-                        Select multiple video files to merge them into a single video. You can reorder them by dragging.
+                        Select multiple video files to merge them into a single video. You can reorder them by dragging. 
+                        <br><strong>Note:</strong> Videos are processed in your browser. Large files may take several minutes to merge.
                     </div>
                 </div>
 
@@ -194,6 +199,9 @@
                                     </div>
                                     <div class="progress-text" id="fileProgressText">0%</div>
                                 </div>
+                            </div>
+                            <div class="processing-actions">
+                                <button class="btn btn-secondary" onclick="cancelProcessing()">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -334,9 +342,11 @@
 
     <!-- JavaScript -->
     <script>
-        // Video merger functionality
+        // Video merger functionality with FFmpeg.wasm
         let selectedFiles = [];
         let mergedVideoBlob = null;
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
 
         document.addEventListener('DOMContentLoaded', function() {
             initializeVideoMerger();
@@ -381,17 +391,31 @@
         }
 
         function addVideoFiles(files) {
-            const videoFiles = files.filter(file => file.type.startsWith('video/'));
+            const videoFiles = files.filter(file => {
+                // Check MIME type first
+                if (file.type.startsWith('video/')) return true;
+                // Fallback to extension check
+                const ext = file.name.split('.').pop().toLowerCase();
+                const videoExtensions = ['mp4', 'avi', 'mov', 'mkv', 'wmv', 'flv', 'webm', 'm4v', '3gp'];
+                return videoExtensions.includes(ext);
+            });
             
             if (videoFiles.length === 0) {
-                showNotification('❌ Please select valid video files', 'error');
+                showNotification('❌ Please select valid video files (MP4, AVI, MOV, MKV, WMV, FLV, WebM, etc.)', 'error');
                 return;
             }
 
-            // Check file sizes (max 500MB)
+            // Check individual file sizes (max 500MB)
             const oversizedFiles = videoFiles.filter(file => file.size > 500 * 1024 * 1024);
             if (oversizedFiles.length > 0) {
-                showNotification('❌ Some files are too large. Maximum size is 500MB per file.', 'error');
+                const oversizedNames = oversizedFiles.map(f => f.name).join(', ');
+                showNotification(`❌ These files are too large (>500MB): ${oversizedNames}`, 'error');
+                return;
+            }
+
+            // Check total file count (max 20 files to prevent browser overload)
+            if (selectedFiles.length + videoFiles.length > 20) {
+                showNotification('❌ Maximum 20 files can be merged at once. Please select fewer files.', 'error');
                 return;
             }
 
@@ -403,6 +427,8 @@
             if (selectedFiles.length > 0) {
                 document.getElementById('fileListSection').style.display = 'block';
                 document.getElementById('timelineSection').style.display = 'block';
+                
+                showNotification(`✅ Added ${videoFiles.length} video file${videoFiles.length > 1 ? 's' : ''} successfully`);
             }
         }
 
@@ -559,55 +585,186 @@
             document.getElementById('fileCount').textContent = selectedFiles.length;
         }
 
-        function startMerge() {
+        async function startMerge() {
             if (selectedFiles.length === 0) {
                 showNotification('❌ Please select video files to merge', 'error');
+                return;
+            }
+            
+            // Check if FFmpeg is available
+            if (typeof FFmpeg === 'undefined' || typeof FFmpegUtil === 'undefined') {
+                showNotification('❌ FFmpeg library not loaded. Please refresh the page and try again.', 'error');
+                return;
+            }
+            
+            // Check total file size (limit to 1GB for browser processing)
+            const totalSize = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+            if (totalSize > 1024 * 1024 * 1024) {
+                showNotification('❌ Total file size too large. Please select smaller files (max 1GB total).', 'error');
                 return;
             }
             
             document.getElementById('processingSection').style.display = 'block';
             document.getElementById('fileListSection').style.display = 'none';
             
-            // Start mock processing
-            simulateVideoMerge();
-        }
-
-        function simulateVideoMerge() {
-            let overallProgress = 0;
-            let currentFileIndex = 0;
-            const totalFiles = selectedFiles.length;
-            
-            const processNextFile = () => {
-                if (currentFileIndex >= totalFiles) {
-                    // Processing complete
-                    overallProgress = 100;
-                    updateProgress(overallProgress, 100, `Merged ${totalFiles} videos successfully!`);
-                    setTimeout(showResult, 1000);
-                    return;
+            try {
+                // Initialize FFmpeg if not already loaded
+                if (!ffmpegLoaded) {
+                    updateProgress(5, 0, 'Initializing FFmpeg...');
+                    await initializeFFmpeg();
                 }
                 
-                const currentFile = selectedFiles[currentFileIndex];
-                updateCurrentFile(currentFile.name);
-                
-                let fileProgress = 0;
-                const fileProgressInterval = setInterval(() => {
-                    fileProgress += Math.random() * 15;
-                    if (fileProgress > 100) fileProgress = 100;
-                    
-                    overallProgress = ((currentFileIndex * 100) + fileProgress) / totalFiles;
-                    
-                    updateProgress(overallProgress, fileProgress, `Processing ${currentFile.name}`);
-                    
-                    if (fileProgress >= 100) {
-                        clearInterval(fileProgressInterval);
-                        currentFileIndex++;
-                        setTimeout(processNextFile, 500);
-                    }
-                }, 200);
-            };
-            
-            processNextFile();
+                // Start real video processing
+                await mergeVideos();
+            } catch (error) {
+                console.error('Video merge error:', error);
+                showNotification('❌ Error merging videos: ' + error.message, 'error');
+                document.getElementById('processingSection').style.display = 'none';
+                document.getElementById('fileListSection').style.display = 'block';
+            }
         }
+
+        async function initializeFFmpeg() {
+            try {
+                // Check if FFmpeg is available
+                if (!window.FFmpeg || !window.FFmpegUtil) {
+                    throw new Error('FFmpeg library not found. Please check your internet connection and refresh the page.');
+                }
+                
+                const { FFmpeg } = window.FFmpeg;
+                const { toBlobURL } = window.FFmpegUtil;
+                
+                if (!FFmpeg || !toBlobURL) {
+                    throw new Error('FFmpeg components not properly loaded');
+                }
+                
+                ffmpeg = new FFmpeg();
+                
+                // Load FFmpeg with progress tracking
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg log:', message);
+                });
+                
+                ffmpeg.on('progress', ({ progress, time }) => {
+                    const percentage = Math.round(progress * 100);
+                    updateProgress(5 + (percentage * 0.15), percentage, 'Loading FFmpeg core...');
+                });
+                
+                // Load FFmpeg core from CDN
+                const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.7/dist/umd';
+                await ffmpeg.load({
+                    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+                    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+                });
+                
+                ffmpegLoaded = true;
+                showNotification('✅ FFmpeg loaded successfully');
+            } catch (error) {
+                if (error.message.includes('Failed to fetch') || error.message.includes('network')) {
+                    throw new Error('Network error: Could not load FFmpeg. Please check your internet connection.');
+                } else if (error.message.includes('out of memory')) {
+                    throw new Error('Browser memory limit reached. Try using fewer or smaller video files.');
+                } else {
+                    throw new Error('Failed to initialize FFmpeg: ' + error.message);
+                }
+            }
+        }
+
+        async function mergeVideos() {
+            if (!ffmpeg || !ffmpegLoaded) {
+                throw new Error('FFmpeg not initialized');
+            }
+            
+            try {
+                const totalFiles = selectedFiles.length;
+                let processedFiles = 0;
+                
+                // Set up progress tracking for file processing
+                ffmpeg.on('progress', ({ progress, time }) => {
+                    const fileProgress = Math.round(progress * 100);
+                    const overallProgress = ((processedFiles * 100) + fileProgress) / totalFiles;
+                    const currentFile = selectedFiles[processedFiles]?.name || 'Finalizing...';
+                    updateProgress(overallProgress, fileProgress, `Processing: ${currentFile}`);
+                });
+                
+                // Write all input files to FFmpeg file system
+                updateProgress(10, 0, 'Preparing video files...');
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    const fileName = `input${i}.${getFileExtension(file.name)}`;
+                    const fileData = new Uint8Array(await file.arrayBuffer());
+                    await ffmpeg.writeFile(fileName, fileData);
+                    processedFiles = i + 1;
+                    updateProgress(((i + 1) / totalFiles) * 30, 100, `Loaded: ${file.name}`);
+                }
+                
+                // Create concat filter for all videos
+                const concatFilter = selectedFiles.map((_, i) => `[${i}:v][${i}:a]`).join('') + `concat=n=${selectedFiles.length}:v=1:a=1[outv][outa]`;
+                
+                // Build FFmpeg command
+                const args = [];
+                
+                // Add all input files
+                selectedFiles.forEach((_, i) => {
+                    args.push('-i', `input${i}.${getFileExtension(selectedFiles[i].name)}`);
+                });
+                
+                // Add filter complex for concatenation
+                args.push('-filter_complex', concatFilter);
+                
+                // Map output
+                args.push('-map', '[outv]', '-map', '[outa]');
+                
+                // Output settings
+                args.push('-c:v', 'libx264', '-c:a', 'aac', '-preset', 'medium', '-crf', '23', 'output.mp4');
+                
+                updateProgress(35, 0, 'Merging videos...');
+                
+                // Execute FFmpeg command
+                await ffmpeg.exec(args);
+                
+                // Read the output file
+                updateProgress(95, 0, 'Finalizing...');
+                const data = await ffmpeg.readFile('output.mp4');
+                mergedVideoBlob = new Blob([data], { type: 'video/mp4' });
+                
+                // Clean up temporary files
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    await ffmpeg.deleteFile(`input${i}.${getFileExtension(selectedFiles[i].name)}`);
+                }
+                await ffmpeg.deleteFile('output.mp4');
+                
+                updateProgress(100, 100, 'Video merge completed!');
+                setTimeout(showResult, 500);
+                
+            } catch (error) {
+                // Clean up any temporary files on error
+                try {
+                    for (let i = 0; i < selectedFiles.length; i++) {
+                        await ffmpeg.deleteFile(`input${i}.${getFileExtension(selectedFiles[i].name)}`);
+                    }
+                    await ffmpeg.deleteFile('output.mp4');
+                } catch (cleanupError) {
+                    console.warn('Cleanup error:', cleanupError);
+                }
+                
+                // Provide specific error messages
+                if (error.message.includes('Invalid data found') || error.message.includes('moov atom not found')) {
+                    throw new Error('One or more video files are corrupted or in an unsupported format.');
+                } else if (error.message.includes('Permission denied') || error.message.includes('ENOENT')) {
+                    throw new Error('File access error. Please try again with different files.');
+                } else if (error.message.includes('out of memory') || error.message.includes('memory')) {
+                    throw new Error('Browser memory limit reached. Try using fewer or smaller video files.');
+                } else {
+                    throw new Error('Video merge failed: ' + error.message);
+                }
+            }
+        }
+
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
 
         function updateProgress(overall, file, currentFile) {
             document.getElementById('overallProgress').style.width = overall + '%';
@@ -627,23 +784,58 @@
             document.getElementById('processingSection').style.display = 'none';
             document.getElementById('resultSection').style.display = 'block';
             
-            // Mock result data
-            const totalSize = selectedFiles.reduce((sum, file) => sum + file.size, 0);
-            const totalDuration = selectedFiles.length * 10;
-            
-            document.getElementById('outputFileSize').textContent = formatFileSize(totalSize * 0.8); // Mock compression
-            document.getElementById('outputDuration').textContent = formatDuration(totalDuration);
-            document.getElementById('outputResolution').textContent = '1920x1080';
+            if (mergedVideoBlob) {
+                document.getElementById('outputFileName').textContent = 'merged_video.mp4';
+                document.getElementById('outputFileSize').textContent = formatFileSize(mergedVideoBlob.size);
+                
+                // Get video duration and resolution if possible
+                getVideoInfo(mergedVideoBlob).then(info => {
+                    if (info.duration) {
+                        document.getElementById('outputDuration').textContent = formatDuration(info.duration);
+                    }
+                    if (info.resolution) {
+                        document.getElementById('outputResolution').textContent = info.resolution;
+                    }
+                }).catch(() => {
+                    // If we can't get video info, show estimated duration
+                    const totalDuration = selectedFiles.length * 10;
+                    document.getElementById('outputDuration').textContent = formatDuration(totalDuration);
+                    document.getElementById('outputResolution').textContent = 'Auto-detected';
+                });
+            }
             
             showNotification('🎉 Video merge completed successfully!');
         }
 
+        function getVideoInfo(blob) {
+            return new Promise((resolve, reject) => {
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                
+                video.onloadedmetadata = () => {
+                    window.URL.revokeObjectURL(video.src);
+                    resolve({
+                        duration: video.duration,
+                        resolution: `${video.videoWidth}x${video.videoHeight}`
+                    });
+                };
+                
+                video.onerror = () => {
+                    window.URL.revokeObjectURL(video.src);
+                    reject(new Error('Failed to load video metadata'));
+                };
+                
+                video.src = URL.createObjectURL(blob);
+            });
+        }
+
         function downloadMergedVideo() {
-            // Create a mock blob for demonstration
-            const mockBlob = new Blob(['mock video data'], { type: 'video/mp4' });
-            mergedVideoBlob = mockBlob;
+            if (!mergedVideoBlob) {
+                showNotification('❌ No merged video available for download', 'error');
+                return;
+            }
             
-            const url = URL.createObjectURL(mockBlob);
+            const url = URL.createObjectURL(mergedVideoBlob);
             const a = document.createElement('a');
             a.href = url;
             a.download = 'merged_video.mp4';
@@ -713,6 +905,22 @@
                     }
                 }, 300);
             }, 3000);
+        }
+
+        function cancelProcessing() {
+            if (ffmpeg) {
+                try {
+                    // FFmpeg.wasm doesn't have a built-in cancel, but we can reset the state
+                    ffmpeg = null;
+                    ffmpegLoaded = false;
+                } catch (error) {
+                    console.warn('Error canceling FFmpeg:', error);
+                }
+            }
+            
+            document.getElementById('processingSection').style.display = 'none';
+            document.getElementById('fileListSection').style.display = 'block';
+            showNotification('⚠️ Processing canceled');
         }
 
         // Mobile menu functionality
@@ -1063,6 +1271,12 @@
             to { transform: rotate(360deg); }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .processing-icon {
+                animation: none;
+            }
+        }
+
         .processing-info {
             flex: 1;
         }
@@ -1104,6 +1318,11 @@
             background: var(--color-neutral-50);
             border-radius: var(--radius-button);
             padding: var(--spacing-md);
+        }
+
+        .processing-actions {
+            margin-top: var(--spacing-md);
+            text-align: center;
         }
 
         .file-name {

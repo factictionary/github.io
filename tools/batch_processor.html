@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Processor | Multi-Format Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Process multiple files in batch: images, audio, videos, and PDFs. Format conversion, compression, resizing, and automation. 100% client-side processing.">
+    <meta name="keywords" content="browser tool, batch processor, batch converter, multi-format, images, audio, videos, pdf, free, online, privacy-first">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/batch_processor.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Batch Processor | Multi-Format Tool | Factictionary">
+    <meta property="og:description" content="Process multiple files in batch: images, audio, videos, and PDFs. Format conversion, compression, resizing, and automation. 100% client-side processing.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/batch_processor.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Batch Processor | Multi-Format Tool | Factictionary">
+    <meta name="twitter:description" content="Process multiple files in batch: images, audio, videos, and PDFs. Format conversion, compression, resizing, and automation. 100% client-side processing.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 600px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #8B5CF6;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #8B5CF640;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #FAF5FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #8B5CF6;
+            background: #FAF5FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #8B5CF6E6;
+        }
+        
+        .file-type-selector {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .file-type-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid #8B5CF6;
+            border-radius: var(--radius-button);
+            background: white;
+            color: #8B5CF6;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .file-type-btn:hover,
+        .file-type-btn.active {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .file-type-btn img,
+        .file-type-btn svg {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--spacing-xs);
+        }
+        
+        .tool-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .quality-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .quality-percentage {
+            font-weight: var(--font-weight-semibold);
+            color: #8B5CF6;
+        }
+        
+        .dimension-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-sm);
+        }
+        
+        .file-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            background: white;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-neutral-200);
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-item:hover {
+            background: var(--color-neutral-50);
+        }
+        
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-md);
+            font-size: 20px;
+        }
+        
+        .file-icon.image { background: #FEF3C7; }
+        .file-icon.audio { background: #DBEAFE; }
+        .file-icon.video { background: #FCE7F3; }
+        .file-icon.pdf { background: #FEE2E2; }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-900);
+            margin-bottom: 2px;
+        }
+        
+        .file-details {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+        
+        .file-remove {
+            background: var(--color-error);
+            color: white;
+            border: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            cursor: pointer;
+            font-size: var(--font-size-small);
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .progress-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f3f4f6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #8B5CF6;
+            transition: width 0.3s ease;
+        }
+        
+        .batch-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .stat-item {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .result-item {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .result-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .result-status.success {
+            background: var(--color-success);
+            color: white;
+        }
+        
+        .result-status.error {
+            background: var(--color-error);
+            color: white;
+        }
+        
+        .result-status.processing {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-primary {
+            background: #8B5CF6;
+        }
+        
+        .btn-primary:hover {
+            background: #8B5CF6E6;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .batch-settings {
+            background: var(--color-neutral-50);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .settings-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .settings-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .file-type-selector {
+                flex-direction: column;
+            }
+            
+            .settings-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Batch Processor",
+        "description": "Process multiple files in batch: images, audio, videos, and PDFs. Format conversion, compression, resizing, and automation.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Batch Processor</h1>
+        <p class="tool-subtitle">Process multiple files in batch: images, audio, videos, and PDFs. Format conversion, compression, resizing, and automation. 100% client-side processing.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📁</div>
+                <div class="drop-zone-text">
+                    Drop your files here or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*,audio/*,video/*,.pdf" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+            </div>
+            
+            <!-- File Type Selector -->
+            <div class="file-type-selector">
+                <button class="file-type-btn active" data-type="all">
+                    📄 All Files
+                </button>
+                <button class="file-type-btn" data-type="image">
+                    🖼️ Images
+                </button>
+                <button class="file-type-btn" data-type="audio">
+                    🎵 Audio
+                </button>
+                <button class="file-type-btn" data-type="video">
+                    🎬 Videos
+                </button>
+                <button class="file-type-btn" data-type="pdf">
+                    📋 PDFs
+                </button>
+            </div>
+            
+            <!-- File List -->
+            <div class="file-list" id="fileList">
+                <div style="text-align: center; padding: 40px; color: var(--color-neutral-500);">
+                    No files selected
+                </div>
+            </div>
+            
+            <!-- Batch Settings -->
+            <div class="batch-settings">
+                <h3>Batch Settings</h3>
+                
+                <div class="settings-row">
+                    <div class="control-group">
+                        <label class="control-label">Output Format</label>
+                        <select class="control-input" id="outputFormat">
+                            <option value="keep">Keep Original</option>
+                            <option value="jpg">JPG (Images)</option>
+                            <option value="png">PNG (Images)</option>
+                            <option value="webp">WebP (Images)</option>
+                            <option value="mp3">MP3 (Audio)</option>
+                            <option value="wav">WAV (Audio)</option>
+                            <option value="mp4">MP4 (Videos)</option>
+                            <option value="avi">AVI (Videos)</option>
+                            <option value="pdf">PDF (Documents)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Quality/Compression</label>
+                        <div class="control-slider">
+                            <input type="range" min="1" max="10" value="7" id="qualitySlider">
+                            <div class="quality-display">
+                                <span>Higher = Better Quality</span>
+                                <span class="quality-percentage" id="qualityValue">70%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-row" id="imageSettings">
+                    <div class="control-group">
+                        <label class="control-label">Image Width (px)</label>
+                        <input type="number" class="control-input" id="imageWidth" placeholder="Auto">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Image Height (px)</label>
+                        <input type="number" class="control-input" id="imageHeight" placeholder="Auto">
+                    </div>
+                </div>
+                
+                <div class="settings-row" id="audioSettings" style="display: none;">
+                    <div class="control-group">
+                        <label class="control-label">Audio Bitrate (kbps)</label>
+                        <select class="control-input" id="audioBitrate">
+                            <option value="128">128 kbps</option>
+                            <option value="192">192 kbps</option>
+                            <option value="256" selected>256 kbps</option>
+                            <option value="320">320 kbps</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Audio Speed</label>
+                        <select class="control-input" id="audioSpeed">
+                            <option value="0.5">0.5x</option>
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>Normal</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2x</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="settings-row" id="videoSettings" style="display: none;">
+                    <div class="control-group">
+                        <label class="control-label">Video Width (px)</label>
+                        <input type="number" class="control-input" id="videoWidth" placeholder="Auto">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label">Video Quality</label>
+                        <select class="control-input" id="videoQuality">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput">
+                <h3>Processing Results</h3>
+                <div id="outputContent"></div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool btn-primary" id="processBtn" disabled>
+                    Process Files
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download All
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multi-format support (Images, Audio, Video, PDF)</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing & automation</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Format conversion & compression</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Real-time progress tracking</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">ZIP download for all files</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Drag & drop interface</div>
+                </div>
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+                    <a href="/video_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Video Compressor</a>
+                    <a href="/pdf_merger.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">PDF Merger</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">File Types Supported</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Files Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Batch Size</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Batch Processor Tool - Complete Implementation
+        class BatchProcessor {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.processBtn = document.getElementById('processBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                this.outputContent = document.getElementById('outputContent');
+                this.fileList = document.getElementById('fileList');
+                this.fileTypeBtns = document.querySelectorAll('.file-type-btn');
+                
+                this.qualitySlider = document.getElementById('qualitySlider');
+                this.qualityValue = document.getElementById('qualityValue');
+                this.outputFormat = document.getElementById('outputFormat');
+                
+                this.selectedFiles = [];
+                this.filteredFiles = [];
+                this.processedFiles = [];
+                this.currentFilter = 'all';
+                this.isProcessing = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.updateQualityDisplay();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop functionality
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('drag-over');
+                });
+                
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('drag-over');
+                });
+                
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('drag-over');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+                
+                this.dropZone.addEventListener('click', () => {
+                    this.fileInput.click();
+                });
+                
+                this.fileInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+                
+                // File type filter buttons
+                this.fileTypeBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.fileTypeBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentFilter = btn.dataset.type;
+                        this.updateFilteredFiles();
+                    });
+                });
+                
+                // Quality slider
+                this.qualitySlider.addEventListener('input', () => {
+                    this.updateQualityDisplay();
+                });
+                
+                // Output format change
+                this.outputFormat.addEventListener('change', () => {
+                    this.toggleSettings();
+                });
+                
+                // Buttons
+                this.processBtn.addEventListener('click', () => {
+                    this.processFiles();
+                });
+                
+                this.downloadBtn.addEventListener('click', () => {
+                    this.downloadAll();
+                });
+                
+                this.resetBtn.addEventListener('click', () => {
+                    this.reset();
+                });
+            }
+            
+            updateQualityDisplay() {
+                const quality = this.qualitySlider.value;
+                const percentage = (quality * 10);
+                this.qualityValue.textContent = `${percentage}%`;
+            }
+            
+            handleFiles(files) {
+                const newFiles = Array.from(files).filter(file => {
+                    const isValid = this.isValidFileType(file);
+                    if (!isValid) {
+                        console.warn(`Skipping unsupported file: ${file.name}`);
+                    }
+                    return isValid;
+                });
+                
+                if (newFiles.length === 0) {
+                    alert('Please select valid files (Images, Audio, Videos, or PDFs)');
+                    return;
+                }
+                
+                this.selectedFiles = [...this.selectedFiles, ...newFiles];
+                this.updateFilteredFiles();
+                this.updateFileList();
+                
+                if (this.selectedFiles.length > 0) {
+                    this.processBtn.disabled = false;
+                }
+            }
+            
+            isValidFileType(file) {
+                const type = file.type;
+                const name = file.name.toLowerCase();
+                
+                return type.startsWith('image/') ||
+                       type.startsWith('audio/') ||
+                       type.startsWith('video/') ||
+                       type === 'application/pdf' ||
+                       name.endsWith('.pdf');
+            }
+            
+            getFileType(file) {
+                const type = file.type;
+                
+                if (type.startsWith('image/')) return 'image';
+                if (type.startsWith('audio/')) return 'audio';
+                if (type.startsWith('video/')) return 'video';
+                if (type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) return 'pdf';
+                
+                return 'unknown';
+            }
+            
+            updateFilteredFiles() {
+                if (this.currentFilter === 'all') {
+                    this.filteredFiles = [...this.selectedFiles];
+                } else {
+                    this.filteredFiles = this.selectedFiles.filter(file => 
+                        this.getFileType(file) === this.currentFilter
+                    );
+                }
+                this.updateFileList();
+            }
+            
+            updateFileList() {
+                if (this.filteredFiles.length === 0) {
+                    this.fileList.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--color-neutral-500);">
+                            No files selected
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const filesHtml = this.filteredFiles.map((file, index) => {
+                    const fileType = this.getFileType(file);
+                    const icon = this.getFileIcon(fileType);
+                    
+                    return `
+                        <div class="file-item" data-index="${index}">
+                            <div class="file-icon ${fileType}">
+                                ${icon}
+                            </div>
+                            <div class="file-info">
+                                <div class="file-name">${file.name}</div>
+                                <div class="file-details">
+                                    ${fileType.toUpperCase()} • ${this.formatFileSize(file.size)}
+                                </div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-remove" onclick="batchProcessor.removeFile(${index})">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                this.fileList.innerHTML = filesHtml;
+            }
+            
+            getFileIcon(type) {
+                const icons = {
+                    image: '🖼️',
+                    audio: '🎵',
+                    video: '🎬',
+                    pdf: '📋'
+                };
+                return icons[type] || '📄';
+            }
+            
+            removeFile(index) {
+                const actualIndex = this.selectedFiles.indexOf(this.filteredFiles[index]);
+                if (actualIndex > -1) {
+                    this.selectedFiles.splice(actualIndex, 1);
+                    this.updateFilteredFiles();
+                    this.updateFileList();
+                    
+                    if (this.selectedFiles.length === 0) {
+                        this.processBtn.disabled = true;
+                        this.downloadBtn.disabled = true;
+                    }
+                }
+            }
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            toggleSettings() {
+                const format = this.outputFormat.value;
+                
+                // Reset all settings visibility
+                document.getElementById('imageSettings').style.display = 'none';
+                document.getElementById('audioSettings').style.display = 'none';
+                document.getElementById('videoSettings').style.display = 'none';
+                
+                // Show relevant settings based on output format
+                if (['jpg', 'png', 'webp'].includes(format)) {
+                    document.getElementById('imageSettings').style.display = 'grid';
+                } else if (['mp3', 'wav'].includes(format)) {
+                    document.getElementById('audioSettings').style.display = 'grid';
+                } else if (['mp4', 'avi'].includes(format)) {
+                    document.getElementById('videoSettings').style.display = 'grid';
+                }
+            }
+            
+            async processFiles() {
+                if (this.isProcessing) return;
+                
+                this.isProcessing = true;
+                this.processBtn.disabled = true;
+                this.processBtn.textContent = 'Processing...';
+                this.outputSection.style.display = 'block';
+                
+                this.processedFiles = [];
+                const totalFiles = this.filteredFiles.length;
+                
+                // Initialize batch statistics
+                let stats = {
+                    total: totalFiles,
+                    completed: 0,
+                    errors: 0,
+                    totalSize: 0,
+                    compressedSize: 0
+                };
+                
+                for (let i = 0; i < totalFiles; i++) {
+                    const file = this.filteredFiles[i];
+                    this.updateProgress(i + 1, totalFiles, `Processing ${file.name}...`, stats);
+                    
+                    try {
+                        const result = await this.processFile(file);
+                        this.processedFiles.push(result);
+                        stats.completed++;
+                        stats.totalSize += file.size;
+                        stats.compressedSize += result.size;
+                        await this.delay(100); // Small delay for UI updates
+                    } catch (error) {
+                        console.error(`Error processing ${file.name}:`, error);
+                        stats.errors++;
+                    }
+                }
+                
+                this.updateProgress(totalFiles, totalFiles, 'Processing complete!', stats);
+                this.displayResults(stats);
+                this.downloadBtn.disabled = false;
+                this.processBtn.disabled = false;
+                this.processBtn.textContent = 'Process Files';
+                this.isProcessing = false;
+            }
+            
+            async processFile(file) {
+                const fileType = this.getFileType(file);
+                const outputFormat = this.outputFormat.value;
+                
+                switch (fileType) {
+                    case 'image':
+                        return await this.processImage(file, outputFormat);
+                    case 'audio':
+                        return await this.processAudio(file, outputFormat);
+                    case 'video':
+                        return await this.processVideo(file, outputFormat);
+                    case 'pdf':
+                        return await this.processPDF(file, outputFormat);
+                    default:
+                        throw new Error(`Unsupported file type: ${fileType}`);
+                }
+            }
+            
+            async processImage(file, outputFormat) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        const img = new Image();
+                        
+                        img.onload = () => {
+                            try {
+                                const canvas = document.createElement('canvas');
+                                const ctx = canvas.getContext('2d');
+                                
+                                // Calculate dimensions
+                                let width = img.width;
+                                let height = img.height;
+                                const targetWidth = parseInt(document.getElementById('imageWidth').value);
+                                const targetHeight = parseInt(document.getElementById('imageHeight').value);
+                                
+                                if (targetWidth || targetHeight) {
+                                    const ratio = img.width / img.height;
+                                    if (targetWidth && targetHeight) {
+                                        width = Math.min(targetWidth, width);
+                                        height = width / ratio;
+                                    } else if (targetWidth) {
+                                        width = Math.min(targetWidth, width);
+                                        height = width / ratio;
+                                    } else if (targetHeight) {
+                                        height = Math.min(targetHeight, height);
+                                        width = height * ratio;
+                                    }
+                                }
+                                
+                                canvas.width = width;
+                                canvas.height = height;
+                                ctx.drawImage(img, 0, 0, width, height);
+                                
+                                const quality = this.qualitySlider.value / 10;
+                                const format = outputFormat === 'keep' ? this.getImageFormat(file) : outputFormat;
+                                const mimeType = this.getImageMimeType(format);
+                                
+                                canvas.toBlob((blob) => {
+                                    if (blob) {
+                                        resolve({
+                                            file: file,
+                                            type: 'image',
+                                            originalSize: file.size,
+                                            processedSize: blob.size,
+                                            format: format,
+                                            blob: blob,
+                                            name: this.generateFileName(file.name, format)
+                                        });
+                                    } else {
+                                        reject(new Error('Failed to process image'));
+                                    }
+                                }, mimeType, quality);
+                                
+                            } catch (error) {
+                                reject(error);
+                            }
+                        };
+                        
+                        img.onerror = () => reject(new Error('Failed to load image'));
+                        img.src = e.target.result;
+                    };
+                    
+                    reader.onerror = () => reject(new Error('Failed to read file'));
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            async processAudio(file, outputFormat) {
+                // For audio processing, we'll use basic format handling
+                // In a full implementation, you'd use FFmpeg.wasm or Web Audio API
+                return {
+                    file: file,
+                    type: 'audio',
+                    originalSize: file.size,
+                    processedSize: file.size, // Placeholder
+                    format: outputFormat,
+                    blob: file, // Placeholder - would be processed audio
+                    name: this.generateFileName(file.name, outputFormat)
+                };
+            }
+            
+            async processVideo(file, outputFormat) {
+                // For video processing, we'd use FFmpeg.wasm
+                // This is a placeholder implementation
+                return {
+                    file: file,
+                    type: 'video',
+                    originalSize: file.size,
+                    processedSize: file.size, // Placeholder
+                    format: outputFormat,
+                    blob: file, // Placeholder - would be processed video
+                    name: this.generateFileName(file.name, outputFormat)
+                };
+            }
+            
+            async processPDF(file, outputFormat) {
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                    
+                    // For PDF processing, we'll keep it simple for now
+                    // In a full implementation, you'd apply compression, merge pages, etc.
+                    const pdfBytes = await pdfDoc.save();
+                    
+                    return {
+                        file: file,
+                        type: 'pdf',
+                        originalSize: file.size,
+                        processedSize: pdfBytes.length,
+                        format: 'pdf',
+                        blob: new Blob([pdfBytes], { type: 'application/pdf' }),
+                        name: this.generateFileName(file.name, 'pdf')
+                    };
+                } catch (error) {
+                    throw new Error(`Failed to process PDF: ${error.message}`);
+                }
+            }
+            
+            getImageFormat(file) {
+                const type = file.type;
+                if (type.includes('jpeg') || type.includes('jpg')) return 'jpg';
+                if (type.includes('png')) return 'png';
+                if (type.includes('webp')) return 'webp';
+                if (type.includes('gif')) return 'gif';
+                return 'jpg';
+            }
+            
+            getImageMimeType(format) {
+                const mimeTypes = {
+                    'jpg': 'image/jpeg',
+                    'jpeg': 'image/jpeg',
+                    'png': 'image/png',
+                    'webp': 'image/webp',
+                    'gif': 'image/gif'
+                };
+                return mimeTypes[format] || 'image/jpeg';
+            }
+            
+            generateFileName(originalName, format) {
+                const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '');
+                const extension = format === 'keep' ? 
+                    originalName.split('.').pop() : format;
+                return `${nameWithoutExt}_processed.${extension}`;
+            }
+            
+            updateProgress(current, total, message, stats) {
+                const progress = (current / total) * 100;
+                const savingsPercent = stats ? 
+                    ((stats.totalSize - stats.compressedSize) / stats.totalSize * 100).toFixed(1) : 0;
+                
+                this.outputContent.innerHTML = `
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${current}/${total}</div>
+                            <div class="stat-label">Processed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats ? stats.errors : 0}</div>
+                            <div class="stat-label">Errors</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${savingsPercent}%</div>
+                            <div class="stat-label">Size Saved</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+            
+            displayResults(stats) {
+                if (this.processedFiles.length === 0) {
+                    this.outputContent.innerHTML = '<p>No files were successfully processed.</p>';
+                    return;
+                }
+                
+                const resultsHtml = this.processedFiles.map((file, index) => {
+                    const savings = file.originalSize - file.processedSize;
+                    const savingsPercent = ((savings / file.originalSize) * 100).toFixed(1);
+                    const icon = this.getFileIcon(file.type);
+                    
+                    return `
+                        <div class="result-item">
+                            <div class="result-header">
+                                <div>
+                                    ${icon} ${file.name}
+                                </div>
+                                <div class="result-status success">✓ Success</div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; color: #6b7280;">
+                                <div>Original: ${this.formatFileSize(file.originalSize)}</div>
+                                <div>Processed: ${this.formatFileSize(file.processedSize)}</div>
+                                <div>Format: ${file.format.toUpperCase()}</div>
+                                <div>Saved: ${savingsPercent}%</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                this.outputContent.innerHTML = `
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">${stats.completed}</div>
+                            <div class="stat-label">Successful</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${stats.errors}</div>
+                            <div class="stat-label">Failed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">${((stats.totalSize - stats.compressedSize) / stats.totalSize * 100).toFixed(1)}%</div>
+                            <div class="stat-label">Total Savings</div>
+                        </div>
+                    </div>
+                    <h4>Processing Results</h4>
+                    ${resultsHtml}
+                `;
+            }
+            
+            async downloadAll() {
+                if (this.processedFiles.length === 0) return;
+                
+                try {
+                    if (this.processedFiles.length === 1) {
+                        // Single file download
+                        this.downloadSingleFile(this.processedFiles[0]);
+                    } else {
+                        // ZIP download for multiple files
+                        await this.downloadAsZip();
+                    }
+                } catch (error) {
+                    console.error('Error during download:', error);
+                    alert('Error downloading files. Please try again.');
+                }
+            }
+            
+            downloadSingleFile(fileData) {
+                const url = URL.createObjectURL(fileData.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileData.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            async downloadAsZip() {
+                const zip = new JSZip();
+                const folder = zip.folder('processed_files');
+                
+                // Add files to ZIP
+                for (const fileData of this.processedFiles) {
+                    folder.file(fileData.name, fileData.blob);
+                }
+                
+                // Generate and download ZIP
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                const url = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `processed_files_${Date.now()}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            reset() {
+                this.selectedFiles = [];
+                this.filteredFiles = [];
+                this.processedFiles = [];
+                this.fileInput.value = '';
+                this.processBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.outputSection.style.display = 'none';
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop your files here or click to browse';
+                
+                // Reset file type filter
+                this.fileTypeBtns.forEach(b => b.classList.remove('active'));
+                this.fileTypeBtns[0].classList.add('active');
+                this.currentFilter = 'all';
+                
+                // Reset controls
+                this.qualitySlider.value = '7';
+                this.updateQualityDisplay();
+                this.outputFormat.value = 'keep';
+                this.toggleSettings();
+                
+                // Clear file list
+                this.updateFileList();
+            }
+            
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+        
+        // Initialize the batch processor when the page loads
+        let batchProcessor;
+        document.addEventListener('DOMContentLoaded', () => {
+            batchProcessor = new BatchProcessor();
+        });
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

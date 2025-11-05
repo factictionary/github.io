@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -210,6 +214,16 @@
                             <div class="preset-name">Reset All</div>
                         </div>
                     </div>
+                    
+                    <!-- Processing Workflow Information -->
+                    <div class="workflow-info" style="margin-top: 20px; padding: 16px; background: var(--color-info); color: white; border-radius: var(--radius-card); font-size: 14px;">
+                        <strong>ℹ️ How it works:</strong> 
+                        <ul style="margin: 8px 0; padding-left: 20px;">
+                            <li>Adjust filters below to see real-time preview</li>
+                            <li>Click "Process Video" to generate final filtered output</li>
+                            <li>Download your processed video when ready</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Video Preview Section -->
@@ -348,6 +362,8 @@
         let videoElement = null;
         let originalVideoURL = null;
         let comparisonMode = false;
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
         let currentFilters = {
             brightness: 0,
             contrast: 0,
@@ -358,6 +374,7 @@
             blur: 0,
             sharpen: 0
         };
+        let processedVideoBlob = null;
 
         // File upload handlers
         function handleDrop(event) {
@@ -402,21 +419,25 @@
             // Validate file type
             const validTypes = ['video/mp4', 'video/webm', 'video/avi', 'video/quicktime', 'video/x-msvideo', 'video/x-ms-wmv'];
             if (!validTypes.includes(file.type)) {
-                showNotification('❌ Invalid file type. Please select a video file.');
+                showNotification('Invalid file type. Please select MP4, WebM, AVI, MOV, or WMV video file.', 'error');
                 return;
             }
 
             // Validate file size (500MB limit)
             const maxSize = 500 * 1024 * 1024;
             if (file.size > maxSize) {
-                showNotification('❌ File too large. Maximum size is 500MB.');
+                showNotification('File too large. Maximum size is 500MB.', 'error');
                 return;
             }
 
+            // Clear any previous processed video
+            processedVideoBlob = null;
+            
             currentVideoFile = file;
             displayFileInfo(file);
             showVideoPreview(file);
             showFilterControls();
+            showNotification('Video loaded successfully! You can now apply filters.', 'success');
         }
 
         function displayFileInfo(file) {
@@ -470,11 +491,20 @@
                 URL.revokeObjectURL(originalVideoURL);
                 originalVideoURL = null;
             }
+            
+            // Clear processed video
+            processedVideoBlob = null;
+            
+            // Reset file input
+            document.getElementById('videoFileInput').value = '';
+            
+            // Hide all sections
             document.getElementById('fileInfo').style.display = 'none';
             document.getElementById('filterSection').style.display = 'none';
             document.getElementById('presetsSection').style.display = 'none';
             document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('videoFileInput').value = '';
+            
+            showNotification('Video removed. Upload a new video to continue.', 'info');
         }
 
         // Filter control handlers
@@ -516,8 +546,8 @@
             const grayscale = parseInt(currentFilters.grayscale);
             const blur = parseFloat(currentFilters.blur);
 
-            // Note: In a real implementation, you would use canvas processing or WebGL
-            // This is the CSS filter syntax (works for images, but video requires more complex processing)
+            // Apply CSS filters for real-time preview
+            // Note: This provides visual preview only. Actual processing uses FFmpeg for final output
             const filterString = `
                 brightness(${brightness}%)
                 contrast(${contrast}%)
@@ -528,11 +558,16 @@
                 blur(${blur}px)
             `;
             
-            // For now, we'll just show a message that this is the preview
-            // Real video processing would require FFmpeg.wasm or similar
             const videoContainer = document.getElementById('videoContainer');
             if (videoContainer) {
                 videoContainer.style.filter = filterString;
+            }
+            
+            // Clear processed video when filters change
+            if (processedVideoBlob) {
+                processedVideoBlob = null;
+                document.getElementById('downloadSection').style.display = 'none';
+                showNotification('Filters changed. Click "Process Video" to generate new output.', 'info');
             }
         }
 
@@ -564,7 +599,7 @@
                     resetFilters();
                     return;
             }
-            showNotification(`🎨 ${presetName} filter applied!`);
+            showNotification(`${presetName.charAt(0).toUpperCase() + presetName.slice(1)} filter applied! Click "Process Video" to generate the filtered output.`, 'success');
         }
 
         function setFilters(filters) {
@@ -580,7 +615,7 @@
         function resetFilters() {
             const defaultFilters = {brightness: 0, contrast: 0, saturation: 0, hue: 0, sepia: 0, grayscale: 0, blur: 0, sharpen: 0};
             setFilters(defaultFilters);
-            showNotification('🔄 All filters reset');
+            showNotification('All filters reset to default values.', 'info');
         }
 
         function resetFilterValues() {
@@ -610,72 +645,261 @@
             }
         }
 
-        // Video processing
-        function processVideo() {
+        // Check if FFmpeg scripts are loaded
+        function checkFFmpegLoaded() {
+            return typeof FFmpegWASM !== 'undefined';
+        }
+
+        // Initialize FFmpeg with compatibility check
+        async function initializeFFmpeg() {
+            if (ffmpegLoaded) return;
+            
+            // Check if FFmpeg scripts are available
+            if (!checkFFmpegLoaded()) {
+                throw new Error('FFmpeg.wasm scripts not loaded. Please refresh the page.');
+            }
+            
+            try {
+                // Check for WebAssembly support
+                if (typeof WebAssembly === 'undefined') {
+                    throw new Error('WebAssembly is not supported in this browser');
+                }
+                
+                showNotification('Loading FFmpeg.wasm (this may take a moment)...', 'info');
+                
+                const { FFmpeg } = FFmpegWASM;
+                ffmpeg = new FFmpeg();
+                
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+                
+                ffmpeg.on('progress', ({ progress }) => {
+                    updateProcessingProgress(progress * 100);
+                });
+                
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.wasm',
+                });
+                
+                ffmpegLoaded = true;
+                showNotification('Video processing engine ready!', 'success');
+            } catch (error) {
+                console.error('Error loading FFmpeg:', error);
+                
+                let errorMessage = 'Failed to load video processing engine';
+                if (error.message.includes('WebAssembly')) {
+                    errorMessage = 'Your browser does not support video processing. Please use a modern browser like Chrome, Firefox, or Safari.';
+                } else if (error.message.includes('fetch')) {
+                    errorMessage = 'Network error while loading video processor. Please check your internet connection.';
+                } else if (error.message.includes('memory')) {
+                    errorMessage = 'Insufficient memory to process video. Try a smaller file or close other browser tabs.';
+                } else if (error.message.includes('not loaded')) {
+                    errorMessage = 'Video processing engine failed to load. Please refresh the page and try again.';
+                }
+                
+                showNotification(errorMessage, 'error');
+                throw error;
+            }
+        }
+
+        // Video processing with FFmpeg
+        async function processVideo() {
             if (!currentVideoFile) {
                 showNotification('❌ Please upload a video first');
                 return;
             }
 
-            // Show progress section
-            const progressSection = document.getElementById('progressSection');
-            const downloadSection = document.getElementById('downloadSection');
-            progressSection.style.display = 'block';
-            downloadSection.style.display = 'none';
+            try {
+                // Show progress section
+                const progressSection = document.getElementById('progressSection');
+                const downloadSection = document.getElementById('downloadSection');
+                progressSection.style.display = 'block';
+                downloadSection.style.display = 'none';
+                
+                // Reset progress
+                updateProcessingProgress(0);
 
-            // Simulate processing
-            let progress = 0;
+                // Initialize FFmpeg if not already loaded
+                if (!ffmpegLoaded) {
+                    await initializeFFmpeg();
+                }
+
+                showNotification('⚙️ Processing video with filters...');
+
+                // Read the video file
+                const videoData = await currentVideoFile.arrayBuffer();
+                const inputFileName = 'input.' + getFileExtension(currentVideoFile.name);
+                const outputFileName = 'output.mp4';
+
+                // Write input file to FFmpeg file system
+                await ffmpeg.writeFile(inputFileName, new Uint8Array(videoData));
+
+                // Build FFmpeg filter command
+                const filterCommand = buildFFmpegFilter();
+                
+                // Execute FFmpeg command
+                await ffmpeg.exec([
+                    '-i', inputFileName,
+                    '-vf', filterCommand,
+                    '-c:a', 'copy', // Copy audio without re-encoding
+                    '-c:v', 'libx264', // Use H.264 codec
+                    '-crf', '23', // Good quality
+                    '-preset', 'medium', // Balance between speed and quality
+                    outputFileName
+                ]);
+
+                // Read the output file
+                const outputData = await ffmpeg.readFile(outputFileName);
+                
+                // Create blob and URL for download
+                processedVideoBlob = new Blob([outputData], { type: 'video/mp4' });
+                
+                // Clean up FFmpeg file system
+                await ffmpeg.deleteFile(inputFileName);
+                await ffmpeg.deleteFile(outputFileName);
+
+                // Show success
+                progressSection.style.display = 'none';
+                downloadSection.style.display = 'block';
+                showNotification('✅ Video processing complete!');
+
+            } catch (error) {
+                console.error('Video processing error:', error);
+                showNotification('❌ Video processing failed: ' + error.message);
+                
+                // Hide progress section on error
+                const progressSection = document.getElementById('progressSection');
+                progressSection.style.display = 'none';
+            }
+        }
+
+        // Build FFmpeg filter command from current filter values
+        function buildFFmpegFilter() {
+            const filters = [];
+            
+            // Brightness/contrast
+            if (currentFilters.brightness !== 0 || currentFilters.contrast !== 0) {
+                const brightness = (parseInt(currentFilters.brightness) + 100) / 100;
+                const contrast = (parseInt(currentFilters.contrast) + 100) / 100;
+                filters.push(`eq=brightness=${brightness}:contrast=${contrast}`);
+            }
+            
+            // Saturation
+            if (currentFilters.saturation !== 0) {
+                const saturation = (parseInt(currentFilters.saturation) + 100) / 100;
+                filters.push(`eq=saturation=${saturation}`);
+            }
+            
+            // Hue rotation
+            if (currentFilters.hue !== 0) {
+                const hue = parseInt(currentFilters.hue);
+                filters.push(`hue=h=${hue}*PI/180`);
+            }
+            
+            // Sepia
+            if (currentFilters.sepia > 0) {
+                const sepia = parseInt(currentFilters.sepia) / 100;
+                filters.push(`colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131:0:.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131`);
+            }
+            
+            // Grayscale
+            if (currentFilters.grayscale > 0) {
+                const gray = parseInt(currentFilters.grayscale) / 100;
+                filters.push(`colorchannelmixer=.299:.587:.114:0:.299:.587:.114:0:.299:.587:.114:0:0:0:0:1:0`);
+            }
+            
+            // Blur
+            if (currentFilters.blur > 0) {
+                const blur = parseFloat(currentFilters.blur);
+                filters.push(`gblur=sigma=${blur}`);
+            }
+            
+            // Sharpen
+            if (currentFilters.sharpen > 0) {
+                const sharpen = parseInt(currentFilters.sharpen) / 100;
+                filters.push(`unsharp=5:5:${sharpen}:5:5:0`);
+            }
+            
+            return filters.join(',');
+        }
+
+        // Update processing progress
+        function updateProcessingProgress(progress) {
             const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
-
-            const interval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 100) progress = 100;
-                
-                progressFill.style.width = progress + '%';
-                progressText.textContent = Math.floor(progress) + '%';
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        progressSection.style.display = 'none';
-                        downloadSection.style.display = 'block';
-                        showNotification('✅ Video processing complete!');
-                    }, 1000);
-                }
-            }, 200);
-
-            // TODO: Implement actual FFmpeg.wasm integration here
-            // This would involve:
-            // 1. Loading FFmpeg.wasm
-            // 2. Reading the video file
-            // 3. Applying filters using FFmpeg commands
-            // 4. Writing the filtered video to output
-            // 5. Providing download link
+            
+            if (progressFill && progressText) {
+                progressFill.style.width = Math.min(progress, 100) + '%';
+                progressText.textContent = Math.floor(Math.min(progress, 100)) + '%';
+            }
         }
 
+        // Download processed video
         function downloadFilteredVideo() {
-            // TODO: Implement actual download
-            // This would provide the processed video file for download
-            showNotification('⬇️ Download would start here (FFmpeg.wasm integration needed)');
+            if (!processedVideoBlob) {
+                showNotification('❌ No processed video available');
+                return;
+            }
+
+            try {
+                const url = URL.createObjectURL(processedVideoBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'filtered_' + currentVideoFile.name.replace(/\.[^/.]+$/, '') + '.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('⬇️ Video download started');
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('❌ Download failed: ' + error.message);
+            }
         }
 
-        function showNotification(message) {
+        // Utility function to get file extension
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
+        function showNotification(message, type = 'success') {
             // Create and show a temporary notification
             const notification = document.createElement('div');
             notification.className = 'notification';
             notification.textContent = message;
+            
+            // Set background color based on type
+            let bgColor;
+            switch (type) {
+                case 'error':
+                    bgColor = 'var(--color-error)';
+                    break;
+                case 'warning':
+                    bgColor = 'var(--color-warning)';
+                    break;
+                case 'info':
+                    bgColor = 'var(--color-info)';
+                    break;
+                default:
+                    bgColor = 'var(--color-success)';
+            }
+            
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: var(--color-success);
+                background: ${bgColor};
                 color: white;
                 padding: 12px 20px;
                 border-radius: var(--radius-button);
                 font-weight: 500;
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
+                max-width: 350px;
+                word-wrap: break-word;
             `;
             
             document.body.appendChild(notification);
@@ -687,7 +911,7 @@
                         document.body.removeChild(notification);
                     }
                 }, 300);
-            }, 3000);
+            }, 4000);
         }
 
         // Mobile menu functionality
@@ -726,6 +950,29 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Cleanup function for page unload
+        window.addEventListener('beforeunload', () => {
+            // Clean up object URLs
+            if (originalVideoURL) {
+                URL.revokeObjectURL(originalVideoURL);
+            }
+            
+            // Clean up FFmpeg if loaded
+            if (ffmpeg && ffmpegLoaded) {
+                // Note: FFmpeg.wasm doesn't have explicit cleanup API
+                // The garbage collector will handle memory cleanup
+            }
+        });
+
+        // Handle page visibility change to pause video when tab is not active
+        document.addEventListener('visibilitychange', () => {
+            if (videoElement) {
+                if (document.hidden) {
+                    videoElement.pause();
+                }
+            }
+        });
     </script>
 
     <style>
@@ -744,6 +991,13 @@
         .video-upload-area.drag-over {
             border-color: var(--color-primary-500);
             background: var(--color-primary-50);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+
+        .video-upload-area.drag-over {
+            border-color: var(--color-primary-600);
+            background: var(--color-primary-100);
         }
 
         .upload-content h3 {
@@ -947,8 +1201,26 @@
             height: 100%;
             background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
             border-radius: 4px;
-            transition: width var(--duration-fast);
+            transition: width 0.3s ease;
             width: 0%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .progress-text {
@@ -1076,6 +1348,55 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+        }
+
+        /* Loading states */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-card);
+            z-index: 10;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced error states */
+        .error-message {
+            background: var(--color-error);
+            color: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-card);
+            margin: var(--spacing-md) 0;
+            text-align: center;
+        }
+
+        /* Workflow info */
+        .workflow-info {
+            border-left: 4px solid var(--color-primary-400);
+        }
+
+        .workflow-info ul {
+            list-style-type: disc;
+        }
         }
 
         @media (max-width: 480px) {

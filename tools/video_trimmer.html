@@ -3,380 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Trimmer | Free Browser Tool | Factictionary</title>
+    <title>Video Trimmer Tool | Trim Video Clips Online | Factictionary</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Cut and trim video files to extract specific parts. Perfect for creating clips and highlights. - Professional browser-based tool. No uploads required, 100% privacy-protected.">
-    <meta name="keywords" content="browser tool, video trimmer, video, free, online, privacy-first">
+    <meta name="description" content="Free online video trimmer tool. Trim and cut video clips without losing quality. Upload, set start/end times, and download instantly. 100% privacy-protected, works entirely in your browser.">
+    <meta name="keywords" content="video trimmer, cut video, trim video online, video editor, video cutter, clip video, split video, video processing, online video tool">
     <meta name="author" content="Factictionary Team">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://factictionary.github.io/tools/video_trimmer.html">
     
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="Video Trimmer | Factictionary Tools">
-    <meta property="og:description" content="Cut and trim video files to extract specific parts. Perfect for creating clips and highlights. - 100% privacy-protected.">
+    <meta property="og:title" content="Video Trimmer Tool | Trim Video Clips Online | Factictionary">
+    <meta property="og:description" content="Professional video trimmer with timeline controls and real-time preview. Trim video clips instantly in your browser. Free and privacy-protected.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://factictionary.github.io/tools/video_trimmer.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
     
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Video Trimmer | Factictionary Tools">
-    <meta name="twitter:description" content="Cut and trim video files to extract specific parts. Perfect for creating clips and highlights. - 100% privacy-protected.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    <meta name="twitter:title" content="Video Trimmer Tool | Factictionary">
+    <meta name="twitter:description" content="Trim and cut video clips online with timeline controls. Free and privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://factictionary.github.io/tools/video_trimmer.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- Tool-specific styles -->
-    <style>
-        .tool-header {
-            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
-            color: white;
-            padding: var(--spacing-4xl) var(--spacing-lg);
-            text-align: center;
-            margin-top: -80px;
-            padding-top: calc(var(--spacing-4xl) + 80px);
-        }
-        
-        .tool-title {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            margin-bottom: var(--spacing-md);
-            line-height: var(--line-height-tight);
-        }
-        
-        .tool-subtitle {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-medium);
-            opacity: 0.9;
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .tool-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-lg);
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: var(--spacing-3xl);
-        }
-        
-        .tool-workspace {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-card);
-            min-height: 600px;
-        }
-        
-        .tool-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-        
-        .tool-info {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-card);
-        }
-        
-        .tool-info h3 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .tool-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .tool-feature-icon {
-            color: #8B5CF6;
-            font-weight: var(--font-weight-bold);
-            margin-top: 2px;
-        }
-        
-        .tool-feature-text {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-small);
-        }
-        
-        .drop-zone {
-            border: 3px dashed #8B5CF640;
-            border-radius: var(--radius-card);
-            padding: var(--spacing-3xl);
-            text-align: center;
-            background: #F3E8FF;
-            transition: all var(--duration-standard) var(--easing-standard);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .drop-zone:hover,
-        .drop-zone.drag-over {
-            border-color: #8B5CF6;
-            background: #F3E8FFCC;
-        }
-        
-        .drop-zone-icon {
-            font-size: 4rem;
-            color: #8B5CF6;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .drop-zone-text {
-            font-size: var(--font-size-body);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .btn-file-input {
-            background: #8B5CF6;
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: background-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .btn-file-input:hover {
-            background: #8B5CF6E6;
-        }
-        
-        .tool-controls {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .control-group {
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .control-label {
-            display: block;
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .control-input {
-            width: 100%;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            transition: border-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .control-input:focus {
-            outline: none;
-            border-color: #8B5CF6;
-        }
-        
-        .control-slider {
-            width: 100%;
-            margin: var(--spacing-sm) 0;
-        }
-        
-        .control-slider input[type="range"] {
-            width: 100%;
-            height: 8px;
-            background: var(--color-neutral-200);
-            border-radius: 4px;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .control-slider input[type="range"]:hover {
-            opacity: 1;
-        }
-        
-        .control-slider input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #8B5CF6;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .control-slider input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #8B5CF6;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .tool-output {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-            min-height: 200px;
-            display: none;
-        }
-        
-        .output-preview {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: var(--radius-card);
-        }
-        
-        .output-text {
-            background: white;
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .tool-actions {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-tool {
-            background: var(--color-neutral-900);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: all var(--duration-fast) var(--easing-standard);
-            min-width: 120px;
-        }
-        
-        .btn-tool:hover {
-            background: var(--color-neutral-700);
-            transform: translateY(-1px);
-        }
-        
-        .btn-tool:disabled {
-            background: var(--color-neutral-400);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .privacy-badge {
-            background: var(--color-success);
-            color: white;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xl);
-        }
-        
-        .stat-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .stat-number {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            color: #8B5CF6;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .stat-label {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-small);
-        }
-        
-        .adsense-tool {
-            background: var(--color-neutral-100);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            color: var(--color-neutral-500);
-            font-size: var(--font-size-small);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tool-main {
-                grid-template-columns: 1fr;
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-            
-            .tool-title {
-                font-size: var(--font-size-subtitle);
-            }
-            
-            .tool-actions {
-                flex-direction: column;
-            }
-            
-            .btn-tool {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tool-header {
-                padding: var(--spacing-2xl) var(--spacing-sm);
-                padding-top: calc(var(--spacing-2xl) + 80px);
-            }
-            
-            .tool-workspace {
-                padding: var(--spacing-lg);
-            }
-        }
-    </style>
     
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Video Trimmer",
-        "description": "Cut and trim video files to extract specific parts. Perfect for creating clips and highlights.",
-        "applicationCategory": "UtilityApplication",
+        "name": "Factictionary Video Trimmer",
+        "description": "Free online video trimmer tool to cut and trim video clips with timeline controls and real-time preview.",
+        "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Web Browser",
         "offers": {
             "@type": "Offer",
@@ -386,11 +58,6 @@
         "provider": {
             "@type": "Organization",
             "name": "Factictionary"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "1250"
         }
     }
     </script>
@@ -420,220 +87,795 @@
             </button>
         </div>
     </nav>
-    
-    <!-- Tool Header -->
-    <header class="tool-header">
-        <h1 class="tool-title">Video Trimmer</h1>
-        <p class="tool-subtitle">Cut and trim video files to extract specific parts. Perfect for creating clips and highlights.</p>
-        <div class="privacy-badge">
-            🔒 100% Privacy Protected
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- AdSense Container -->
+        <div class="ad-container top-ad">
+            <!-- AdSense code will be inserted here -->
         </div>
-    </header>
-    
-    <!-- Main Tool Content -->
-    <main id="main" class="tool-main">
+
+        <!-- Tool Header -->
+        <header class="tool-header">
+            <div class="container">
+                <div class="tool-header-content">
+                    <h3 class="tool-title">Video Trimmer Tool</h3>
+                    <p class="tool-subtitle">Trim and cut video clips with precision. Upload your video, set start and end times using the timeline scrubber, preview in real-time, and download the trimmed clip instantly. No quality loss, completely private.</p>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="tool-features">
+                        <span class="feature-tag">Timeline Controls</span>
+                        <span class="feature-tag">Real-time Preview</span>
+                        <span class="feature-tag">No Quality Loss</span>
+                        <span class="feature-tag">Multiple Formats</span>
+                        <span class="feature-tag">Instant Download</span>
+                        <span class="feature-tag">Browser Processing</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <!-- Tool Workspace -->
         <section class="tool-workspace">
-            <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">📁</div>
-                <div class="drop-zone-text">
-                    Drop your video files here or click to browse
+            <div class="container">
+                <!-- Video Upload Section -->
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">📹</div>
+                            <h3 class="upload-title">Drop your video here</h3>
+                            <p class="upload-subtitle">or click to browse files</p>
+                            <input type="file" id="videoInput" accept="video/*" class="file-input" aria-describedby="uploadHelp">
+                            <div id="uploadHelp" class="input-help">
+                                Supports MP4, WebM, AVI, MOV, WMV, and other common video formats. Maximum file size: 100MB
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Information -->
+                    <div class="video-info" id="videoInfo" style="display: none;">
+                        <div class="video-details">
+                            <div class="video-meta">
+                                <span class="meta-item">
+                                    <span class="meta-label">File:</span>
+                                    <span class="meta-value" id="fileName">-</span>
+                                </span>
+                                <span class="meta-item">
+                                    <span class="meta-label">Duration:</span>
+                                    <span class="meta-value" id="videoDuration">-</span>
+                                </span>
+                                <span class="meta-item">
+                                    <span class="meta-label">Resolution:</span>
+                                    <span class="meta-value" id="videoResolution">-</span>
+                                </span>
+                                <span class="meta-item">
+                                    <span class="meta-label">Format:</span>
+                                    <span class="meta-value" id="videoFormat">-</span>
+                                </span>
+                                <span class="meta-item">
+                                    <span class="meta-label">Size:</span>
+                                    <span class="meta-value" id="fileSize">-</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.webp,.mp4,.avi,.mov,.mp3,.wav,.m4a" style="display: none;">
-                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
-                    Choose Files
-                </button>
-            </div>
-            
-            <div class="tool-controls">
-                <h3>Settings</h3>
-                
-        <div class="control-group">
-            <label class="control-label">Quality Settings</label>
-            <div class="control-slider">
-                <input type="range" min="1" max="10" value="5" id="qualitySlider">
-                <span id="qualityValue">5</span>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Format</label>
-            <select class="control-input" id="formatSelect">
-                <option value="mp4">MP4</option>
-                <option value="avi">AVI</option>
-                <option value="mov">MOV</option>
-                <option value="webm">WebM</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Resolution</label>
-            <select class="control-input" id="resolutionSelect">
-                <option value="original">Original</option>
-                <option value="1080p">1080p</option>
-                <option value="720p">720p</option>
-                <option value="480p">480p</option>
-            </select>
-        </div>
-        
-            </div>
-            
-            <div class="tool-output" id="toolOutput">
-                <h3>Result</h3>
-                <div id="outputContent"></div>
-            </div>
-            
-            <div class="tool-actions">
-                <button class="btn-tool" id="processBtn" disabled>
-                    Process Video
-                </button>
-                <button class="btn-tool" id="downloadBtn" disabled>
-                    Download
-                </button>
-                <button class="btn-tool" id="resetBtn">
-                    Reset
-                </button>
+
+                <!-- Video Preview and Timeline -->
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <h3 class="section-title">Video Preview & Timeline</h3>
+                    
+                    <!-- Video Player -->
+                    <div class="video-player-container">
+                        <video id="videoPlayer" class="video-player" controls preload="metadata">
+                            Your browser does not support the video tag.
+                        </video>
+                        
+                        <!-- Custom Controls Overlay -->
+                        <div class="custom-controls" id="customControls">
+                            <div class="timeline-container">
+                                <div class="timeline">
+                                    <div class="timeline-track" id="timelineTrack">
+                                        <div class="timeline-progress" id="timelineProgress"></div>
+                                        <div class="timeline-handle start-handle" id="startHandle" title="Set start time"></div>
+                                        <div class="timeline-handle end-handle" id="endHandle" title="Set end time"></div>
+                                        <div class="timeline-selection" id="timelineSelection"></div>
+                                    </div>
+                                </div>
+                                <div class="time-display">
+                                    <span class="time-text">
+                                        <span id="startTime">00:00</span> - <span id="endTime">00:00</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trim Controls -->
+                    <div class="trim-controls">
+                        <div class="time-inputs">
+                            <div class="time-input-group">
+                                <label for="startTimeInput" class="time-input-label">Start Time</label>
+                                <input type="text" id="startTimeInput" class="time-input" placeholder="00:00" value="00:00">
+                            </div>
+                            <div class="time-input-group">
+                                <label for="endTimeInput" class="time-input-label">End Time</label>
+                                <input type="text" id="endTimeInput" class="time-input" placeholder="00:00" value="00:00">
+                            </div>
+                        </div>
+                        <div class="control-buttons">
+                            <button class="btn btn-secondary" onclick="setStartFromCurrent()">⏮️ Set Start from Current</button>
+                            <button class="btn btn-secondary" onclick="setEndFromCurrent()">⏭️ Set End from Current</button>
+                            <button class="btn btn-secondary" onclick="resetSelection()">🔄 Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Section -->
+                <div class="processing-section" id="processingSection" style="display: none;">
+                    <h3 class="section-title">Process & Download</h3>
+                    
+                    <!-- Processing Options -->
+                    <div class="processing-options">
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label class="option-label">Output Format</label>
+                                <select id="outputFormat" class="option-select">
+                                    <option value="mp4">MP4 (Recommended)</option>
+                                    <option value="webm">WebM</option>
+                                    <option value="avi">AVI</option>
+                                    <option value="mov">MOV</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label class="option-label">Quality</label>
+                                <select id="outputQuality" class="option-select">
+                                    <option value="high">High Quality</option>
+                                    <option value="medium">Medium Quality</option>
+                                    <option value="low">Low Quality</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Processing Status -->
+                    <div class="processing-status" id="processingStatus" style="display: none;">
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">Processing...</div>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <div class="download-section">
+                        <button class="btn btn-primary btn-large" id="trimButton" onclick="processVideo()">
+                            ✂️ Trim Video
+                        </button>
+                        <button class="btn btn-success btn-large" id="downloadButton" onclick="downloadVideo()" style="display: none;">
+                            ⬇️ Download Trimmed Video
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Statistics -->
+                <div class="stats-section" id="statsSection" style="display: none;">
+                    <h3 class="section-title">Video Information</h3>
+                    <div class="stats-grid" id="videoStats">
+                        <!-- Stats will be populated here -->
+                        <div class="stat-item">
+                            <div class="stat-value" id="statDuration">0:00</div>
+                            <div class="stat-label">Original Duration</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statTrimmedDuration">0:00</div>
+                            <div class="stat-label">Trimmed Duration</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statFileSize">0 MB</div>
+                            <div class="stat-label">Original Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statTrimmedSize">-</div>
+                            <div class="stat-label">Estimated Output Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statFrameRate">0</div>
+                            <div class="stat-label">Frame Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statBitrate">0</div>
+                            <div class="stat-label">Bitrate</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        
-        <!-- Tool Sidebar -->
-        <aside class="tool-sidebar">
-            <!-- Tool Information -->
-            <div class="tool-info">
-                <h3>Features</h3>
-                
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Precise cutting</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Multiple segments</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Format preservation</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">No quality loss</div>
-            </div>
-        
-            </div>
-            
-            <!-- AdSense Container -->
-            <div class="adsense-tool">
-                <div>
-                    <div>🛠️ Advertisement</div>
-                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+
+        <!-- AdSense Container -->
+        <div class="ad-container bottom-ad">
+            <!-- AdSense code will be inserted here -->
+        </div>
+
+        <!-- Privacy Notice -->
+        <section class="privacy-notice">
+            <div class="container">
+                <div class="privacy-card">
+                    <div class="privacy-icon">🔒</div>
+                    <div class="privacy-content">
+                        <h4>Your Privacy is Protected</h4>
+                        <p>All video processing happens entirely in your browser. Your files are never uploaded to our servers, ensuring complete privacy and security. The video trimmer uses client-side processing with FFmpeg.wasm technology.</p>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Category Navigation -->
-            <div class="tool-info">
-                <h3>Related Tools</h3>
-                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-                    <a href="/video_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Video Compressor</a><a href="/video_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Video Converter</a><a href="/video_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Video Trimmer</a><a href="/video_merger.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Video Merger</a>
+        </section>
+
+        <!-- Related Tools -->
+        <section class="related-tools">
+            <div class="container">
+                <h3 class="related-title">More Video & Audio Tools</h3>
+                <div class="related-grid">
+                    <a href="video_compressor.html" class="related-card">
+                        <div class="related-icon">🗜️</div>
+                        <div class="related-content">
+                            <h4>Video Compressor</h4>
+                            <p>Compress video files to reduce size while maintaining quality with advanced algorithms</p>
+                        </div>
+                    </a>
+                    <a href="audio_converter.html" class="related-card">
+                        <div class="related-icon">🎵</div>
+                        <div class="related-content">
+                            <h4>Audio Converter</h4>
+                            <p>Convert audio files between different formats like MP3, WAV, AAC, and more</p>
+                        </div>
+                    </a>
+                    <a href="video_converter.html" class="related-card">
+                        <div class="related-icon">🔄</div>
+                        <div class="related-content">
+                            <h4>Video Converter</h4>
+                            <p>Convert videos to different formats and resolutions with customizable settings</p>
+                        </div>
+                    </a>
                 </div>
             </div>
-        </aside>
+        </section>
     </main>
-    
-    <!-- Tool Statistics -->
-    <section class="section-lg">
+
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Tools Available</div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Files Uploaded</div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Unlimited Usage</div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Privacy Protected</div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:contact@factictionary.in">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
                 </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
             </div>
         </div>
-    </section>
-    
+    </footer>
+
     <!-- JavaScript -->
     <script>
-        // Tool functionality will be implemented here
-        // This is a placeholder for the actual tool logic
-        
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const processBtn = document.getElementById('processBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const outputSection = document.getElementById('toolOutput');
-        
-        let selectedFiles = [];
-        
-        // Drag and drop functionality
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over');
+        // Video Trimmer functionality
+        let currentVideo = null;
+        let videoMetadata = {};
+        let selectionStart = 0;
+        let selectionEnd = 0;
+        let processedBlob = null;
+
+        // FFmpeg.wasm will be loaded here (structure for future implementation)
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVideoTrimmer();
         });
-        
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over');
-        });
-        
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-            handleFiles(e.dataTransfer.files);
-        });
-        
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-        
-        function handleFiles(files) {
-            selectedFiles = Array.from(files);
-            if (selectedFiles.length > 0) {
-                processBtn.disabled = false;
-                dropZone.querySelector('.drop-zone-text').textContent = 
-                    `${selectedFiles.length} file(s) selected`;
+
+        function initializeVideoTrimmer() {
+            const uploadArea = document.getElementById('uploadArea');
+            const videoInput = document.getElementById('videoInput');
+            const videoPlayer = document.getElementById('videoPlayer');
+            const startTimeInput = document.getElementById('startTimeInput');
+            const endTimeInput = document.getElementById('endTimeInput');
+
+            // File upload handling
+            videoInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                }
+            });
+
+            // Video player time update
+            videoPlayer.addEventListener('timeupdate', updateTimelineProgress);
+            videoPlayer.addEventListener('loadedmetadata', handleVideoMetadata);
+
+            // Time input changes
+            startTimeInput.addEventListener('change', handleTimeInputChange);
+            endTimeInput.addEventListener('change', handleTimeInputChange);
+
+            // Initialize timeline handles
+            initializeTimeline();
+        }
+
+        async function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                await handleFile(file);
             }
         }
-        
-        processBtn.addEventListener('click', () => {
-            // Placeholder for actual processing logic
-            outputSection.style.display = 'block';
-            outputSection.querySelector('#outputContent').innerHTML = 
-                '<div class="output-text">Processing completed! (This is a demo - implement actual tool logic here)</div>';
-            downloadBtn.disabled = false;
-        });
-        
-        downloadBtn.addEventListener('click', () => {
-            // Placeholder for download functionality
-            alert('Download would start here (implement actual download logic)');
-        });
-        
-        resetBtn.addEventListener('click', () => {
-            selectedFiles = [];
-            fileInput.value = '';
-            processBtn.disabled = true;
-            downloadBtn.disabled = true;
-            outputSection.style.display = 'none';
-            dropZone.querySelector('.drop-zone-text').textContent = 
-                'Drop your video files here or click to browse';
-        });
-        
+
+        async function handleFile(file) {
+            // Validate file type
+            if (!file.type.startsWith('video/')) {
+                showNotification('❌ Please select a valid video file', 'error');
+                return;
+            }
+
+            // Validate file size (100MB limit)
+            if (file.size > 100 * 1024 * 1024) {
+                showNotification('❌ File size must be less than 100MB', 'error');
+                return;
+            }
+
+            currentVideo = file;
+            const videoURL = URL.createObjectURL(file);
+            const videoPlayer = document.getElementById('videoPlayer');
+            
+            videoPlayer.src = videoURL;
+            
+            // Show sections
+            document.getElementById('uploadArea').style.display = 'none';
+            document.getElementById('videoInfo').style.display = 'block';
+            document.getElementById('previewSection').style.display = 'block';
+            document.getElementById('processingSection').style.display = 'block';
+            document.getElementById('statsSection').style.display = 'block';
+
+            // Update file info
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatFileSize(file.size);
+            document.getElementById('videoFormat').textContent = file.type.split('/')[1].toUpperCase();
+
+            showNotification('📹 Video loaded successfully!');
+        }
+
+        function handleVideoMetadata() {
+            const video = document.getElementById('videoPlayer');
+            videoMetadata = {
+                duration: video.duration,
+                width: video.videoWidth,
+                height: video.videoHeight
+            };
+
+            // Update video info
+            document.getElementById('videoDuration').textContent = formatTime(video.duration);
+            document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
+
+            // Set initial selection
+            selectionStart = 0;
+            selectionEnd = video.duration;
+            
+            // Update time inputs
+            document.getElementById('startTimeInput').value = formatTime(0);
+            document.getElementById('endTimeInput').value = formatTime(video.duration);
+            document.getElementById('startTime').textContent = formatTime(0);
+            document.getElementById('endTime').textContent = formatTime(video.duration);
+
+            // Update stats
+            updateVideoStats();
+            
+            // Initialize timeline
+            updateTimelineVisual();
+        }
+
+        function initializeTimeline() {
+            const timelineTrack = document.getElementById('timelineTrack');
+            const startHandle = document.getElementById('startHandle');
+            const endHandle = document.getElementById('endHandle');
+
+            let isDragging = false;
+            let draggingHandle = null;
+
+            startHandle.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                draggingHandle = 'start';
+                e.preventDefault();
+            });
+
+            endHandle.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                draggingHandle = 'end';
+                e.preventDefault();
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging || !currentVideo) return;
+                
+                const rect = timelineTrack.getBoundingClientRect();
+                const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                const time = percent * videoMetadata.duration;
+
+                if (draggingHandle === 'start') {
+                    selectionStart = Math.max(0, Math.min(time, selectionEnd - 0.1));
+                } else {
+                    selectionEnd = Math.min(videoMetadata.duration, Math.max(time, selectionStart + 0.1));
+                }
+
+                updateTimelineVisual();
+                updateTimeInputs();
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                draggingHandle = null;
+            });
+        }
+
+        function updateTimelineProgress() {
+            const video = document.getElementById('videoPlayer');
+            const progressFill = document.getElementById('timelineProgress');
+            const percent = (video.currentTime / videoMetadata.duration) * 100;
+            progressFill.style.width = `${percent}%`;
+        }
+
+        function updateTimelineVisual() {
+            const track = document.getElementById('timelineTrack');
+            const startHandle = document.getElementById('startHandle');
+            const endHandle = document.getElementById('endHandle');
+            const selection = document.getElementById('timelineSelection');
+
+            const startPercent = (selectionStart / videoMetadata.duration) * 100;
+            const endPercent = (selectionEnd / videoMetadata.duration) * 100;
+            const selectionWidth = endPercent - startPercent;
+
+            // Update handles
+            startHandle.style.left = `${startPercent}%`;
+            endHandle.style.left = `${endPercent}%`;
+
+            // Update selection
+            selection.style.left = `${startPercent}%`;
+            selection.style.width = `${selectionWidth}%`;
+
+            // Update time display
+            document.getElementById('startTime').textContent = formatTime(selectionStart);
+            document.getElementById('endTime').textContent = formatTime(selectionEnd);
+        }
+
+        function updateTimeInputs() {
+            document.getElementById('startTimeInput').value = formatTime(selectionStart);
+            document.getElementById('endTimeInput').value = formatTime(selectionEnd);
+            updateVideoStats();
+        }
+
+        function handleTimeInputChange() {
+            const startTime = parseTime(document.getElementById('startTimeInput').value);
+            const endTime = parseTime(document.getElementById('endTimeInput').value);
+
+            if (startTime !== null && endTime !== null && startTime < endTime) {
+                selectionStart = startTime;
+                selectionEnd = endTime;
+                updateTimelineVisual();
+                updateVideoStats();
+            }
+        }
+
+        function setStartFromCurrent() {
+            const video = document.getElementById('videoPlayer');
+            selectionStart = video.currentTime;
+            if (selectionStart >= selectionEnd) {
+                selectionEnd = Math.min(videoMetadata.duration, selectionStart + 1);
+            }
+            updateTimelineVisual();
+            updateTimeInputs();
+        }
+
+        function setEndFromCurrent() {
+            const video = document.getElementById('videoPlayer');
+            selectionEnd = video.currentTime;
+            if (selectionEnd <= selectionStart) {
+                selectionStart = Math.max(0, selectionEnd - 1);
+            }
+            updateTimelineVisual();
+            updateTimeInputs();
+        }
+
+        function resetSelection() {
+            selectionStart = 0;
+            selectionEnd = videoMetadata.duration;
+            updateTimelineVisual();
+            updateTimeInputs();
+        }
+
+        function updateVideoStats() {
+            const trimmedDuration = selectionEnd - selectionStart;
+            const originalSize = currentVideo.size;
+            const estimatedSize = (originalSize * trimmedDuration) / videoMetadata.duration;
+
+            document.getElementById('statDuration').textContent = formatTime(videoMetadata.duration);
+            document.getElementById('statTrimmedDuration').textContent = formatTime(trimmedDuration);
+            document.getElementById('statFileSize').textContent = formatFileSize(originalSize);
+            document.getElementById('statTrimmedSize').textContent = formatFileSize(estimatedSize);
+            document.getElementById('statFrameRate').textContent = '30 fps'; // Placeholder
+            document.getElementById('statBitrate').textContent = 'Unknown'; // Placeholder
+        }
+
+        // FFmpeg.wasm integration
+        async function loadFFmpeg() {
+            if (ffmpegLoaded) return true;
+
+            try {
+                showNotification('Loading video processing engine...', 'info');
+                
+                // Initialize FFmpeg.wasm
+                const { FFmpeg } = window.FFmpeg;
+                ffmpeg = new FFmpeg();
+                
+                // Load FFmpeg with progress tracking
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+                });
+                
+                ffmpegLoaded = true;
+                showNotification('Video processing engine loaded!', 'success');
+                return true;
+                
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                showNotification('Failed to load video processing engine: ' + error.message, 'error');
+                return false;
+            }
+        }
+
+        async function processVideo() {
+            if (!currentVideo) {
+                showNotification('❌ Please select a video first', 'error');
+                return;
+            }
+
+            // Load FFmpeg
+            const loaded = await loadFFmpeg();
+            if (!loaded) return;
+
+            // Show processing status
+            document.getElementById('processingStatus').style.display = 'block';
+            document.getElementById('trimButton').disabled = true;
+            document.getElementById('trimButton').textContent = 'Processing...';
+
+            try {
+                // Update progress
+                updateProgress(10, 'Reading video file...');
+                const inputData = new Uint8Array(await currentVideo.arrayBuffer());
+                
+                updateProgress(20, 'Preparing video processing...');
+                
+                // Write input file to FFmpeg filesystem
+                const inputFileName = 'input.' + currentVideo.name.split('.').pop();
+                await ffmpeg.writeFile(inputFileName, inputData);
+
+                const outputFormat = document.getElementById('outputFormat').value;
+                const quality = document.getElementById('outputQuality').value;
+                const outputFileName = `output.${outputFormat}`;
+                
+                updateProgress(30, 'Trimming video...');
+                
+                // Build FFmpeg arguments based on settings
+                let ffmpegArgs;
+                
+                if (outputFormat === 'mp4' && quality === 'high') {
+                    // For MP4 with high quality, use copy when possible
+                    ffmpegArgs = [
+                        '-i', inputFileName,
+                        '-ss', selectionStart.toFixed(3),
+                        '-to', selectionEnd.toFixed(3),
+                        '-c', 'copy'
+                    ];
+                } else {
+                    // For format conversion or quality adjustment
+                    const videoBitrate = quality === 'high' ? '2000k' : quality === 'medium' ? '1000k' : '500k';
+                    const audioBitrate = '128k';
+                    
+                    ffmpegArgs = [
+                        '-i', inputFileName,
+                        '-ss', selectionStart.toFixed(3),
+                        '-to', selectionEnd.toFixed(3),
+                        '-c:v', 'libx264',
+                        '-c:a', 'aac',
+                        '-b:v', videoBitrate,
+                        '-b:a', audioBitrate,
+                        '-preset', 'medium',
+                        '-movflags', '+faststart'
+                    ];
+                    
+                    if (outputFormat === 'webm') {
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-ss', selectionStart.toFixed(3),
+                            '-to', selectionEnd.toFixed(3),
+                            '-c:v', 'libvpx-vp9',
+                            '-c:a', 'libopus',
+                            '-b:v', videoBitrate,
+                            '-b:a', audioBitrate
+                        ];
+                    }
+                }
+
+                updateProgress(50, 'Processing video...');
+                
+                // Execute FFmpeg command
+                await ffmpeg.exec(ffmpegArgs);
+                
+                updateProgress(80, 'Reading output file...');
+                
+                // Read the output file
+                const outputData = await ffmpeg.readFile(outputFileName);
+                processedBlob = new Blob([outputData], { type: `video/${outputFormat}` });
+                
+                updateProgress(100, 'Video trimmed successfully!');
+                
+                // Clean up temporary files
+                try {
+                    await ffmpeg.deleteFile(inputFileName);
+                    await ffmpeg.deleteFile(outputFileName);
+                } catch (cleanupError) {
+                    console.warn('Cleanup error:', cleanupError);
+                }
+                
+                showNotification('✅ Video trimmed successfully!', 'success');
+                
+                // Show download button
+                document.getElementById('downloadButton').style.display = 'inline-block';
+                
+            } catch (error) {
+                console.error('Processing error:', error);
+                showNotification('❌ Failed to process video: ' + error.message, 'error');
+            } finally {
+                // Hide processing status after a short delay
+                setTimeout(() => {
+                    document.getElementById('processingStatus').style.display = 'none';
+                    document.getElementById('trimButton').disabled = false;
+                    document.getElementById('trimButton').textContent = '✂️ Trim Video';
+                }, 1000);
+            }
+        }
+
+        function updateProgress(percent, message) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = `${percent}%`;
+            progressText.textContent = message;
+        }
+
+        function downloadVideo() {
+            if (!processedBlob) {
+                showNotification('❌ No processed video to download', 'error');
+                return;
+            }
+
+            const url = URL.createObjectURL(processedBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `trimmed_${currentVideo.name.replace(/\.[^/.]+$/, '')}_${Date.now()}.mp4`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('⬇️ Video download started!', 'success');
+        }
+
+        // Utility functions
+        function formatTime(seconds) {
+            if (!isFinite(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function parseTime(timeString) {
+            const parts = timeString.split(':');
+            if (parts.length !== 2) return null;
+            
+            const minutes = parseInt(parts[0]);
+            const seconds = parseInt(parts[1]);
+            
+            if (isNaN(minutes) || isNaN(seconds)) return null;
+            return minutes * 60 + seconds;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--color-success)' : type === 'error' ? 'var(--color-error)' : 'var(--color-primary-500)'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: var(--radius-button);
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
         // Mobile menu functionality
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
@@ -644,5 +886,527 @@
             navLinks.classList.toggle('active');
         });
     </script>
+
+    <style>
+        /* Video Trimmer specific styles */
+        .upload-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            transition: all var(--duration-fast);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: var(--color-primary-500);
+            background: var(--color-primary-50);
+        }
+
+        .upload-content {
+            pointer-events: none;
+        }
+
+        .upload-area * {
+            pointer-events: auto;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .upload-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .upload-subtitle {
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .video-info {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-button);
+        }
+
+        .video-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .meta-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .meta-value {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-900);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .preview-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .video-player-container {
+            position: relative;
+            background: #000;
+            border-radius: var(--radius-button);
+            overflow: hidden;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .video-player {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            display: block;
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: var(--spacing-lg);
+            color: white;
+        }
+
+        .timeline-container {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .timeline {
+            position: relative;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .timeline-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            height: 100%;
+            background: var(--color-primary-500);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .timeline-handle {
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 2px solid var(--color-primary-500);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            cursor: grab;
+            z-index: 2;
+        }
+
+        .timeline-handle:active {
+            cursor: grabbing;
+        }
+
+        .timeline-selection {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background: rgba(139, 92, 246, 0.4);
+            border: 1px solid var(--color-primary-500);
+            border-radius: 3px;
+            pointer-events: none;
+        }
+
+        .time-display {
+            text-align: center;
+        }
+
+        .time-text {
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .trim-controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .time-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .time-input-label {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .time-input {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            font-family: monospace;
+            text-align: center;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .processing-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .processing-options {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .option-label {
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-700);
+        }
+
+        .option-select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            background: white;
+        }
+
+        .option-select:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        .processing-status {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .progress-container {
+            background: var(--color-neutral-100);
+            border-radius: var(--radius-button);
+            padding: var(--spacing-lg);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-700);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .download-section {
+            text-align: center;
+        }
+
+        .btn-large {
+            padding: var(--spacing-md) var(--spacing-2xl);
+            font-size: var(--font-size-body-large);
+        }
+
+        .stats-section {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-button);
+            transition: transform var(--duration-fast);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-500);
+            margin-bottom: var(--spacing-xs);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .privacy-notice {
+            padding: var(--spacing-xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .privacy-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .privacy-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .privacy-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .privacy-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        .related-tools {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-neutral-50);
+        }
+
+        .related-title {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .related-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: all var(--duration-standard) var(--easing-standard);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .related-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card-hover);
+            border-color: var(--color-primary-100);
+        }
+
+        .related-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .related-content h4 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .related-content p {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
+            margin: 0;
+        }
+
+        /* Notifications */
+        .notification {
+            box-shadow: var(--shadow-card);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .upload-area {
+                padding: var(--spacing-2xl);
+            }
+            
+            .video-meta {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
+            .time-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+            }
+            
+            .privacy-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </body>
 </html>

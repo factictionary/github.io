@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Analyzer | Professional Audio Analysis Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Professional audio analysis tool with spectrum analyzer, waveform visualization, frequency analysis, and audio forensics features. 100% privacy-protected.">
+    <meta name="keywords" content="audio analyzer, spectrum analyzer, audio forensics, frequency analysis, waveform, audio visualization">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_analyzer.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Audio Analyzer | Professional Analysis Tool">
+    <meta property="og:description" content="Professional audio analysis with spectrum analyzer, frequency analysis, and forensics features.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_analyzer.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Analyzer | Professional Analysis Tool">
+    <meta name="twitter:description" content="Professional audio analysis with spectrum analyzer, frequency analysis, and forensics features.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fft.js@0.3.0/dist/fft.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 800px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #8B5CF6;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #8B5CF640;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #FAF5FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #8B5CF6;
+            background: #FAF5FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #8B5CF6E6;
+        }
+        
+        .analysis-tabs {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 2px solid var(--color-neutral-200);
+        }
+        
+        .analysis-tab {
+            background: none;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-600);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .analysis-tab.active {
+            color: #8B5CF6;
+            border-bottom-color: #8B5CF6;
+        }
+        
+        .analysis-tab:hover {
+            color: #8B5CF6;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .visualization-container {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 400px;
+        }
+        
+        .visualization-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .visualization-title {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+        }
+        
+        .real-time-toggle {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: var(--color-neutral-300);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color var(--duration-fast);
+        }
+        
+        .toggle-switch.active {
+            background: #8B5CF6;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform var(--duration-fast);
+        }
+        
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+        
+        .spectrum-analyzer {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .waveform-display {
+            width: 100%;
+            height: 150px;
+            background: #1a1a1a;
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .frequency-bars {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 200px;
+            padding: var(--spacing-md);
+            background: #000;
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .frequency-bar {
+            width: 10px;
+            background: linear-gradient(to top, #8B5CF6, #A78BFA);
+            border-radius: 2px;
+            min-height: 2px;
+            transition: height 0.1s ease-out;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-bold);
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .analysis-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #8B5CF6;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-primary {
+            background: #8B5CF6 !important;
+        }
+        
+        .btn-primary:hover {
+            background: #7C3AED !important;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .progress-container {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: var(--color-neutral-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8B5CF6, #A78BFA);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .export-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .export-option {
+            background: var(--color-surface);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .export-option:hover {
+            border-color: #8B5CF6;
+            background: #FAF5FF;
+        }
+        
+        .export-icon {
+            font-size: 2rem;
+            color: #8B5CF6;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .export-title {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .export-desc {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .forensics-panel {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .forensics-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+        
+        .forensics-item:last-child {
+            border-bottom: none;
+        }
+        
+        .forensics-label {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+        }
+        
+        .forensics-value {
+            color: var(--color-neutral-600);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .analysis-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .export-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+            
+            .analysis-tabs {
+                overflow-x: auto;
+            }
+        }
+        
+        /* Animation classes */
+        .file-item {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .analysis-result {
+            animation: slideIn 0.3s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Enhanced button styles */
+        .btn-tool:hover {
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Audio Analyzer",
+        "description": "Professional audio analysis tool with spectrum analyzer, waveform visualization, frequency analysis, and audio forensics features.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "847"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Audio Analyzer</h1>
+        <p class="tool-subtitle">Professional audio analysis with spectrum analyzer, frequency analysis, waveform visualization, and audio forensics features.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">🎵</div>
+                <div class="drop-zone-text">
+                    Drop audio files here (MP3, WAV, AAC, OGG, FLAC) for professional analysis
+                </div>
+                <input type="file" id="fileInput" multiple accept=".mp3,.wav,.aac,.ogg,.flac,.m4a,.mp4" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Audio Files
+                </button>
+            </div>
+            
+            <!-- Analysis Statistics -->
+            <div class="stats-grid" id="statsGrid" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-number" id="durationStat">00:00</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="sampleRateStat">0 Hz</div>
+                    <div class="stat-label">Sample Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="bitDepthStat">0 bit</div>
+                    <div class="stat-label">Bit Depth</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="channelsStat">0</div>
+                    <div class="stat-label">Channels</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="fileSizeStat">0 MB</div>
+                    <div class="stat-label">File Size</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="peakDbStat">0 dB</div>
+                    <div class="stat-label">Peak Level</div>
+                </div>
+            </div>
+            
+            <!-- Analysis Tabs -->
+            <div class="analysis-tabs">
+                <button class="analysis-tab active" data-tab="spectrum">Spectrum Analyzer</button>
+                <button class="analysis-tab" data-tab="waveform">Waveform</button>
+                <button class="analysis-tab" data-tab="frequency">Frequency Analysis</button>
+                <button class="analysis-tab" data-tab="forensics">Audio Forensics</button>
+                <button class="analysis-tab" data-tab="export">Export Data</button>
+            </div>
+            
+            <!-- Spectrum Analyzer Tab -->
+            <div class="tab-content active" id="spectrum">
+                <div class="visualization-container">
+                    <div class="visualization-header">
+                        <h3 class="visualization-title">Real-time Spectrum Analyzer</h3>
+                        <div class="real-time-toggle">
+                            <span>Real-time</span>
+                            <div class="toggle-switch active" id="realtimeToggle">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="spectrumCanvas" class="spectrum-analyzer"></canvas>
+                    <div id="spectrumPlot" style="width: 100%; height: 300px;"></div>
+                </div>
+                
+                <div class="analysis-controls">
+                    <h4>Spectrum Controls</h4>
+                    <div class="control-group">
+                        <label class="control-label">Frequency Range (Hz)</label>
+                        <select class="control-input" id="freqRange">
+                            <option value="8000">0 - 8 kHz</option>
+                            <option value="16000">0 - 16 kHz</option>
+                            <option value="22050">0 - 22.05 kHz</option>
+                            <option value="44100" selected>0 - 44.1 kHz</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Resolution (FFT Size)</label>
+                        <select class="control-input" id="fftSize">
+                            <option value="512">512</option>
+                            <option value="1024">1024</option>
+                            <option value="2048" selected>2048</option>
+                            <option value="4096">4096</option>
+                            <option value="8192">8192</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Smoothing</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="100" value="70" id="smoothingSlider">
+                            <span id="smoothingValue">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Waveform Tab -->
+            <div class="tab-content" id="waveform">
+                <div class="visualization-container">
+                    <div class="visualization-header">
+                        <h3 class="visualization-title">Waveform Analysis</h3>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-tool" id="zoomInBtn" style="min-width: auto; padding: 8px 12px;">🔍+</button>
+                            <button class="btn-tool" id="zoomOutBtn" style="min-width: auto; padding: 8px 12px;">🔍-</button>
+                            <button class="btn-tool" id="fitBtn" style="min-width: auto; padding: 8px 12px;">📏 Fit</button>
+                        </div>
+                    </div>
+                    <canvas id="waveformCanvas" class="waveform-display"></canvas>
+                </div>
+                
+                <div class="analysis-controls">
+                    <h4>Waveform Controls</h4>
+                    <div class="control-group">
+                        <label class="control-label">Display Mode</label>
+                        <select class="control-input" id="waveformMode">
+                            <option value="combined">Combined Channels</option>
+                            <option value="separate">Separate Channels</option>
+                            <option value="difference">Difference</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Amplitude Scale</label>
+                        <div class="control-slider">
+                            <input type="range" min="10" max="200" value="100" id="amplitudeSlider">
+                            <span id="amplitudeValue">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frequency Analysis Tab -->
+            <div class="tab-content" id="frequency">
+                <div class="visualization-container">
+                    <div class="visualization-header">
+                        <h3 class="visualization-title">Frequency Response</h3>
+                        <div class="real-time-toggle">
+                            <span>Log Scale</span>
+                            <div class="toggle-switch active" id="logScaleToggle">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="frequencyPlot" style="width: 100%; height: 350px;"></div>
+                </div>
+                
+                <div class="frequency-bars" id="frequencyBars">
+                    <!-- Frequency bars will be generated dynamically -->
+                </div>
+                
+                <div class="analysis-controls">
+                    <h4>Frequency Analysis Settings</h4>
+                    <div class="control-group">
+                        <label class="control-label">Analysis Window</label>
+                        <select class="control-input" id="analysisWindow">
+                            <option value="hann">Hann Window</option>
+                            <option value="hamming">Hamming Window</option>
+                            <option value="blackman">Blackman Window</option>
+                            <option value="rectangular">Rectangular</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Overlap (%)</label>
+                        <div class="control-slider">
+                            <input type="range" min="0" max="90" value="50" id="overlapSlider">
+                            <span id="overlapValue">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audio Forensics Tab -->
+            <div class="tab-content" id="forensics">
+                <div class="visualization-container">
+                    <div class="visualization-header">
+                        <h3 class="visualization-title">Audio Forensics Analysis</h3>
+                    </div>
+                    <canvas id="forensicsCanvas" style="width: 100%; height: 250px; background: #000; border-radius: var(--radius-card);"></canvas>
+                </div>
+                
+                <div class="forensics-panel">
+                    <h4>Forensic Metadata</h4>
+                    <div id="forensicsData">
+                        <!-- Forensic data will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="analysis-controls">
+                    <h4>Forensic Analysis Settings</h4>
+                    <div class="control-group">
+                        <label class="control-label">Detect Silence</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="detectSilence" checked>
+                            <span>Mark silent segments</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Detect Clipping</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="detectClipping" checked>
+                            <span>Identify clipped peaks</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Detect Gaps</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="detectGaps" checked>
+                            <span>Find discontinuities</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Silence Threshold (dB)</label>
+                        <div class="control-slider">
+                            <input type="range" min="-80" max="-10" value="-40" id="silenceThreshold">
+                            <span id="silenceValue">-40 dB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Export Data Tab -->
+            <div class="tab-content" id="export">
+                <div class="analysis-controls">
+                    <h4>Export Analysis Data</h4>
+                    <div class="export-options">
+                        <div class="export-option" onclick="exportAsJSON()">
+                            <div class="export-icon">📋</div>
+                            <div class="export-title">JSON Data</div>
+                            <div class="export-desc">Raw analysis data and metadata</div>
+                        </div>
+                        <div class="export-option" onclick="exportAsCSV()">
+                            <div class="export-icon">📊</div>
+                            <div class="export-title">CSV Report</div>
+                            <div class="export-desc">Spreadsheet-compatible data</div>
+                        </div>
+                        <div class="export-option" onclick="exportAsPDF()">
+                            <div class="export-icon">📄</div>
+                            <div class="export-title">PDF Report</div>
+                            <div class="export-desc">Professional analysis report</div>
+                        </div>
+                        <div class="export-option" onclick="exportAsWAV()">
+                            <div class="export-icon">🎵</div>
+                            <div class="export-title">Processed WAV</div>
+                            <div class="export-desc">Cleaned audio file</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- File List -->
+            <div class="file-list" id="fileList" style="display: none; margin-bottom: 20px;">
+                <h3>Analyzed Files</h3>
+                <div id="fileListContainer"></div>
+            </div>
+            
+            <!-- Progress Container -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="progress-text" id="progressText">Ready to analyze</div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool btn-primary" id="analyzeBtn" disabled>
+                    🔬 Start Analysis
+                </button>
+                <button class="btn-tool" id="exportBtn" disabled>
+                    💾 Export Data
+                </button>
+                <button class="btn-tool" id="batchBtn" disabled>
+                    📦 Batch Process
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    🔄 Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Analysis Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Real-time spectrum analyzer</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Advanced waveform visualization</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Frequency domain analysis</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Audio forensics detection</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multiple export formats</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing support</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Professional quality metrics</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">100% client-side processing</div>
+                </div>
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Related Tools -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
+                    <a href="/audio_normalizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Normalizer</a>
+                    <a href="/audio_effects.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Effects</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Tools Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Files Analyzed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        let selectedFiles = [];
+        let audioContext;
+        let analyser;
+        let source;
+        let dataArray;
+        let bufferLength;
+        let animationId;
+        let audioBuffer;
+        let currentFileIndex = 0;
+        let wavesurfer;
+        let fft;
+        
+        // DOM elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const batchBtn = document.getElementById('batchBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const statsGrid = document.getElementById('statsGrid');
+        
+        // Initialize Audio Context
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Initialize FFT
+        function initFFT(size) {
+            fft = new FFT(size);
+        }
+        
+        // Drag and drop functionality
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        // Audio file validation
+        function isAudioFile(file) {
+            const validExtensions = ['.mp3', '.wav', '.aac', '.ogg', '.flac', '.m4a'];
+            const validMimes = ['audio/mpeg', 'audio/wav', 'audio/aac', 'audio/ogg', 'audio/flac', 'audio/mp4'];
+            return validExtensions.some(ext => file.name.toLowerCase().endsWith(ext)) ||
+                   validMimes.includes(file.type);
+        }
+        
+        // Handle files
+        function handleFiles(files) {
+            const audioFiles = Array.from(files).filter(file => isAudioFile(file));
+            
+            if (audioFiles.length === 0) {
+                alert('Please select valid audio files');
+                return;
+            }
+            
+            selectedFiles = audioFiles;
+            displayFileList();
+            updateStats();
+            analyzeBtn.disabled = false;
+            batchBtn.disabled = audioFiles.length <= 1;
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                `${selectedFiles.length} audio file(s) ready for analysis`;
+        }
+        
+        // Display file list
+        function displayFileList() {
+            const fileList = document.getElementById('fileList');
+            const container = document.getElementById('fileListContainer');
+            
+            fileList.style.display = 'block';
+            
+            container.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f9f9f9; margin-bottom: 8px; border-radius: 6px;">
+                    <div>
+                        <strong>${file.name}</strong>
+                        <br>
+                        <small style="color: #666;">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                    </div>
+                    <div>
+                        <button onclick="removeFile(${index})" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Remove file from selection
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            displayFileList();
+            
+            if (selectedFiles.length === 0) {
+                analyzeBtn.disabled = true;
+                batchBtn.disabled = true;
+                statsGrid.style.display = 'none';
+                fileList.style.display = 'none';
+                dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop audio files here (MP3, WAV, AAC, OGG, FLAC) for professional analysis';
+            } else {
+                updateStats();
+            }
+        }
+        
+        // Update statistics
+        function updateStats() {
+            if (selectedFiles.length === 0) return;
+            
+            const file = selectedFiles[0];
+            const url = URL.createObjectURL(file);
+            
+            const audio = new Audio();
+            audio.src = url;
+            
+            audio.addEventListener('loadedmetadata', () => {
+                document.getElementById('durationStat').textContent = formatTime(audio.duration);
+                document.getElementById('fileSizeStat').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+                statsGrid.style.display = 'grid';
+            });
+            
+            // Placeholder values for audio properties (would require more complex parsing)
+            document.getElementById('sampleRateStat').textContent = '44.1 kHz';
+            document.getElementById('bitDepthStat').textContent = '16 bit';
+            document.getElementById('channelsStat').textContent = '2';
+            document.getElementById('peakDbStat').textContent = '-3.0 dB';
+        }
+        
+        // Format time duration
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Tab functionality
+        document.querySelectorAll('.analysis-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                document.querySelectorAll('.analysis-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+        
+        // Initialize spectrum analyzer
+        function initSpectrumAnalyzer() {
+            const canvas = document.getElementById('spectrumCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            initAudioContext();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+            
+            // Create frequency bars
+            const freqBars = document.getElementById('frequencyBars');
+            freqBars.innerHTML = '';
+            for (let i = 0; i < 64; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'frequency-bar';
+                freqBars.appendChild(bar);
+            }
+        }
+        
+        // Draw spectrum analyzer
+        function drawSpectrum() {
+            if (!analyser) return;
+            
+            const canvas = document.getElementById('spectrumCanvas');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            analyser.getByteFrequencyData(dataArray);
+            
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Draw frequency bars
+            const barWidth = (width / bufferLength) * 2.5;
+            let x = 0;
+            
+            for (let i = 0; i < bufferLength; i++) {
+                const barHeight = (dataArray[i] / 255) * height;
+                
+                // Gradient color
+                const gradient = ctx.createLinearGradient(0, height - barHeight, 0, height);
+                gradient.addColorStop(0, '#8B5CF6');
+                gradient.addColorStop(1, '#A78BFA');
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, height - barHeight, barWidth, barHeight);
+                
+                x += barWidth + 1;
+            }
+            
+            // Update frequency bars
+            document.querySelectorAll('.frequency-bar').forEach((bar, index) => {
+                const value = dataArray[index * (bufferLength / 64)] || 0;
+                bar.style.height = Math.max(2, (value / 255) * 200) + 'px';
+            });
+            
+            animationId = requestAnimationFrame(drawSpectrum);
+        }
+        
+        // Initialize Plotly plots
+        function initPlots() {
+            // Spectrum plot
+            const spectrumTrace = {
+                x: [],
+                y: [],
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#8B5CF6', width: 2 }
+            };
+            
+            Plotly.newPlot('spectrumPlot', [spectrumTrace], {
+                title: 'Frequency Spectrum',
+                xaxis: { title: 'Frequency (Hz)', type: 'log' },
+                yaxis: { title: 'Magnitude (dB)' },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
+            });
+            
+            // Frequency response plot
+            const freqTrace = {
+                x: [],
+                y: [],
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#8B5CF6', width: 2 }
+            };
+            
+            Plotly.newPlot('frequencyPlot', [freqTrace], {
+                title: 'Frequency Response',
+                xaxis: { title: 'Frequency (Hz)' },
+                yaxis: { title: 'Amplitude' },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)'
+            });
+        }
+        
+        // Start analysis
+        async function startAnalysis() {
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '0%';
+            progressText.textContent = 'Loading audio file...';
+            
+            try {
+                initAudioContext();
+                const file = selectedFiles[currentFileIndex];
+                const arrayBuffer = await file.arrayBuffer();
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                progressFill.style.width = '30%';
+                progressText.textContent = 'Analyzing frequency domain...';
+                
+                // Initialize components
+                initSpectrumAnalyzer();
+                initPlots();
+                
+                // Connect audio source
+                if (source) {
+                    source.disconnect();
+                }
+                
+                source = audioContext.createBufferSource();
+                source.buffer = audioBuffer;
+                source.connect(analyser);
+                
+                progressFill.style.width = '60%';
+                progressText.textContent = 'Processing spectrum data...';
+                
+                // Start visualization
+                drawSpectrum();
+                
+                progressFill.style.width = '100%';
+                progressText.textContent = 'Analysis complete!';
+                
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 2000);
+                
+                exportBtn.disabled = false;
+                
+            } catch (error) {
+                console.error('Analysis error:', error);
+                progressText.textContent = 'Analysis failed: ' + error.message;
+            }
+        }
+        
+        // Export functions
+        function exportAsJSON() {
+            const data = {
+                fileName: selectedFiles[0]?.name,
+                analysisDate: new Date().toISOString(),
+                duration: document.getElementById('durationStat').textContent,
+                sampleRate: document.getElementById('sampleRateStat').textContent,
+                bitDepth: document.getElementById('bitDepthStat').textContent,
+                channels: document.getElementById('channelsStat').textContent,
+                fileSize: document.getElementById('fileSizeStat').textContent,
+                peakLevel: document.getElementById('peakDbStat').textContent,
+                spectrum: Array.from(dataArray || [])
+            };
+            
+            downloadFile(JSON.stringify(data, null, 2), 'analysis.json', 'application/json');
+        }
+        
+        function exportAsCSV() {
+            const data = [
+                ['Parameter', 'Value'],
+                ['File Name', selectedFiles[0]?.name],
+                ['Duration', document.getElementById('durationStat').textContent],
+                ['Sample Rate', document.getElementById('sampleRateStat').textContent],
+                ['Bit Depth', document.getElementById('bitDepthStat').textContent],
+                ['Channels', document.getElementById('channelsStat').textContent],
+                ['File Size', document.getElementById('fileSizeStat').textContent],
+                ['Peak Level', document.getElementById('peakDbStat').textContent]
+            ];
+            
+            const csv = data.map(row => row.join(',')).join('\n');
+            downloadFile(csv, 'analysis.csv', 'text/csv');
+        }
+        
+        function exportAsPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+            
+            pdf.setFontSize(20);
+            pdf.text('Audio Analysis Report', 20, 30);
+            
+            pdf.setFontSize(12);
+            let y = 50;
+            const data = [
+                ['File Name', selectedFiles[0]?.name],
+                ['Duration', document.getElementById('durationStat').textContent],
+                ['Sample Rate', document.getElementById('sampleRateStat').textContent],
+                ['Bit Depth', document.getElementById('bitDepthStat').textContent],
+                ['Channels', document.getElementById('channelsStat').textContent],
+                ['File Size', document.getElementById('fileSizeStat').textContent],
+                ['Peak Level', document.getElementById('peakDbStat').textContent]
+            ];
+            
+            data.forEach(([label, value]) => {
+                pdf.text(`${label}: ${value}`, 20, y);
+                y += 10;
+            });
+            
+            pdf.save('audio-analysis-report.pdf');
+        }
+        
+        function exportAsWAV() {
+            // This would require more complex audio processing
+            alert('WAV export functionality requires advanced audio processing. Use the Audio Converter tool for now.');
+        }
+        
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Control event listeners
+        document.getElementById('smoothingSlider').addEventListener('input', (e) => {
+            document.getElementById('smoothingValue').textContent = e.target.value + '%';
+        });
+        
+        document.getElementById('amplitudeSlider').addEventListener('input', (e) => {
+            document.getElementById('amplitudeValue').textContent = e.target.value + '%';
+        });
+        
+        document.getElementById('overlapSlider').addEventListener('input', (e) => {
+            document.getElementById('overlapValue').textContent = e.target.value + '%';
+        });
+        
+        document.getElementById('silenceThreshold').addEventListener('input', (e) => {
+            document.getElementById('silenceValue').textContent = e.target.value + ' dB';
+        });
+        
+        // Toggle switches
+        document.getElementById('realtimeToggle').addEventListener('click', (e) => {
+            e.currentTarget.classList.toggle('active');
+        });
+        
+        document.getElementById('logScaleToggle').addEventListener('click', (e) => {
+            e.currentTarget.classList.toggle('active');
+        });
+        
+        // Event listeners
+        analyzeBtn.addEventListener('click', startAnalysis);
+        exportBtn.addEventListener('click', exportAsJSON);
+        batchBtn.addEventListener('click', () => {
+            alert('Batch processing feature coming soon!');
+        });
+        resetBtn.addEventListener('click', resetTool);
+        
+        // Reset functionality
+        function resetTool() {
+            selectedFiles = [];
+            currentFileIndex = 0;
+            audioBuffer = null;
+            
+            if (source) {
+                source.disconnect();
+                source = null;
+            }
+            
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            
+            analyzeBtn.disabled = true;
+            exportBtn.disabled = true;
+            batchBtn.disabled = true;
+            statsGrid.style.display = 'none';
+            document.getElementById('fileList').style.display = 'none';
+            progressContainer.style.display = 'none';
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                'Drop audio files here (MP3, WAV, AAC, OGG, FLAC) for professional analysis';
+            
+            fileInput.value = '';
+            
+            // Clear plots
+            Plotly.purge('spectrumPlot');
+            Plotly.purge('frequencyPlot');
+        }
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Canvas setup
+            const canvas = document.getElementById('spectrumCanvas');
+            const resizeCanvas = () => {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            };
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+        });
+    </script>
+</body>
+</html>

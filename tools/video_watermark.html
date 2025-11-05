@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -386,6 +390,7 @@
         let currentWatermarkPosition = 'center';
         let ffmpeg = null;
         let processedVideoBlob = null;
+        let ffmpegLoaded = false;
 
         // DOM elements
         const videoUploadArea = document.getElementById('videoUploadArea');
@@ -409,7 +414,6 @@
         // Initialize application
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
-            initializeFFmpeg();
         });
 
         function setupEventListeners() {
@@ -667,9 +671,37 @@
             }
         }
 
-        function initializeFFmpeg() {
-            // FFmpeg.wasm initialization will be implemented here
-            console.log('FFmpeg initialization placeholder - to be implemented with actual FFmpeg.wasm integration');
+        async function initializeFFmpeg() {
+            try {
+                updateProgress(0, 'Loading FFmpeg...');
+                
+                const { FFmpeg } = FFmpegWASM;
+                ffmpeg = new FFmpeg();
+                
+                // Set up progress tracking
+                ffmpeg.on('progress', ({ progress }) => {
+                    const percentage = Math.round(progress * 100);
+                    updateProgress(percentage, `Processing... ${percentage}%`);
+                });
+                
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg log:', message);
+                });
+                
+                // Load FFmpeg
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
+                });
+                
+                ffmpegLoaded = true;
+                updateProgress(100, 'FFmpeg loaded successfully!');
+                
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                showError('Failed to load video processing engine. Please refresh the page and try again.');
+                throw error;
+            }
         }
 
         async function processVideo() {
@@ -687,23 +719,106 @@
                 updateProgress(0, 'Initializing FFmpeg...');
                 
                 // Initialize FFmpeg if not already done
-                if (!ffmpeg) {
-                    await initializeFFmpegInstance();
+                if (!ffmpegLoaded) {
+                    await initializeFFmpeg();
+                }
+                
+                updateProgress(10, 'Preparing video...');
+                
+                // Clear previous files from FFmpeg FS
+                try {
+                    await ffmpeg.deleteFile('/input.mp4');
+                    await ffmpeg.deleteFile('/logo.png');
+                    await ffmpeg.deleteFile('/output.mp4');
+                } catch (e) {
+                    // Files might not exist, ignore errors
                 }
                 
                 updateProgress(20, 'Loading video file...');
                 
                 // Write video file to FFmpeg filesystem
-                // FFmpeg.wasm integration will be implemented here
+                const videoData = new Uint8Array(await selectedVideoFile.arrayBuffer());
+                await ffmpeg.writeFile('/input.mp4', videoData);
+                
+                updateProgress(30, 'Processing video...');
+                
+                // Get video dimensions for positioning
+                const videoElement = document.createElement('video');
+                videoElement.src = URL.createObjectURL(selectedVideoFile);
+                await new Promise((resolve) => {
+                    videoElement.onloadedmetadata = resolve;
+                });
+                
+                const videoWidth = videoElement.videoWidth;
+                const videoHeight = videoElement.videoHeight;
+                URL.revokeObjectURL(videoElement.src);
                 
                 updateProgress(40, 'Applying watermark...');
                 
-                // Apply watermark using FFmpeg commands
-                // This will include text and/or image watermark overlay
+                // Build FFmpeg command
+                let ffmpegArgs = ['-i', '/input.mp4'];
                 
-                updateProgress(80, 'Encoding processed video...');
+                // Add text watermark if provided
+                const textWatermark = textWatermarkInput.value.trim();
+                if (textWatermark) {
+                    const fontSize = parseInt(document.getElementById('fontSize').value);
+                    const opacity = parseInt(document.getElementById('fontOpacity').value) / 100;
+                    const color = document.getElementById('textColor').value;
+                    const font = document.getElementById('fontFamily').value.split(',')[0];
+                    
+                    // Calculate position
+                    const position = getWatermarkPosition(videoWidth, videoHeight);
+                    
+                    // Escape text for FFmpeg
+                    const escapedText = textWatermark.replace(/'/g, "'\\''").replace(/:/g, '\\:');
+                    
+                    // Build text filter
+                    const textFilter = `drawtext=text='${escapedText}':fontsize=${fontSize}:fontcolor=${color}@${opacity}:x=${position.x}:y=${position.y}`;
+                    ffmpegArgs.push('-vf', textFilter);
+                }
                 
-                // Read the processed video back
+                // Add image watermark if provided
+                if (selectedLogoFile) {
+                    updateProgress(50, 'Processing logo...');
+                    
+                    // Convert logo to PNG and write to FS
+                    const logoData = new Uint8Array(await selectedLogoFile.arrayBuffer());
+                    await ffmpeg.writeFile('/logo.png', logoData);
+                    
+                    // Get logo dimensions
+                    const logoImg = new Image();
+                    logoImg.src = URL.createObjectURL(selectedLogoFile);
+                    await new Promise((resolve) => {
+                        logoImg.onload = resolve;
+                    });
+                    
+                    const logoWidth = logoImg.width;
+                    const logoHeight = logoImg.height;
+                    URL.revokeObjectURL(logoImg.src);
+                    
+                    updateProgress(60, 'Positioning logo...');
+                    
+                    const position = getImageWatermarkPosition(videoWidth, videoHeight, logoWidth, logoHeight);
+                    
+                    // Add image overlay filter
+                    const imageFilter = `overlay=${position.x}:${position.y}:enable='between(t,0,999999)'`;
+                    ffmpegArgs.push('-i', '/logo.png', '-filter_complex', ffmpegArgs.includes('-vf') ? 
+                        `${ffmpegArgs[ffmpegArgs.indexOf('-vf') + 1]}.${imageFilter}` : imageFilter);
+                }
+                
+                // Output settings
+                ffmpegArgs.push('-c:v', 'libx264', '-c:a', 'copy', '-y', '/output.mp4');
+                
+                updateProgress(70, 'Encoding video...');
+                
+                // Execute FFmpeg
+                await ffmpeg.exec(ffmpegArgs);
+                
+                updateProgress(90, 'Finalizing...');
+                
+                // Read the processed video
+                const outputData = await ffmpeg.readFile('/output.mp4');
+                processedVideoBlob = new Blob([outputData], { type: 'video/mp4' });
                 
                 updateProgress(100, 'Complete!');
                 
@@ -714,9 +829,16 @@
                 
                 showNotification('✅ Video processed successfully!');
                 
+                // Clean up
+                try {
+                    await ffmpeg.deleteFile('/output.mp4');
+                } catch (e) {
+                    // Ignore cleanup errors
+                }
+                
             } catch (error) {
                 console.error('Video processing error:', error);
-                showError('Failed to process video. Please try again.');
+                showError(`Failed to process video: ${error.message}. Please try again with a different video format.`);
                 
                 progressSection.style.display = 'none';
                 processBtn.disabled = false;
@@ -724,19 +846,91 @@
             }
         }
 
-        async function initializeFFmpegInstance() {
-            // FFmpeg.wasm initialization code will go here
-            // This is a placeholder for the actual implementation
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve();
-                }, 1000);
-            });
+        function getWatermarkPosition(videoWidth, videoHeight) {
+            const margin = 50;
+            
+            switch(currentWatermarkPosition) {
+                case 'top-left':
+                    return { x: margin, y: margin };
+                case 'top-center':
+                    return { x: (videoWidth / 2) - 100, y: margin };
+                case 'top-right':
+                    return { x: videoWidth - 200, y: margin };
+                case 'middle-left':
+                    return { x: margin, y: (videoHeight / 2) - 25 };
+                case 'center':
+                    return { x: (videoWidth / 2) - 100, y: (videoHeight / 2) - 25 };
+                case 'middle-right':
+                    return { x: videoWidth - 200, y: (videoHeight / 2) - 25 };
+                case 'bottom-left':
+                    return { x: margin, y: videoHeight - 75 };
+                case 'bottom-center':
+                    return { x: (videoWidth / 2) - 100, y: videoHeight - 75 };
+                case 'bottom-right':
+                    return { x: videoWidth - 200, y: videoHeight - 75 };
+                default:
+                    // Custom position
+                    const customX = parseInt(document.getElementById('customX').value);
+                    const customY = parseInt(document.getElementById('customY').value);
+                    return { 
+                        x: Math.round((customX / 100) * videoWidth),
+                        y: Math.round((customY / 100) * videoHeight)
+                    };
+            }
+        }
+
+        function getImageWatermarkPosition(videoWidth, videoHeight, logoWidth, logoHeight) {
+            const margin = 20;
+            const maxLogoWidth = Math.min(200, videoWidth * 0.3);
+            const maxLogoHeight = Math.min(100, videoHeight * 0.2);
+            const scale = Math.min(maxLogoWidth / logoWidth, maxLogoHeight / logoHeight, 1);
+            
+            const scaledWidth = logoWidth * scale;
+            const scaledHeight = logoHeight * scale;
+            
+            switch(currentWatermarkPosition) {
+                case 'top-left':
+                    return { x: margin, y: margin };
+                case 'top-center':
+                    return { x: Math.round((videoWidth - scaledWidth) / 2), y: margin };
+                case 'top-right':
+                    return { x: videoWidth - scaledWidth - margin, y: margin };
+                case 'middle-left':
+                    return { x: margin, y: Math.round((videoHeight - scaledHeight) / 2) };
+                case 'center':
+                    return { 
+                        x: Math.round((videoWidth - scaledWidth) / 2), 
+                        y: Math.round((videoHeight - scaledHeight) / 2) 
+                    };
+                case 'middle-right':
+                    return { x: videoWidth - scaledWidth - margin, y: Math.round((videoHeight - scaledHeight) / 2) };
+                case 'bottom-left':
+                    return { x: margin, y: videoHeight - scaledHeight - margin };
+                case 'bottom-center':
+                    return { 
+                        x: Math.round((videoWidth - scaledWidth) / 2), 
+                        y: videoHeight - scaledHeight - margin 
+                    };
+                case 'bottom-right':
+                    return { 
+                        x: videoWidth - scaledWidth - margin, 
+                        y: videoHeight - scaledHeight - margin 
+                    };
+                default:
+                    // Custom position
+                    const customX = parseInt(document.getElementById('customX').value);
+                    const customY = parseInt(document.getElementById('customY').value);
+                    return { 
+                        x: Math.round((customX / 100) * videoWidth - scaledWidth / 2),
+                        y: Math.round((customY / 100) * videoHeight - scaledHeight / 2)
+                    };
+            }
         }
 
         function updateProgress(percentage, status) {
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressStatus').textContent = status;
+            document.getElementById('progressDetails').textContent = `Progress: ${percentage}% - ${status}`;
         }
 
         function downloadVideo() {
@@ -748,7 +942,7 @@
             const url = URL.createObjectURL(processedVideoBlob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'watermarked_' + selectedVideoFile.name;
+            a.download = 'watermarked_' + selectedVideoFile.name.replace(/\.[^/.]+$/, '.mp4');
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

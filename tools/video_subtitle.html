@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.7/dist/ffmpeg.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/ffmpeg-util.min.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -98,6 +102,16 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Subtitle Tool</h3>
                     <p class="tool-subtitle">Add, edit, and style video captions and subtitles with real-time preview. Support for SRT files, custom styling, timing adjustment, and video processing. Perfect for content creators, educators, and accessibility.</p>
+                    <div class="shortcuts-help">
+                        <h4>⌨️ Keyboard Shortcuts</h4>
+                        <div class="shortcuts-grid">
+                            <span><kbd>Space</kbd> Play/Pause</span>
+                            <span><kbd>Ctrl + ←</kbd> Rewind 10s</span>
+                            <span><kbd>Ctrl + →</kbd> Forward 10s</span>
+                            <span><kbd>Ctrl + N</kbd> Add subtitle</span>
+                            <span><kbd>Ctrl + S</kbd> Sync to video</span>
+                        </div>
+                    </div>
                     <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">SRT Support</span>
@@ -110,6 +124,45 @@
                 </div>
             </div>
         </header>
+
+        <!-- Help Section -->
+        <section class="help-section">
+            <div class="container">
+                <div class="help-content">
+                    <h3>How to Use</h3>
+                    <div class="help-grid">
+                        <div class="help-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Upload Files</h4>
+                                <p>Drag & drop your video file and SRT subtitle file, or click to browse and select files.</p>
+                            </div>
+                        </div>
+                        <div class="help-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Edit Subtitles</h4>
+                                <p>Click on any subtitle in the timeline to edit text, timing, and position. Use the video controls to sync with specific moments.</p>
+                            </div>
+                        </div>
+                        <div class="help-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Style Your Subtitles</h4>
+                                <p>Customize font, colors, position, background, and effects to match your video's style.</p>
+                            </div>
+                        </div>
+                        <div class="help-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Process & Download</h4>
+                                <p>Click "Process Video" to generate your video with embedded subtitles. Download the final result when ready.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Tool Workspace -->
         <section class="tool-workspace">
@@ -194,7 +247,11 @@
                         <div class="subtitle-list-container">
                             <div class="subtitle-list-header">
                                 <h4>Subtitle Timeline</h4>
-                                <button class="btn btn-primary btn-sm" onclick="addSubtitle()">+ Add Subtitle</button>
+                                <div class="subtitle-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="addSubtitle()" title="Add subtitle at current time (Ctrl+N)">+ Add</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="duplicateCurrentSubtitle()" title="Duplicate selected subtitle">📋 Duplicate</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="splitCurrentSubtitle()" title="Split subtitle at current time">✂️ Split</button>
+                                </div>
                             </div>
                             <div class="subtitle-list" id="subtitleList">
                                 <div class="subtitle-placeholder">
@@ -486,11 +543,14 @@
         let currentSubtitleIndex = -1;
         let ffmpegLoaded = false;
         let videoProcessing = false;
+        let ffmpeg = null;
+        let processedVideoBlob = null;
 
         // Initialize tool
         document.addEventListener('DOMContentLoaded', function() {
             initializeEventListeners();
             initializeDragDrop();
+            initializeKeyboardShortcuts();
             console.log('Video Subtitle Tool initialized');
         });
 
@@ -591,12 +651,14 @@
         function handleVideoFiles(files) {
             if (files.length > 0) {
                 const file = files[0];
-                if (file.type.startsWith('video/')) {
+                if (validateVideoFile(file)) {
                     currentVideo = file;
                     displayVideoFile(file);
                     loadVideoIntoPlayer(file);
+                    resetProcessingState();
+                    showNotification(`✅ Video file loaded: ${file.name}`);
                 } else {
-                    showNotification('❌ Please select a valid video file');
+                    showNotification('❌ Please select a valid video file (MP4, AVI, MOV, MKV, WebM)');
                 }
             }
         }
@@ -604,10 +666,11 @@
         function handleSRTFiles(files) {
             if (files.length > 0) {
                 const file = files[0];
-                if (file.name.toLowerCase().endsWith('.srt')) {
+                if (validateSRTFile(file)) {
                     currentSRT = file;
                     displaySRTFile(file);
                     loadSRTData(file);
+                    resetProcessingState();
                 } else {
                     showNotification('❌ Please select a valid SRT file');
                 }
@@ -793,19 +856,7 @@
         }
 
         function addSubtitle() {
-            const videoPlayer = document.getElementById('videoPlayer');
-            const currentTime = videoPlayer.currentTime;
-            
-            const newSubtitle = {
-                id: subtitleData.length + 1,
-                start: currentTime,
-                end: currentTime + 3,
-                text: 'New subtitle text'
-            };
-            
-            subtitleData.push(newSubtitle);
-            displaySubtitleList();
-            showNotification('✅ New subtitle added');
+            addSubtitleAtCurrentTime();
         }
 
         function updateCurrentSubtitle() {
@@ -816,6 +867,7 @@
                 subtitle.end = parseTimeString(document.getElementById('endTime').value);
                 
                 displaySubtitleList();
+                resetProcessingState();
                 showNotification('✅ Subtitle updated');
             } else {
                 showNotification('❌ Please select a subtitle to update');
@@ -828,6 +880,7 @@
                 currentSubtitleIndex = -1;
                 displaySubtitleList();
                 clearEditor();
+                resetProcessingState();
                 showNotification('✅ Subtitle deleted');
             } else {
                 showNotification('❌ Please select a subtitle to delete');
@@ -849,10 +902,128 @@
                     document.getElementById('endTime').value = secondsToTime(currentTime + 3);
                 }
                 displaySubtitleList();
+                resetProcessingState();
                 showNotification('✅ Synced to current video time');
             } else {
                 showNotification('❌ Please select a subtitle to sync');
             }
+        }
+
+        // Enhanced subtitle management
+        function addSubtitleAtCurrentTime() {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const currentTime = videoPlayer.currentTime;
+            
+            const newSubtitle = {
+                id: subtitleData.length + 1,
+                start: currentTime,
+                end: currentTime + 3,
+                text: 'New subtitle text'
+            };
+            
+            subtitleData.push(newSubtitle);
+            subtitleData.sort((a, b) => a.start - b.start);
+            displaySubtitleList();
+            resetProcessingState();
+            showNotification('✅ New subtitle added at current time');
+        }
+
+        function duplicateCurrentSubtitle() {
+            if (currentSubtitleIndex >= 0) {
+                const originalSubtitle = subtitleData[currentSubtitleIndex];
+                const duplicatedSubtitle = {
+                    id: subtitleData.length + 1,
+                    start: originalSubtitle.end + 0.5,
+                    end: originalSubtitle.end + 3.5,
+                    text: originalSubtitle.text
+                };
+                
+                subtitleData.push(duplicatedSubtitle);
+                subtitleData.sort((a, b) => a.start - b.start);
+                displaySubtitleList();
+                resetProcessingState();
+                showNotification('✅ Subtitle duplicated');
+            } else {
+                showNotification('❌ Please select a subtitle to duplicate');
+            }
+        }
+
+        function splitCurrentSubtitle() {
+            if (currentSubtitleIndex >= 0) {
+                const videoPlayer = document.getElementById('videoPlayer');
+                const currentTime = videoPlayer.currentTime;
+                const subtitle = subtitleData[currentSubtitleIndex];
+                
+                if (currentTime > subtitle.start && currentTime < subtitle.end) {
+                    const firstPart = {
+                        id: subtitle.id,
+                        start: subtitle.start,
+                        end: currentTime,
+                        text: subtitle.text
+                    };
+                    
+                    const secondPart = {
+                        id: subtitleData.length + 1,
+                        start: currentTime,
+                        end: subtitle.end,
+                        text: subtitle.text
+                    };
+                    
+                    // Replace current subtitle with first part and add second part
+                    subtitleData.splice(currentSubtitleIndex, 1, firstPart);
+                    subtitleData.push(secondPart);
+                    subtitleData.sort((a, b) => a.start - b.start);
+                    
+                    displaySubtitleList();
+                    resetProcessingState();
+                    showNotification('✅ Subtitle split at current time');
+                } else {
+                    showNotification('❌ Current time is not within the selected subtitle');
+                }
+            } else {
+                showNotification('❌ Please select a subtitle to split');
+            }
+        }
+
+        // Keyboard shortcuts
+        function initializeKeyboardShortcuts() {
+            document.addEventListener('keydown', function(e) {
+                // Only activate shortcuts when not typing in input fields
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+                
+                switch(e.code) {
+                    case 'Space':
+                        e.preventDefault();
+                        playPause();
+                        break;
+                    case 'ArrowLeft':
+                        if (e.ctrlKey) {
+                            e.preventDefault();
+                            rewind();
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if (e.ctrlKey) {
+                            e.preventDefault();
+                            forward();
+                        }
+                        break;
+                    case 'KeyS':
+                        if (e.ctrlKey) {
+                            e.preventDefault();
+                            syncToVideo();
+                        }
+                        break;
+                    case 'KeyN':
+                        if (e.ctrlKey) {
+                            e.preventDefault();
+                            addSubtitleAtCurrentTime();
+                        }
+                        break;
+                }
+            });
         }
 
         function parseTimeString(timeString) {
@@ -967,18 +1138,30 @@
             showNotification('🔄 Styles reset to default');
         }
 
-        // Video processing functions (FFmpeg.wasm integration structure)
+        // Video processing functions with FFmpeg.wasm integration
         async function loadFFmpeg() {
             if (ffmpegLoaded) return;
             
             try {
                 showNotification('📦 Loading FFmpeg...');
-                // FFmpeg.wasm integration will be added here
-                // const { createFFmpeg, fetchFile } = FFmpeg;
-                // ffmpeg = createFFmpeg({ log: true });
-                // await ffmpeg.load();
+                updateProgress(10, 'Initializing FFmpeg engine...');
+                
+                const { FFmpeg } = window;
+                const { fetchFile } = FFmpeg;
+                
+                ffmpeg = new FFmpeg();
+                ffmpeg.setLogger(({ type, message }) => {
+                    console.log('FFmpeg:', type, message);
+                    if (type === 'fferr') {
+                        updateProgress(20, 'Processing: ' + message);
+                    }
+                });
+                
+                await ffmpeg.load();
                 ffmpegLoaded = true;
+                updateProgress(30, 'FFmpeg engine ready');
                 showNotification('✅ FFmpeg loaded successfully');
+                return { FFmpeg, fetchFile };
             } catch (error) {
                 console.error('Failed to load FFmpeg:', error);
                 showNotification('❌ Failed to load video processing engine');
@@ -989,8 +1172,10 @@
         async function processVideo() {
             if (videoProcessing) return;
             
-            if (!currentVideo || subtitleData.length === 0) {
-                showNotification('❌ Please upload a video and subtitles first');
+            // Validate inputs
+            const validation = validateVideoForProcessing();
+            if (!validation.valid) {
+                showNotification(`❌ ${validation.error}`);
                 return;
             }
             
@@ -999,29 +1184,47 @@
                 document.getElementById('processBtn').disabled = true;
                 document.getElementById('processingStatus').style.display = 'block';
                 
-                await loadFFmpeg();
+                const { FFmpeg, fetchFile } = await loadFFmpeg();
                 
-                // Simulate processing steps
-                const steps = [
-                    'Preparing video...',
-                    'Processing subtitles...',
-                    'Applying styles...',
-                    'Finalizing video...',
-                    'Processing complete!'
+                // Prepare files
+                updateProgress(40, 'Reading video file...');
+                const videoData = await fetchFile(currentVideo);
+                await ffmpeg.writeFile('input_video', videoData);
+                
+                // Generate subtitle filter
+                updateProgress(50, 'Generating subtitle filter...');
+                const subtitleFilter = await generateSubtitleFilter();
+                await ffmpeg.writeFile('subtitles.srt', await generateSRTFile());
+                
+                // Process video with FFmpeg
+                updateProgress(60, 'Processing video with subtitles...');
+                const outputFileName = 'output_video.mp4';
+                
+                // FFmpeg command to add subtitles
+                const ffmpegCommand = [
+                    '-i', 'input_video',
+                    '-vf', subtitleFilter,
+                    '-c:v', 'libx264',
+                    '-c:a', 'copy',
+                    '-y',
+                    outputFileName
                 ];
                 
-                for (let i = 0; i < steps.length; i++) {
-                    updateProgress((i + 1) * 20, steps[i]);
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
+                await ffmpeg.exec(ffmpegCommand);
+                
+                // Read output file
+                updateProgress(80, 'Preparing download...');
+                const outputData = await ffmpeg.readFile(outputFileName);
+                processedVideoBlob = new Blob([outputData], { type: 'video/mp4' });
+                
+                updateProgress(100, 'Processing complete!');
                 
                 document.getElementById('downloadVideoBtn').disabled = false;
                 document.getElementById('downloadSrtBtn').disabled = false;
                 showNotification('🎉 Video processing complete!');
                 
             } catch (error) {
-                console.error('Processing error:', error);
-                showNotification('❌ Video processing failed');
+                handleProcessingError(error, 'video processing');
             } finally {
                 videoProcessing = false;
                 document.getElementById('processBtn').disabled = false;
@@ -1031,9 +1234,92 @@
             }
         }
 
+        async function generateSubtitleFilter() {
+            const styles = getCurrentStyles();
+            const subtitleFilter = `subtitles=subtitles.srt:force_style='FontName=Arial,FontSize=${styles.fontSize.replace('px', '')},PrimaryColour=&Hffffff,BackColour=&H80000000,Bold=${styles.fontWeight >= 600 ? -1 : 0},Alignment=2,MarginV=${styles.verticalOffset}'`;
+            return subtitleFilter;
+        }
+
+        async function generateSRTFile() {
+            const srtContent = generateSRTContent();
+            return new TextEncoder().encode(srtContent);
+        }
+
         function updateProgress(percentage, message) {
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = message;
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            if (progressFill && progressText) {
+                progressFill.style.width = Math.min(100, Math.max(0, percentage)) + '%';
+                progressText.textContent = message;
+            }
+        }
+
+        // Enhanced error handling
+        function handleProcessingError(error, step) {
+            console.error(`Error during ${step}:`, error);
+            
+            let errorMessage = `Error during ${step}`;
+            if (error.message) {
+                errorMessage += `: ${error.message}`;
+            }
+            
+            // Common error messages and solutions
+            if (error.message && error.message.includes('Memory')) {
+                errorMessage = 'Video file is too large for browser processing. Please try a smaller file.';
+            } else if (error.message && error.message.includes('codec')) {
+                errorMessage = 'Video codec not supported. Please try a different video format.';
+            }
+            
+            showNotification(`❌ ${errorMessage}`);
+        }
+
+        // Validate video file before processing
+        function validateVideoForProcessing() {
+            if (!currentVideo) {
+                return { valid: false, error: 'No video file selected' };
+            }
+            
+            // Check file size (limit to 100MB for browser processing)
+            const maxSize = 100 * 1024 * 1024; // 100MB
+            if (currentVideo.size > maxSize) {
+                return { valid: false, error: 'Video file is too large. Please use a file smaller than 100MB.' };
+            }
+            
+            // Check subtitle data
+            if (!subtitleData || subtitleData.length === 0) {
+                return { valid: false, error: 'No subtitles to process' };
+            }
+            
+            // Validate subtitle timings
+            for (let i = 0; i < subtitleData.length; i++) {
+                const subtitle = subtitleData[i];
+                if (subtitle.start >= subtitle.end) {
+                    return { valid: false, error: `Subtitle ${i + 1} has invalid timing (start >= end)` };
+                }
+                if (subtitle.text.trim() === '') {
+                    return { valid: false, error: `Subtitle ${i + 1} has empty text` };
+                }
+            }
+            
+            return { valid: true };
+        }
+
+        // Reset processing state
+        function resetProcessingState() {
+            processedVideoBlob = null;
+            document.getElementById('downloadVideoBtn').disabled = true;
+            document.getElementById('downloadSrtBtn').disabled = true;
+        }
+
+        // Enhanced file validation
+        function validateVideoFile(file) {
+            const validTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/mkv', 'video/webm', 'video/quicktime'];
+            return validTypes.includes(file.type) || /\.(mp4|avi|mov|mkv|webm)$/i.test(file.name);
+        }
+
+        function validateSRTFile(file) {
+            return file.name.toLowerCase().endsWith('.srt') && file.type === 'text/plain';
         }
 
         function downloadSRT() {
@@ -1049,7 +1335,25 @@
         }
 
         function downloadVideo() {
-            showNotification('📹 Video download will be available after processing');
+            if (!processedVideoBlob) {
+                showNotification('❌ No processed video available for download');
+                return;
+            }
+            
+            try {
+                const url = URL.createObjectURL(processedVideoBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'video_with_subtitles.mp4';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showNotification('📹 Processed video downloaded successfully');
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('❌ Failed to download video');
+            }
         }
 
         function generateSRTContent() {
@@ -1337,6 +1641,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: var(--spacing-md);
+        }
+
+        .subtitle-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+            flex-wrap: wrap;
         }
 
         .subtitle-list {
@@ -1652,6 +1962,16 @@
             .export-actions {
                 flex-direction: column;
             }
+
+            .subtitle-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .subtitle-actions .btn {
+                width: 100%;
+                text-align: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1662,6 +1982,19 @@
             .subtitle-text {
                 font-size: 18px;
                 max-width: 95%;
+            }
+
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .help-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .help-step {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -1697,6 +2030,81 @@
         .drag-over {
             background: var(--color-primary-50) !important;
             border-color: var(--color-primary-400) !important;
+        }
+
+        /* Keyboard shortcuts */
+        .shortcuts-help h4 {
+            margin: 0 0 var(--spacing-sm) 0;
+            color: var(--color-neutral-800);
+            font-size: var(--font-size-body);
+        }
+
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .shortcuts-grid span {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+
+        kbd {
+            background: var(--color-neutral-200);
+            border: 1px solid var(--color-neutral-300);
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        /* Help section */
+        .help-section {
+            background: var(--color-neutral-50);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .help-content h3 {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            color: var(--color-neutral-900);
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .help-step {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--color-primary-500);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-weight-bold);
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            margin: 0 0 var(--spacing-xs) 0;
+            color: var(--color-neutral-900);
+        }
+
+        .step-content p {
+            margin: 0;
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-body);
         }
     </style>
 </body>

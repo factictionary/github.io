@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.15/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -116,11 +120,24 @@
             <div class="container">
                 <!-- Video Upload Section -->
                 <div class="upload-section">
+                    <!-- Compatibility Notice -->
+                    <div class="compatibility-notice" id="compatibilityNotice">
+                        <div class="notice-content">
+                            <div class="notice-icon">ℹ️</div>
+                            <div class="notice-text">
+                                <strong>Browser Requirements:</strong> This tool works best in Chrome, Firefox, or Edge. Large videos may take time to process.
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-content">
                             <div class="upload-icon">📹</div>
                             <h3 class="upload-title">Drop your video here or click to browse</h3>
-                            <p class="upload-description">Support for MP4, AVI, MOV, MKV, and other common video formats. Maximum file size: 500MB</p>
+                            <p class="upload-description">
+                                <strong>Supported formats:</strong> MP4, AVI, MOV, MKV, WebM, OGG<br>
+                                <strong>Maximum file size:</strong> 500MB (larger files may cause memory issues)
+                            </p>
                             <input type="file" id="videoInput" accept="video/*" style="display: none;">
                             <button class="btn btn-primary" onclick="document.getElementById('videoInput').click()">Choose Video File</button>
                         </div>
@@ -287,6 +304,12 @@
                                     <div class="progress-fill" id="processingProgress"></div>
                                 </div>
                                 <div class="progress-text" id="progressText">Initializing...</div>
+                                <div class="progress-actions">
+                                    <button class="btn btn-secondary btn-sm" onclick="cancelProcessing()">
+                                        <span class="btn-icon">❌</span>
+                                        Cancel
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -435,12 +458,65 @@
         let currentFile = null;
         let currentTransformation = null;
         let processedBlob = null;
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             setupDragAndDrop();
+            checkBrowserCompatibility();
         });
+
+        function checkBrowserCompatibility() {
+            // Check for WebAssembly support
+            if (!window.WebAssembly) {
+                showError('Your browser does not support WebAssembly, which is required for video processing.');
+                return false;
+            }
+            
+            // Check for SharedArrayBuffer support (required for FFmpeg.wasm)
+            if (!window.SharedArrayBuffer) {
+                showError('Your browser does not support SharedArrayBuffer. Please use a modern browser like Chrome, Firefox, or Edge.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        async function initializeFFmpeg() {
+            if (ffmpegLoaded) return;
+            
+            try {
+                updateProgress(10, 'Loading FFmpeg.wasm...');
+                ffmpeg = new FFmpeg();
+                
+                // Set up progress callback
+                ffmpeg.on('progress', ({ progress }) => {
+                    const percentage = Math.min(90, 10 + (progress * 80));
+                    updateProgress(percentage, 'Processing video...');
+                });
+                
+                ffmpeg.on('log', ({ message }) => {
+                    if (message.includes('Error') || message.includes('error')) {
+                        console.error('FFmpeg Error:', message);
+                    }
+                });
+                
+                // Load FFmpeg
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.15/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.15/dist/umd/ffmpeg-core.wasm',
+                });
+                
+                ffmpegLoaded = true;
+                updateProgress(100, 'FFmpeg ready!');
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                showError('Failed to load video processing engine. Please try again.');
+                throw error;
+            }
+        }
 
         function setupEventListeners() {
             // File input change
@@ -467,15 +543,26 @@
             
             uploadArea.addEventListener('dragleave', (e) => {
                 e.preventDefault();
-                uploadArea.classList.remove('drag-over');
+                if (!uploadArea.contains(e.relatedTarget)) {
+                    uploadArea.classList.remove('drag-over');
+                }
             });
             
             uploadArea.addEventListener('drop', (e) => {
                 e.preventDefault();
                 uploadArea.classList.remove('drag-over');
+                
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
-                    handleFile(files[0]);
+                    const file = files[0];
+                    
+                    // Check if it's a video file
+                    if (!file.type.startsWith('video/')) {
+                        showError('Please drop a video file (MP4, AVI, MOV, MKV, etc.).');
+                        return;
+                    }
+                    
+                    handleFile(file);
                 }
             });
         }
@@ -489,14 +576,38 @@
 
         function handleFile(file) {
             // Validate file type
+            const supportedTypes = [
+                'video/mp4',
+                'video/avi',
+                'video/mov',
+                'video/quicktime',
+                'video/x-msvideo',
+                'video/x-matroska',
+                'video/webm',
+                'video/ogg',
+                'video/3gpp',
+                'video/3gpp2'
+            ];
+            
             if (!file.type.startsWith('video/')) {
-                showError('Please select a valid video file.');
+                showError('Please select a valid video file (MP4, AVI, MOV, MKV, WebM, etc.).');
+                return;
+            }
+            
+            if (!supportedTypes.includes(file.type)) {
+                showError('Video format not fully supported. Please try MP4, AVI, MOV, or MKV.');
                 return;
             }
             
             // Validate file size (500MB limit)
             if (file.size > 500 * 1024 * 1024) {
-                showError('File size must be less than 500MB.');
+                showError('File size must be less than 500MB for optimal performance.');
+                return;
+            }
+            
+            // Check if file is too small
+            if (file.size < 1024) {
+                showError('File appears to be too small or corrupted.');
                 return;
             }
             
@@ -514,12 +625,20 @@
             video.src = URL.createObjectURL(file);
             
             video.addEventListener('loadedmetadata', () => {
-                document.getElementById('fileName').textContent = file.name;
-                document.getElementById('videoDuration').textContent = formatDuration(video.duration);
-                document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
-                
-                // Load preview thumbnails
-                loadPreviewThumbnails(video);
+                if (video.duration && video.videoWidth && video.videoHeight) {
+                    document.getElementById('fileName').textContent = file.name;
+                    document.getElementById('videoDuration').textContent = formatDuration(video.duration);
+                    document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
+                    
+                    // Load preview thumbnails
+                    loadPreviewThumbnails(video);
+                } else {
+                    showError('Invalid video file. Please try a different file.');
+                }
+            });
+            
+            video.addEventListener('error', () => {
+                showError('Failed to load video. The file may be corrupted or in an unsupported format.');
             });
         }
 
@@ -616,20 +735,146 @@
             }
         }
 
-        function processVideo() {
+        async function processVideo() {
             if (!currentFile || !currentTransformation) {
                 showError('Please select a video and transformation first.');
                 return;
             }
             
+            // Check browser compatibility
+            if (!checkBrowserCompatibility()) {
+                return;
+            }
+            
+            // Check memory usage
+            if (!checkMemoryUsage()) {
+                return;
+            }
+            
             showSection('progressSection');
-            updateProgress(0, 'Initializing FFmpeg...');
+            setButtonLoading('processBtn', true);
             
-            // Update progress steps
-            updateProgressStep(1, true);
+            try {
+                // Update progress steps
+                updateProgressStep(1, true);
+                
+                // Initialize FFmpeg
+                await initializeFFmpeg();
+                updateProgressStep(2, true);
+                
+                // Process the video
+                await processVideoWithFFmpeg();
+                
+                updateProgressStep(3, true);
+                updateProgress(100, 'Processing complete!');
+                
+                // Show download section
+                setTimeout(() => {
+                    showDownloadSection();
+                    setButtonLoading('processBtn', false);
+                    showNotification('✅ Video processed successfully!');
+                }, 500);
+                
+            } catch (error) {
+                console.error('Video processing failed:', error);
+                
+                // Handle specific error types
+                if (error.message.includes('memory') || error.message.includes('out of memory')) {
+                    showError('Out of memory. Please try a smaller video file or close other applications.');
+                } else if (error.message.includes('timeout')) {
+                    showError('Processing timed out. Please try again with a smaller file.');
+                } else {
+                    showError('Failed to process video: ' + error.message);
+                }
+                
+                hideSection('progressSection');
+                setButtonLoading('processBtn', false);
+                
+                // Reset FFmpeg state
+                if (ffmpeg) {
+                    ffmpeg.terminate();
+                    ffmpeg = null;
+                    ffmpegLoaded = false;
+                }
+            }
+        }
+
+        async function processVideoWithFFmpeg() {
+            if (!ffmpeg || !ffmpegLoaded) {
+                throw new Error('FFmpeg not initialized');
+            }
             
-            // Simulate processing steps (FFmpeg.wasm integration will replace this)
-            simulateProcessing();
+            const inputFileName = 'input.' + getFileExtension(currentFile.name);
+            const outputFileName = 'output.' + getFileExtension(currentFile.name);
+            
+            updateProgress(20, 'Loading video into memory...');
+            
+            // Write input file to FFmpeg filesystem
+            const inputData = new Uint8Array(await currentFile.arrayBuffer());
+            await ffmpeg.writeFile(inputFileName, inputData);
+            
+            updateProgress(30, 'Preparing video transformation...');
+            
+            // Build FFmpeg command based on transformation
+            const args = buildFFmpegCommand(currentTransformation, inputFileName, outputFileName);
+            
+            updateProgress(40, 'Processing video...');
+            
+            // Execute FFmpeg command
+            await ffmpeg.exec(args);
+            
+            updateProgress(80, 'Finalizing output...');
+            
+            // Read output file
+            const outputData = await ffmpeg.readFile(outputFileName);
+            processedBlob = new Blob([outputData], { type: currentFile.type });
+            
+            updateProgress(90, 'Cleaning up...');
+            
+            // Clean up files
+            await ffmpeg.deleteFile(inputFileName);
+            await ffmpeg.deleteFile(outputFileName);
+        }
+
+        function buildFFmpegCommand(transformation, inputFile, outputFile) {
+            const baseArgs = ['-i', inputFile];
+            let filterArgs = [];
+            let outputArgs = [outputFile];
+            
+            switch (transformation.value) {
+                case '90cw':
+                    // 90° clockwise rotation
+                    filterArgs = ['-vf', 'transpose=1'];
+                    break;
+                case '90ccw':
+                    // 90° counter-clockwise rotation
+                    filterArgs = ['-vf', 'transpose=2'];
+                    break;
+                case '180':
+                    // 180° rotation
+                    filterArgs = ['-vf', 'transpose=1,transpose=1'];
+                    break;
+                case '180flip':
+                    // 180° rotation with flip
+                    filterArgs = ['-vf', 'transpose=1,transpose=1,hflip'];
+                    break;
+                case 'horizontal':
+                    // Horizontal flip
+                    filterArgs = ['-vf', 'hflip'];
+                    break;
+                case 'vertical':
+                    // Vertical flip
+                    filterArgs = ['-vf', 'vflip'];
+                    break;
+                default:
+                    filterArgs = [];
+            }
+            
+            return [...baseArgs, ...filterArgs, ...outputArgs];
+        }
+
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
         }
 
         function simulateProcessing() {
@@ -664,9 +909,9 @@
         }
 
         function createMockProcessedVideo() {
-            // This is a placeholder. In the real implementation, this would be the processed video blob
-            // For now, we'll create a mock result for demonstration
-            return new Blob(['mock video data'], { type: 'video/mp4' });
+            // This function is no longer needed with real FFmpeg processing
+            // Kept for compatibility but should not be called
+            return null;
         }
 
         function showDownloadSection() {
@@ -709,6 +954,15 @@
         }
 
         function processAnother() {
+            // Clean up video URLs
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                if (video.src && video.src.startsWith('blob:')) {
+                    URL.revokeObjectURL(video.src);
+                    video.src = '';
+                }
+            });
+            
             // Reset everything
             currentFile = null;
             currentTransformation = null;
@@ -725,6 +979,31 @@
             document.getElementById('videoInput').value = '';
             
             showNotification('➕ Ready for new video');
+        }
+
+        function cancelProcessing() {
+            if (ffmpeg) {
+                ffmpeg.terminate();
+                ffmpeg = null;
+                ffmpegLoaded = false;
+            }
+            
+            hideSection('progressSection');
+            showNotification('❌ Processing cancelled', 'error');
+        }
+
+        function checkMemoryUsage() {
+            if (performance.memory) {
+                const usedMemory = performance.memory.usedJSHeapSize;
+                const totalMemory = performance.memory.totalJSHeapSize;
+                const memoryUsagePercent = (usedMemory / totalMemory) * 100;
+                
+                if (memoryUsagePercent > 80) {
+                    showError('High memory usage detected. Please try a smaller file or close other tabs.');
+                    return false;
+                }
+            }
+            return true;
         }
 
         function updateProgress(percentage, text) {
@@ -773,6 +1052,7 @@
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
                 max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             `;
             
             document.body.appendChild(notification);
@@ -780,9 +1060,31 @@
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 4000);
+        }
+
+        // Add loading indicator for buttons
+        function setButtonLoading(buttonId, loading) {
+            const button = document.getElementById(buttonId);
+            if (!button) return;
+            
+            if (loading) {
+                button.disabled = true;
+                button.innerHTML = '<span class="btn-icon">⏳</span>Processing...';
+                button.style.opacity = '0.7';
+            } else {
+                button.disabled = false;
+                const originalContent = {
+                    'processBtn': '<span class="btn-icon">⚙️</span>Process Video',
+                    'downloadBtn': '<span class="btn-icon">⬇️</span>Download Video'
+                };
+                button.innerHTML = originalContent[buttonId] || button.innerHTML;
+                button.style.opacity = '1';
+            }
         }
 
         function formatDuration(seconds) {
@@ -798,6 +1100,15 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
+
+        // Cleanup FFmpeg when page is unloaded
+        window.addEventListener('beforeunload', () => {
+            if (ffmpeg) {
+                ffmpeg.terminate();
+                ffmpeg = null;
+                ffmpegLoaded = false;
+            }
+        });
 
         // Mobile menu functionality
         const menuToggle = document.querySelector('.menu-toggle');
@@ -845,6 +1156,31 @@
             border-radius: var(--radius-card);
             padding: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
+        }
+
+        .compatibility-notice {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 1px solid #F59E0B;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .notice-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .notice-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .notice-text {
+            color: #92400E;
+            font-size: var(--font-size-small);
+            line-height: 1.5;
         }
 
         .upload-area {
@@ -1165,6 +1501,15 @@
 
         .progress-bar-container {
             text-align: center;
+        }
+
+        .progress-actions {
+            margin-top: var(--spacing-md);
+        }
+
+        .btn-sm {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: var(--font-size-small);
         }
 
         .download-section {

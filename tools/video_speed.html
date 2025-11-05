@@ -38,6 +38,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.min.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -183,6 +186,17 @@
                                 <small>Create video-only version without audio track</small>
                             </span>
                         </label>
+                    </div>
+                </div>
+
+                <!-- Process Button -->
+                <div class="process-button-section">
+                    <button class="btn btn-primary btn-large" id="processVideoBtn" disabled>
+                        ⚡ Process Video with Speed Adjustment
+                    </button>
+                    <p class="process-note">Click to generate a new video with your selected speed and audio settings</p>
+                    <div class="processing-warning">
+                        <p><strong>⚠️ Note:</strong> Video processing runs entirely in your browser and may take several minutes for large files. Please keep this tab open during processing.</p>
                     </div>
                 </div>
 
@@ -371,18 +385,48 @@
         let ffmpeg = null;
         let isProcessing = false;
 
-        function initializeVideoSpeedController() {
+        async function initializeVideoSpeedController() {
             // Initialize FFmpeg.wasm
-            initializeFFmpeg();
+            const ffmpegLoaded = await initializeFFmpeg();
             
             // Setup event listeners
             setupEventListeners();
+            
+            // Enable process button if FFmpeg loaded successfully
+            if (ffmpegLoaded) {
+                console.log('Video speed controller ready!');
+            }
         }
 
-        function initializeFFmpeg() {
-            // FFmpeg.wasm will be loaded here
-            // This is a placeholder for the actual implementation
-            console.log('FFmpeg.wasm will be initialized here');
+        async function initializeFFmpeg() {
+            try {
+                updateProgress(5, 'Loading FFmpeg...');
+                ffmpeg = new FFmpeg();
+                
+                // Set up progress tracking
+                ffmpeg.on('progress', ({ progress }) => {
+                    updateProgress(5 + (progress * 80), 'Processing video...');
+                });
+                
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+
+                // Load FFmpeg
+                const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
+                await ffmpeg.load({
+                    coreURL: `${baseURL}/ffmpeg-core.js`,
+                    wasmURL: `${baseURL}/ffmpeg-core.wasm`,
+                });
+                
+                updateProgress(10, 'FFmpeg ready!');
+                console.log('FFmpeg.wasm loaded successfully');
+                return true;
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                showError('Failed to load video processing engine. Please refresh the page and try again.');
+                return false;
+            }
         }
 
         function setupEventListeners() {
@@ -432,6 +476,7 @@
             fullscreenBtn.addEventListener('click', toggleFullscreen);
             
             // Process video
+            document.getElementById('processVideoBtn').addEventListener('click', processVideo);
             document.getElementById('processAnotherBtn').addEventListener('click', resetTool);
             document.getElementById('downloadBtn').addEventListener('click', downloadProcessedVideo);
         }
@@ -458,6 +503,20 @@
         }
 
         function processVideoFile(file) {
+            // Validate file size (limit to 500MB for performance)
+            const maxSize = 500 * 1024 * 1024; // 500MB
+            if (file.size > maxSize) {
+                showError('File too large. Please use a video file smaller than 500MB.');
+                return;
+            }
+            
+            // Validate file type
+            const supportedFormats = ['video/mp4', 'video/mov', 'video/avi', 'video/mkv', 'video/webm'];
+            if (!supportedFormats.includes(file.type)) {
+                showError('Unsupported video format. Please use MP4, MOV, AVI, MKV, or WebM files.');
+                return;
+            }
+            
             currentVideoFile = file;
             const videoInfo = document.getElementById('videoInfo');
             const previewPlaceholder = document.getElementById('previewPlaceholder');
@@ -476,6 +535,7 @@
             // Enable controls
             document.getElementById('playPauseBtn').disabled = false;
             document.getElementById('fullscreenBtn').disabled = false;
+            document.getElementById('processVideoBtn').disabled = !ffmpeg;
             
             videoInfo.style.display = 'block';
             
@@ -516,6 +576,11 @@
             const videoPreview = document.getElementById('videoPreview');
             const duration = videoPreview.duration;
             document.getElementById('fileDuration').textContent = formatTime(duration);
+            
+            // Also update original duration in output stats if processing has been done
+            if (document.getElementById('outputSection').style.display !== 'none') {
+                document.getElementById('originalDuration').textContent = formatTime(duration);
+            }
         }
 
         function togglePlayPause() {
@@ -542,7 +607,7 @@
         }
 
         async function processVideo() {
-            if (!currentVideoFile || isProcessing) return;
+            if (!currentVideoFile || isProcessing || !ffmpeg) return;
             
             isProcessing = true;
             const processingSection = document.getElementById('processingSection');
@@ -553,73 +618,163 @@
             outputSection.style.display = 'none';
             
             try {
-                updateProgress(10, 'Loading FFmpeg...');
+                updateProgress(5, 'Preparing video...');
                 
-                // Initialize FFmpeg (placeholder)
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // Read video file
+                const videoData = new Uint8Array(await currentVideoFile.arrayBuffer());
+                const inputFileName = 'input.' + currentVideoFile.name.split('.').pop();
+                const outputFileName = 'output.mp4';
                 
-                updateProgress(30, 'Processing video...');
+                // Write input file to FFmpeg filesystem
+                ffmpeg.FS('writeFile', inputFileName, videoData);
                 
-                // This is where FFmpeg.wasm processing would happen
-                // For now, we'll simulate the process
-                await simulateVideoProcessing();
+                // Get processing options
+                const speed = parseFloat(document.getElementById('speedSlider').value);
+                const audioMode = document.querySelector('input[name="audioMode"]:checked').value;
                 
-                updateProgress(90, 'Finalizing output...');
+                updateProgress(10, 'Applying speed and audio settings...');
                 
-                await new Promise(resolve => setTimeout(resolve, 500));
+                // Build FFmpeg command based on audio mode
+                let ffmpegArgs;
                 
-                updateProgress(100, 'Complete!');
+                switch (audioMode) {
+                    case 'preserve':
+                        // Preserve audio pitch (atempo filter for speed, pitch preserved)
+                        updateProgress(15, 'Applying speed with audio pitch preservation...', 'Using atempo filter to maintain natural sound');
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-filter:v', `setpts=${1/speed}*PTS`,
+                            '-filter:a', `atempo=${speed}`,
+                            '-c:v', 'libx264',
+                            '-c:a', 'aac',
+                            '-strict', 'experimental',
+                            outputFileName
+                        ];
+                        break;
+                        
+                    case 'stretch':
+                        // Stretch audio to match video duration
+                        updateProgress(15, 'Applying speed with audio stretching...', 'Adjusting audio duration to match video');
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-filter:v', `setpts=${1/speed}*PTS`,
+                            '-filter:a', `atempo=${speed}`,
+                            '-c:v', 'libx264',
+                            '-c:a', 'aac',
+                            '-strict', 'experimental',
+                            outputFileName
+                        ];
+                        break;
+                        
+                    case 'remove':
+                        // Remove audio entirely
+                        updateProgress(15, 'Removing audio track...', 'Creating video-only output');
+                        ffmpegArgs = [
+                            '-i', inputFileName,
+                            '-an', // Remove audio
+                            '-c:v', 'libx264',
+                            outputFileName
+                        ];
+                        break;
+                        
+                    default:
+                        throw new Error('Invalid audio mode');
+                }
+                
+                updateProgress(20, 'Starting video processing...', 'This may take a few moments depending on video size');
+                
+                // Execute FFmpeg command
+                await ffmpeg.run(...ffmpegArgs);
+                
+                updateProgress(85, 'Finalizing video...', 'Almost ready!');
+                
+                // Read output file
+                const outputData = ffmpeg.FS('readFile', outputFileName);
+                
+                // Create blob and URL for download
+                const outputBlob = new Blob([outputData.buffer], { type: 'video/mp4' });
+                const outputUrl = URL.createObjectURL(outputBlob);
+                
+                // Clean up filesystem
+                ffmpeg.FS('unlink', inputFileName);
+                ffmpeg.FS('unlink', outputFileName);
+                
+                updateProgress(100, 'Complete!', 'Your video is ready for download');
+                
+                // Store output for download
+                window.processedVideoBlob = outputBlob;
+                window.processedVideoUrl = outputUrl;
                 
                 // Show output section
                 setTimeout(() => {
                     processingSection.style.display = 'none';
-                    showOutputSection();
+                    showOutputSection(outputUrl, speed, audioMode);
                 }, 1000);
                 
             } catch (error) {
                 console.error('Video processing error:', error);
-                showError('Failed to process video. Please try again.');
+                
+                // Clean up filesystem on error
+                try {
+                    if (ffmpeg) {
+                        ffmpeg.FS('unlink', 'input.' + currentVideoFile.name.split('.').pop());
+                        ffmpeg.FS('unlink', 'output.mp4');
+                    }
+                } catch (cleanupError) {
+                    console.warn('Cleanup error:', cleanupError);
+                }
+                
+                let errorMessage = 'Failed to process video. ';
+                
+                if (error.message.includes('Invalid argument')) {
+                    errorMessage += 'The video format may not be supported or the file may be corrupted.';
+                } else if (error.message.includes('Memory')) {
+                    errorMessage += 'The video file is too large to process in your browser. Try a smaller file.';
+                } else if (error.message.includes('Output file')) {
+                    errorMessage += 'There was an issue creating the output file. Please try again.';
+                } else {
+                    errorMessage += 'Please try a different video or settings.';
+                }
+                
+                showError(errorMessage);
             } finally {
                 isProcessing = false;
+                document.getElementById('processVideoBtn').disabled = false;
             }
         }
 
-        function simulateVideoProcessing() {
-            return new Promise(resolve => {
-                let progress = 30;
-                const interval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress >= 90) {
-                        clearInterval(interval);
-                        resolve();
-                    } else {
-                        updateProgress(progress, 'Processing video...');
-                    }
-                }, 200);
-            });
-        }
-
-        function updateProgress(percentage, status) {
+        function updateProgress(percentage, status, details) {
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressText').textContent = status;
+            if (details) {
+                document.getElementById('progressDetails').textContent = details;
+            }
         }
 
-        function showOutputSection() {
+
+
+        function showOutputSection(outputUrl, speed, audioMode) {
             const outputSection = document.getElementById('outputSection');
-            const speed = parseFloat(document.getElementById('speedSlider').value);
-            const audioMode = document.querySelector('input[name="audioMode"]:checked').value;
+            const videoPreview = document.getElementById('videoPreview');
+            const outputVideo = document.getElementById('outputVideo');
             
             // Update output info
             document.getElementById('appliedSpeed').textContent = speed.toFixed(1) + 'x';
             document.getElementById('audioModeText').textContent = getAudioModeText(audioMode);
             
-            // Show processed video (for demo, show original)
-            const videoPreview = document.getElementById('videoPreview');
-            const outputVideo = document.getElementById('outputVideo');
-            outputVideo.src = videoPreview.src;
-            outputVideo.playbackRate = speed;
+            // Update duration info
+            const originalDuration = videoPreview.duration;
+            const newDuration = originalDuration / speed;
+            document.getElementById('originalDuration').textContent = formatTime(originalDuration);
+            document.getElementById('newDuration').textContent = formatTime(newDuration);
+            
+            // Show processed video
+            outputVideo.src = outputUrl;
+            outputVideo.load();
             
             outputSection.style.display = 'block';
+            
+            showNotification('🎉 Video processed successfully!');
         }
 
         function getAudioModeText(mode) {
@@ -632,17 +787,39 @@
         }
 
         function downloadProcessedVideo() {
-            // This would download the processed video
-            // For demo purposes, we'll download the original
+            if (!window.processedVideoBlob) {
+                showError('No processed video available for download');
+                return;
+            }
+            
             const link = document.createElement('a');
-            link.href = document.getElementById('videoPreview').src;
-            link.download = currentVideoFile.name.replace(/\.[^/.]+$/, '_speed_adjusted.mp4');
+            const speed = parseFloat(document.getElementById('speedSlider').value);
+            const audioMode = document.querySelector('input[name="audioMode"]:checked').value;
+            
+            // Create download URL
+            const downloadUrl = URL.createObjectURL(window.processedVideoBlob);
+            link.href = downloadUrl;
+            link.download = currentVideoFile.name.replace(/\.[^/.]+$/, `_${speed}x_${audioMode}.mp4`);
+            
+            // Trigger download
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            
+            // Clean up URL
+            setTimeout(() => URL.revokeObjectURL(downloadUrl), 100);
             
             showNotification('📥 Video download started!');
         }
 
         function resetTool() {
+            // Clean up processed video resources
+            if (window.processedVideoUrl) {
+                URL.revokeObjectURL(window.processedVideoUrl);
+            }
+            window.processedVideoBlob = null;
+            window.processedVideoUrl = null;
+            
             // Reset all sections
             document.getElementById('videoInput').value = '';
             document.getElementById('videoInfo').style.display = 'none';
@@ -652,11 +829,15 @@
             document.getElementById('processingSection').style.display = 'none';
             document.getElementById('playPauseBtn').disabled = true;
             document.getElementById('fullscreenBtn').disabled = true;
+            document.getElementById('processVideoBtn').disabled = true;
             
             // Reset controls
             document.getElementById('speedSlider').value = 1;
             updateSpeedDisplay(1);
             updatePresetButtons(1);
+            
+            // Reset audio mode
+            document.querySelector('input[name="audioMode"][value="preserve"]').checked = true;
             
             currentVideoFile = null;
             
@@ -967,6 +1148,56 @@
         .audio-option-content small {
             color: var(--color-neutral-600);
             font-size: var(--font-size-small);
+        }
+
+        .process-button-section {
+            text-align: center;
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .btn-large {
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn:disabled:hover {
+            transform: none !important;
+        }
+
+        .process-note {
+            margin-top: var(--spacing-md);
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-body);
+        }
+
+        .processing-warning {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-radius: var(--radius-button);
+            text-align: left;
+        }
+
+        .processing-warning p {
+            margin: 0;
+            color: #92400E;
+            font-size: var(--font-size-small);
+        }
+
+        .processing-warning strong {
+            color: #B45309;
         }
 
         .preview-container {

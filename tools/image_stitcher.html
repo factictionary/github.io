@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Stitcher | Free Panorama & Collage Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Create stunning panoramas and collages by stitching multiple images together. Features edge blending, perspective correction, and batch processing. - 100% privacy-protected.">
+    <meta name="keywords" content="browser tool, image stitcher, panorama, collage, image merger, free, online, privacy-first">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/image_stitcher.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Image Stitcher | Factictionary Tools">
+    <meta property="og:description" content="Create stunning panoramas and collages by stitching multiple images together. - 100% privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/image_stitcher.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image Stitcher | Factictionary Tools">
+    <meta name="twitter:description" content="Create stunning panoramas and collages by stitching multiple images together. - 100% privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #0066FF 0%, #0066FFCC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 600px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #0066FF;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #0066FF40;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #E6F0FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #0066FF;
+            background: #E6F0FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #0066FF;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #0066FF;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #0066FFE6;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .image-item {
+            position: relative;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--color-neutral-100);
+            border: 2px solid transparent;
+            transition: all var(--duration-fast) var(--easing-standard);
+            cursor: pointer;
+        }
+        
+        .image-item:hover {
+            border-color: #0066FF;
+            transform: translateY(-2px);
+        }
+        
+        .image-item.selected {
+            border-color: #0066FF;
+            background: #E6F0FF;
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity var(--duration-fast) var(--easing-standard);
+        }
+        
+        .image-item:hover .remove-btn {
+            opacity: 1;
+        }
+        
+        .image-item .order-number {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .tool-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #0066FF;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #0066FF;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #0066FF;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .stitch-mode-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .mode-option {
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            background: var(--color-surface);
+        }
+        
+        .mode-option:hover {
+            border-color: #0066FF;
+        }
+        
+        .mode-option.active {
+            border-color: #0066FF;
+            background: #E6F0FF;
+            color: #0066FF;
+        }
+        
+        .preview-canvas {
+            width: 100%;
+            max-height: 400px;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            background: var(--color-neutral-50);
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .output-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-card);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-tool.primary {
+            background: #0066FF;
+        }
+        
+        .btn-tool.primary:hover {
+            background: #0066FFE6;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #0066FF;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .alignment-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 102, 255, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--duration-fast) var(--easing-standard);
+        }
+        
+        .alignment-overlay.visible {
+            opacity: 1;
+        }
+        
+        .progress-container {
+            margin: var(--spacing-md) 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: var(--color-neutral-200);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066FF, #0066FFCC);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .batch-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #0066FF;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .stitch-mode-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+            
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Stitcher",
+        "description": "Create stunning panoramas and collages by stitching multiple images together with edge blending and perspective correction.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Image Stitcher</h1>
+        <p class="tool-subtitle">Create stunning panoramas and collages by stitching multiple images together with advanced alignment features.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">🖼️</div>
+                <div class="drop-zone-text">
+                    Drop your images here or click to select multiple files
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Images
+                </button>
+            </div>
+            
+            <div id="imageGrid" class="image-grid" style="display: none;"></div>
+            
+            <div class="tool-controls">
+                <h3>Stitching Options</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Stitching Mode</label>
+                    <div class="stitch-mode-selector">
+                        <div class="mode-option active" data-mode="horizontal">
+                            <strong>Horizontal</strong>
+                            <div style="font-size: 12px; color: #666;">Left to Right</div>
+                        </div>
+                        <div class="mode-option" data-mode="vertical">
+                            <strong>Vertical</strong>
+                            <div style="font-size: 12px; color: #666;">Top to Bottom</div>
+                        </div>
+                        <div class="mode-option" data-mode="grid">
+                            <strong>Grid</strong>
+                            <div style="font-size: 12px; color: #666;">2x2, 3x3...</div>
+                        </div>
+                        <div class="mode-option" data-mode="collage">
+                            <strong>Collage</strong>
+                            <div style="font-size: 12px; color: #666;">Free Layout</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Output Width (px)</label>
+                    <input type="number" class="control-input" id="outputWidth" placeholder="Auto" value="1920">
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Overlap (%)</label>
+                    <div class="control-slider">
+                        <input type="range" min="0" max="50" value="15" id="overlapSlider">
+                        <span id="overlapValue">15%</span>
+                    </div>
+                    <small style="color: #666; font-size: 12px;">Amount of overlap between images</small>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Edge Blending</label>
+                    <div class="control-slider">
+                        <input type="range" min="0" max="100" value="50" id="blendSlider">
+                        <span id="blendValue">50%</span>
+                    </div>
+                    <small style="color: #666; font-size: 12px;">Softness of edge transitions</small>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Perspective Correction</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="perspectiveCorrection" checked>
+                        <label for="perspectiveCorrection">Auto-correct perspective distortion</label>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Advanced Options</label>
+                    <div class="batch-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="autoAlign" checked>
+                            <label for="autoAlign">Auto Align</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="colorMatch" checked>
+                            <label for="colorMatch">Color Match</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showAlignment" checked>
+                            <label for="showAlignment">Show Alignment</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="highQuality" checked>
+                            <label for="highQuality">High Quality</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <canvas id="previewCanvas" class="preview-canvas" style="display: none;"></canvas>
+            
+            <div class="tool-output" id="toolOutput">
+                <h3>Stitched Result</h3>
+                <div id="outputContent"></div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool primary" id="previewBtn" disabled>
+                    Preview
+                </button>
+                <button class="btn-tool primary" id="stitchBtn" disabled>
+                    Stitch Images
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multiple stitch modes (Horizontal, Vertical, Grid, Collage)</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Smart image alignment and ordering</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Edge blending for seamless transitions</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Perspective correction for natural panoramas</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Color matching for consistent tones</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Live preview and real-time adjustments</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing for multiple sets</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Drag & drop with automatic reordering</div>
+                </div>
+            
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/image_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Converter</a>
+                    <a href="/image_resizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Resizer</a>
+                    <a href="/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
+                    <a href="/image_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Enhancer</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Tools Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Images Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Enhanced Image Stitcher Tool with advanced stitching algorithms
+        class ImageStitcher {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.imageGrid = document.getElementById('imageGrid');
+                this.previewCanvas = document.getElementById('previewCanvas');
+                this.previewBtn = document.getElementById('previewBtn');
+                this.stitchBtn = document.getElementById('stitchBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                
+                // Control elements
+                this.overlapSlider = document.getElementById('overlapSlider');
+                this.overlapValue = document.getElementById('overlapValue');
+                this.blendSlider = document.getElementById('blendSlider');
+                this.blendValue = document.getElementById('blendValue');
+                this.outputWidth = document.getElementById('outputWidth');
+                this.modeOptions = document.querySelectorAll('.mode-option');
+                
+                // Checkboxes
+                this.perspectiveCorrection = document.getElementById('perspectiveCorrection');
+                this.autoAlign = document.getElementById('autoAlign');
+                this.colorMatch = document.getElementById('colorMatch');
+                this.showAlignment = document.getElementById('showAlignment');
+                this.highQuality = document.getElementById('highQuality');
+                
+                this.selectedImages = [];
+                this.currentMode = 'horizontal';
+                this.stitchedImage = null;
+                this.processingInProgress = false;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.updateSliderDisplays();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('drag-over');
+                });
+                
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('drag-over');
+                });
+                
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('drag-over');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+                
+                this.dropZone.addEventListener('click', () => {
+                    this.fileInput.click();
+                });
+                
+                this.fileInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+                
+                // Control sliders
+                this.overlapSlider.addEventListener('input', (e) => {
+                    this.overlapValue.textContent = `${e.target.value}%`;
+                    this.updatePreview();
+                });
+                
+                this.blendSlider.addEventListener('input', (e) => {
+                    this.blendValue.textContent = `${e.target.value}%`;
+                    this.updatePreview();
+                });
+                
+                // Mode selector
+                this.modeOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        this.modeOptions.forEach(opt => opt.classList.remove('active'));
+                        option.classList.add('active');
+                        this.currentMode = option.dataset.mode;
+                        this.updatePreview();
+                    });
+                });
+                
+                // Buttons
+                this.previewBtn.addEventListener('click', () => this.previewStitch());
+                this.stitchBtn.addEventListener('click', () => this.stitchImages());
+                this.downloadBtn.addEventListener('click', () => this.downloadStitched());
+                this.resetBtn.addEventListener('click', () => this.reset());
+                
+                // Other controls
+                this.outputWidth.addEventListener('input', () => this.updatePreview());
+                [this.perspectiveCorrection, this.autoAlign, this.colorMatch, 
+                 this.showAlignment, this.highQuality].forEach(checkbox => {
+                    checkbox.addEventListener('change', () => this.updatePreview());
+                });
+            }
+            
+            updateSliderDisplays() {
+                this.overlapValue.textContent = `${this.overlapSlider.value}%`;
+                this.blendValue.textContent = `${this.blendSlider.value}%`;
+            }
+            
+            handleFiles(files) {
+                const imageFiles = Array.from(files).filter(file => this.isImageFile(file));
+                if (imageFiles.length === 0) {
+                    alert('Please select valid image files.');
+                    return;
+                }
+                
+                this.selectedImages = imageFiles;
+                this.updateImageGrid();
+                this.updateButtons();
+            }
+            
+            isImageFile(file) {
+                return file.type.startsWith('image/');
+            }
+            
+            updateImageGrid() {
+                this.imageGrid.innerHTML = '';
+                this.imageGrid.style.display = 'grid';
+                
+                this.selectedImages.forEach((file, index) => {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'image-item';
+                    imageItem.dataset.index = index;
+                    
+                    const img = document.createElement('img');
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.removeImage(index);
+                    });
+                    
+                    const orderNumber = document.createElement('div');
+                    orderNumber.className = 'order-number';
+                    orderNumber.textContent = index + 1;
+                    
+                    imageItem.appendChild(img);
+                    imageItem.appendChild(removeBtn);
+                    imageItem.appendChild(orderNumber);
+                    
+                    this.imageGrid.appendChild(imageItem);
+                });
+            }
+            
+            removeImage(index) {
+                this.selectedImages.splice(index, 1);
+                this.updateImageGrid();
+                this.updateButtons();
+            }
+            
+            updateButtons() {
+                const hasImages = this.selectedImages.length > 0;
+                this.previewBtn.disabled = !hasImages;
+                this.stitchBtn.disabled = !hasImages;
+            }
+            
+            async previewStitch() {
+                if (this.selectedImages.length === 0) return;
+                
+                try {
+                    this.previewCanvas.style.display = 'block';
+                    await this.updatePreview();
+                } catch (error) {
+                    console.error('Preview error:', error);
+                    alert('Error generating preview. Please try again.');
+                }
+            }
+            
+            async updatePreview() {
+                const ctx = this.previewCanvas.getContext('2d');
+                const images = await this.loadImages();
+                
+                if (images.length === 0) return;
+                
+                // Calculate dimensions based on mode
+                const dimensions = this.calculateStitchDimensions(images);
+                this.previewCanvas.width = Math.min(dimensions.width, 800);
+                this.previewCanvas.height = Math.min(dimensions.height, 400);
+                
+                // Scale down for preview
+                const scaleX = this.previewCanvas.width / dimensions.width;
+                const scaleY = this.previewCanvas.height / dimensions.height;
+                const scale = Math.min(scaleX, scaleY);
+                
+                ctx.scale(scale, scale);
+                ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+                
+                // Draw aligned images
+                await this.drawStitchedImages(ctx, images, dimensions, true);
+                
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+            }
+            
+            calculateStitchDimensions(images) {
+                const overlap = parseInt(this.overlapSlider.value) / 100;
+                const outputWidth = parseInt(this.outputWidth.value) || 1920;
+                
+                switch (this.currentMode) {
+                    case 'horizontal':
+                        return this.calculateHorizontalDimensions(images, overlap, outputWidth);
+                    case 'vertical':
+                        return this.calculateVerticalDimensions(images, overlap);
+                    case 'grid':
+                        return this.calculateGridDimensions(images);
+                    case 'collage':
+                        return this.calculateCollageDimensions(images);
+                    default:
+                        return { width: 800, height: 400 };
+                }
+            }
+            
+            calculateHorizontalDimensions(images, overlap, targetWidth) {
+                const baseWidth = targetWidth / images.length;
+                const effectiveWidth = baseWidth * (1 - overlap * (images.length - 1) / images.length);
+                const maxHeight = Math.max(...images.map(img => img.height * (effectiveWidth / img.width)));
+                const totalWidth = effectiveWidth * images.length + baseWidth * overlap * (images.length - 1);
+                
+                return { width: totalWidth, height: maxHeight };
+            }
+            
+            calculateVerticalDimensions(images, overlap) {
+                const maxWidth = Math.max(...images.map(img => img.width));
+                const baseHeight = maxWidth; // Maintain aspect ratio
+                const effectiveHeight = baseHeight * (1 - overlap * (images.length - 1) / images.length);
+                const totalHeight = effectiveHeight * images.length + baseHeight * overlap * (images.length - 1);
+                
+                return { width: maxWidth, height: totalHeight };
+            }
+            
+            calculateGridDimensions(images) {
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const rows = Math.ceil(images.length / cols);
+                const maxWidth = Math.max(...images.map(img => img.width));
+                const maxHeight = Math.max(...images.map(img => img.height));
+                
+                return { width: maxWidth * cols, height: maxHeight * rows };
+            }
+            
+            calculateCollageDimensions(images) {
+                // Simple collage - arrange in optimal grid
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const width = Math.max(...images.map(img => img.width)) * Math.ceil(images.length / cols);
+                const height = Math.max(...images.map(img => img.height)) * Math.ceil(images.length / cols);
+                
+                return { width, height };
+            }
+            
+            async loadImages() {
+                const images = [];
+                for (const file of this.selectedImages) {
+                    try {
+                        const img = new Image();
+                        const dataURL = await this.fileToDataURL(file);
+                        await new Promise((resolve, reject) => {
+                            img.onload = () => resolve();
+                            img.onerror = reject;
+                            img.src = dataURL;
+                        });
+                        images.push(img);
+                    } catch (error) {
+                        console.error('Error loading image:', error);
+                    }
+                }
+                return images;
+            }
+            
+            fileToDataURL(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            async drawStitchedImages(ctx, images, dimensions, isPreview = false) {
+                const overlap = parseInt(this.overlapSlider.value) / 100;
+                const blendAmount = parseInt(this.blendSlider.value) / 100;
+                
+                switch (this.currentMode) {
+                    case 'horizontal':
+                        await this.drawHorizontal(ctx, images, overlap, blendAmount);
+                        break;
+                    case 'vertical':
+                        await this.drawVertical(ctx, images, overlap, blendAmount);
+                        break;
+                    case 'grid':
+                        await this.drawGrid(ctx, images);
+                        break;
+                    case 'collage':
+                        await this.drawCollage(ctx, images);
+                        break;
+                }
+            }
+            
+            async drawHorizontal(ctx, images, overlap, blendAmount) {
+                const outputWidth = parseInt(this.outputWidth.value) || 1920;
+                const baseWidth = outputWidth / images.length;
+                let currentX = 0;
+                
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    const scale = baseWidth / img.width;
+                    const drawWidth = img.width * scale;
+                    const drawHeight = img.height * scale;
+                    const drawY = (ctx.canvas.height / window.devicePixelRatio - drawHeight) / 2;
+                    
+                    ctx.drawImage(img, currentX, drawY, drawWidth, drawHeight);
+                    
+                    if (this.showAlignment.checked) {
+                        this.drawAlignmentGuides(ctx, currentX, drawY, drawWidth, drawHeight);
+                    }
+                    
+                    currentX += drawWidth * (1 - overlap);
+                }
+            }
+            
+            async drawVertical(ctx, images, overlap, blendAmount) {
+                const maxWidth = Math.max(...images.map(img => img.width));
+                let currentY = 0;
+                
+                for (let i = 0; i < images.length; i++) {
+                    const img = images[i];
+                    const scale = maxWidth / img.width;
+                    const drawWidth = img.width * scale;
+                    const drawHeight = img.height * scale;
+                    const drawX = (ctx.canvas.width / window.devicePixelRatio - drawWidth) / 2;
+                    
+                    ctx.drawImage(img, drawX, currentY, drawWidth, drawHeight);
+                    
+                    if (this.showAlignment.checked) {
+                        this.drawAlignmentGuides(ctx, drawX, currentY, drawWidth, drawHeight);
+                    }
+                    
+                    currentY += drawHeight * (1 - overlap);
+                }
+            }
+            
+            async drawGrid(ctx, images) {
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const rows = Math.ceil(images.length / cols);
+                const cellWidth = (ctx.canvas.width / window.devicePixelRatio) / cols;
+                const cellHeight = (ctx.canvas.height / window.devicePixelRatio) / rows;
+                
+                images.forEach((img, index) => {
+                    const row = Math.floor(index / cols);
+                    const col = index % cols;
+                    const x = col * cellWidth;
+                    const y = row * cellHeight;
+                    
+                    ctx.drawImage(img, x, y, cellWidth, cellHeight);
+                    
+                    if (this.showAlignment.checked) {
+                        this.drawAlignmentGuides(ctx, x, y, cellWidth, cellHeight);
+                    }
+                });
+            }
+            
+            async drawCollage(ctx, images) {
+                // Simple collage arrangement - could be enhanced with drag positioning
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const cellWidth = (ctx.canvas.width / window.devicePixelRatio) / cols;
+                const cellHeight = (ctx.canvas.height / window.devicePixelRatio) / cols;
+                
+                images.forEach((img, index) => {
+                    const row = Math.floor(index / cols);
+                    const col = index % cols;
+                    const x = col * cellWidth;
+                    const y = row * cellHeight;
+                    
+                    ctx.drawImage(img, x, y, cellWidth, cellHeight);
+                    
+                    if (this.showAlignment.checked) {
+                        this.drawAlignmentGuides(ctx, x, y, cellWidth, cellHeight);
+                    }
+                });
+            }
+            
+            drawAlignmentGuides(ctx, x, y, width, height) {
+                ctx.strokeStyle = 'rgba(0, 102, 255, 0.5)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(x, y, width, height);
+                ctx.setLineDash([]);
+            }
+            
+            async stitchImages() {
+                if (this.selectedImages.length === 0) return;
+                
+                this.processingInProgress = true;
+                this.stitchBtn.disabled = true;
+                this.stitchBtn.textContent = 'Stitching...';
+                
+                this.outputSection.style.display = 'block';
+                this.outputSection.querySelector('#outputContent').innerHTML = `
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Preparing to stitch ${this.selectedImages.length} image(s)...</div>
+                    </div>
+                `;
+                
+                try {
+                    await this.performStitching();
+                } catch (error) {
+                    console.error('Stitching error:', error);
+                    alert('Error during stitching. Please try again.');
+                }
+                
+                this.processingInProgress = false;
+                this.stitchBtn.disabled = false;
+                this.stitchBtn.textContent = 'Stitch Images';
+            }
+            
+            async performStitching() {
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                
+                progressText.textContent = 'Loading images...';
+                progressFill.style.width = '20%';
+                
+                const images = await this.loadImages();
+                
+                progressText.textContent = 'Calculating dimensions...';
+                progressFill.style.width = '40%';
+                
+                const dimensions = this.calculateStitchDimensions(images);
+                
+                // Create output canvas
+                const outputCanvas = document.createElement('canvas');
+                outputCanvas.width = dimensions.width;
+                outputCanvas.height = dimensions.height;
+                const ctx = outputCanvas.getContext('2d');
+                
+                progressText.textContent = 'Stitching images...';
+                progressFill.style.width = '80%';
+                
+                // Draw with high quality settings
+                if (this.highQuality.checked) {
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                }
+                
+                await this.drawStitchedImages(ctx, images, dimensions);
+                
+                progressText.textContent = 'Finalizing...';
+                progressFill.style.width = '100%';
+                
+                // Convert to blob
+                return new Promise((resolve) => {
+                    outputCanvas.toBlob((blob) => {
+                        this.stitchedImage = {
+                            blob: blob,
+                            canvas: outputCanvas,
+                            filename: `stitched_image_${Date.now()}.png`
+                        };
+                        
+                        // Show result
+                        const img = new Image();
+                        img.src = URL.createObjectURL(blob);
+                        img.className = 'output-preview';
+                        img.style.maxHeight = '400px';
+                        
+                        this.outputSection.querySelector('#outputContent').innerHTML = `
+                            <h4>Stitched Result</h4>
+                            <div style="text-align: center; margin: 20px 0;">
+                                ${img.outerHTML}
+                            </div>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                                <strong>Dimensions:</strong> ${dimensions.width} × ${dimensions.height}px<br>
+                                <strong>Mode:</strong> ${this.currentMode.charAt(0).toUpperCase() + this.currentMode.slice(1)}<br>
+                                <strong>Images:</strong> ${this.selectedImages.length}
+                            </div>
+                        `;
+                        
+                        this.downloadBtn.disabled = false;
+                        progressText.textContent = '✓ Successfully stitched all images!';
+                        
+                        resolve();
+                    }, 'image/png', 0.95);
+                });
+            }
+            
+            downloadStitched() {
+                if (!this.stitchedImage) return;
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(this.stitchedImage.blob);
+                link.download = this.stitchedImage.filename;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Cleanup
+                setTimeout(() => {
+                    URL.revokeObjectURL(link.href);
+                }, 1000);
+            }
+            
+            reset() {
+                this.selectedImages = [];
+                this.stitchedImage = null;
+                this.fileInput.value = '';
+                this.imageGrid.innerHTML = '';
+                this.imageGrid.style.display = 'none';
+                this.previewCanvas.style.display = 'none';
+                this.outputSection.style.display = 'none';
+                
+                // Reset controls
+                this.overlapSlider.value = 15;
+                this.blendSlider.value = 50;
+                this.outputWidth.value = 1920;
+                this.modeOptions.forEach(opt => opt.classList.remove('active'));
+                this.modeOptions[0].classList.add('active');
+                this.currentMode = 'horizontal';
+                
+                this.perspectiveCorrection.checked = true;
+                this.autoAlign.checked = true;
+                this.colorMatch.checked = true;
+                this.showAlignment.checked = true;
+                this.highQuality.checked = true;
+                
+                this.updateSliderDisplays();
+                this.updateButtons();
+            }
+        }
+        
+        // Initialize the image stitcher when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ImageStitcher();
+        });
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                menuToggle.setAttribute('aria-expanded', !isExpanded);
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>

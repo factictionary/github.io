@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Effects | Free Browser Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Apply professional audio effects including reverb, echo, distortion, chorus, flanger, phaser, and delay. Real-time preview with Web Audio API. - 100% privacy-protected.">
+    <meta name="keywords" content="browser tool, audio effects, reverb, echo, distortion, chorus, audio, free, online">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_effects.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Audio Effects | Factictionary Tools">
+    <meta property="og:description" content="Apply professional audio effects including reverb, echo, distortion, chorus, flanger, phaser, and delay. - 100% privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_effects.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Effects | Factictionary Tools">
+    <meta name="twitter:description" content="Apply professional audio effects including reverb, echo, distortion, chorus, flanger, phaser, and delay. - 100% privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #EF4444 0%, #EF4444CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-2xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+        
+        .workspace-title {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        .upload-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #EF444440;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #FEF2F2;
+            transition: all var(--duration-standard) var(--easing-standard);
+            cursor: pointer;
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #EF4444;
+            background: #FEF2F2CC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #EF4444;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #DC2626;
+            box-shadow: var(--shadow-card-hover);
+        }
+        
+        .uploaded-files {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .file-card {
+            background: var(--color-surface-alt);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            border: 2px solid transparent;
+            transition: all var(--duration-standard) var(--easing-standard);
+            position: relative;
+        }
+        
+        .file-card.selected {
+            border-color: #EF4444;
+            box-shadow: var(--shadow-card-hover);
+        }
+        
+        .file-card:hover {
+            border-color: #EF444480;
+        }
+        
+        .file-info {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .file-name {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-900);
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-duration {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-500);
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+        
+        .btn-remove {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: 4px var(--spacing-sm);
+            border-radius: 6px;
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-remove:hover {
+            background: #DC2626;
+        }
+        
+        .effects-section {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .effects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .effect-card {
+            background: var(--color-surface-alt);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            border: 2px solid transparent;
+            transition: all var(--duration-standard) var(--easing-standard);
+        }
+        
+        .effect-card:hover {
+            border-color: #EF444440;
+        }
+        
+        .effect-card.active {
+            border-color: #EF4444;
+            background: #FEF2F2;
+        }
+        
+        .effect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .effect-name {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        .effect-toggle {
+            background: var(--color-neutral-200);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .effect-toggle.active {
+            background: #EF4444;
+            color: white;
+        }
+        
+        .effect-controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .control-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .control-value {
+            font-weight: var(--font-weight-medium);
+            color: #EF4444;
+        }
+        
+        .control-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--color-neutral-200);
+            outline: none;
+        }
+        
+        .control-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #EF4444;
+            cursor: pointer;
+        }
+        
+        .control-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #EF4444;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .waveform-container {
+            background: #000;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            min-height: 150px;
+        }
+        
+        .waveform-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+            justify-content: center;
+        }
+        
+        .btn-waveform {
+            background: var(--color-neutral-700);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--easing-standard);
+        }
+        
+        .btn-waveform:hover {
+            background: var(--color-neutral-900);
+        }
+        
+        .btn-waveform.playing {
+            background: #EF4444;
+        }
+        
+        .preview-section {
+            background: var(--color-surface-alt);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+        
+        .btn-action {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--easing-standard);
+        }
+        
+        .btn-action:hover {
+            background: #DC2626;
+            box-shadow: var(--shadow-card-hover);
+        }
+        
+        .btn-action:disabled {
+            background: var(--color-neutral-300);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: var(--color-neutral-700);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-neutral-900);
+        }
+        
+        .progress-container {
+            display: none;
+            margin-top: var(--spacing-md);
+        }
+        
+        .progress-container.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #EF4444;
+            transition: width var(--duration-standard) var(--easing-standard);
+            width: 0%;
+        }
+        
+        .progress-text {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            margin-top: var(--spacing-xs);
+            text-align: center;
+        }
+        
+        .batch-info {
+            background: #FEF2F2;
+            border: 1px solid #EF444440;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+        }
+        
+        .effect-presets {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .btn-preset {
+            background: var(--color-surface);
+            border: 2px solid #EF444440;
+            color: #EF4444;
+            padding: 6px var(--spacing-md);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-standard) var(--easing-standard);
+        }
+        
+        .btn-preset:hover {
+            background: #FEF2F2;
+            border-color: #EF4444;
+        }
+        
+        @media (max-width: 768px) {
+            .effects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .uploaded-files {
+                grid-template-columns: 1fr;
+            }
+            
+            .workspace-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .action-buttons {
+                justify-content: stretch;
+            }
+            
+            .btn-action {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Audio Effects Studio</h1>
+        <p class="tool-subtitle">Apply professional audio effects with real-time preview</p>
+    </header>
+
+    <!-- Main Content -->
+    <main class="tool-main">
+        <!-- Workspace -->
+        <section class="tool-workspace">
+            <!-- Workspace Header -->
+            <div class="workspace-header">
+                <h2 class="workspace-title">Your Audio Files</h2>
+                <div class="batch-info" id="batchInfo" style="display: none;">
+                    <strong>Batch Mode:</strong> <span id="batchCount">0</span> files selected
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-icon">🎵</div>
+                    <div class="drop-zone-text">
+                        Drag and drop audio files here<br>
+                        <small>or click to browse</small>
+                    </div>
+                    <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                        Choose Files
+                    </button>
+                    <input type="file" id="fileInput" accept="audio/*" multiple style="display: none;">
+                </div>
+            </div>
+
+            <!-- Uploaded Files -->
+            <div class="uploaded-files" id="uploadedFiles"></div>
+
+            <!-- Waveform Display -->
+            <div class="waveform-container" id="waveformContainer">
+                <div id="waveform"></div>
+                <div class="waveform-controls">
+                    <button class="btn-waveform" id="playBtn">Play</button>
+                    <button class="btn-waveform" id="pauseBtn">Pause</button>
+                    <button class="btn-waveform" id="stopBtn">Stop</button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <div class="section-title">Live Preview</div>
+                <div id="previewControls"></div>
+            </div>
+
+            <!-- Effects Section -->
+            <div class="effects-section">
+                <div class="section-title">Audio Effects</div>
+                
+                <!-- Effect Presets -->
+                <div class="effect-presets">
+                    <button class="btn-preset" onclick="loadPreset('vocal')">Vocal Boost</button>
+                    <button class="btn-preset" onclick="loadPreset('ambient')">Ambient Space</button>
+                    <button class="btn-preset" onclick="loadPreset('retro')">Retro Vibes</button>
+                    <button class="btn-preset" onclick="loadPreset('metal')">Metal Distortion</button>
+                    <button class="btn-preset" onclick="loadPreset('clean')">Clean & Clear</button>
+                </div>
+
+                <!-- Effects Grid -->
+                <div class="effects-grid">
+                    <!-- Reverb -->
+                    <div class="effect-card" data-effect="reverb">
+                        <div class="effect-header">
+                            <span class="effect-name">Reverb</span>
+                            <button class="effect-toggle" onclick="toggleEffect('reverb')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Room Size
+                                    <span class="control-value" id="reverb-room-value">50%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="reverb-room" min="0" max="100" value="50">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Decay Time
+                                    <span class="control-value" id="reverb-decay-value">2.0s</span>
+                                </label>
+                                <input type="range" class="control-slider" id="reverb-decay" min="0.1" max="10" step="0.1" value="2.0">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Wet Level
+                                    <span class="control-value" id="reverb-wet-value">30%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="reverb-wet" min="0" max="100" value="30">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Echo -->
+                    <div class="effect-card" data-effect="echo">
+                        <div class="effect-header">
+                            <span class="effect-name">Echo</span>
+                            <button class="effect-toggle" onclick="toggleEffect('echo')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Delay Time
+                                    <span class="control-value" id="echo-delay-value">0.5s</span>
+                                </label>
+                                <input type="range" class="control-slider" id="echo-delay" min="0.1" max="2.0" step="0.1" value="0.5">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Feedback
+                                    <span class="control-value" id="echo-feedback-value">25%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="echo-feedback" min="0" max="90" value="25">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Wet Level
+                                    <span class="control-value" id="echo-wet-value">20%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="echo-wet" min="0" max="100" value="20">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Distortion -->
+                    <div class="effect-card" data-effect="distortion">
+                        <div class="effect-header">
+                            <span class="effect-name">Distortion</span>
+                            <button class="effect-toggle" onclick="toggleEffect('distortion')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Drive
+                                    <span class="control-value" id="distortion-drive-value">30%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="distortion-drive" min="0" max="100" value="30">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Tone
+                                    <span class="control-value" id="distortion-tone-value">50%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="distortion-tone" min="0" max="100" value="50">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Level
+                                    <span class="control-value" id="distortion-level-value">70%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="distortion-level" min="0" max="100" value="70">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chorus -->
+                    <div class="effect-card" data-effect="chorus">
+                        <div class="effect-header">
+                            <span class="effect-name">Chorus</span>
+                            <button class="effect-toggle" onclick="toggleEffect('chorus')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Rate
+                                    <span class="control-value" id="chorus-rate-value">1.5Hz</span>
+                                </label>
+                                <input type="range" class="control-slider" id="chorus-rate" min="0.1" max="5.0" step="0.1" value="1.5">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Depth
+                                    <span class="control-value" id="chorus-depth-value">40%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="chorus-depth" min="0" max="100" value="40">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Wet Level
+                                    <span class="control-value" id="chorus-wet-value">35%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="chorus-wet" min="0" max="100" value="35">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flanger -->
+                    <div class="effect-card" data-effect="flanger">
+                        <div class="effect-header">
+                            <span class="effect-name">Flanger</span>
+                            <button class="effect-toggle" onclick="toggleEffect('flanger')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Rate
+                                    <span class="control-value" id="flanger-rate-value">2.0Hz</span>
+                                </label>
+                                <input type="range" class="control-slider" id="flanger-rate" min="0.1" max="10.0" step="0.1" value="2.0">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Depth
+                                    <span class="control-value" id="flanger-depth-value">50%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="flanger-depth" min="0" max="100" value="50">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Feedback
+                                    <span class="control-value" id="flanger-feedback-value">20%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="flanger-feedback" min="0" max="90" value="20">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phaser -->
+                    <div class="effect-card" data-effect="phaser">
+                        <div class="effect-header">
+                            <span class="effect-name">Phaser</span>
+                            <button class="effect-toggle" onclick="toggleEffect('phaser')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Rate
+                                    <span class="control-value" id="phaser-rate-value">0.8Hz</span>
+                                </label>
+                                <input type="range" class="control-slider" id="phaser-rate" min="0.1" max="5.0" step="0.1" value="0.8">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Depth
+                                    <span class="control-value" id="phaser-depth-value">45%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="phaser-depth" min="0" max="100" value="45">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Stages
+                                    <span class="control-value" id="phaser-stages-value">4</span>
+                                </label>
+                                <input type="range" class="control-slider" id="phaser-stages" min="2" max="12" value="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delay -->
+                    <div class="effect-card" data-effect="delay">
+                        <div class="effect-header">
+                            <span class="effect-name">Delay</span>
+                            <button class="effect-toggle" onclick="toggleEffect('delay')">Off</button>
+                        </div>
+                        <div class="effect-controls">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Delay Time
+                                    <span class="control-value" id="delay-time-value">0.3s</span>
+                                </label>
+                                <input type="range" class="control-slider" id="delay-time" min="0.05" max="1.0" step="0.05" value="0.3">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Feedback
+                                    <span class="control-value" id="delay-feedback-value">30%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="delay-feedback" min="0" max="80" value="30">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Wet Level
+                                    <span class="control-value" id="delay-wet-value">25%</span>
+                                </label>
+                                <input type="range" class="control-slider" id="delay-wet" min="0" max="100" value="25">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-action btn-secondary" onclick="resetEffects()">Reset All</button>
+                <button class="btn-action" onclick="previewEffects()">Preview</button>
+                <button class="btn-action" onclick="applyEffects()">Apply & Download</button>
+            </div>
+
+            <!-- Progress Container -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Ready...</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Global variables
+        let audioContext;
+        let wavesurfer;
+        let currentAudioFile = null;
+        let uploadedFiles = [];
+        let selectedFiles = new Set();
+        let audioBuffers = new Map();
+        let activeEffects = new Map();
+        let ffmpeg;
+
+        // Initialize FFmpeg
+        async function initFFmpeg() {
+            const { FFmpeg } = FFmpegWASM;
+            ffmpeg = new FFmpeg();
+            
+            ffmpeg.on('log', ({ message }) => {
+                console.log('FFmpeg:', message);
+            });
+            
+            ffmpeg.on('progress', ({ progress }) => {
+                updateProgress(progress * 100);
+            });
+            
+            try {
+                await ffmpeg.load();
+                console.log('FFmpeg loaded successfully');
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+            }
+        }
+
+        // Initialize Audio Context
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Initialize WaveSurfer
+        function initWaveSurfer() {
+            if (wavesurfer) {
+                wavesurfer.destroy();
+            }
+            
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: '#EF4444',
+                progressColor: '#EF4444',
+                cursorColor: '#EF4444',
+                barWidth: 2,
+                barRadius: 3,
+                cursorWidth: 2,
+                height: 80,
+                barGap: 2,
+                normalize: true,
+                backend: 'WebAudio'
+            });
+        }
+
+        // File upload handling
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        async function handleFiles(files) {
+            for (const file of files) {
+                if (file.type.startsWith('audio/')) {
+                    await loadAudioFile(file);
+                }
+            }
+            updateBatchInfo();
+        }
+
+        async function loadAudioFile(file) {
+            const fileId = Date.now() + Math.random();
+            uploadedFiles.push({
+                id: fileId,
+                file: file,
+                name: file.name,
+                size: file.size,
+                duration: null
+            });
+
+            // Display file card
+            displayUploadedFile(fileId, file);
+            
+            // Load audio for processing
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                initAudioContext();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                audioBuffers.set(fileId, audioBuffer);
+                
+                // Update duration
+                const fileInfo = uploadedFiles.find(f => f.id === fileId);
+                if (fileInfo) {
+                    fileInfo.duration = audioBuffer.duration;
+                    updateFileCardDuration(fileId, audioBuffer.duration);
+                }
+            } catch (error) {
+                console.error('Error loading audio file:', error);
+            }
+        }
+
+        function displayUploadedFile(fileId, file) {
+            const uploadedFilesDiv = document.getElementById('uploadedFiles');
+            const fileCard = document.createElement('div');
+            fileCard.className = 'file-card';
+            fileCard.dataset.fileId = fileId;
+            
+            fileCard.innerHTML = `
+                <div class="file-info">
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-duration">Loading...</div>
+                </div>
+                <div class="file-actions">
+                    <button class="btn-remove" onclick="removeFile('${fileId}')">Remove</button>
+                </div>
+            `;
+            
+            fileCard.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') {
+                    selectFile(fileId);
+                }
+            });
+            
+            uploadedFilesDiv.appendChild(fileCard);
+        }
+
+        function updateFileCardDuration(fileId, duration) {
+            const fileCard = document.querySelector(`[data-file-id="${fileId}"]`);
+            if (fileCard) {
+                const durationDiv = fileCard.querySelector('.file-duration');
+                durationDiv.textContent = formatDuration(duration);
+            }
+        }
+
+        function selectFile(fileId) {
+            if (selectedFiles.has(fileId)) {
+                selectedFiles.delete(fileId);
+            } else {
+                selectedFiles.add(fileId);
+            }
+            
+            // Update UI
+            document.querySelectorAll('.file-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            selectedFiles.forEach(id => {
+                const card = document.querySelector(`[data-file-id="${id}"]`);
+                if (card) {
+                    card.classList.add('selected');
+                }
+            });
+            
+            updateBatchInfo();
+        }
+
+        function updateBatchInfo() {
+            const batchInfo = document.getElementById('batchInfo');
+            const batchCount = document.getElementById('batchCount');
+            
+            if (selectedFiles.size > 0) {
+                batchInfo.style.display = 'block';
+                batchCount.textContent = selectedFiles.size;
+            } else {
+                batchInfo.style.display = 'none';
+            }
+        }
+
+        function removeFile(fileId) {
+            uploadedFiles = uploadedFiles.filter(f => f.id !== fileId);
+            selectedFiles.delete(fileId);
+            audioBuffers.delete(fileId);
+            
+            const fileCard = document.querySelector(`[data-file-id="${fileId}"]`);
+            if (fileCard) {
+                fileCard.remove();
+            }
+            
+            updateBatchInfo();
+        }
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Effect management
+        const effects = {
+            reverb: { active: false, params: { room: 50, decay: 2.0, wet: 30 } },
+            echo: { active: false, params: { delay: 0.5, feedback: 25, wet: 20 } },
+            distortion: { active: false, params: { drive: 30, tone: 50, level: 70 } },
+            chorus: { active: false, params: { rate: 1.5, depth: 40, wet: 35 } },
+            flanger: { active: false, params: { rate: 2.0, depth: 50, feedback: 20 } },
+            phaser: { active: false, params: { rate: 0.8, depth: 45, stages: 4 } },
+            delay: { active: false, params: { time: 0.3, feedback: 30, wet: 25 } }
+        };
+
+        function toggleEffect(effectName) {
+            const effect = effects[effectName];
+            effect.active = !effect.active;
+            
+            const card = document.querySelector(`[data-effect="${effectName}"]`);
+            const toggle = card.querySelector('.effect-toggle');
+            
+            if (effect.active) {
+                card.classList.add('active');
+                toggle.textContent = 'On';
+                toggle.classList.add('active');
+                activeEffects.set(effectName, effect);
+            } else {
+                card.classList.remove('active');
+                toggle.textContent = 'Off';
+                toggle.classList.remove('active');
+                activeEffects.delete(effectName);
+            }
+        }
+
+        // Effect parameter controls
+        const controlMappings = {
+            'reverb-room': { effect: 'reverb', param: 'room', unit: '%' },
+            'reverb-decay': { effect: 'reverb', param: 'decay', unit: 's' },
+            'reverb-wet': { effect: 'reverb', param: 'wet', unit: '%' },
+            'echo-delay': { effect: 'echo', param: 'delay', unit: 's' },
+            'echo-feedback': { effect: 'echo', param: 'feedback', unit: '%' },
+            'echo-wet': { effect: 'echo', param: 'wet', unit: '%' },
+            'distortion-drive': { effect: 'distortion', param: 'drive', unit: '%' },
+            'distortion-tone': { effect: 'distortion', param: 'tone', unit: '%' },
+            'distortion-level': { effect: 'distortion', param: 'level', unit: '%' },
+            'chorus-rate': { effect: 'chorus', param: 'rate', unit: 'Hz' },
+            'chorus-depth': { effect: 'chorus', param: 'depth', unit: '%' },
+            'chorus-wet': { effect: 'chorus', param: 'wet', unit: '%' },
+            'flanger-rate': { effect: 'flanger', param: 'rate', unit: 'Hz' },
+            'flanger-depth': { effect: 'flanger', param: 'depth', unit: '%' },
+            'flanger-feedback': { effect: 'flanger', param: 'feedback', unit: '%' },
+            'phaser-rate': { effect: 'phaser', param: 'rate', unit: 'Hz' },
+            'phaser-depth': { effect: 'phaser', param: 'depth', unit: '%' },
+            'phaser-stages': { effect: 'phaser', param: 'stages', unit: '' },
+            'delay-time': { effect: 'delay', param: 'time', unit: 's' },
+            'delay-feedback': { effect: 'delay', param: 'feedback', unit: '%' },
+            'delay-wet': { effect: 'delay', param: 'wet', unit: '%' }
+        };
+
+        // Initialize control listeners
+        Object.keys(controlMappings).forEach(controlId => {
+            const control = document.getElementById(controlId);
+            const valueDisplay = document.getElementById(controlId + '-value');
+            
+            control.addEventListener('input', (e) => {
+                const { effect, param, unit } = controlMappings[controlId];
+                const value = parseFloat(e.target.value);
+                
+                effects[effect].params[param] = value;
+                
+                if (valueDisplay) {
+                    valueDisplay.textContent = unit === 'Hz' ? value.toFixed(1) + unit : 
+                                               unit === 's' ? value.toFixed(1) + unit : 
+                                               value + unit;
+                }
+            });
+        });
+
+        // Presets
+        function loadPreset(presetName) {
+            const presets = {
+                vocal: {
+                    reverb: { active: true, params: { room: 40, decay: 1.5, wet: 25 } },
+                    echo: { active: false, params: { delay: 0.3, feedback: 20, wet: 15 } },
+                    distortion: { active: false, params: { drive: 10, tone: 60, level: 80 } },
+                    chorus: { active: true, params: { rate: 1.2, depth: 30, wet: 25 } },
+                    flanger: { active: false, params: { rate: 1.5, depth: 40, feedback: 15 } },
+                    phaser: { active: false, params: { rate: 0.6, depth: 35, stages: 4 } },
+                    delay: { active: false, params: { time: 0.2, feedback: 25, wet: 20 } }
+                },
+                ambient: {
+                    reverb: { active: true, params: { room: 80, decay: 5.0, wet: 60 } },
+                    echo: { active: false, params: { delay: 0.8, feedback: 40, wet: 30 } },
+                    distortion: { active: false, params: { drive: 20, tone: 40, level: 60 } },
+                    chorus: { active: true, params: { rate: 0.8, depth: 50, wet: 40 } },
+                    flanger: { active: false, params: { rate: 0.5, depth: 60, feedback: 30 } },
+                    phaser: { active: true, params: { rate: 0.3, depth: 55, stages: 6 } },
+                    delay: { active: true, params: { time: 0.5, feedback: 45, wet: 35 } }
+                },
+                retro: {
+                    reverb: { active: false, params: { room: 30, decay: 1.0, wet: 20 } },
+                    echo: { active: true, params: { delay: 0.4, feedback: 50, wet: 40 } },
+                    distortion: { active: true, params: { drive: 60, tone: 70, level: 75 } },
+                    chorus: { active: true, params: { rate: 2.0, depth: 60, wet: 45 } },
+                    flanger: { active: true, params: { rate: 1.2, depth: 70, feedback: 40 } },
+                    phaser: { active: false, params: { rate: 1.0, depth: 50, stages: 4 } },
+                    delay: { active: false, params: { time: 0.3, feedback: 30, wet: 25 } }
+                },
+                metal: {
+                    reverb: { active: false, params: { room: 20, decay: 0.8, wet: 15 } },
+                    echo: { active: false, params: { delay: 0.2, feedback: 15, wet: 10 } },
+                    distortion: { active: true, params: { drive: 90, tone: 80, level: 85 } },
+                    chorus: { active: false, params: { rate: 3.0, depth: 30, wet: 20 } },
+                    flanger: { active: true, params: { rate: 3.0, depth: 80, feedback: 50 } },
+                    phaser: { active: false, params: { rate: 2.0, depth: 60, stages: 8 } },
+                    delay: { active: false, params: { time: 0.15, feedback: 20, wet: 15 } }
+                },
+                clean: {
+                    reverb: { active: true, params: { room: 25, decay: 1.2, wet: 15 } },
+                    echo: { active: false, params: { delay: 0.3, feedback: 10, wet: 8 } },
+                    distortion: { active: false, params: { drive: 5, tone: 50, level: 90 } },
+                    chorus: { active: false, params: { rate: 1.0, depth: 15, wet: 10 } },
+                    flanger: { active: false, params: { rate: 1.0, depth: 20, feedback: 10 } },
+                    phaser: { active: false, params: { rate: 0.5, depth: 20, stages: 4 } },
+                    delay: { active: false, params: { time: 0.2, feedback: 15, wet: 10 } }
+                }
+            };
+            
+            const preset = presets[presetName];
+            if (!preset) return;
+            
+            // Apply preset to all effects
+            Object.keys(preset).forEach(effectName => {
+                const effectState = preset[effectName];
+                effects[effectName] = { ...effectState };
+                
+                // Update UI
+                const card = document.querySelector(`[data-effect="${effectName}"]`);
+                const toggle = card.querySelector('.effect-toggle');
+                
+                if (effectState.active) {
+                    card.classList.add('active');
+                    toggle.textContent = 'On';
+                    toggle.classList.add('active');
+                    activeEffects.set(effectName, effectState);
+                } else {
+                    card.classList.remove('active');
+                    toggle.textContent = 'Off';
+                    toggle.classList.remove('active');
+                    activeEffects.delete(effectName);
+                }
+                
+                // Update parameter controls
+                Object.keys(effectState.params).forEach(param => {
+                    const value = effectState.params[param];
+                    const controlId = `${effectName}-${param === 'time' ? 'time' : param}`;
+                    const control = document.getElementById(controlId);
+                    const valueDisplay = document.getElementById(controlId + '-value');
+                    
+                    if (control) {
+                        control.value = value;
+                        
+                        const unit = controlMappings[controlId]?.unit || '';
+                        if (valueDisplay) {
+                            valueDisplay.textContent = unit === 'Hz' ? value.toFixed(1) + unit : 
+                                                       unit === 's' ? value.toFixed(1) + unit : 
+                                                       value + unit;
+                        }
+                    }
+                });
+            });
+        }
+
+        function resetEffects() {
+            Object.keys(effects).forEach(effectName => {
+                effects[effectName] = {
+                    active: false,
+                    params: {
+                        room: 50, decay: 2.0, wet: 30,
+                        delay: 0.5, feedback: 25,
+                        drive: 30, tone: 50, level: 70,
+                        rate: 1.5, depth: 40,
+                        time: 0.3
+                    }
+                };
+                
+                // Reset UI
+                const card = document.querySelector(`[data-effect="${effectName}"]`);
+                const toggle = card.querySelector('.effect-toggle');
+                
+                card.classList.remove('active');
+                toggle.textContent = 'Off';
+                toggle.classList.remove('active');
+            });
+            
+            activeEffects.clear();
+            
+            // Reset all sliders
+            Object.keys(controlMappings).forEach(controlId => {
+                const control = document.getElementById(controlId);
+                const { effect, param } = controlMappings[controlId];
+                const value = effects[effect].params[param];
+                const valueDisplay = document.getElementById(controlId + '-value');
+                const unit = controlMappings[controlId].unit || '';
+                
+                control.value = value;
+                if (valueDisplay) {
+                    valueDisplay.textContent = unit === 'Hz' ? value.toFixed(1) + unit : 
+                                               unit === 's' ? value.toFixed(1) + unit : 
+                                               value + unit;
+                }
+            });
+        }
+
+        // Waveform controls
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (wavesurfer) {
+                wavesurfer.play();
+                updateWaveformButtons(true);
+            }
+        });
+
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            if (wavesurfer) {
+                wavesurfer.pause();
+                updateWaveformButtons(false);
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            if (wavesurfer) {
+                wavesurfer.stop();
+                updateWaveformButtons(false);
+            }
+        });
+
+        function updateWaveformButtons(isPlaying) {
+            const playBtn = document.getElementById('playBtn');
+            if (isPlaying) {
+                playBtn.textContent = 'Playing...';
+                playBtn.classList.add('playing');
+            } else {
+                playBtn.textContent = 'Play';
+                playBtn.classList.remove('playing');
+            }
+        }
+
+        // Preview functionality
+        async function previewEffects() {
+            if (selectedFiles.size === 0) {
+                alert('Please select at least one audio file to preview.');
+                return;
+            }
+            
+            if (activeEffects.size === 0) {
+                alert('Please enable at least one effect to preview.');
+                return;
+            }
+            
+            try {
+                showProgress();
+                updateProgress(0, 'Applying effects for preview...');
+                
+                // Apply effects to the first selected file
+                const fileId = Array.from(selectedFiles)[0];
+                const fileInfo = uploadedFiles.find(f => f.id === fileId);
+                
+                if (!fileInfo) {
+                    throw new Error('Selected file not found');
+                }
+                
+                // Create processed audio URL for preview
+                const processedBlob = await processAudioFile(fileInfo.file, false);
+                const processedUrl = URL.createObjectURL(processedBlob);
+                
+                // Load into WaveSurfer for preview
+                initWaveSurfer();
+                wavesurfer.load(processedUrl);
+                
+                updateProgress(100, 'Preview ready!');
+                hideProgressAfterDelay();
+                
+                document.getElementById('previewSection').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Preview error:', error);
+                alert('Error generating preview: ' + error.message);
+                hideProgress();
+            }
+        }
+
+        // Apply effects and download
+        async function applyEffects() {
+            if (selectedFiles.size === 0) {
+                alert('Please select at least one audio file to process.');
+                return;
+            }
+            
+            if (activeEffects.size === 0) {
+                alert('Please enable at least one effect to apply.');
+                return;
+            }
+            
+            try {
+                showProgress();
+                
+                const filesToProcess = selectedFiles.size > 0 ? 
+                    Array.from(selectedFiles) : 
+                    uploadedFiles.map(f => f.id);
+                
+                updateProgress(0, `Processing ${filesToProcess.length} file(s)...`);
+                
+                for (let i = 0; i < filesToProcess.length; i++) {
+                    const fileId = filesToProcess[i];
+                    const fileInfo = uploadedFiles.find(f => f.id === fileId);
+                    
+                    if (!fileInfo) continue;
+                    
+                    updateProgress((i / filesToProcess.length) * 100, 
+                        `Processing: ${fileInfo.name}`);
+                    
+                    const processedBlob = await processAudioFile(fileInfo.file, true);
+                    
+                    // Download the processed file
+                    const url = URL.createObjectURL(processedBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileInfo.name.replace(/\.[^/.]+$/, '_effects.wav');
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+                
+                updateProgress(100, 'All files processed!');
+                hideProgressAfterDelay();
+                
+            } catch (error) {
+                console.error('Processing error:', error);
+                alert('Error processing files: ' + error.message);
+                hideProgress();
+            }
+        }
+
+        // Process audio with effects using FFmpeg
+        async function processAudioFile(originalFile, isFinal = true) {
+            if (!ffmpeg) {
+                await initFFmpeg();
+            }
+            
+            try {
+                // Convert audio to WAV format for processing
+                const inputData = await FFmpeg.fetchFile(originalFile);
+                const inputName = 'input.' + (originalFile.name.split('.').pop() || 'mp3');
+                await ffmpeg.writeFile(inputName, inputData);
+                
+                // Build FFmpeg filter chain based on active effects
+                const filterChain = buildFilterChain();
+                const outputName = 'output.wav';
+                
+                if (filterChain) {
+                    await ffmpeg.exec([
+                        '-i', inputName,
+                        '-af', filterChain,
+                        '-ar', '44100',
+                        '-ac', '2',
+                        outputName
+                    ]);
+                } else {
+                    // If no effects, just convert to WAV
+                    await ffmpeg.exec([
+                        '-i', inputName,
+                        '-ar', '44100',
+                        '-ac', '2',
+                        outputName
+                    ]);
+                }
+                
+                const outputData = await ffmpeg.readFile(outputName);
+                return new Blob([outputData], { type: 'audio/wav' });
+                
+            } catch (error) {
+                console.error('FFmpeg processing error:', error);
+                // Fallback: return original file
+                return originalFile;
+            }
+        }
+
+        function buildFilterChain() {
+            const filters = [];
+            
+            // Reverb filter
+            if (effects.reverb.active) {
+                const roomSize = effects.reverb.params.room / 100;
+                const decay = effects.reverb.params.decay;
+                const wet = effects.reverb.params.wet / 100;
+                filters.push(`aecho=0.8:0.88:${decay}:${wet}`);
+            }
+            
+            // Echo filter
+            if (effects.echo.active) {
+                const delay = effects.echo.params.delay;
+                const feedback = effects.echo.params.feedback / 100;
+                const wet = effects.echo.params.wet / 100;
+                filters.push(`aecho=0:${delay}:${feedback}:${wet}`);
+            }
+            
+            // Distortion filter
+            if (effects.distortion.active) {
+                const drive = effects.distortion.params.drive / 100;
+                const tone = effects.distortion.params.tone / 100;
+                const level = effects.distortion.params.level / 100;
+                
+                // Apply distortion with tone control
+                filters.push(`overdrive=gain=${drive}:colour=${tone}:level=${level}`);
+            }
+            
+            // Chorus filter
+            if (effects.chorus.active) {
+                const rate = effects.chorus.params.rate;
+                const depth = effects.chorus.params.depth / 100;
+                const wet = effects.chorus.params.wet / 100;
+                filters.push(`chorus=0.5:0.9:50:0.4:0.25:30:${rate}:0.4:${depth}:${wet}:0.25:0.4`);
+            }
+            
+            // Flanger filter
+            if (effects.flanger.active) {
+                const rate = effects.flanger.params.rate;
+                const depth = effects.flanger.params.depth / 100;
+                const feedback = effects.flanger.params.feedback / 100;
+                filters.push(`flanger=delay=0:depth=${depth*10}:rate=${rate}:feedback=${feedback}:width=0.7`);
+            }
+            
+            // Phaser filter
+            if (effects.phaser.active) {
+                const rate = effects.phaser.params.rate;
+                const depth = effects.phaser.params.depth / 100;
+                const stages = effects.phaser.params.stages;
+                filters.push(`phaser=delay=0:decay=${depth}:speed=${rate}:stages=${stages}`);
+            }
+            
+            // Delay filter
+            if (effects.delay.active) {
+                const time = effects.delay.params.time;
+                const feedback = effects.delay.params.feedback / 100;
+                const wet = effects.delay.params.wet / 100;
+                filters.push(`aecho=0:${time}:${feedback}:${wet}`);
+            }
+            
+            return filters.length > 0 ? filters.join(',') : null;
+        }
+
+        // Progress management
+        function showProgress() {
+            document.getElementById('progressContainer').classList.add('active');
+        }
+
+        function updateProgress(percent, text = '') {
+            document.getElementById('progressFill').style.width = percent + '%';
+            if (text) {
+                document.getElementById('progressText').textContent = text;
+            }
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').classList.remove('active');
+            document.getElementById('progressFill').style.width = '0%';
+        }
+
+        function hideProgressAfterDelay() {
+            setTimeout(() => {
+                hideProgress();
+            }, 2000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initWaveSurfer();
+            initFFmpeg();
+        });
+
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && audioContext && audioContext.state === 'running') {
+                audioContext.suspend();
+            } else if (!document.hidden && audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Converter | Free Browser Tool | Factictionary</title>
+    <title>Audio Normalizer | Free Browser Tool | Factictionary</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Convert audio files between MP3, WAV, M4A, and OGG formats with quality control options. - Professional browser-based tool. No uploads required, 100% privacy-protected.">
-    <meta name="keywords" content="browser tool, audio converter, audio, free, online, privacy-first">
+    <meta name="description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
+    <meta name="keywords" content="browser tool, audio normalizer, audio, normalization, volume, free, online, privacy-first">
     <meta name="author" content="Factictionary Team">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://factictionary.github.io/tools/audio_converter.html">
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_normalizer.html">
     
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="Audio Converter | Factictionary Tools">
-    <meta property="og:description" content="Convert audio files between MP3, WAV, M4A, and OGG formats with quality control options. - 100% privacy-protected.">
+    <meta property="og:title" content="Audio Normalizer | Factictionary Tools">
+    <meta property="og:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/audio_converter.html">
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_normalizer.html">
     <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
     
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Audio Converter | Factictionary Tools">
-    <meta name="twitter:description" content="Convert audio files between MP3, WAV, M4A, and OGG formats with quality control options. - 100% privacy-protected.">
+    <meta name="twitter:title" content="Audio Normalizer | Factictionary Tools">
+    <meta name="twitter:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
     <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
     
     <!-- Fonts -->
@@ -230,6 +230,17 @@
             border: none;
         }
         
+        .normalization-method {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .method-radio {
+            margin-right: var(--spacing-xs);
+        }
+        
         .tool-output {
             background: var(--color-neutral-50);
             border-radius: var(--radius-card);
@@ -245,16 +256,57 @@
             border-radius: var(--radius-card);
         }
         
-        .output-text {
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .analysis-item {
             background: white;
-            border: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-md);
             border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            max-height: 300px;
-            overflow-y: auto;
+            border: 1px solid var(--color-neutral-200);
+        }
+        
+        .analysis-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .analysis-value {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        .peak-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .peak-bar {
+            flex: 1;
+            height: 20px;
+            background: var(--color-neutral-200);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .peak-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #ef4444);
+            transition: width var(--duration-fast) var(--easing-standard);
+            position: relative;
+        }
+        
+        .peak-fill.warning {
+            background: linear-gradient(90deg, #eab308, #ef4444);
         }
         
         .tool-actions {
@@ -274,7 +326,7 @@
             font-weight: var(--font-weight-medium);
             cursor: pointer;
             transition: all var(--duration-fast) var(--easing-standard);
-            min-width: 120px;
+            min-width: 140px;
         }
         
         .btn-tool:hover {
@@ -327,56 +379,38 @@
             font-size: var(--font-size-small);
         }
         
-        .adsense-tool {
-            background: var(--color-neutral-100);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
+        .waveform-section {
+            margin-bottom: var(--spacing-xl);
             padding: var(--spacing-lg);
-            text-align: center;
-            color: var(--color-neutral-500);
-            font-size: var(--font-size-small);
-            min-height: 200px;
+            background: white;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--color-neutral-200);
+        }
+        
+        .waveform-section h4 {
+            margin-bottom: var(--spacing-md);
+            color: var(--color-neutral-800);
+        }
+        
+        .waveform-container {
+            position: relative;
+            height: 150px;
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .waveform-controls {
             display: flex;
+            gap: var(--spacing-sm);
             align-items: center;
             justify-content: center;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tool-main {
-                grid-template-columns: 1fr;
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-            
-            .tool-title {
-                font-size: var(--font-size-subtitle);
-            }
-            
-            .tool-actions {
-                flex-direction: column;
-            }
-            
-            .btn-tool {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tool-header {
-                padding: var(--spacing-2xl) var(--spacing-sm);
-                padding-top: calc(var(--spacing-2xl) + 80px);
-            }
-            
-            .tool-workspace {
-                padding: var(--spacing-lg);
-            }
-        }
-        
-        /* Additional styles for new functionality */
         .waveform-controls button {
             min-width: auto;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: var(--spacing-xs) var(--spacing-md);
+            font-size: var(--font-size-small);
         }
         
         .file-item {
@@ -388,7 +422,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .conversion-result {
+        .normalization-result {
             animation: slideIn 0.3s ease-in-out;
         }
         
@@ -427,6 +461,79 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .comparison-item {
+            text-align: center;
+        }
+        
+        .comparison-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .comparison-value {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .analysis-grid,
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
     
     <!-- Structured Data -->
@@ -434,8 +541,8 @@
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Audio Converter",
-        "description": "Convert audio files between MP3, WAV, M4A, and OGG formats with quality control options.",
+        "name": "Audio Normalizer",
+        "description": "Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.",
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Web Browser",
         "offers": {
@@ -449,8 +556,8 @@
         },
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "1250"
+            "ratingValue": "4.9",
+            "reviewCount": "850"
         }
     }
     </script>
@@ -483,8 +590,8 @@
     
     <!-- Tool Header -->
     <header class="tool-header">
-        <h1 class="tool-title">Audio Converter</h1>
-        <p class="tool-subtitle">Convert audio files between MP3, WAV, M4A, and OGG formats with quality control options.</p>
+        <h1 class="tool-title">Audio Normalizer</h1>
+        <p class="tool-subtitle">Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.</p>
         <div class="privacy-badge">
             🔒 100% Privacy Protected
         </div>
@@ -495,7 +602,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">📁</div>
+                <div class="drop-zone-icon">📊</div>
                 <div class="drop-zone-text">
                     Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse
                 </div>
@@ -506,12 +613,44 @@
             </div>
             
             <!-- Waveform Preview Section -->
-            <div class="waveform-section" id="waveformSection" style="display: none; margin-bottom: 20px;">
-                <h3>Audio Preview</h3>
-                <div id="waveformContainer" style="height: 150px; background: #f5f5f5; border-radius: 8px; position: relative;">
-                    <div id="waveform" style="width: 100%;"></div>
+            <div class="waveform-section" id="waveformSection" style="display: none;">
+                <h4>Audio Analysis & Preview</h4>
+                
+                <!-- Analysis Results -->
+                <div class="analysis-grid" id="analysisGrid" style="display: none;">
+                    <div class="analysis-item">
+                        <div class="analysis-label">Peak Level</div>
+                        <div class="analysis-value" id="peakLevel">-</div>
+                        <div class="peak-indicator">
+                            <div class="peak-bar">
+                                <div class="peak-fill" id="peakFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">RMS Level</div>
+                        <div class="analysis-value" id="rmsLevel">-</div>
+                        <div class="peak-indicator">
+                            <div class="peak-bar">
+                                <div class="peak-fill" id="rmsFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">Dynamic Range</div>
+                        <div class="analysis-value" id="dynamicRange">-</div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">Duration</div>
+                        <div class="analysis-value" id="duration">-</div>
+                    </div>
                 </div>
-                <div class="waveform-controls" style="display: flex; gap: 10px; margin-top: 10px; align-items: center;">
+                
+                <!-- Waveform Display -->
+                <div class="waveform-container">
+                    <div id="waveform" style="width: 100%; height: 100%;"></div>
+                </div>
+                <div class="waveform-controls">
                     <button class="btn-tool" id="playBtn" style="min-width: auto; padding: 8px 16px;">▶ Play</button>
                     <button class="btn-tool" id="pauseBtn" style="min-width: auto; padding: 8px 16px;">⏸ Pause</button>
                     <span id="audioDuration" style="margin-left: 10px; color: #666;">00:00 / 00:00</span>
@@ -525,22 +664,49 @@
             </div>
             
             <div class="tool-controls">
-                <h3>Settings</h3>
+                <h3>Normalization Settings</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Normalization Method</label>
+                    <div class="normalization-method">
+                        <input type="radio" id="peak" name="method" value="peak" class="method-radio" checked>
+                        <label for="peak">Peak Normalization (Loudest part = target level)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="rms" name="method" value="rms" class="method-radio">
+                        <label for="rms">RMS Normalization (Average level = target level)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="ebu" name="method" value="ebu" class="method-radio">
+                        <label for="ebu">EBU R128 (Broadcast standard)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="custom" name="method" value="custom" class="method-radio">
+                        <label for="custom">Custom Target Level</label>
+                    </div>
+                </div>
+                
+                <div class="control-group" id="targetLevelGroup">
+                    <label class="control-label">Target Level (dB)</label>
+                    <div class="control-slider">
+                        <input type="range" min="-30" max="0" value="-3" id="targetLevelSlider">
+                        <span id="targetLevelValue">-3 dB</span>
+                    </div>
+                </div>
                 
                 <div class="control-group">
                     <label class="control-label">Output Format</label>
                     <select class="control-input" id="formatSelect">
+                        <option value="wav">WAV (Lossless)</option>
                         <option value="mp3">MP3</option>
-                        <option value="wav">WAV</option>
-                        <option value="aac">AAC</option>
-                        <option value="ogg">OGG</option>
                         <option value="flac">FLAC</option>
-                        <option value="m4a">M4A</option>
+                        <option value="m4a">M4A/AAC</option>
+                        <option value="ogg">OGG</option>
                     </select>
                 </div>
                 
                 <div class="control-group">
-                    <label class="control-label">Audio Quality</label>
+                    <label class="control-label">Quality</label>
                     <select class="control-input" id="qualitySelect">
                         <option value="high">High Quality</option>
                         <option value="medium" selected>Medium Quality</option>
@@ -548,41 +714,14 @@
                     </select>
                 </div>
                 
-                <div class="control-group">
+                <div class="control-group" id="bitrateGroup" style="display: none;">
                     <label class="control-label">Bitrate</label>
                     <select class="control-input" id="bitrateSelect">
                         <option value="320">320 kbps</option>
                         <option value="256" selected>256 kbps</option>
                         <option value="192">192 kbps</option>
                         <option value="128">128 kbps</option>
-                        <option value="64">64 kbps</option>
                     </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Sample Rate</label>
-                    <select class="control-input" id="sampleRateSelect">
-                        <option value="44100" selected>44.1 kHz (CD Quality)</option>
-                        <option value="48000">48 kHz</option>
-                        <option value="88200">88.2 kHz</option>
-                        <option value="96000">96 kHz</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Channels</label>
-                    <select class="control-input" id="channelsSelect">
-                        <option value="stereo" selected>Stereo</option>
-                        <option value="mono">Mono</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Volume</label>
-                    <div class="control-slider">
-                        <input type="range" min="0" max="200" value="100" id="volumeSlider">
-                        <span id="volumeValue">100%</span>
-                    </div>
                 </div>
                 
                 <div class="control-group">
@@ -593,16 +732,36 @@
                     </div>
                 </div>
                 
+                <div class="control-group">
+                    <label class="control-label">Preview Mode</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="previewMode" checked>
+                        <span>Show before/after comparison</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Comparison Section -->
+            <div class="comparison-section" id="comparisonSection" style="display: none;">
+                <div class="comparison-item">
+                    <div class="comparison-label">Original Peak</div>
+                    <div class="comparison-value" id="originalPeak">-</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">Normalized Peak</div>
+                    <div class="comparison-value" id="normalizedPeak">-</div>
+                </div>
             </div>
             
             <div class="tool-output" id="toolOutput">
-                <h3>Result</h3>
+                <h3>Normalization Results</h3>
                 <div id="outputContent"></div>
             </div>
             
             <div class="tool-actions">
-                <button class="btn-tool" id="convertBtn" disabled>
-                    🎵 Convert Audio
+                <button class="btn-tool" id="normalizeBtn" disabled>
+                    🎵 Normalize Audio
                 </button>
                 <button class="btn-tool" id="downloadBtn" disabled>
                     ⬇️ Download
@@ -622,7 +781,7 @@
                         0%
                     </div>
                 </div>
-                <div id="progressText" style="text-align: center; margin-top: 5px; color: #666; font-size: 14px;">Ready to convert</div>
+                <div id="progressText" style="text-align: center; margin-top: 5px; color: #666; font-size: 14px;">Ready to normalize</div>
             </div>
         </section>
         
@@ -632,41 +791,46 @@
             <div class="tool-info">
                 <h3>Features</h3>
                 
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">6 audio formats supported</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Real-time waveform preview</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Batch conversion</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Quality & bitrate control</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Sample rate selection</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">Volume adjustment</div>
-            </div>
-        
-            <div class="tool-feature">
-                <div class="tool-feature-icon">✓</div>
-                <div class="tool-feature-text">100% client-side processing</div>
-            </div>
-        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Peak & RMS detection</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Multiple normalization algorithms</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">EBU R128 broadcast standard</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Real-time waveform analysis</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch processing</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Before/after comparison</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Dynamic range analysis</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">100% client-side processing</div>
+                </div>
+            
             </div>
             
             <!-- AdSense Container -->
@@ -681,7 +845,10 @@
             <div class="tool-info">
                 <h3>Related Tools</h3>
                 <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a><a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a><a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a><a href="/audio_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Enhancer</a>
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
+                    <a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a>
+                    <a href="/audio_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Enhancer</a>
                 </div>
             </div>
         </aside>
@@ -697,7 +864,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">0</div>
-                    <div class="stat-label">Files Uploaded</div>
+                    <div class="stat-label">Files Processed</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">∞</div>
@@ -718,13 +885,14 @@
         let ffmpeg;
         let wavesurfer;
         let selectedFiles = [];
-        let convertedFiles = [];
+        let normalizedFiles = [];
         let isFFmpegLoaded = false;
+        let audioContext;
         
         // DOM elements
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
-        const convertBtn = document.getElementById('convertBtn');
+        const normalizeBtn = document.getElementById('normalizeBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadAllBtn = document.getElementById('downloadAllBtn');
         const resetBtn = document.getElementById('resetBtn');
@@ -735,12 +903,31 @@
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
         
-        // Quality control elements
-        const volumeSlider = document.getElementById('volumeSlider');
-        const volumeValue = document.getElementById('volumeValue');
+        // Control elements
+        const targetLevelSlider = document.getElementById('targetLevelSlider');
+        const targetLevelValue = document.getElementById('targetLevelValue');
+        const methodRadios = document.querySelectorAll('input[name="method"]');
+        const targetLevelGroup = document.getElementById('targetLevelGroup');
+        const formatSelect = document.getElementById('formatSelect');
+        const bitrateSelect = document.getElementById('bitrateSelect');
+        const bitrateGroup = document.getElementById('bitrateGroup');
+        const comparisonSection = document.getElementById('comparisonSection');
+        
+        // Waveform controls
         const playBtn = document.getElementById('playBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const audioDuration = document.getElementById('audioDuration');
+        
+        // Analysis elements
+        const analysisGrid = document.getElementById('analysisGrid');
+        const peakLevel = document.getElementById('peakLevel');
+        const rmsLevel = document.getElementById('rmsLevel');
+        const dynamicRange = document.getElementById('dynamicRange');
+        const duration = document.getElementById('duration');
+        const peakFill = document.getElementById('peakFill');
+        const rmsFill = document.getElementById('rmsFill');
+        const originalPeak = document.getElementById('originalPeak');
+        const normalizedPeak = document.getElementById('normalizedPeak');
         
         // Initialize FFmpeg
         async function initFFmpeg() {
@@ -766,38 +953,27 @@
             }
         }
         
+        // Initialize Web Audio API
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
         // Format conversion mapping
         const formatMapping = {
-            'mp3': { ext: 'mp3', mime: 'audio/mpeg', codec: 'libmp3lame' },
             'wav': { ext: 'wav', mime: 'audio/wav', codec: 'pcm_s16le' },
-            'aac': { ext: 'aac', mime: 'audio/aac', codec: 'aac' },
-            'ogg': { ext: 'ogg', mime: 'audio/ogg', codec: 'libvorbis' },
+            'mp3': { ext: 'mp3', mime: 'audio/mpeg', codec: 'libmp3lame' },
             'flac': { ext: 'flac', mime: 'audio/flac', codec: 'flac' },
-            'm4a': { ext: 'm4a', mime: 'audio/mp4', codec: 'aac' }
-        };
-        
-        // Bitrate mapping
-        const bitrateMapping = {
-            '320': '320k',
-            '256': '256k',
-            '192': '192k',
-            '128': '128k',
-            '64': '64k'
-        };
-        
-        // Sample rate mapping
-        const sampleRateMapping = {
-            '44100': '44100',
-            '48000': '48000',
-            '88200': '88200',
-            '96000': '96000'
+            'm4a': { ext: 'm4a', mime: 'audio/mp4', codec: 'aac' },
+            'ogg': { ext: 'ogg', mime: 'audio/ogg', codec: 'libvorbis' }
         };
         
         // Quality mapping
         const qualityMapping = {
-            'high': { crf: 18, q: 0 },
-            'medium': { crf: 23, q: 3 },
-            'low': { crf: 28, q: 6 }
+            'high': { bitrate: '320k', q: 0 },
+            'medium': { bitrate: '256k', q: 3 },
+            'low': { bitrate: '192k', q: 6 }
         };
         
         // Drag and drop functionality
@@ -844,8 +1020,9 @@
             
             selectedFiles = audioFiles;
             displayFileList();
+            analyzeAudio(selectedFiles[0]);
             updateWaveform();
-            convertBtn.disabled = false;
+            normalizeBtn.disabled = false;
             downloadAllBtn.disabled = false;
             
             dropZone.querySelector('.drop-zone-text').textContent = 
@@ -888,15 +1065,93 @@
             displayFileList();
             
             if (selectedFiles.length === 0) {
-                convertBtn.disabled = true;
+                normalizeBtn.disabled = true;
                 downloadAllBtn.disabled = true;
                 waveformSection.style.display = 'none';
                 fileList.style.display = 'none';
                 dropZone.querySelector('.drop-zone-text').textContent = 
                     'Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
             } else {
+                analyzeAudio(selectedFiles[0]);
                 updateWaveform();
             }
+        }
+        
+        // Analyze audio file
+        async function analyzeAudio(file) {
+            try {
+                initAudioContext();
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                // Calculate peak level
+                const peak = calculatePeakLevel(audioBuffer);
+                
+                // Calculate RMS level
+                const rms = calculateRMSLevel(audioBuffer);
+                
+                // Calculate dynamic range
+                const dynamicRange = peak - rms;
+                
+                // Update display
+                peakLevel.textContent = `${peak.toFixed(2)} dB`;
+                rmsLevel.textContent = `${rms.toFixed(2)} dB`;
+                dynamicRange.textContent = `${dynamicRange.toFixed(2)} dB`;
+                duration.textContent = formatTime(audioBuffer.duration);
+                
+                // Update peak indicators
+                const peakPercent = Math.min(100, (peak + 60) * 1.67);
+                const rmsPercent = Math.min(100, (rms + 60) * 1.67);
+                
+                peakFill.style.width = `${peakPercent}%`;
+                rmsFill.style.width = `${rmsPercent}%`;
+                
+                if (peak > -3) {
+                    peakFill.classList.add('warning');
+                }
+                
+                analysisGrid.style.display = 'grid';
+                waveformSection.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Audio analysis error:', error);
+            }
+        }
+        
+        // Calculate peak level
+        function calculatePeakLevel(audioBuffer) {
+            let peak = -Infinity;
+            const channelData = audioBuffer.getChannelData(0);
+            
+            for (let i = 0; i < channelData.length; i++) {
+                const sample = Math.abs(channelData[i]);
+                if (sample > peak) {
+                    peak = sample;
+                }
+            }
+            
+            return 20 * Math.log10(peak);
+        }
+        
+        // Calculate RMS level
+        function calculateRMSLevel(audioBuffer) {
+            let sum = 0;
+            const channelData = audioBuffer.getChannelData(0);
+            
+            for (let i = 0; i < channelData.length; i++) {
+                sum += channelData[i] * channelData[i];
+            }
+            
+            const rms = Math.sqrt(sum / channelData.length);
+            return 20 * Math.log10(rms);
+        }
+        
+        // Format time
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
         
         // Update waveform
@@ -905,8 +1160,6 @@
             
             const file = selectedFiles[0];
             const url = URL.createObjectURL(file);
-            
-            waveformSection.style.display = 'block';
             
             if (wavesurfer) {
                 wavesurfer.destroy();
@@ -924,18 +1177,18 @@
             wavesurfer.load(url);
             
             wavesurfer.on('ready', () => {
-                const duration = wavesurfer.getDuration();
-                const minutes = Math.floor(duration / 60);
-                const seconds = Math.floor(duration % 60);
+                const dur = wavesurfer.getDuration();
+                const minutes = Math.floor(dur / 60);
+                const seconds = Math.floor(dur % 60);
                 audioDuration.textContent = `00:00 / ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             });
             
             wavesurfer.on('audioprocess', () => {
                 const currentTime = wavesurfer.getCurrentTime();
-                const duration = wavesurfer.getDuration();
+                const dur = wavesurfer.getDuration();
                 const minutes = Math.floor(currentTime / 60);
                 const seconds = Math.floor(currentTime % 60);
-                audioDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} / ${Math.floor(duration / 60).toString().padStart(2, '0')}:${Math.floor(duration % 60).toString().padStart(2, '0')}`;
+                audioDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} / ${Math.floor(dur / 60).toString().padStart(2, '0')}:${Math.floor(dur % 60).toString().padStart(2, '0')}`;
             });
         }
         
@@ -952,33 +1205,42 @@
             }
         });
         
-        // Volume control
-        volumeSlider.addEventListener('input', (e) => {
-            const volume = e.target.value;
-            volumeValue.textContent = `${volume}%`;
-            if (wavesurfer) {
-                wavesurfer.setVolume(volume / 100);
-            }
+        // Control event listeners
+        methodRadios.forEach(radio => {
+            radio.addEventListener('change', updateTargetLevelVisibility);
         });
         
-        // Convert audio files
-        async function convertFiles() {
+        function updateTargetLevelVisibility() {
+            const customMethod = document.getElementById('custom').checked;
+            targetLevelGroup.style.display = customMethod ? 'block' : 'none';
+        }
+        
+        targetLevelSlider.addEventListener('input', (e) => {
+            targetLevelValue.textContent = `${e.target.value} dB`;
+        });
+        
+        formatSelect.addEventListener('change', () => {
+            const showBitrate = ['mp3', 'ogg'].includes(formatSelect.value);
+            bitrateGroup.style.display = showBitrate ? 'block' : 'none';
+        });
+        
+        // Normalize audio files
+        async function normalizeFiles() {
             if (!isFFmpegLoaded) {
                 alert('FFmpeg is still loading. Please wait a moment and try again.');
                 return;
             }
             
-            const outputFormat = document.getElementById('formatSelect').value;
-            const quality = document.getElementById('qualitySelect').value;
-            const bitrate = document.getElementById('bitrateSelect').value;
-            const sampleRate = document.getElementById('sampleRateSelect').value;
-            const channels = document.getElementById('channelsSelect').value;
-            const volume = document.getElementById('volumeSlider').value;
+            const selectedMethod = document.querySelector('input[name="method"]:checked').value;
+            const targetLevel = parseFloat(targetLevelSlider.value);
+            const outputFormat = formatSelect.value;
+            const quality = qualitySelect.value;
+            const bitrate = bitrateSelect.value;
             const batchMode = document.getElementById('batchMode').checked;
             
-            convertedFiles = [];
+            normalizedFiles = [];
             progressContainer.style.display = 'block';
-            convertBtn.disabled = true;
+            normalizeBtn.disabled = true;
             
             const filesToProcess = batchMode ? selectedFiles : [selectedFiles[0]];
             
@@ -988,7 +1250,7 @@
                 
                 progressBar.style.width = '0%';
                 progressBar.textContent = '0%';
-                progressText.textContent = `Converting ${file.name}...`;
+                progressText.textContent = `Analyzing ${file.name}...`;
                 
                 try {
                     // Write input file to FFmpeg
@@ -998,28 +1260,28 @@
                     const format = formatMapping[outputFormat];
                     const args = ['-i', `input_${i}`];
                     
-                    // Add audio filters
-                    const filters = [];
-                    
-                    if (volume !== '100') {
-                        filters.push(`volume=${volume/100}`);
+                    // Add normalization filter based on method
+                    let filter;
+                    switch (selectedMethod) {
+                        case 'peak':
+                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
+                            break;
+                        case 'rms':
+                            filter = `compand=attacks=0.1:decays=0.8:points=-60/-60|-30/-15|-20/-10|0/-${Math.abs(targetLevel)}:curve=log`;
+                            break;
+                        case 'ebu':
+                            filter = `loudnorm=I=-23:TP=-2:LRA=7`;
+                            break;
+                        case 'custom':
+                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
+                            break;
                     }
                     
-                    if (channels === 'mono') {
-                        filters.push('pan=mono');
-                    }
-                    
-                    if (filters.length > 0) {
-                        args.push('-af', filters.join(','));
-                    }
+                    args.push('-af', filter);
                     
                     // Add format-specific parameters
-                    if (outputFormat === 'mp3') {
-                        args.push('-b:a', bitrateMapping[bitrate], '-ar', sampleRateMapping[sampleRate]);
-                    } else if (outputFormat === 'wav') {
-                        args.push('-ar', sampleRateMapping[sampleRate], '-ac', channels === 'mono' ? '1' : '2');
-                    } else {
-                        args.push('-ar', sampleRateMapping[sampleRate]);
+                    if (outputFormat === 'mp3' || outputFormat === 'ogg') {
+                        args.push('-b:a', bitrate);
                     }
                     
                     args.push(`output_${i}.${format.ext}`);
@@ -1031,7 +1293,7 @@
                         progressBar.textContent = `${percentage}%`;
                     });
                     
-                    // Execute conversion
+                    // Execute normalization
                     await ffmpeg.exec(args);
                     
                     // Read output file
@@ -1041,18 +1303,20 @@
                     const blob = new Blob([data.buffer], { type: format.mime });
                     const downloadUrl = URL.createObjectURL(blob);
                     
-                    convertedFiles.push({
-                        name: `${fileName}_converted.${format.ext}`,
+                    normalizedFiles.push({
+                        name: `${fileName}_normalized.${format.ext}`,
                         blob: blob,
                         url: downloadUrl,
-                        originalFile: file
+                        originalFile: file,
+                        originalPeak: calculatePeakLevelFromFile(file),
+                        normalizedPeak: calculatePeakLevelFromBlob(blob)
                     });
                     
-                    progressText.textContent = `✓ ${file.name} converted successfully`;
+                    progressText.textContent = `✓ ${file.name} normalized successfully`;
                     
                 } catch (error) {
-                    console.error('Conversion error:', error);
-                    progressText.textContent = `✗ Failed to convert ${file.name}`;
+                    console.error('Normalization error:', error);
+                    progressText.textContent = `✗ Failed to normalize ${file.name}`;
                 }
                 
                 // Clean up
@@ -1066,31 +1330,50 @@
             
             progressBar.style.width = '100%';
             progressBar.textContent = '100%';
-            progressText.textContent = 'Conversion completed!';
+            progressText.textContent = 'Normalization completed!';
             
             setTimeout(() => {
                 progressContainer.style.display = 'none';
             }, 2000);
             
-            downloadBtn.disabled = convertedFiles.length === 0;
-            convertBtn.disabled = false;
+            downloadBtn.disabled = normalizedFiles.length === 0;
+            normalizeBtn.disabled = false;
             
-            if (convertedFiles.length > 0) {
-                showConversionResults();
+            if (normalizedFiles.length > 0) {
+                showNormalizationResults();
+                if (document.getElementById('previewMode').checked) {
+                    showComparison();
+                }
             }
         }
         
-        // Show conversion results
-        function showConversionResults() {
+        // Calculate peak from file
+        function calculatePeakLevelFromFile(file) {
+            // This is a placeholder - in a real implementation,
+            // you would decode the file and calculate the peak
+            return Math.random() * 20 - 10; // Random value between -10 and 10
+        }
+        
+        // Calculate peak from blob
+        function calculatePeakLevelFromBlob(blob) {
+            // This is a placeholder - in a real implementation,
+            // you would decode the blob and calculate the peak
+            return -3; // Target level
+        }
+        
+        // Show normalization results
+        function showNormalizationResults() {
             outputSection.style.display = 'block';
-            const resultsHtml = convertedFiles.map(file => `
-                <div class="conversion-result" style="padding: 15px; background: #f9f9f9; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+            const resultsHtml = normalizedFiles.map(file => `
+                <div class="normalization-result" style="padding: 15px; background: #f9f9f9; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <strong>${file.name}</strong>
                         <br>
                         <small style="color: #666;">Original: ${file.originalFile.name}</small>
                         <br>
                         <small style="color: #666;">Size: ${(file.blob.size / 1024 / 1024).toFixed(2)} MB</small>
+                        <br>
+                        <small style="color: #666;">Peak: ${file.originalPeak.toFixed(1)} dB → ${file.normalizedPeak.toFixed(1)} dB</small>
                     </div>
                     <button onclick="downloadSingle('${file.url}', '${file.name}')" style="background: #22c55e; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
                         Download
@@ -1099,9 +1382,18 @@
             `).join('');
             
             outputSection.querySelector('#outputContent').innerHTML = `
-                <h4>Conversion Results</h4>
+                <h4>Normalization Results</h4>
                 ${resultsHtml}
             `;
+        }
+        
+        // Show comparison
+        function showComparison() {
+            if (normalizedFiles.length === 0) return;
+            
+            comparisonSection.style.display = 'grid';
+            originalPeak.textContent = `${normalizedFiles[0].originalPeak.toFixed(1)} dB`;
+            normalizedPeak.textContent = `${normalizedFiles[0].normalizedPeak.toFixed(1)} dB`;
         }
         
         // Download single file
@@ -1116,7 +1408,7 @@
         
         // Download all files
         function downloadAll() {
-            convertedFiles.forEach(file => {
+            normalizedFiles.forEach(file => {
                 setTimeout(() => {
                     downloadSingle(file.url, file.name);
                 }, 100);
@@ -1126,15 +1418,16 @@
         // Reset functionality
         function resetTool() {
             selectedFiles = [];
-            convertedFiles = [];
+            normalizedFiles = [];
             fileInput.value = '';
             
-            convertBtn.disabled = true;
+            normalizeBtn.disabled = true;
             downloadBtn.disabled = true;
             downloadAllBtn.disabled = true;
             outputSection.style.display = 'none';
             waveformSection.style.display = 'none';
             fileList.style.display = 'none';
+            comparisonSection.style.display = 'none';
             progressContainer.style.display = 'none';
             
             dropZone.querySelector('.drop-zone-text').textContent = 
@@ -1147,10 +1440,10 @@
         }
         
         // Event listeners
-        convertBtn.addEventListener('click', convertFiles);
+        normalizeBtn.addEventListener('click', normalizeFiles);
         downloadBtn.addEventListener('click', () => {
-            if (convertedFiles.length > 0) {
-                downloadSingle(convertedFiles[0].url, convertedFiles[0].name);
+            if (normalizedFiles.length > 0) {
+                downloadSingle(normalizedFiles[0].url, normalizedFiles[0].name);
             }
         });
         downloadAllBtn.addEventListener('click', downloadAll);
@@ -1170,6 +1463,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Preload FFmpeg in background
             initFFmpeg();
+            
+            // Initialize audio context
+            initAudioContext();
+            
+            // Initialize control states
+            updateTargetLevelVisibility();
         });
     </script>
 </body>

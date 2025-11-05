@@ -226,6 +226,203 @@
             border: none;
         }
         
+        .preset-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: var(--spacing-xs);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .preset-btn {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-small);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .preset-btn:hover {
+            border-color: #10B981;
+            background: #ECFDF5;
+        }
+        
+        .preset-btn.active {
+            border-color: #10B981;
+            background: #10B981;
+            color: white;
+        }
+        
+        .file-list {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-sm);
+            border-bottom: 1px solid var(--color-neutral-200);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .file-preview {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-input);
+            object-fit: cover;
+            background: var(--color-neutral-100);
+        }
+        
+        .file-details {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-900);
+            margin-bottom: 2px;
+        }
+        
+        .file-size {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-500);
+        }
+        
+        .file-status {
+            font-size: var(--font-size-small);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .file-status.pending {
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-600);
+        }
+        
+        .file-status.processing {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+        
+        .file-status.completed {
+            background: #D1FAE5;
+            color: #059669;
+        }
+        
+        .file-status.error {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+        
+        .batch-settings {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .batch-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: var(--radius-input);
+        }
+        
+        .batch-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #10B981;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10B981, #059669);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .image-card {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-card);
+            text-align: center;
+        }
+        
+        .image-card img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius-input);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .image-card-info {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .download-all-btn {
+            background: #10B981;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            margin-bottom: var(--spacing-lg);
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .download-all-btn:hover {
+            background: #059669;
+        }
+        
+        .download-all-btn:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+        }
+        
         .tool-output {
             background: var(--color-neutral-50);
             border-radius: var(--radius-card);
@@ -474,11 +671,66 @@
             </select>
         </div>
         
+        <div class="control-group">
+            <label class="control-label">Resize Mode</label>
+            <select class="control-input" id="resizeModeSelect">
+                <option value="fit">Fit (maintain aspect ratio)</option>
+                <option value="fill">Fill (crop to fit)</option>
+                <option value="stretch">Stretch (no aspect ratio)</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">Presets</label>
+            <div class="preset-buttons" id="presetButtons">
+                <button class="preset-btn" data-width="1920" data-height="1080">HD (1920×1080)</button>
+                <button class="preset-btn" data-width="1280" data-height="720">720p (1280×720)</button>
+                <button class="preset-btn" data-width="800" data-height="600">800×600</button>
+                <button class="preset-btn" data-width="600" data-height="600">Square (600×600)</button>
+                <button class="preset-btn" data-width="400" data-height="400">Thumb (400×400)</button>
+                <button class="preset-btn" data-width="300" data-height="300">Icon (300×300)</button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label">Batch Settings</label>
+            <div class="batch-settings">
+                <div class="batch-option">
+                    <input type="checkbox" id="sameSize">
+                    <label for="sameSize">Use same size for all images</label>
+                </div>
+                <div class="batch-option">
+                    <input type="checkbox" id="maintainAspect" checked>
+                    <label for="maintainAspect">Maintain aspect ratio</label>
+                </div>
+                <div class="batch-option">
+                    <input type="checkbox" id="includeOriginal">
+                    <label for="includeOriginal">Include original size in batch</label>
+                </div>
+            </div>
+        </div>
+        
             </div>
             
-            <div class="tool-output" id="toolOutput">
-                <h3>Result</h3>
-                <div id="outputContent"></div>
+            <div class="file-list" id="fileList" style="display: none;">
+                <h3>Selected Images</h3>
+                <div id="fileItems"></div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput" style="display: none;">
+                <h3>Processing Results</h3>
+                <div id="progressSection">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText">Ready to process...</p>
+                </div>
+                <div id="resultsSection">
+                    <button class="download-all-btn" id="downloadAllBtn" disabled>
+                        Download All Processed Images
+                    </button>
+                    <div class="image-grid" id="imageGrid"></div>
+                </div>
             </div>
             
             <div class="tool-actions">
@@ -566,82 +818,540 @@
     
     <!-- JavaScript -->
     <script>
-        // Tool functionality will be implemented here
-        // This is a placeholder for the actual tool logic
-        
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const processBtn = document.getElementById('processBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const outputSection = document.getElementById('toolOutput');
-        
-        let selectedFiles = [];
-        
-        // Drag and drop functionality
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over');
-        });
-        
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over');
-        });
-        
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-            handleFiles(e.dataTransfer.files);
-        });
-        
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-        
-        function handleFiles(files) {
-            selectedFiles = Array.from(files);
-            if (selectedFiles.length > 0) {
-                processBtn.disabled = false;
-                dropZone.querySelector('.drop-zone-text').textContent = 
-                    `${selectedFiles.length} file(s) selected`;
+        // Image Resizer Tool with full functionality
+        class ImageResizer {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.processBtn = document.getElementById('processBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                this.fileList = document.getElementById('fileList');
+                this.fileItems = document.getElementById('fileItems');
+                this.imageGrid = document.getElementById('imageGrid');
+                this.downloadAllBtn = document.getElementById('downloadAllBtn');
+                this.progressFill = document.getElementById('progressFill');
+                this.progressText = document.getElementById('progressText');
+                
+                // Control elements
+                this.widthInput = document.getElementById('widthInput');
+                this.heightInput = document.getElementById('heightInput');
+                this.qualitySlider = document.getElementById('qualitySlider');
+                this.qualityValue = document.getElementById('qualityValue');
+                this.formatSelect = document.getElementById('formatSelect');
+                this.resizeModeSelect = document.getElementById('resizeModeSelect');
+                this.presetButtons = document.getElementById('presetButtons');
+                this.sameSizeCheckbox = document.getElementById('sameSize');
+                this.maintainAspectCheckbox = document.getElementById('maintainAspect');
+                this.includeOriginalCheckbox = document.getElementById('includeOriginal');
+                
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.currentFileIndex = 0;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.setupQualitySlider();
+                this.setupPresetButtons();
+                this.setupMobileMenu();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop
+                this.dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                this.dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                this.dropZone.addEventListener('drop', this.handleDrop.bind(this));
+                this.dropZone.addEventListener('click', () => this.fileInput.click());
+                
+                // File input
+                this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
+                
+                // Controls
+                this.widthInput.addEventListener('input', this.updatePresetSelection.bind(this));
+                this.heightInput.addEventListener('input', this.updatePresetSelection.bind(this));
+                this.sameSizeCheckbox.addEventListener('change', this.handleBatchModeChange.bind(this));
+                
+                // Buttons
+                this.processBtn.addEventListener('click', this.processImages.bind(this));
+                this.downloadBtn.addEventListener('click', this.downloadImage.bind(this));
+                this.downloadAllBtn.addEventListener('click', this.downloadAllImages.bind(this));
+                this.resetBtn.addEventListener('click', this.reset.bind(this));
+            }
+            
+            setupQualitySlider() {
+                this.qualitySlider.addEventListener('input', () => {
+                    this.qualityValue.textContent = this.qualitySlider.value;
+                });
+            }
+            
+            setupPresetButtons() {
+                this.presetButtons.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('preset-btn')) {
+                        const width = e.target.dataset.width;
+                        const height = e.target.dataset.height;
+                        
+                        this.widthInput.value = width;
+                        this.heightInput.value = height;
+                        
+                        // Update active state
+                        this.presetButtons.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                    }
+                });
+            }
+            
+            setupMobileMenu() {
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                
+                if (menuToggle && navLinks) {
+                    menuToggle.addEventListener('click', () => {
+                        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                        menuToggle.setAttribute('aria-expanded', !isExpanded);
+                        navLinks.classList.toggle('active');
+                    });
+                }
+            }
+            
+            updatePresetSelection() {
+                // Remove active state from all preset buttons
+                this.presetButtons.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+            }
+            
+            handleBatchModeChange() {
+                const isBatchMode = this.sameSizeCheckbox.checked;
+                this.widthInput.disabled = isBatchMode && this.selectedFiles.length > 1;
+                this.heightInput.disabled = isBatchMode && this.selectedFiles.length > 1;
+            }
+            
+            handleDragOver(e) {
+                e.preventDefault();
+                this.dropZone.classList.add('drag-over');
+            }
+            
+            handleDragLeave() {
+                this.dropZone.classList.remove('drag-over');
+            }
+            
+            handleDrop(e) {
+                e.preventDefault();
+                this.dropZone.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                this.handleFiles(files);
+            }
+            
+            handleFileSelect(e) {
+                this.handleFiles(e.target.files);
+            }
+            
+            async handleFiles(files) {
+                const imageFiles = Array.from(files).filter(file => 
+                    file.type.startsWith('image/')
+                );
+                
+                if (imageFiles.length === 0) {
+                    alert('Please select image files only.');
+                    return;
+                }
+                
+                this.selectedFiles = imageFiles;
+                this.displayFileList();
+                this.updateUI();
+            }
+            
+            displayFileList() {
+                if (this.selectedFiles.length === 0) {
+                    this.fileList.style.display = 'none';
+                    return;
+                }
+                
+                this.fileList.style.display = 'block';
+                this.fileItems.innerHTML = '';
+                
+                this.selectedFiles.forEach((file, index) => {
+                    const fileItem = this.createFileItem(file, index);
+                    this.fileItems.appendChild(fileItem);
+                });
+            }
+            
+            createFileItem(file, index) {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const preview = document.createElement('img');
+                preview.className = 'file-preview';
+                preview.alt = file.name;
+                
+                const details = document.createElement('div');
+                details.className = 'file-details';
+                
+                const name = document.createElement('div');
+                name.className = 'file-name';
+                name.textContent = file.name;
+                
+                const size = document.createElement('div');
+                size.className = 'file-size';
+                size.textContent = this.formatFileSize(file.size);
+                
+                details.appendChild(name);
+                details.appendChild(size);
+                
+                const status = document.createElement('div');
+                status.className = 'file-status pending';
+                status.textContent = 'Pending';
+                
+                fileInfo.appendChild(preview);
+                fileInfo.appendChild(details);
+                
+                item.appendChild(fileInfo);
+                item.appendChild(status);
+                
+                // Load preview
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                return item;
+            }
+            
+            updateUI() {
+                if (this.selectedFiles.length > 0) {
+                    this.processBtn.disabled = false;
+                    this.dropZone.querySelector('.drop-zone-text').textContent = 
+                        `${this.selectedFiles.length} image(s) selected`;
+                } else {
+                    this.processBtn.disabled = true;
+                    this.dropZone.querySelector('.drop-zone-text').textContent = 
+                        'Drop your image files here or click to browse';
+                }
+                
+                this.handleBatchModeChange();
+            }
+            
+            async processImages() {
+                if (this.selectedFiles.length === 0) return;
+                
+                this.outputSection.style.display = 'block';
+                this.processBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.downloadAllBtn.disabled = true;
+                this.processedImages = [];
+                this.currentFileIndex = 0;
+                
+                const totalFiles = this.selectedFiles.length;
+                
+                for (let i = 0; i < totalFiles; i++) {
+                    await this.processSingleImage(this.selectedFiles[i], i, totalFiles);
+                    this.updateFileStatus(i, 'completed', 'Completed');
+                    this.updateProgress((i + 1) / totalFiles * 100);
+                }
+                
+                this.displayResults();
+                this.downloadAllBtn.disabled = this.processedImages.length === 0;
+                this.processBtn.disabled = false;
+            }
+            
+            async processSingleImage(file, index, total) {
+                try {
+                    this.updateFileStatus(index, 'processing', 'Processing...');
+                    
+                    const img = await this.loadImage(file);
+                    const canvas = this.createCanvas(img);
+                    
+                    // Get settings
+                    const settings = this.getResizeSettings(img);
+                    
+                    // Resize image
+                    const resizedImageData = await this.resizeImage(img, settings);
+                    
+                    // Store processed image
+                    this.processedImages.push({
+                        original: file,
+                        resized: resizedImageData,
+                        originalSize: { width: img.naturalWidth, height: img.naturalHeight },
+                        newSize: { width: settings.width, height: settings.height },
+                        settings: settings
+                    });
+                    
+                } catch (error) {
+                    console.error('Error processing image:', error);
+                    this.updateFileStatus(index, 'error', 'Error');
+                }
+            }
+            
+            loadImage(file) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        img.onload = () => resolve(img);
+                        img.onerror = reject;
+                        img.src = e.target.result;
+                    };
+                    
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            getResizeSettings(img) {
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                let width = this.widthInput.value ? parseInt(this.widthInput.value) : img.naturalWidth;
+                let height = this.heightInput.value ? parseInt(this.heightInput.value) : img.naturalHeight;
+                
+                const mode = this.resizeModeSelect.value;
+                const maintainAspect = this.maintainAspectCheckbox.checked;
+                
+                if (maintainAspect || mode === 'fit') {
+                    if (width && !height) {
+                        height = Math.round(width / aspectRatio);
+                    } else if (!width && height) {
+                        width = Math.round(height * aspectRatio);
+                    } else if (width && height) {
+                        const ratio = width / height;
+                        if (Math.abs(ratio - aspectRatio) > 0.01) {
+                            // Adjust dimensions to maintain aspect ratio
+                            if (ratio > aspectRatio) {
+                                height = Math.round(width / aspectRatio);
+                            } else {
+                                width = Math.round(height * aspectRatio);
+                            }
+                        }
+                    }
+                }
+                
+                width = width || img.naturalWidth;
+                height = height || img.naturalHeight;
+                
+                return {
+                    width,
+                    height,
+                    quality: parseInt(this.qualitySlider.value) / 10,
+                    format: this.formatSelect.value,
+                    mode,
+                    maintainAspect
+                };
+            }
+            
+            async resizeImage(img, settings) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas dimensions
+                canvas.width = settings.width;
+                canvas.height = settings.height;
+                
+                // Configure canvas
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                // Calculate source dimensions for different modes
+                let sourceX = 0, sourceY = 0, sourceWidth = img.naturalWidth, sourceHeight = img.naturalHeight;
+                
+                if (settings.mode === 'fill') {
+                    // Crop to fit
+                    const targetRatio = settings.width / settings.height;
+                    const sourceRatio = img.naturalWidth / img.naturalHeight;
+                    
+                    if (sourceRatio > targetRatio) {
+                        // Source is wider, crop width
+                        sourceWidth = img.naturalHeight * targetRatio;
+                        sourceX = (img.naturalWidth - sourceWidth) / 2;
+                    } else {
+                        // Source is taller, crop height
+                        sourceHeight = img.naturalWidth / targetRatio;
+                        sourceY = (img.naturalHeight - sourceHeight) / 2;
+                    }
+                }
+                
+                // Draw image
+                ctx.drawImage(
+                    img,
+                    sourceX, sourceY, sourceWidth, sourceHeight,
+                    0, 0, settings.width, settings.height
+                );
+                
+                // Convert to blob
+                return new Promise((resolve) => {
+                    const format = settings.format === 'original' ? 
+                        this.getOriginalFormat(img) : settings.format;
+                    
+                    canvas.toBlob((blob) => {
+                        resolve({
+                            blob,
+                            dataURL: canvas.toDataURL(this.getMimeType(format)),
+                            format: format
+                        });
+                    }, this.getMimeType(format), settings.quality);
+                });
+            }
+            
+            getOriginalFormat(img) {
+                const originalType = img.src.split(';')[0].split('/')[1];
+                return originalType === 'jpeg' ? 'jpg' : originalType;
+            }
+            
+            getMimeType(format) {
+                const mimeTypes = {
+                    jpg: 'image/jpeg',
+                    jpeg: 'image/jpeg',
+                    png: 'image/png',
+                    webp: 'image/webp',
+                    gif: 'image/gif'
+                };
+                return mimeTypes[format] || 'image/png';
+            }
+            
+            updateProgress(percentage) {
+                this.progressFill.style.width = `${percentage}%`;
+                this.progressText.textContent = `Processing... ${Math.round(percentage)}%`;
+            }
+            
+            updateFileStatus(index, status, text) {
+                const fileItems = this.fileItems.querySelectorAll('.file-item');
+                if (fileItems[index]) {
+                    const statusElement = fileItems[index].querySelector('.file-status');
+                    statusElement.className = `file-status ${status}`;
+                    statusElement.textContent = text;
+                }
+            }
+            
+            displayResults() {
+                this.imageGrid.innerHTML = '';
+                
+                this.processedImages.forEach((imageData, index) => {
+                    const card = this.createImageCard(imageData, index);
+                    this.imageGrid.appendChild(card);
+                });
+            }
+            
+            createImageCard(imageData, index) {
+                const card = document.createElement('div');
+                card.className = 'image-card';
+                
+                const img = document.createElement('img');
+                img.src = imageData.resized.dataURL;
+                img.alt = imageData.original.name;
+                
+                const info = document.createElement('div');
+                info.className = 'image-card-info';
+                info.innerHTML = `
+                    ${imageData.original.name}<br>
+                    ${imageData.originalSize.width}×${imageData.originalSize.height} → 
+                    ${imageData.newSize.width}×${imageData.newSize.height}<br>
+                    ${this.formatFileSize(imageData.original.size)} → 
+                    ${this.formatFileSize(imageData.resized.blob.size)}
+                `;
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn-tool';
+                downloadBtn.textContent = 'Download';
+                downloadBtn.addEventListener('click', () => {
+                    this.downloadSingleImage(index);
+                });
+                
+                card.appendChild(img);
+                card.appendChild(info);
+                card.appendChild(downloadBtn);
+                
+                return card;
+            }
+            
+            async downloadSingleImage(index) {
+                const imageData = this.processedImages[index];
+                const url = URL.createObjectURL(imageData.resized.blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = this.getOutputFilename(imageData);
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                URL.revokeObjectURL(url);
+            }
+            
+            async downloadAllImages() {
+                for (let i = 0; i < this.processedImages.length; i++) {
+                    await this.downloadSingleImage(i);
+                    // Small delay to prevent browser blocking
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+            }
+            
+            getOutputFilename(imageData) {
+                const originalName = imageData.original.name;
+                const extension = imageData.resized.format;
+                const nameWithoutExt = originalName.split('.')[0];
+                return `${nameWithoutExt}_resized.${extension}`;
+            }
+            
+            downloadImage() {
+                if (this.processedImages.length > 0) {
+                    this.downloadSingleImage(0);
+                }
+            }
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            reset() {
+                this.selectedFiles = [];
+                this.processedImages = [];
+                this.fileInput.value = '';
+                this.widthInput.value = '';
+                this.heightInput.value = '';
+                this.qualitySlider.value = 8;
+                this.qualityValue.textContent = '8';
+                this.formatSelect.value = 'original';
+                this.resizeModeSelect.value = 'fit';
+                this.sameSizeCheckbox.checked = false;
+                this.maintainAspectCheckbox.checked = true;
+                this.includeOriginalCheckbox.checked = false;
+                
+                // Clear UI
+                this.fileList.style.display = 'none';
+                this.outputSection.style.display = 'none';
+                this.imageGrid.innerHTML = '';
+                this.progressFill.style.width = '0%';
+                this.progressText.textContent = 'Ready to process...';
+                
+                // Reset buttons
+                this.processBtn.disabled = true;
+                this.downloadBtn.disabled = true;
+                this.downloadAllBtn.disabled = true;
+                
+                // Reset drop zone
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop your image files here or click to browse';
+                
+                // Reset preset buttons
+                this.presetButtons.querySelectorAll('.preset-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
             }
         }
         
-        processBtn.addEventListener('click', () => {
-            // Placeholder for actual processing logic
-            outputSection.style.display = 'block';
-            outputSection.querySelector('#outputContent').innerHTML = 
-                '<div class="output-text">Processing completed! (This is a demo - implement actual tool logic here)</div>';
-            downloadBtn.disabled = false;
-        });
-        
-        downloadBtn.addEventListener('click', () => {
-            // Placeholder for download functionality
-            alert('Download would start here (implement actual download logic)');
-        });
-        
-        resetBtn.addEventListener('click', () => {
-            selectedFiles = [];
-            fileInput.value = '';
-            processBtn.disabled = true;
-            downloadBtn.disabled = true;
-            outputSection.style.display = 'none';
-            dropZone.querySelector('.drop-zone-text').textContent = 
-                'Drop your image files here or click to browse';
-        });
-        
-        // Mobile menu functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
+        // Initialize the image resizer when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ImageResizer();
         });
     </script>
 </body>

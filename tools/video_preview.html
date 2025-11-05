@@ -38,6 +38,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/ffmpeg.min.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -406,12 +409,83 @@
         let currentVideo = null;
         let generatedThumbnails = [];
         let selectedSize = { width: 640, height: 360 };
+        let ffmpeg = null;
+        let ffmpegLoaded = false;
 
-        // Video processing functionality
-        document.addEventListener('DOMContentLoaded', function() {
+        // FFmpeg.wasm initialization
+        document.addEventListener('DOMContentLoaded', async function() {
             setupDragAndDrop();
             setupSettingsHandlers();
+            await initializeFFmpeg();
         });
+
+        async function initializeFFmpeg() {
+            // Show loading status
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'ffmpeg-status loading';
+            statusDiv.innerHTML = '🔄 Loading video processing...';
+            document.body.appendChild(statusDiv);
+            
+            try {
+                // Check if FFmpegWASM is available
+                if (typeof FFmpegWASM === 'undefined') {
+                    throw new Error('FFmpegWASM library not found');
+                }
+                
+                const { FFmpeg } = FFmpegWASM;
+                ffmpeg = new FFmpeg();
+                
+                // Set up progress tracking
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+                
+                ffmpeg.on('progress', ({ progress, time }) => {
+                    if (progress) {
+                        const percentage = Math.round(progress * 100);
+                        statusDiv.innerHTML = `🔄 Loading video processing... ${percentage}%`;
+                    }
+                });
+                
+                // Load FFmpeg with timeout
+                const loadPromise = ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/ffmpeg-core.js'
+                });
+                
+                // Add timeout to load operation
+                await Promise.race([
+                    loadPromise,
+                    new Promise((_, reject) => 
+                        setTimeout(() => reject(new Error('FFmpeg loading timeout')), 30000)
+                    )
+                ]);
+                
+                ffmpegLoaded = true;
+                statusDiv.className = 'ffmpeg-status ready';
+                statusDiv.innerHTML = '✅ Video processing ready';
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    if (statusDiv.parentNode) {
+                        statusDiv.remove();
+                    }
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                ffmpegLoaded = false;
+                
+                statusDiv.className = 'ffmpeg-status error';
+                statusDiv.innerHTML = '⚠️ Using fallback method';
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    if (statusDiv.parentNode) {
+                        statusDiv.remove();
+                    }
+                }, 5000);
+            }
+        }
 
         function setupDragAndDrop() {
             const uploadArea = document.getElementById('uploadArea');
@@ -552,7 +626,18 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        function generateThumbnails() {
+        function checkFFmpegStatus() {
+            if (!ffmpegLoaded) {
+                showError('Video processing library not available. Please refresh the page and try again.');
+                return false;
+            }
+            return true;
+        }
+
+        async function generateThumbnails() {
+            if (!checkFFmpegStatus()) {
+                return;
+            }
             if (!currentVideo) {
                 showError('Please upload a video file first.');
                 return;
@@ -572,31 +657,29 @@
             showProgress();
             generatedThumbnails = [];
 
-            const generateMultiple = document.getElementById('generateMultiple').checked;
-            const thumbsCount = parseInt(document.getElementById('thumbsCount').value);
-            const thumbnailsToGenerate = generateMultiple ? thumbsCount : 1;
+            try {
+                const generateMultiple = document.getElementById('generateMultiple').checked;
+                const thumbsCount = parseInt(document.getElementById('thumbsCount').value);
+                const thumbnailsToGenerate = generateMultiple ? thumbsCount : 1;
 
-            // Calculate timestamps
-            const timestamps = generateTimestamps(currentVideo.duration, thumbnailsToGenerate);
-            
-            // Generate thumbnails sequentially
-            let currentIndex = 0;
-            function generateNext() {
-                if (currentIndex >= timestamps.length) {
-                    hideProgress();
-                    showResults();
-                    return;
+                // Calculate timestamps
+                const timestamps = generateTimestamps(currentVideo.duration, thumbnailsToGenerate);
+                
+                if (ffmpegLoaded) {
+                    // Use FFmpeg for processing
+                    await generateThumbnailsWithFFmpeg(timestamps);
+                } else {
+                    // Fallback to Canvas API
+                    await generateThumbnailsWithCanvas(timestamps);
                 }
-
-                const timestamp = timestamps[currentIndex];
-                generateSingleThumbnail(timestamp, currentIndex).then(() => {
-                    currentIndex++;
-                    updateProgress((currentIndex / timestamps.length) * 100);
-                    setTimeout(generateNext, 100); // Small delay to prevent UI blocking
-                });
+                
+                hideProgress();
+                showResults();
+            } catch (error) {
+                console.error('Error generating thumbnails:', error);
+                hideProgress();
+                showError('Error generating thumbnails: ' + error.message);
             }
-
-            generateNext();
         }
 
         function generateTimestamps(duration, count) {
@@ -625,7 +708,101 @@
             }
         }
 
-        function generateSingleThumbnail(timestamp, index) {
+        async function generateThumbnailsWithFFmpeg(timestamps) {
+            const videoFile = currentVideo.src;
+            
+            // Try to fetch video data
+            let response;
+            try {
+                response = await fetch(videoFile);
+            } catch (error) {
+                // If fetch fails due to CORS, fall back to Canvas API
+                console.warn('CORS issue detected, falling back to Canvas API:', error);
+                await generateThumbnailsWithCanvas(timestamps);
+                return;
+            }
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch video: ${response.status} ${response.statusText}`);
+            }
+            
+            const videoData = await response.arrayBuffer();
+            
+            // Write video file to FFmpeg filesystem
+            await ffmpeg.writeFile('input_video', new Uint8Array(videoData));
+            
+            for (let i = 0; i < timestamps.length; i++) {
+                const timestamp = timestamps[i];
+                const timestampStr = formatTime(timestamp).replace(':', '-');
+                const outputName = `thumbnail_${i}_${timestampStr}.png`;
+                
+                try {
+                    // Use FFmpeg to extract frame at specific timestamp
+                    await ffmpeg.exec([
+                        '-i', 'input_video',
+                        '-ss', timestamp.toString(),
+                        '-vframes', '1',
+                        '-vf', `scale=${selectedSize.width}:${selectedSize.height}:force_original_aspect_ratio=decrease,pad=${selectedSize.width}:${selectedSize.height}:(ow-iw)/2:(oh-ih)/2`,
+                        '-f', 'image2',
+                        outputName
+                    ]);
+                    
+                    // Read the generated thumbnail
+                    const thumbnailData = await ffmpeg.readFile(outputName);
+                    const blob = new Blob([thumbnailData], { type: 'image/png' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    generatedThumbnails.push({
+                        url: url,
+                        blob: blob,
+                        filename: `thumbnail_${timestampStr}_${selectedSize.width}x${selectedSize.height}.png`,
+                        timestamp: timestamp,
+                        index: i
+                    });
+                    
+                    // Update progress
+                    updateProgress(((i + 1) / timestamps.length) * 100);
+                    
+                } catch (error) {
+                    console.error(`Error generating thumbnail at ${timestamp}s:`, error);
+                    throw new Error(`Failed to generate thumbnail at ${formatTime(timestamp)}`);
+                }
+            }
+            
+            // Clean up
+            try {
+                await ffmpeg.deleteFile('input_video');
+                for (let i = 0; i < timestamps.length; i++) {
+                    const timestampStr = formatTime(timestamps[i]).replace(':', '-');
+                    const outputName = `thumbnail_${i}_${timestampStr}.png`;
+                    await ffmpeg.deleteFile(outputName);
+                }
+            } catch (cleanupError) {
+                console.warn('Cleanup error:', cleanupError);
+            }
+        }
+
+        async function generateThumbnailsWithCanvas(timestamps) {
+            // Fallback implementation using Canvas API
+            let currentIndex = 0;
+            
+            function generateNext() {
+                if (currentIndex >= timestamps.length) {
+                    return Promise.resolve();
+                }
+
+                const timestamp = timestamps[currentIndex];
+                return generateSingleThumbnailWithCanvas(timestamp, currentIndex).then(() => {
+                    currentIndex++;
+                    updateProgress((currentIndex / timestamps.length) * 100);
+                    return generateNext();
+                });
+            }
+            
+            await generateNext();
+        }
+
+        function generateSingleThumbnailWithCanvas(timestamp, index) {
             return new Promise((resolve) => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
@@ -679,9 +856,20 @@
             });
         }
 
+
+
         function showProgress() {
             document.getElementById('progressSection').style.display = 'block';
             document.getElementById('resultsSection').style.display = 'none';
+            
+            // Update progress text to show processing method
+            const progressText = document.getElementById('progressText');
+            if (ffmpegLoaded) {
+                progressText.textContent = 'Loading FFmpeg... 0%';
+            } else {
+                progressText.textContent = 'Processing... 0%';
+            }
+            
             updateProgress(0);
         }
 
@@ -690,7 +878,12 @@
             const progressText = document.getElementById('progressText');
             
             progressFill.style.width = percentage + '%';
-            progressText.textContent = Math.round(percentage) + '%';
+            
+            if (ffmpegLoaded) {
+                progressText.textContent = 'Processing... ' + Math.round(percentage) + '%';
+            } else {
+                progressText.textContent = Math.round(percentage) + '%';
+            }
         }
 
         function hideProgress() {
@@ -1298,6 +1491,35 @@
             padding: var(--spacing-xs) var(--spacing-sm);
             font-size: var(--font-size-small);
             border-radius: var(--radius-button);
+        }
+
+        .ffmpeg-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-700);
+            z-index: 1000;
+            opacity: 0.9;
+        }
+
+        .ffmpeg-status.loading {
+            border-color: var(--color-primary-300);
+            color: var(--color-primary-600);
+        }
+
+        .ffmpeg-status.ready {
+            border-color: var(--color-success-300);
+            color: var(--color-success-600);
+        }
+
+        .ffmpeg-status.error {
+            border-color: var(--color-error-300);
+            color: var(--color-error-600);
         }
 
         @media (max-width: 768px) {

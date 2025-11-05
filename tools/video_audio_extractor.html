@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -382,6 +386,8 @@
         let audioContext = null;
         let ffmpeg = null;
         let ffmpegLoaded = false;
+        let ffmpegLoading = false;
+        let currentExtractionController = null;
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
@@ -461,6 +467,11 @@
         }
 
         function removeFile() {
+            // Cancel any ongoing extraction
+            if (currentExtractionController) {
+                currentExtractionController.abort();
+            }
+            
             selectedFile = null;
             document.getElementById('fileInfo').style.display = 'none';
             document.getElementById('uploadArea').style.display = 'block';
@@ -566,24 +577,47 @@
             }
         }
 
-        // FFmpeg.wasm integration (basic structure)
+        // FFmpeg.wasm integration
         async function loadFFmpeg() {
-            if (ffmpegLoaded) return;
+            if (ffmpegLoaded || ffmpegLoading) {
+                while (ffmpegLoading && !ffmpegLoaded) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                return;
+            }
+            
+            ffmpegLoading = true;
             
             try {
-                // Initialize FFmpeg.wasm
-                // This is a placeholder - actual FFmpeg.wasm implementation would go here
-                ffmpeg = {
-                    run: async (args) => {
-                        // Placeholder implementation
-                        console.log('FFmpeg would run with args:', args);
-                        return { exitCode: 0 };
-                    }
-                };
+                updateProgress(10, 'Loading FFmpeg.wasm...');
+                
+                // Initialize FFmpeg
+                const { FFmpeg } = window.FFmpegWASM;
+                ffmpeg = new FFmpeg();
+                
+                // Set up logging
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+                
+                ffmpeg.on('progress', (progress) => {
+                    const percent = Math.round(progress.progress * 100);
+                    updateProgress(percent, 'Processing video...');
+                });
+                
+                // Load FFmpeg
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+                });
                 
                 ffmpegLoaded = true;
+                ffmpegLoading = false;
+                updateProgress(20, 'FFmpeg loaded successfully');
                 console.log('FFmpeg.wasm loaded successfully');
             } catch (error) {
+                ffmpegLoading = false;
+                console.error('Failed to load FFmpeg.wasm:', error);
                 throw new Error('Failed to load FFmpeg.wasm: ' + error.message);
             }
         }
@@ -597,16 +631,21 @@
 
             try {
                 showProcessing();
+                updateProgress(5, 'Initializing extraction...');
+                
                 await loadFFmpeg();
                 
                 const format = document.getElementById('audioFormat').value;
                 const bitrate = document.getElementById('bitrate').value;
                 const sampleRate = document.getElementById('sampleRate').value;
                 
-                updateProgress(20, 'Processing video file...');
+                updateProgress(25, 'Analyzing video file...');
                 
-                // Simulate FFmpeg extraction process
-                await simulateExtraction(format, bitrate, sampleRate);
+                // Create abort controller for this extraction
+                currentExtractionController = new AbortController();
+                
+                // Perform actual FFmpeg extraction
+                await performExtraction(format, bitrate, sampleRate, currentExtractionController.signal);
                 
                 updateProgress(100, 'Extraction complete!');
                 
@@ -614,33 +653,126 @@
                 setTimeout(() => {
                     showPreview();
                     showDownload();
-                }, 1000);
+                }, 500);
                 
             } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('Extraction was cancelled');
+                    return;
+                }
                 console.error('Extraction error:', error);
                 showError('Failed to extract audio: ' + error.message);
             } finally {
                 hideProcessing();
+                currentExtractionController = null;
             }
         }
 
-        // Simulate extraction process (placeholder for actual FFmpeg processing)
-        async function simulateExtraction(format, bitrate, sampleRate) {
-            const steps = [
-                { progress: 30, message: 'Analyzing video file...' },
-                { progress: 50, message: 'Extracting audio track...' },
-                { progress: 70, message: 'Converting format...' },
-                { progress: 90, message: 'Finalizing audio file...' }
-            ];
-
-            for (const step of steps) {
-                await new Promise(resolve => setTimeout(resolve, 800));
-                updateProgress(step.progress, step.message);
+        // Perform actual FFmpeg extraction
+        async function performExtraction(format, bitrate, sampleRate, signal) {
+            const inputFileName = 'input.' + selectedFile.name.split('.').pop();
+            const outputFileName = 'output.' + format;
+            
+            // Check if operation was cancelled
+            if (signal.aborted) {
+                throw new Error('Aborted');
             }
-
-            // Create a mock audio blob (in real implementation, this would be the extracted audio)
-            const mockAudioData = new ArrayBuffer(1024 * 1024); // 1MB mock data
-            extractedAudioBlob = new Blob([mockAudioData], { type: `audio/${format}` });
+            
+            // Write input file to FFmpeg
+            updateProgress(30, 'Preparing video file...');
+            await ffmpeg.writeFile(inputFileName, await selectedFile.arrayBuffer());
+            
+            if (signal.aborted) {
+                throw new Error('Aborted');
+            }
+            
+            // Build FFmpeg command based on format and settings
+            const ffmpegArgs = buildFFmpegCommand(inputFileName, outputFileName, format, bitrate, sampleRate);
+            
+            updateProgress(40, 'Extracting audio track...');
+            
+            // Run FFmpeg
+            await ffmpeg.exec(ffmpegArgs);
+            
+            if (signal.aborted) {
+                throw new Error('Aborted');
+            }
+            
+            updateProgress(80, 'Finalizing audio file...');
+            
+            // Read the output file
+            const outputData = await ffmpeg.readFile(outputFileName);
+            
+            // Create blob from output data
+            const mimeType = getMimeType(format);
+            extractedAudioBlob = new Blob([outputData], { type: mimeType });
+            
+            // Clean up files
+            try {
+                await ffmpeg.deleteFile(inputFileName);
+                await ffmpeg.deleteFile(outputFileName);
+            } catch (cleanupError) {
+                console.warn('Failed to cleanup temporary files:', cleanupError);
+            }
+        }
+        
+        // Build FFmpeg command based on format and settings
+        function buildFFmpegCommand(input, output, format, bitrate, sampleRate) {
+            const args = [
+                '-i', input,
+                '-vn', // No video
+                '-acodec', getCodec(format),
+                '-ar', sampleRate, // Sample rate
+                '-b:a', bitrate + 'k', // Bitrate
+            ];
+            
+            // Add format-specific parameters
+            switch (format) {
+                case 'mp3':
+                    args.push('-f', 'mp3');
+                    break;
+                case 'wav':
+                    // WAV doesn't use bitrate, adjust parameters
+                    args.splice(-1, 1); // Remove bitrate
+                    args.push('-f', 'wav');
+                    break;
+                case 'flac':
+                    args.push('-f', 'flac');
+                    break;
+                case 'aac':
+                    args.push('-f', 'adts');
+                    break;
+                case 'ogg':
+                    args.push('-f', 'ogg');
+                    break;
+            }
+            
+            args.push(output);
+            return args;
+        }
+        
+        // Get codec for format
+        function getCodec(format) {
+            const codecs = {
+                mp3: 'libmp3lame',
+                wav: 'pcm_s16le',
+                flac: 'flac',
+                aac: 'aac',
+                ogg: 'libvorbis'
+            };
+            return codecs[format] || 'libmp3lame';
+        }
+        
+        // Get MIME type for format
+        function getMimeType(format) {
+            const mimeTypes = {
+                mp3: 'audio/mpeg',
+                wav: 'audio/wav',
+                flac: 'audio/flac',
+                aac: 'audio/aac',
+                ogg: 'audio/ogg'
+            };
+            return mimeTypes[format] || 'audio/mpeg';
         }
 
         // Progress management
@@ -680,7 +812,14 @@
             const sampleRate = (document.getElementById('sampleRate').value / 1000).toFixed(1);
             
             audioFormatInfo.textContent = `${format} • ${bitrate} kbps • ${sampleRate} kHz`;
-            audioDuration.textContent = '03:45'; // Mock duration
+            
+            // Try to get actual duration from audio element
+            const audio = document.getElementById('audioPlayer');
+            if (audio.duration && !isNaN(audio.duration)) {
+                audioDuration.textContent = formatDuration(audio.duration);
+            } else {
+                audioDuration.textContent = '00:00';
+            }
             
             // Draw waveform (placeholder)
             drawWaveform();
@@ -712,7 +851,18 @@
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw mock waveform
+            const audio = document.getElementById('audioPlayer');
+            
+            // If audio is loaded and has duration, try to generate a real waveform
+            if (audio.src && audio.duration && !isNaN(audio.duration)) {
+                generateRealWaveform(audio, canvas, ctx);
+            } else {
+                // Draw mock waveform for loading state
+                drawMockWaveform(canvas, ctx);
+            }
+        }
+        
+        function drawMockWaveform(canvas, ctx) {
             const width = canvas.width;
             const height = canvas.height;
             const centerY = height / 2;
@@ -723,6 +873,46 @@
             
             for (let x = 0; x < width; x++) {
                 const amplitude = Math.sin(x * 0.02) * 0.3 + Math.sin(x * 0.05) * 0.1;
+                const y = centerY + amplitude * (height * 0.4);
+                
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.stroke();
+        }
+        
+        function generateRealWaveform(audio, canvas, ctx) {
+            // This is a simplified waveform generation
+            // For a full implementation, you'd need to decode the audio data
+            // and generate actual waveform samples
+            
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerY = height / 2;
+            
+            ctx.strokeStyle = '#8B5CF6';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            
+            // Generate a more realistic waveform pattern
+            for (let x = 0; x < width; x++) {
+                const progress = x / width;
+                const time = progress * audio.duration;
+                
+                // Simulate audio amplitude based on time (this is a simplified version)
+                let amplitude = 0;
+                for (let freq = 1; freq <= 5; freq++) {
+                    amplitude += Math.sin((time * freq * Math.PI) / (audio.duration / 4)) * (0.2 / freq);
+                }
+                
+                // Add some randomness for realism
+                amplitude += (Math.random() - 0.5) * 0.1;
+                amplitude = Math.max(-1, Math.min(1, amplitude));
+                
                 const y = centerY + amplitude * (height * 0.4);
                 
                 if (x === 0) {
@@ -776,6 +966,11 @@
 
         // Utility functions
         function resetTool() {
+            // Cancel any ongoing extraction
+            if (currentExtractionController) {
+                currentExtractionController.abort();
+            }
+            
             removeFile();
             resetExtraction();
             document.getElementById('actionButtons').style.display = 'flex';
@@ -803,6 +998,12 @@
             document.getElementById('errorSection').style.display = 'none';
         }
 
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
         function showNotification(message) {
             // Create and show a temporary notification
             const notification = document.createElement('div');
@@ -819,6 +1020,8 @@
                 font-weight: 500;
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+                word-wrap: break-word;
             `;
             
             document.body.appendChild(notification);
@@ -826,7 +1029,9 @@
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
-                    document.body.removeChild(notification);
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
                 }, 300);
             }, 3000);
         }

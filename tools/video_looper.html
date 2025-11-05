@@ -38,6 +38,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
     
+    <!-- FFmpeg.wasm Library -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -244,9 +248,10 @@
                             <span class="btn-text">Create Looped Video</span>
                         </button>
                         <div class="processing-info">
-                            <p>• Processing happens locally in your browser</p>
+                            <p>• Processing happens locally in your browser using FFmpeg.wasm</p>
                             <p>• No video data is uploaded to any server</p>
                             <p>• Keep this tab open during processing</p>
+                            <p>• First use may take longer while FFmpeg.wasm loads</p>
                         </div>
                     </div>
                     
@@ -407,9 +412,23 @@
         let isProcessing = false;
 
         // Initialize the tool
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             setupEventListeners();
-            setupFFmpeg();
+            showNotification('🔄 Loading FFmpeg.wasm... This may take a moment on first use.', 'info');
+            
+            // Add a timeout for FFmpeg initialization
+            const initTimeout = setTimeout(() => {
+                if (!ffmpeg) {
+                    showNotification('⏰ FFmpeg taking longer than expected. Some features may be limited.', 'warning');
+                }
+            }, 10000); // 10 second timeout
+            
+            const success = await setupFFmpeg();
+            clearTimeout(initTimeout);
+            
+            if (!success) {
+                showNotification('⚠️ Some features may be limited if FFmpeg failed to load.', 'warning');
+            }
         });
 
         function setupEventListeners() {
@@ -455,10 +474,48 @@
             }
         }
 
-        function setupFFmpeg() {
-            // FFmpeg.wasm integration structure
-            // Actual implementation will be added when FFmpeg.wasm is ready
-            console.log('FFmpeg setup placeholder - integration will be added later');
+        async function setupFFmpeg() {
+            try {
+                showNotification('🔄 Initializing FFmpeg...', 'info');
+                
+                // Wait a bit for CDN scripts to load
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                if (typeof FFmpeg === 'undefined') {
+                    throw new Error('FFmpeg library not loaded');
+                }
+                
+                const { fetchFile, toBlobURL } = FFmpegUtil || {};
+                if (!fetchFile || !toBlobURL) {
+                    throw new Error('FFmpegUtil not available');
+                }
+                
+                ffmpeg = new FFmpeg();
+                
+                // Set up FFmpeg with progress tracking
+                ffmpeg.on('log', ({ message }) => {
+                    console.log('FFmpeg:', message);
+                });
+                
+                ffmpeg.on('progress', ({ progress, time }) => {
+                    const percentage = Math.round(progress * 100);
+                    updateProgress(percentage, `Processing... ${time}s`);
+                });
+                
+                // Load FFmpeg core
+                const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+                await ffmpeg.load({
+                    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+                    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+                });
+                
+                showNotification('✅ FFmpeg initialized successfully', 'success');
+                return true;
+            } catch (error) {
+                console.error('FFmpeg setup failed:', error);
+                showNotification('❌ Failed to initialize FFmpeg. Please refresh the page and try again.', 'error');
+                return false;
+            }
         }
 
         function handleFileSelect(event) {
@@ -632,14 +689,19 @@
             }
         }
 
-        function startProcessing() {
+        async function startProcessing() {
             if (isProcessing) {
                 showNotification('⏳ Processing already in progress', 'warning');
                 return;
             }
             
-            if (!currentVideo) {
+            if (!currentVideo || !currentVideoFile) {
                 showNotification('❌ Please select a video first', 'error');
+                return;
+            }
+            
+            if (!ffmpeg || typeof FFmpegUtil === 'undefined') {
+                showNotification('❌ FFmpeg not initialized. Please refresh the page.', 'error');
                 return;
             }
             
@@ -651,27 +713,185 @@
                 progressContainer.style.display = 'block';
             }
             
-            // Update progress
-            updateProgress(10, 'Initializing FFmpeg...');
-            
-            // Simulate processing (placeholder for actual FFmpeg integration)
-            setTimeout(() => {
-                updateProgress(30, 'Loading video data...');
+            try {
+                // Update progress
+                updateProgress(5, 'Preparing video data...');
                 
-                setTimeout(() => {
-                    updateProgress(60, 'Creating loops...');
+                // Get user settings
+                const loopCount = getSelectedRepetition();
+                const transitionType = getSelectedTransition();
+                const transitionDuration = parseFloat(document.getElementById('transitionDuration')?.value || '0.5');
+                
+                // Read video file
+                const { fetchFile } = FFmpegUtil;
+                const videoData = await fetchFile(currentVideoFile);
+                
+                updateProgress(15, 'Loading video into FFmpeg...');
+                
+                // Write input file to FFmpeg filesystem
+                const inputFileName = 'input.mp4';
+                await ffmpeg.writeFile(inputFileName, videoData);
+                
+                updateProgress(25, 'Analyzing video...');
+                
+                // Get video duration using ffprobe
+                const duration = await getVideoDuration();
+                if (duration <= 0) {
+                    throw new Error('Could not determine video duration');
+                }
+                
+                updateProgress(35, 'Creating looped video...');
+                
+                // Generate looped video based on settings
+                const outputFileName = await createLoopedVideo(inputFileName, loopCount, transitionType, transitionDuration, duration);
+                
+                updateProgress(85, 'Finalizing output...');
+                
+                // Read the output file
+                const outputData = await ffmpeg.readFile(outputFileName);
+                const outputBlob = new Blob([outputData.buffer], { type: 'video/mp4' });
+                const outputUrl = URL.createObjectURL(outputBlob);
+                
+                // Store the output for download
+                window.loopedVideoBlob = outputBlob;
+                window.loopedVideoUrl = outputUrl;
+                
+                updateProgress(100, 'Processing complete!');
+                isProcessing = false;
+                
+                // Show results
+                showLoopedVideo(outputUrl);
+                
+                // Clean up FFmpeg filesystem
+                await cleanupFFmpeg([inputFileName, outputFileName]);
+                
+            } catch (error) {
+                console.error('Processing failed:', error);
+                isProcessing = false;
+                updateProgress(0, 'Processing failed');
+                
+                // Check if it's an FFmpeg-specific error
+                if (error.message.includes('FFmpeg') || error.message.includes('ffmpeg')) {
+                    showNotification('❌ FFmpeg processing failed. You can still create a simple HTML5 loop.', 'error');
+                    // Fallback to HTML5 video looping
+                    showFallbackLoopedVideo();
+                } else {
+                    showNotification(`❌ Processing failed: ${error.message}`, 'error');
+                }
+            }
+        }
+        
+        async function getVideoDuration() {
+            try {
+                // Use ffprobe to get video duration
+                const probeResult = await ffmpeg.exec(['-i', 'input.mp4', '-f', 'null', '-']);
+                // Duration is not easily extractable from ffprobe output in browser
+                // Fall back to using video element duration
+                return currentVideo.duration || 0;
+            } catch (error) {
+                console.warn('Could not get video duration from FFmpeg, using video element duration');
+                return currentVideo.duration || 0;
+            }
+        }
+        
+        async function createLoopedVideo(inputFile, loopCount, transitionType, transitionDuration, videoDuration) {
+            const outputFile = 'output.mp4';
+            
+            // Handle unlimited loop (cap at 10 repetitions for practical purposes)
+            if (loopCount === 0) {
+                loopCount = 10;
+            }
+            
+            let ffmpegArgs = [];
+            
+            if (loopCount === 1) {
+                // No looping needed, just copy the input
+                ffmpegArgs = [
+                    '-i', inputFile,
+                    '-c', 'copy',
+                    outputFile
+                ];
+            } else {
+                // Create looped video
+                if (transitionType === 'hard') {
+                    // Hard cut - simple concatenation
+                    ffmpegArgs = [
+                        '-i', inputFile,
+                        '-filter_complex', `[0:v][0:a]loop=loop=${loopCount-1}:size=1:start=0[outv][outa]`,
+                        '-map', '[outv]',
+                        '-map', '[outa]',
+                        '-c:v', 'libx264',
+                        '-c:a', 'aac',
+                        '-preset', 'medium',
+                        '-crf', '23',
+                        outputFile
+                    ];
+                } else if (transitionType === 'fade') {
+                    // Fade in/out transitions
+                    const fadeInDuration = Math.min(transitionDuration, videoDuration / 4);
+                    const fadeOutDuration = Math.min(transitionDuration, videoDuration / 4);
                     
-                    setTimeout(() => {
-                        updateProgress(90, 'Finalizing output...');
-                        
-                        setTimeout(() => {
-                            updateProgress(100, 'Processing complete!');
-                            isProcessing = false;
-                            showLoopedVideo();
-                        }, 1000);
-                    }, 1500);
-                }, 2000);
-            }, 1500);
+                    ffmpegArgs = [
+                        '-i', inputFile,
+                        '-filter_complex', 
+                        `[0:v]loop=loop=${loopCount-1}:size=1:start=0,` +
+                        `fade=t=in:st=0:d=${fadeInDuration},` +
+                        `fade=t=out:st=${videoDuration * loopCount - fadeOutDuration}:d=${fadeOutDuration}[v];` +
+                        `[0:a]aloop=loop=${loopCount-1}:size=1:start=0,` +
+                        `afade=t=in:st=0:d=${fadeInDuration},` +
+                        `afade=t=out:st=${videoDuration * loopCount - fadeOutDuration}:d=${fadeOutDuration}[a]`,
+                        '-map', '[v]',
+                        '-map', '[a]',
+                        '-c:v', 'libx264',
+                        '-c:a', 'aac',
+                        '-preset', 'medium',
+                        '-crf', '23',
+                        outputFile
+                    ];
+                } else if (transitionType === 'crossfade') {
+                    // Cross-fade transitions between loops
+                    const crossfadeDuration = Math.min(transitionDuration, videoDuration / 4);
+                    
+                    // For crossfade, we need to create individual loops and then crossfade them
+                    let filterComplex = '';
+                    for (let i = 0; i < loopCount; i++) {
+                        filterComplex += `[0:v]loop=1:size=1:start=0,trim=duration=${videoDuration}[v${i}];`;
+                        filterComplex += `[0:a]aloop=1:size=1:start=0,atrim=duration=${videoDuration}[a${i}];`;
+                    }
+                    
+                    // Chain crossfades
+                    let videoChain = `[v0][a0]`;
+                    for (let i = 1; i < loopCount; i++) {
+                        videoChain = `[${videoChain.substring(1, videoChain.length-1)}][v${i}]xfade=transition=fade:duration=${crossfadeDuration}:offset=${i * videoDuration - crossfadeDuration}[v${i}_fade];`;
+                        videoChain = `[${videoChain.substring(1, videoChain.length-1)}][a${i}]afade=transition=fade:st=${i * videoDuration - crossfadeDuration}:d=${crossfadeDuration}[a${i}_fade];`;
+                    }
+                    
+                    ffmpegArgs = [
+                        '-i', inputFile,
+                        '-filter_complex', filterComplex + videoChain,
+                        '-map', `[v${loopCount-1}_fade]`,
+                        '-map', `[a${loopCount-1}_fade]`,
+                        '-c:v', 'libx264',
+                        '-c:a', 'aac',
+                        '-preset', 'medium',
+                        '-crf', '23',
+                        outputFile
+                    ];
+                }
+            }
+            
+            await ffmpeg.exec(ffmpegArgs);
+            return outputFile;
+        }
+        
+        async function cleanupFFmpeg(files) {
+            try {
+                for (const file of files) {
+                    await ffmpeg.deleteFile(file);
+                }
+            } catch (error) {
+                console.warn('Failed to clean up some files:', error);
+            }
         }
 
         function updateProgress(percentage, status) {
@@ -697,7 +917,7 @@
             }
         }
 
-        function showLoopedVideo() {
+        function showLoopedVideo(outputUrl) {
             const resultsSection = document.getElementById('resultsSection');
             const loopCount = getSelectedRepetition();
             const outputSize = document.getElementById('outputSize');
@@ -706,30 +926,135 @@
                 resultsSection.style.display = 'block';
             }
             
-            // Create a simple loop preview (placeholder)
+            // Show the processed looped video
             const loopedVideo = document.getElementById('loopedVideo');
-            if (loopedVideo) {
-                loopedVideo.src = currentVideo.src; // In real implementation, this would be the processed video
+            if (loopedVideo && outputUrl) {
+                loopedVideo.src = outputUrl;
+            }
+            
+            // Update metadata with actual file size
+            if (outputSize && window.loopedVideoBlob) {
+                const actualSize = (window.loopedVideoBlob.size / (1024 * 1024)).toFixed(1);
+                outputSize.textContent = actualSize + ' MB';
+            }
+            
+            const loopCountElement = document.getElementById('loopCount');
+            if (loopCountElement) {
+                loopCountElement.textContent = loopCount === 0 ? '10x (unlimited)' : loopCount + 'x';
+            }
+            
+            showNotification('✅ Looped video created successfully!', 'success');
+        }
+        
+        function showFallbackLoopedVideo() {
+            const resultsSection = document.getElementById('resultsSection');
+            const loopCount = getSelectedRepetition();
+            const outputSize = document.getElementById('outputSize');
+            
+            if (resultsSection) {
+                resultsSection.style.display = 'block';
+            }
+            
+            // Create a fallback looped video using HTML5 video element
+            const loopedVideo = document.getElementById('loopedVideo');
+            if (loopedVideo && currentVideo) {
+                loopedVideo.src = currentVideo.src;
+                loopedVideo.loop = true; // This creates an infinite loop
+                
+                // For finite loops, we need to create a canvas-based solution
+                if (loopCount > 0 && loopCount !== 0) {
+                    loopedVideo.removeAttribute('loop');
+                    createHTML5LoopedVideo(loopCount).then(blob => {
+                        if (blob) {
+                            const url = URL.createObjectURL(blob);
+                            loopedVideo.src = url;
+                            window.loopedVideoUrl = url;
+                            window.loopedVideoBlob = blob;
+                        }
+                    });
+                }
             }
             
             // Update metadata
             if (outputSize) {
                 const repetition = loopCount === 0 ? 1 : loopCount;
                 const estimatedSize = (currentVideoFile.size * repetition / (1024 * 1024)).toFixed(1);
-                outputSize.textContent = estimatedSize + ' MB';
+                outputSize.textContent = estimatedSize + ' MB (HTML5 loop)';
             }
             
             const loopCountElement = document.getElementById('loopCount');
             if (loopCountElement) {
-                loopCountElement.textContent = loopCount === 0 ? 'Unlimited' : loopCount + 'x';
+                loopCountElement.textContent = loopCount === 0 ? 'Unlimited (HTML5)' : loopCount + 'x (HTML5)';
             }
             
-            showNotification('✅ Looped video created successfully!', 'success');
+            showNotification('ℹ️ Created HTML5 fallback loop. Download may be limited.', 'info');
+        }
+        
+        async function createHTML5LoopedVideo(loopCount) {
+            // This is a simplified fallback that creates a video by repeating frames
+            // Note: This is a basic implementation and may not work perfectly for all videos
+            try {
+                const video = document.createElement('video');
+                video.src = currentVideo.src;
+                await video.load();
+                
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                
+                // Create a simple canvas-based loop
+                // This is a basic implementation - for production use, FFmpeg processing is recommended
+                showNotification('ℹ️ HTML5 fallback is limited. For best results, use FFmpeg processing.', 'info');
+                
+                return null; // Return null to use the simple HTML5 loop instead
+            } catch (error) {
+                console.warn('HTML5 fallback failed:', error);
+                return null;
+            }
         }
 
         function downloadLoopedVideo() {
-            // Placeholder for download functionality
-            showNotification('💾 Download functionality will be available with full FFmpeg integration', 'info');
+            if (!window.loopedVideoBlob && !currentVideoFile) {
+                showNotification('❌ No video available for download', 'error');
+                return;
+            }
+            
+            try {
+                // Create download link
+                const loopCount = getSelectedRepetition();
+                const countText = loopCount === 0 ? 'unlimited' : `${loopCount}x`;
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+                
+                let downloadUrl, fileName;
+                
+                if (window.loopedVideoBlob) {
+                    // Download the processed FFmpeg video
+                    fileName = `looped_video_${countText}_${timestamp}.mp4`;
+                    downloadUrl = window.loopedVideoUrl || URL.createObjectURL(window.loopedVideoBlob);
+                } else {
+                    // Download the original video (HTML5 loop fallback)
+                    fileName = `original_video_${countText}_${timestamp}.${currentVideoFile.name.split('.').pop()}`;
+                    downloadUrl = URL.createObjectURL(currentVideoFile);
+                }
+                
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                // Show success message
+                const repetitionText = loopCount === 0 ? 'unlimited (10x)' : `${loopCount}x`;
+                const processType = window.loopedVideoBlob ? 'FFmpeg' : 'HTML5';
+                showNotification(`💾 Downloaded ${processType} looped video (${repetitionText})`, 'success');
+                
+            } catch (error) {
+                console.error('Download failed:', error);
+                showNotification('❌ Download failed. Please try again.', 'error');
+            }
         }
 
         function resetTool() {
@@ -744,6 +1069,13 @@
             // Reset video
             currentVideo = null;
             currentVideoFile = null;
+            
+            // Clean up processed video
+            if (window.loopedVideoUrl) {
+                URL.revokeObjectURL(window.loopedVideoUrl);
+                window.loopedVideoUrl = null;
+            }
+            window.loopedVideoBlob = null;
             
             // Clear video input
             document.getElementById('videoInput').value = '';

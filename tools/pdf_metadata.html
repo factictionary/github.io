@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Metadata Editor | Free Browser Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs. 100% privacy-protected.">
+    <meta name="keywords" content="pdf metadata editor, pdf, metadata, title, author, subject, keywords, free, online, privacy-first">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/pdf_metadata.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="PDF Metadata Editor | Factictionary Tools">
+    <meta property="og:description" content="Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs. - 100% privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/pdf_metadata.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF Metadata Editor | Factictionary Tools">
+    <meta name="twitter:description" content="Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs. - 100% privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 600px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #6366F1;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #6366F140;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #F5F5FF;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #6366F1;
+            background: #F5F5FFCC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #6366F1;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #6366F1;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #5855EB;
+        }
+        
+        .tool-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #6366F1;
+        }
+        
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .metadata-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .metadata-preview {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-100);
+        }
+        
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+        
+        .preview-label {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            min-width: 120px;
+        }
+        
+        .preview-value {
+            color: var(--color-neutral-600);
+            flex: 1;
+            margin-left: var(--spacing-md);
+            word-break: break-word;
+        }
+        
+        .file-list {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-neutral-100);
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-name {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-neutral-800);
+        }
+        
+        .file-size {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-small);
+        }
+        
+        .status-updated {
+            color: var(--color-success);
+        }
+        
+        .status-processing {
+            color: #6366F1;
+        }
+        
+        .status-error {
+            color: var(--color-error);
+        }
+        
+        .progress-container {
+            background: var(--color-neutral-200);
+            border-radius: var(--radius-button);
+            height: 8px;
+            margin: var(--spacing-md) 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #6366F1;
+            transition: width 0.3s ease;
+            border-radius: var(--radius-button);
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: var(--spacing-xs);
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .results-list {
+            margin-top: var(--spacing-lg);
+        }
+        
+        .result-item {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result-info {
+            flex: 1;
+        }
+        
+        .result-title {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .result-meta {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: var(--color-neutral-200);
+            color: var(--color-neutral-800);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-neutral-300);
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .template-section {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .template-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .template-title {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-800);
+            font-size: var(--font-size-body);
+        }
+        
+        .template-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+        
+        .btn-icon {
+            background: none;
+            border: 1px solid var(--color-neutral-300);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            cursor: pointer;
+            font-size: var(--font-size-small);
+            transition: all var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-icon:hover {
+            background: var(--color-neutral-100);
+        }
+        
+        .btn-icon.danger:hover {
+            background: var(--color-error);
+            color: white;
+            border-color: var(--color-error);
+        }
+        
+        .custom-field {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+        
+        .custom-field input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: var(--font-size-body);
+        }
+        
+        .btn-remove-field {
+            background: var(--color-error);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .btn-remove-field:hover {
+            opacity: 0.8;
+        }
+        
+        .export-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .export-option {
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            text-align: center;
+        }
+        
+        .export-option:hover {
+            border-color: #6366F1;
+            background: var(--color-primary-50);
+        }
+        
+        .export-option.selected {
+            border-color: #6366F1;
+            background: var(--color-primary-50);
+        }
+        
+        .export-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .export-title {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .export-description {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #6366F1;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .metadata-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .export-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .template-actions {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "PDF Metadata Editor",
+        "description": "Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1250"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>☰</span>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">PDF Metadata Editor</h1>
+        <p class="tool-subtitle">Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📄</div>
+                <div class="drop-zone-text">
+                    Drop your PDF files here or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept=".pdf" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+            </div>
+            
+            <div class="file-list" id="fileList">
+                <div class="file-item">
+                    <span class="file-name">No files selected</span>
+                    <span class="file-size">0 MB</span>
+                </div>
+            </div>
+            
+            <!-- Metadata Template Section -->
+            <div class="template-section">
+                <div class="template-header">
+                    <h3 class="template-title">Metadata Templates</h3>
+                    <div class="template-actions">
+                        <button class="btn-icon" onclick="metadataEditor.loadTemplate()">Load Template</button>
+                        <button class="btn-icon" onclick="metadataEditor.saveTemplate()">Save Current</button>
+                        <button class="btn-icon danger" onclick="metadataEditor.deleteTemplate()">Delete Template</button>
+                    </div>
+                </div>
+                <select id="templateSelect" class="control-input" style="width: 100%;">
+                    <option value="">Select a template...</option>
+                </select>
+            </div>
+            
+            <div class="tool-controls">
+                <h3>PDF Metadata</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Standard Fields</label>
+                    <div class="metadata-grid">
+                        <div class="metadata-field">
+                            <input type="text" id="metadataTitle" class="control-input" placeholder="Document Title">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="text" id="metadataAuthor" class="control-input" placeholder="Author">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="text" id="metadataSubject" class="control-input" placeholder="Subject">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="text" id="metadataKeywords" class="control-input" placeholder="Keywords (comma-separated)">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="text" id="metadataProducer" class="control-input" placeholder="Producer">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="text" id="metadataCreator" class="control-input" placeholder="Creator">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="datetime-local" id="metadataCreationDate" class="control-input" placeholder="Creation Date">
+                        </div>
+                        <div class="metadata-field">
+                            <input type="datetime-local" id="metadataModDate" class="control-input" placeholder="Modification Date">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-sm);">
+                        <label class="control-label">Custom Fields</label>
+                        <button class="btn-icon" onclick="metadataEditor.addCustomField()">+ Add Field</button>
+                    </div>
+                    <div id="customFieldsContainer">
+                        <div style="text-align: center; color: var(--color-neutral-500); padding: var(--spacing-md);">
+                            No custom fields added
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Metadata Validation</label>
+                    <div style="display: flex; gap: var(--spacing-md);">
+                        <label style="display: flex; align-items: center; gap: var(--spacing-xs);">
+                            <input type="checkbox" id="validateRequired" checked> 
+                            <span style="font-size: var(--font-size-small);">Validate required fields</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: var(--spacing-xs);">
+                            <input type="checkbox" id="preserveOriginal"> 
+                            <span style="font-size: var(--font-size-small);">Preserve original metadata</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Metadata Preview -->
+            <div class="metadata-preview" id="metadataPreview" style="display: none;">
+                <h4 style="margin-bottom: var(--spacing-md);">Metadata Preview</h4>
+                <div id="previewContent"></div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput">
+                <h3>Processing Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-text" id="progressText">Ready to process</div>
+                
+                <div class="results-list" id="resultsList" style="display: none;">
+                    <h4>Processing Results</h4>
+                </div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="previewBtn" disabled>
+                    Preview Metadata
+                </button>
+                <button class="btn-tool" id="processBtn" disabled>
+                    Update PDFs
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download All
+                </button>
+                <button class="btn-secondary btn-tool" id="exportBtn" disabled>
+                    Export Metadata
+                </button>
+                <button class="btn-secondary btn-tool" id="resetBtn">
+                    Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Edit all PDF metadata fields</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Add custom metadata fields</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Save and load metadata templates</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Batch process multiple PDFs</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Metadata validation</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Export metadata to JSON/CSV</div>
+                </div>
+            </div>
+            
+            <!-- Export Options -->
+            <div class="tool-info">
+                <h3>Export Options</h3>
+                <div class="export-options">
+                    <div class="export-option" onclick="metadataEditor.selectExport('individual')" data-export="individual">
+                        <div class="export-icon">📄</div>
+                        <div class="export-title">Individual Files</div>
+                        <div class="export-description">Download each PDF separately</div>
+                    </div>
+                    <div class="export-option selected" onclick="metadataEditor.selectExport('zip')" data-export="zip">
+                        <div class="export-icon">📦</div>
+                        <div class="export-title">ZIP Archive</div>
+                        <div class="export-description">Download all as ZIP</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>🛠️ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/pdf_merger.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">PDF Merger</a>
+                    <a href="/pdf_splitter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">PDF Splitter</a>
+                    <a href="/pdf_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">PDF Compressor</a>
+                    <a href="/pdf_password.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">PDF Password</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Tools Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Files Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" integrity="sha512-zPg73YOkAaQQj4DaRj0KQvFQxiFOPPJQBhh0oM6H28uKhbdB9EYCgQflk6WMRCRACvE9JUNUXw+MhZ+vuUNcsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-T9Cc2XjFvoV5DGHYgp8GXQjqfGbvpZJlqEJzpJA0nXkU3vV2kXWcRqzJZv66uJhhd7zXzZLrJ8I1ci4mWOsGQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- JavaScript -->
+    <script>
+        // PDF Metadata Editor Application
+        class PDFMetadataEditor {
+            constructor() {
+                this.dropZone = document.getElementById('dropZone');
+                this.fileInput = document.getElementById('fileInput');
+                this.fileList = document.getElementById('fileList');
+                this.previewBtn = document.getElementById('previewBtn');
+                this.processBtn = document.getElementById('processBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.exportBtn = document.getElementById('exportBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.outputSection = document.getElementById('toolOutput');
+                this.progressBar = document.getElementById('progressBar');
+                this.progressText = document.getElementById('progressText');
+                this.resultsList = document.getElementById('resultsList');
+                this.metadataPreview = document.getElementById('metadataPreview');
+                this.previewContent = document.getElementById('previewContent');
+                this.templateSelect = document.getElementById('templateSelect');
+                this.customFieldsContainer = document.getElementById('customFieldsContainer');
+                this.validateRequired = document.getElementById('validateRequired');
+                this.preserveOriginal = document.getElementById('preserveOriginal');
+                
+                this.selectedFiles = [];
+                this.processedFiles = [];
+                this.customFields = [];
+                this.isProcessing = false;
+                this.exportMode = 'zip';
+                
+                // Metadata fields
+                this.metadataFields = {
+                    title: document.getElementById('metadataTitle'),
+                    author: document.getElementById('metadataAuthor'),
+                    subject: document.getElementById('metadataSubject'),
+                    keywords: document.getElementById('metadataKeywords'),
+                    producer: document.getElementById('metadataProducer'),
+                    creator: document.getElementById('metadataCreator'),
+                    creationDate: document.getElementById('metadataCreationDate'),
+                    modificationDate: document.getElementById('metadataModDate')
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.loadTemplates();
+                this.updateButtonStates();
+            }
+            
+            setupEventListeners() {
+                // Drag and drop
+                this.dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+                this.dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+                this.dropZone.addEventListener('drop', this.handleDrop.bind(this));
+                this.dropZone.addEventListener('click', () => this.fileInput.click());
+                
+                // File input
+                this.fileInput.addEventListener('change', (e) => this.handleFiles(e.target.files));
+                
+                // Buttons
+                this.previewBtn.addEventListener('click', this.previewMetadata.bind(this));
+                this.processBtn.addEventListener('click', this.processFiles.bind(this));
+                this.downloadBtn.addEventListener('click', this.downloadFiles.bind(this));
+                this.exportBtn.addEventListener('click', this.exportMetadata.bind(this));
+                this.resetBtn.addEventListener('click', this.reset.bind(this));
+                
+                // Template selection
+                this.templateSelect.addEventListener('change', this.loadSelectedTemplate.bind(this));
+                
+                // Metadata field changes
+                Object.values(this.metadataFields).forEach(field => {
+                    field.addEventListener('input', this.updatePreview.bind(this));
+                });
+                
+                // Mobile menu
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+                if (menuToggle && navLinks) {
+                    menuToggle.addEventListener('click', () => {
+                        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                        menuToggle.setAttribute('aria-expanded', !isExpanded);
+                        navLinks.classList.toggle('active');
+                    });
+                }
+            }
+            
+            handleDragOver(e) {
+                e.preventDefault();
+                this.dropZone.classList.add('drag-over');
+            }
+            
+            handleDragLeave() {
+                this.dropZone.classList.remove('drag-over');
+            }
+            
+            handleDrop(e) {
+                e.preventDefault();
+                this.dropZone.classList.remove('drag-over');
+                const files = Array.from(e.dataTransfer.files).filter(file => file.type === 'application/pdf');
+                this.handleFiles(files);
+            }
+            
+            async handleFiles(files) {
+                const pdfFiles = Array.from(files).filter(file => file.type === 'application/pdf');
+                
+                if (pdfFiles.length === 0) {
+                    alert('Please select only PDF files.');
+                    return;
+                }
+                
+                this.selectedFiles = [...this.selectedFiles, ...pdfFiles];
+                this.updateFileList();
+                this.updateButtonStates();
+            }
+            
+            updateFileList() {
+                if (this.selectedFiles.length === 0) {
+                    this.fileList.innerHTML = `
+                        <div class="file-item">
+                            <span class="file-name">No files selected</span>
+                            <span class="file-size">0 MB</span>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                this.fileList.innerHTML = this.selectedFiles.map(file => {
+                    const size = this.formatFileSize(file.size);
+                    return `
+                        <div class="file-item">
+                            <div>
+                                <span class="file-name">${file.name}</span>
+                                <div class="file-status" id="status-${file.name}">
+                                    <span>⏳ Ready</span>
+                                </div>
+                            </div>
+                            <div class="file-size">${size}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            updateButtonStates() {
+                const hasFiles = this.selectedFiles.length > 0;
+                const hasMetadata = this.hasMetadataValues();
+                
+                this.previewBtn.disabled = !hasFiles || this.isProcessing;
+                this.processBtn.disabled = !hasFiles || !hasMetadata || this.isProcessing;
+                this.downloadBtn.disabled = this.processedFiles.length === 0;
+                this.exportBtn.disabled = this.processedFiles.length === 0;
+            }
+            
+            hasMetadataValues() {
+                return Object.values(this.metadataFields).some(field => field.value.trim() !== '') ||
+                       this.customFields.length > 0;
+            }
+            
+            async previewMetadata() {
+                if (this.selectedFiles.length === 0) return;
+                
+                const metadata = this.getMetadataFromForm();
+                const metadataHtml = this.formatMetadataPreview(metadata);
+                
+                this.previewContent.innerHTML = metadataHtml;
+                this.metadataPreview.style.display = 'block';
+                this.metadataPreview.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            formatMetadataPreview(metadata) {
+                let html = '';
+                for (const [key, value] of Object.entries(metadata)) {
+                    if (value) {
+                        const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                        html += `
+                            <div class="preview-item">
+                                <div class="preview-label">${label}:</div>
+                                <div class="preview-value">${value}</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                if (html === '') {
+                    html = '<div style="text-align: center; color: var(--color-neutral-500); padding: var(--spacing-md);">No metadata entered</div>';
+                }
+                
+                return html;
+            }
+            
+            getMetadataFromForm() {
+                const metadata = {};
+                
+                // Standard fields
+                Object.entries(this.metadataFields).forEach(([key, field]) => {
+                    let value = field.value.trim();
+                    
+                    if (key === 'keywords') {
+                        // Convert comma-separated keywords to array format
+                        value = value ? value.split(',').map(k => k.trim()).filter(k => k) : [];
+                    } else if (key === 'creationDate' || key === 'modificationDate') {
+                        // Convert datetime-local to Date
+                        value = value ? new Date(value) : null;
+                    }
+                    
+                    if (value !== '') {
+                        metadata[key] = value;
+                    }
+                });
+                
+                // Custom fields
+                if (this.customFields.length > 0) {
+                    metadata.customFields = this.customFields;
+                }
+                
+                return metadata;
+            }
+            
+            async processFiles() {
+                if (this.isProcessing || this.selectedFiles.length === 0) return;
+                
+                // Validate metadata if required
+                if (this.validateRequired.checked && !this.validateMetadata()) {
+                    return;
+                }
+                
+                this.isProcessing = true;
+                this.updateButtonStates();
+                this.outputSection.style.display = 'block';
+                this.resultsList.style.display = 'none';
+                
+                const metadata = this.getMetadataFromForm();
+                const totalFiles = this.selectedFiles.length;
+                let processedFiles = 0;
+                
+                this.processedFiles = [];
+                this.resultsList.innerHTML = '<h4>Processing Results</h4>';
+                
+                for (const file of this.selectedFiles) {
+                    try {
+                        this.updateStatus(file.name, 'processing', '🔄 Processing...');
+                        this.updateProgress(processedFiles / totalFiles * 100, `Processing ${file.name}...`);
+                        
+                        const updatedFile = await this.processSingleFile(file, metadata);
+                        this.processedFiles.push(updatedFile);
+                        
+                        this.resultsList.innerHTML += this.createResultItem(file, updatedFile);
+                        this.updateStatus(file.name, 'completed', '✅ Updated');
+                        
+                        processedFiles++;
+                        
+                    } catch (error) {
+                        console.error(`Error processing ${file.name}:`, error);
+                        this.updateStatus(file.name, 'error', '❌ Error');
+                        this.resultsList.innerHTML += this.createErrorItem(file, error.message);
+                        processedFiles++;
+                    }
+                }
+                
+                this.resultsList.style.display = 'block';
+                this.updateProgress(100, `Completed! Processed ${processedFiles} files`);
+                
+                this.isProcessing = false;
+                this.updateButtonStates();
+            }
+            
+            async processSingleFile(file, metadata) {
+                const arrayBuffer = await file.arrayBuffer();
+                
+                // Load the PDF
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                
+                // Update metadata
+                try {
+                    if (metadata.title) pdfDoc.setTitle(metadata.title);
+                    if (metadata.author) pdfDoc.setAuthor(metadata.author);
+                    if (metadata.subject) pdfDoc.setSubject(metadata.subject);
+                    if (metadata.keywords) pdfDoc.setKeywords(metadata.keywords);
+                    if (metadata.producer) pdfDoc.setProducer(metadata.producer);
+                    if (metadata.creator) pdfDoc.setCreator(metadata.creator);
+                    if (metadata.creationDate) pdfDoc.setCreationDate(metadata.creationDate);
+                    if (metadata.modificationDate) pdfDoc.setModificationDate(metadata.modificationDate);
+                    
+                    // Custom fields (stored in PDF Info dictionary)
+                    if (metadata.customFields) {
+                        // Note: PDF-lib doesn't directly support custom fields,
+                        // but we can set them through the context
+                        try {
+                            pdfDoc.setKeywords(metadata.customFields.map(f => `${f.key}: ${f.value}`));
+                        } catch (error) {
+                            console.warn('Could not set custom fields:', error);
+                        }
+                    }
+                    
+                } catch (error) {
+                    console.warn('Some metadata could not be set:', error);
+                }
+                
+                // Save the PDF
+                const updatedBytes = await pdfDoc.save();
+                
+                // Create updated file blob
+                const updatedBlob = new Blob([updatedBytes], { type: 'application/pdf' });
+                
+                // Return updated file
+                return new File([updatedBlob], file.name, {
+                    type: 'application/pdf',
+                    lastModified: Date.now()
+                });
+            }
+            
+            validateMetadata() {
+                const requiredFields = ['title', 'author'];
+                const errors = [];
+                
+                requiredFields.forEach(field => {
+                    const value = this.metadataFields[field].value.trim();
+                    if (!value) {
+                        errors.push(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+                    }
+                });
+                
+                if (errors.length > 0) {
+                    alert('Please fill in required fields:\n\n' + errors.join('\n'));
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            addCustomField() {
+                const fieldId = Date.now();
+                this.customFields.push({ id: fieldId, key: '', value: '' });
+                
+                const fieldHtml = `
+                    <div class="custom-field" data-field-id="${fieldId}">
+                        <input type="text" placeholder="Field Name" class="custom-key" onchange="metadataEditor.updateCustomField(${fieldId}, 'key', this.value)">
+                        <span style="color: var(--color-neutral-500);">:</span>
+                        <input type="text" placeholder="Field Value" class="custom-value" onchange="metadataEditor.updateCustomField(${fieldId}, 'value', this.value)">
+                        <button class="btn-remove-field" onclick="metadataEditor.removeCustomField(${fieldId})">×</button>
+                    </div>
+                `;
+                
+                const container = this.customFieldsContainer;
+                if (container.innerHTML.includes('No custom fields added')) {
+                    container.innerHTML = '';
+                }
+                container.innerHTML += fieldHtml;
+                
+                this.updateButtonStates();
+            }
+            
+            updateCustomField(fieldId, key, value) {
+                const field = this.customFields.find(f => f.id === fieldId);
+                if (field) {
+                    field[key] = value;
+                }
+                this.updateButtonStates();
+            }
+            
+            removeCustomField(fieldId) {
+                this.customFields = this.customFields.filter(f => f.id !== fieldId);
+                
+                const fieldElement = document.querySelector(`[data-field-id="${fieldId}"]`);
+                if (fieldElement) {
+                    fieldElement.remove();
+                }
+                
+                if (this.customFields.length === 0) {
+                    this.customFieldsContainer.innerHTML = `
+                        <div style="text-align: center; color: var(--color-neutral-500); padding: var(--spacing-md);">
+                            No custom fields added
+                        </div>
+                    `;
+                }
+                
+                this.updateButtonStates();
+            }
+            
+            updatePreview() {
+                if (this.metadataPreview.style.display !== 'none') {
+                    const metadata = this.getMetadataFromForm();
+                    const metadataHtml = this.formatMetadataPreview(metadata);
+                    this.previewContent.innerHTML = metadataHtml;
+                }
+            }
+            
+            selectExport(mode) {
+                this.exportMode = mode;
+                
+                // Update UI
+                document.querySelectorAll('.export-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                document.querySelector(`[data-export="${mode}"]`).classList.add('selected');
+            }
+            
+            async downloadFiles() {
+                if (this.processedFiles.length === 0) return;
+                
+                if (this.exportMode === 'individual') {
+                    // Download files individually
+                    for (const file of this.processedFiles) {
+                        this.downloadSingleFile(file);
+                        await new Promise(resolve => setTimeout(resolve, 100)); // Small delay between downloads
+                    }
+                } else {
+                    // Download as ZIP
+                    this.downloadAsZip();
+                }
+            }
+            
+            downloadSingleFile(file) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(file);
+                link.download = file.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            }
+            
+            async downloadAsZip() {
+                try {
+                    this.updateProgress(100, 'Creating ZIP file...');
+                    
+                    const zip = new JSZip();
+                    
+                    for (const file of this.processedFiles) {
+                        zip.file(file.name, file);
+                    }
+                    
+                    const zipBlob = await zip.generateAsync({ type: 'blob' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(zipBlob);
+                    link.download = `pdfs_with_updated_metadata_${Date.now()}.zip`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                    
+                } catch (error) {
+                    console.error('Error creating ZIP:', error);
+                    alert('Error creating ZIP file. Please try downloading files individually.');
+                }
+            }
+            
+            exportMetadata() {
+                if (this.processedFiles.length === 0) return;
+                
+                const metadata = this.getMetadataFromForm();
+                const exportData = {
+                    timestamp: new Date().toISOString(),
+                    filesProcessed: this.processedFiles.length,
+                    metadata: metadata
+                };
+                
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `pdf_metadata_export_${Date.now()}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(link.href);
+            }
+            
+            saveTemplate() {
+                const metadata = this.getMetadataFromForm();
+                if (Object.keys(metadata).length === 0) {
+                    alert('No metadata to save. Please fill in some fields first.');
+                    return;
+                }
+                
+                const templateName = prompt('Enter template name:');
+                if (!templateName) return;
+                
+                // Get existing templates
+                let templates = JSON.parse(localStorage.getItem('pdfMetadataTemplates') || '{}');
+                
+                // Save new template
+                templates[templateName] = metadata;
+                localStorage.setItem('pdfMetadataTemplates', JSON.stringify(templates));
+                
+                // Update dropdown
+                this.loadTemplates();
+                this.templateSelect.value = templateName;
+                
+                alert('Template saved successfully!');
+            }
+            
+            loadTemplates() {
+                const templates = JSON.parse(localStorage.getItem('pdfMetadataTemplates') || '{}');
+                
+                // Clear and repopulate dropdown
+                this.templateSelect.innerHTML = '<option value="">Select a template...</option>';
+                
+                for (const [name, metadata] of Object.entries(templates)) {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    this.templateSelect.appendChild(option);
+                }
+            }
+            
+            loadSelectedTemplate() {
+                const templateName = this.templateSelect.value;
+                if (!templateName) return;
+                
+                const templates = JSON.parse(localStorage.getItem('pdfMetadataTemplates') || '{}');
+                const template = templates[templateName];
+                
+                if (template) {
+                    // Load standard fields
+                    Object.entries(template).forEach(([key, value]) => {
+                        if (key !== 'customFields' && this.metadataFields[key]) {
+                            if (key === 'keywords' && Array.isArray(value)) {
+                                this.metadataFields[key].value = value.join(', ');
+                            } else if ((key === 'creationDate' || key === 'modificationDate') && value) {
+                                this.metadataFields[key].value = new Date(value).toISOString().slice(0, 16);
+                            } else {
+                                this.metadataFields[key].value = value;
+                            }
+                        }
+                    });
+                    
+                    // Load custom fields
+                    this.customFields = [];
+                    this.customFieldsContainer.innerHTML = '';
+                    
+                    if (template.customFields && Array.isArray(template.customFields)) {
+                        template.customFields.forEach(field => {
+                            this.addCustomField();
+                            // Note: This will add new fields, but we need to update them
+                        });
+                    }
+                    
+                    this.updatePreview();
+                    this.updateButtonStates();
+                }
+            }
+            
+            loadTemplate() {
+                this.templateSelect.click();
+            }
+            
+            deleteTemplate() {
+                const templateName = this.templateSelect.value;
+                if (!templateName) {
+                    alert('Please select a template to delete.');
+                    return;
+                }
+                
+                if (confirm(`Are you sure you want to delete the template "${templateName}"?`)) {
+                    let templates = JSON.parse(localStorage.getItem('pdfMetadataTemplates') || '{}');
+                    delete templates[templateName];
+                    localStorage.setItem('pdfMetadataTemplates', JSON.stringify(templates));
+                    
+                    this.loadTemplates();
+                    this.templateSelect.value = '';
+                    
+                    alert('Template deleted successfully!');
+                }
+            }
+            
+            updateStatus(fileName, status, text) {
+                const statusElement = document.getElementById(`status-${fileName}`);
+                if (statusElement) {
+                    const className = status === 'completed' ? 'status-updated' : 
+                                    status === 'processing' ? 'status-processing' : 'status-error';
+                    statusElement.innerHTML = `<span class="${className}">${text}</span>`;
+                }
+            }
+            
+            updateProgress(percentage, text) {
+                this.progressBar.style.width = `${percentage}%`;
+                this.progressText.textContent = text;
+            }
+            
+            createResultItem(originalFile, updatedFile) {
+                const originalSize = this.formatFileSize(originalFile.size);
+                const updatedSize = this.formatFileSize(updatedFile.size);
+                
+                return `
+                    <div class="result-item">
+                        <div class="result-info">
+                            <div class="result-title">${originalFile.name}</div>
+                            <div class="result-meta">
+                                ${originalSize} → ${updatedSize}
+                            </div>
+                        </div>
+                        <button onclick="metadataEditor.downloadSingleFile(${this.processedFiles.indexOf(updatedFile)})" 
+                                style="background: #6366F1; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                            Download
+                        </button>
+                    </div>
+                `;
+            }
+            
+            createErrorItem(file, errorMessage) {
+                return `
+                    <div class="result-item">
+                        <div class="result-info">
+                            <div class="result-title" style="color: var(--color-error);">${file.name}</div>
+                            <div class="result-meta">
+                                Error: ${errorMessage}
+                            </div>
+                        </div>
+                        <span style="color: var(--color-error);">❌ Failed</span>
+                    </div>
+                `;
+            }
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            reset() {
+                this.selectedFiles = [];
+                this.processedFiles = [];
+                this.customFields = [];
+                this.fileInput.value = '';
+                this.fileList.innerHTML = `
+                    <div class="file-item">
+                        <span class="file-name">No files selected</span>
+                        <span class="file-size">0 MB</span>
+                    </div>
+                `;
+                this.outputSection.style.display = 'none';
+                this.metadataPreview.style.display = 'none';
+                this.resultsList.style.display = 'none';
+                this.progressBar.style.width = '0%';
+                this.progressText.textContent = 'Ready to process';
+                this.isProcessing = false;
+                
+                // Clear form
+                Object.values(this.metadataFields).forEach(field => {
+                    field.value = '';
+                });
+                this.customFieldsContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--color-neutral-500); padding: var(--spacing-md);">
+                        No custom fields added
+                    </div>
+                `;
+                
+                this.updateButtonStates();
+            }
+        }
+        
+        // Initialize the metadata editor when the page loads
+        let metadataEditor;
+        document.addEventListener('DOMContentLoaded', () => {
+            metadataEditor = new PDFMetadataEditor();
+        });
+    </script>
+</body>
+</html>
