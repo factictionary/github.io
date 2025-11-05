@@ -58,6 +58,85 @@
         }
     }
     </script>
+	<style>
+		.tool-header {
+            background: linear-gradient(135deg, #A0010B 0%, #A0010BCC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 600px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #F59E0B;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+	</style>
 </head>
 <body>
     <!-- Skip to main content -->
@@ -84,33 +163,28 @@
             </button>
         </div>
     </nav>
+	
+	<!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">📋 Text Diff Tool</h1>
+        <p class="tool-subtitle">Compare and find differences between two texts with side-by-side comparison and highlighted additions and deletions. Perfect for writers, editors, developers, and anyone who needs to track text changes.</p>
+        <div class="tool-features">
+            <span class="feature-tag">Side-by-Side View</span>
+            <span class="feature-tag">Highlight Changes</span>
+            <span class="feature-tag">Line-by-Line Diff</span>
+            <span class="feature-tag">Word-Level Comparison</span>
+            <span class="feature-tag">Real-time Updates</span>
+            <span class="feature-tag">Copy Results</span>
+        </div>
+        <br />
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+ 
+    </header>
 
     <!-- Main Content -->
     <main id="main">
-        <!-- AdSense Container -->
-        <div class="ad-container top-ad">
-            <!-- AdSense code will be inserted here -->
-        </div>
-
-        <!-- Tool Header -->
-        <header class="tool-header">
-            <div class="container">
-                <div class="tool-header-content">
-                    <h3 class="tool-title">📋 Text Diff Tool</h3>
-                    <p class="tool-subtitle">Compare and find differences between two texts with side-by-side comparison and highlighted additions and deletions. Perfect for writers, editors, developers, and anyone who needs to track text changes.</p>
-                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
-                    <div class="tool-features">
-                        <span class="feature-tag">Side-by-Side View</span>
-                        <span class="feature-tag">Highlight Changes</span>
-                        <span class="feature-tag">Line-by-Line Diff</span>
-                        <span class="feature-tag">Word-Level Comparison</span>
-                        <span class="feature-tag">Real-time Updates</span>
-                        <span class="feature-tag">Copy Results</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="container">
