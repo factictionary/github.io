@@ -1,46 +1,47 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frame Extractor Tool | Extract Video Frames as Images | Factictionary</title>
-    
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="Free online video frame extractor. Extract individual frames from videos in PNG, JPG, or WebP format. Perfect for filmmakers, content creators, and educators. 100% privacy-protected, works entirely in your browser.">
     <meta name="keywords" content="frame extractor, video frame extraction, extract frames from video, video to image, frame capture, video frame downloader, video analysis tool">
     <meta name="author" content="Factictionary Team">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Frame Extractor Tool | Extract Video Frames as Images | Factictionary">
     <meta property="og:description" content="Professional video frame extractor tool. Extract individual frames or frame sequences from videos in various formats. Free and privacy-protected.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://factictionary.github.io/tools/frame_extractor.html">
     <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
-    
+
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Frame Extractor Tool | Factictionary">
     <meta name="twitter:description" content="Extract video frames as images. Supports PNG, JPG, WebP formats with timeline scrubbing.">
     <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://factictionary.github.io/tools/frame_extractor.html">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    
+
     <!-- FFmpeg.wasm Library -->
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js"></script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
@@ -65,23 +66,23 @@
 <body>
     <!-- Skip to main content -->
     <a href="#main" class="skip-link">Skip to main content</a>
-    
+
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="/" class="logo">Factictionary</a>
-            
+
             <ul class="nav-links">
                 <li><a href="/blog/" class="nav-link">Blog</a></li>
                 <li><a href="/tools/" class="nav-link active">Tools</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
             </ul>
-            
+
             <div class="nav-cta">
                 <a href="/blog/" class="btn btn-primary">Read Articles</a>
             </div>
-            
+
             <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
                 <span>☰</span>
             </button>
@@ -141,7 +142,7 @@
                         <video id="videoPlayer" controls class="video-player">
                             Your browser does not support the video tag.
                         </video>
-                        
+
                         <!-- Timeline Controls -->
                         <div class="timeline-container">
                             <div class="timeline-header">
@@ -158,7 +159,7 @@
                     <!-- Extraction Options -->
                     <div class="extraction-options">
                         <h3 class="section-title">Extraction Settings</h3>
-                        
+
                         <div class="options-grid">
                             <!-- Extraction Mode -->
                             <div class="option-card">
@@ -193,7 +194,7 @@
 
                             <!-- Frame Range Settings -->
                             <div class="option-card" id="rangeSettings" style="display: none;">
-                                <h4 class="option-title">⏰ Frame Range</h4>
+                                <h4 class="option-title">⏱️ Frame Range</h4>
                                 <div class="range-inputs">
                                     <div class="range-input-group">
                                         <label>Start Time:</label>
@@ -208,7 +209,7 @@
 
                             <!-- Interval Settings -->
                             <div class="option-card" id="intervalSettings" style="display: none;">
-                                <h4 class="option-title">⏱️ Interval Settings</h4>
+                                <h4 class="option-title">⏰ Interval Settings</h4>
                                 <div class="interval-input-group">
                                     <label>Extract every:</label>
                                     <div class="interval-controls">
@@ -229,7 +230,7 @@
                             <button class="btn btn-secondary" id="downloadAllButton" onclick="downloadAllFrames()" style="display: none;">
                                 📦 Download All
                             </button>
-                            
+
                             <!-- Progress Indicator -->
                             <div id="progressContainer" class="progress-container" style="display: none;">
                                 <div class="progress-bar">
@@ -299,6 +300,14 @@
                 </div>
             </div>
         </section>
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Frame Extractor</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Frame Extractor is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Frame Extractor leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote server—which carries significant privacy risks and consumes massive bandwidth—this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithms—such as compression heuristics, codec transformations, or binary manipulation—depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -315,7 +324,7 @@
                         <li><a href="/blog/?category=learning">Learning</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Tools</h4>
                     <ul>
@@ -326,7 +335,7 @@
                         <li><a href="/tools/categories/text.html">Text Tools</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Company</h4>
                     <ul>
@@ -336,25 +345,25 @@
                         <li><a href="/terms.html">Terms of Service</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-section">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="mailto:factictionary@gmail.com">Email Us</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#e88e898b9c818b9c818786899a91a88f85898184c68b8785">Email Us</a></li>
                         <li><a href="/contact.html">Support</a></li>
                         <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+                <p>© 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Global variables
         let currentVideo = null;
         let extractedFrames = [];
@@ -425,13 +434,13 @@
         function processVideoFile(file) {
             // Validate file type
             if (!file.type.startsWith('video/')) {
-                showNotification('❌ Please select a valid video file');
+                showNotification('☹ Please select a valid video file');
                 return;
             }
 
             // Validate file size (500MB limit)
             if (file.size > 500 * 1024 * 1024) {
-                showNotification('❌ File size too large. Maximum 500MB allowed.');
+                showNotification('☹ File size too large. Maximum 500MB allowed.');
                 return;
             }
 
@@ -445,10 +454,10 @@
             const videoURL = URL.createObjectURL(file);
             const videoPlayer = document.getElementById('videoPlayer');
             videoPlayer.src = videoURL;
-            
+
             // Show video section
             document.getElementById('videoSection').style.display = 'block';
-            
+
             showNotification('📹 Video loaded successfully! FFmpeg ready for frame extraction.');
         }
 
@@ -462,13 +471,13 @@
                 });
                 extractedFrames = [];
             }
-            
+
             // Hide results section
             const resultsSection = document.getElementById('resultsSection');
             if (resultsSection) {
                 resultsSection.style.display = 'none';
             }
-            
+
             // Hide download all button
             const downloadAllButton = document.getElementById('downloadAllButton');
             if (downloadAllButton) {
@@ -490,11 +499,12 @@
 
         async function initializeFFmpeg() {
             try {
-                showNotification('🔧 Loading FFmpeg.wasm library (this may take a moment)...');
-                
+                showNotification('⚙️ Loading FFmpeg.wasm library (this may take a moment)...');
+
+                // Use the global FFmpeg from the CDN
                 const { FFmpeg } = FFmpegWASM;
                 ffmpeg = new FFmpeg();
-                
+
                 // Set up progress tracking
                 ffmpeg.on('log', ({ message }) => {
                     if (message.includes('error') || message.includes('Error')) {
@@ -503,54 +513,49 @@
                         console.log('FFmpeg:', message);
                     }
                 });
-                
+
                 ffmpeg.on('progress', ({ progress }) => {
                     const percent = Math.round(progress * 100);
                     showProgress(percent);
                 });
-                
+
                 // Load FFmpeg with error handling
                 try {
-                    await ffmpeg.load();
+                    await ffmpeg.load({
+                        coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                        wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+                    });
                     ffmpegLoaded = true;
-                    showNotification('✅ FFmpeg.wasm loaded successfully! Ready for frame extraction.');
+                    showNotification('✓ FFmpeg.wasm loaded successfully! Ready for frame extraction.');
                 } catch (loadError) {
                     console.error('FFmpeg load error:', loadError);
                     throw new Error('Failed to load FFmpeg core: ' + loadError.message);
                 }
-                
+
             } catch (error) {
                 console.error('FFmpeg initialization failed:', error);
                 ffmpegLoaded = false;
-                
+
                 // Show specific error message
                 if (error.message.includes('WebAssembly')) {
-                    showNotification('❌ WebAssembly not supported. Using Canvas fallback method.');
+                    showNotification('☹ WebAssembly not supported. Using Canvas fallback method.');
                 } else if (error.message.includes('network') || error.message.includes('fetch')) {
-                    showNotification('❌ Network error loading FFmpeg. Using Canvas fallback method.');
+                    showNotification('☹ Network error loading FFmpeg. Using Canvas fallback method.');
                 } else {
-                    showNotification('❌ FFmpeg initialization failed. Using Canvas fallback method.');
+                    showNotification('☹ FFmpeg initialization failed. Using Canvas fallback method.');
                 }
             }
         }
 
         // Helper function to convert File/Blob to Uint8Array for FFmpeg
-        function fetchFile(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const { result } = reader;
-                    resolve(new Uint8Array(result));
-                };
-                reader.onerror = reject;
-                reader.readAsArrayBuffer(file);
-            });
+        async function fetchFile(file) {
+            return new Uint8Array(await file.arrayBuffer());
         }
 
         function updateVideoInfo() {
             const video = document.getElementById('videoPlayer');
             const duration = formatTime(video.duration);
-            
+
             document.getElementById('totalTime').textContent = duration;
             document.getElementById('scrubberTime').textContent = '00:00';
         }
@@ -560,7 +565,7 @@
             const current = formatTime(video.currentTime);
             const total = formatTime(video.duration);
             const progress = (video.currentTime / video.duration) * 100;
-            
+
             document.getElementById('currentTime').textContent = current;
             document.getElementById('timelineSlider').value = progress;
             document.getElementById('scrubberTime').textContent = current;
@@ -570,7 +575,7 @@
             const video = document.getElementById('videoPlayer');
             const slider = document.getElementById('timelineSlider');
             const seekTime = (slider.value / 100) * video.duration;
-            
+
             video.currentTime = seekTime;
         }
 
@@ -578,11 +583,11 @@
             const mode = document.querySelector('input[name="extractionMode"]:checked').value;
             const rangeSettings = document.getElementById('rangeSettings');
             const intervalSettings = document.getElementById('intervalSettings');
-            
+
             // Hide all option sections
             rangeSettings.style.display = 'none';
             intervalSettings.style.display = 'none';
-            
+
             // Show relevant options
             if (mode === 'range') {
                 rangeSettings.style.display = 'block';
@@ -608,9 +613,9 @@
         async function extractFrames() {
             const mode = document.querySelector('input[name="extractionMode"]:checked').value;
             const format = document.getElementById('outputFormat').value;
-            
+
             if (!currentVideoFile) {
-                showNotification('❌ Please load a video first');
+                showNotification('☹ Please load a video first');
                 return;
             }
 
@@ -625,32 +630,32 @@
             extractButton.disabled = true;
             extractButton.textContent = '⏳ Extracting...';
             extractButton.style.background = '#6B7280';
-            
+
             try {
                 // Ensure FFmpeg is loaded
                 if (!ffmpegLoaded) {
-                    showNotification('🔧 Initializing FFmpeg...');
+                    showNotification('⚙️ Initializing FFmpeg...');
                     await initializeFFmpeg();
                 }
 
                 // Get frame times based on extraction mode
                 const frameTimes = await getFrameTimes(mode);
-                
+
                 if (frameTimes.length === 0) {
                     throw new Error('No valid frame times found');
                 }
 
                 // Show extraction mode info
-                const extractionInfo = mode === 'single' ? '1 frame' : 
-                                     mode === 'range' ? `${frameTimes.length} frames in range` : 
+                const extractionInfo = mode === 'single' ? '1 frame' :
+                                     mode === 'range' ? `${frameTimes.length} frames in range` :
                                      `${frameTimes.length} frames at intervals`;
                 showNotification(`🎬 ${extractionInfo} will be extracted in ${format.toUpperCase()} format`);
 
                 extractedFrames = [];
-                
+
                 // Show progress notification
                 showProgressNotification(0, frameTimes.length);
-                
+
                 if (ffmpegLoaded) {
                     // Use FFmpeg for extraction
                     await extractFramesWithFFmpeg(frameTimes, format, extractButton);
@@ -658,12 +663,12 @@
                     // Fallback to Canvas method
                     await extractFramesWithCanvas(frameTimes, format, extractButton);
                 }
-                
+
                 if (extractedFrames.length > 0) {
                     displayExtractedFrames();
-                    const successMessage = `✅ Successfully extracted ${extractedFrames.length} frames!`;
+                    const successMessage = `✓ Successfully extracted ${extractedFrames.length} frames!`;
                     showNotification(successMessage);
-                    
+
                     // Show memory usage info for large extractions
                     if (extractedFrames.length > 10) {
                         const totalSize = extractedFrames.reduce((sum, frame) => sum + frame.blob.size, 0);
@@ -673,21 +678,21 @@
                 } else {
                     throw new Error('No frames were extracted');
                 }
-                
+
             } catch (error) {
                 console.error('Extraction error:', error);
-                showNotification('❌ Error extracting frames: ' + error.message);
-                
+                showNotification('☹ Error extracting frames: ' + error.message);
+
                 // Try Canvas fallback if FFmpeg fails
                 if (ffmpegLoaded) {
                     showNotification('🔄 Trying Canvas fallback method...');
                     try {
                         await extractFramesWithCanvas(await getFrameTimes(mode), format, extractButton);
                         displayExtractedFrames();
-                        showNotification(`✅ Successfully extracted ${extractedFrames.length} frames using Canvas!`);
+                        showNotification(`✓ Successfully extracted ${extractedFrames.length} frames using Canvas!`);
                     } catch (fallbackError) {
                         console.error('Canvas fallback failed:', fallbackError);
-                        showNotification('❌ Frame extraction failed completely. Please try a smaller video or different format.');
+                        showNotification('☹ Frame extraction failed completely. Please try a smaller video or different format.');
                     }
                 }
             } finally {
@@ -703,86 +708,86 @@
         async function getFrameTimes(mode) {
             const videoPlayer = document.getElementById('videoPlayer');
             let frameTimes = [];
-            
+
             if (mode === 'single') {
                 frameTimes = [videoPlayer.currentTime];
             } else if (mode === 'range') {
                 const startTime = parseTime(document.getElementById('startTime').value || '00:00');
                 const endTime = parseTime(document.getElementById('endTime').value || formatTime(videoPlayer.duration));
-                
+
                 if (startTime >= endTime) {
                     throw new Error('End time must be greater than start time');
                 }
-                
+
                 // Extract frames every second within range (limited to 100 frames max)
                 const maxFrames = 100;
                 const step = Math.max(1, Math.ceil((endTime - startTime) / maxFrames));
-                
+
                 for (let t = startTime; t <= endTime && frameTimes.length < maxFrames; t += step) {
                     frameTimes.push(t);
                 }
             } else if (mode === 'every') {
                 const intervalValue = parseFloat(document.getElementById('intervalValue').value || '1');
                 const intervalUnit = document.getElementById('intervalUnit').value;
-                
+
                 let interval = intervalValue;
                 if (intervalUnit === 'minutes') {
                     interval *= 60;
                 }
-                
+
                 // Limit to 50 frames max to prevent memory issues
                 const maxFrames = 50;
                 const step = Math.max(interval, (videoPlayer.duration / maxFrames));
-                
+
                 for (let t = 0; t <= videoPlayer.duration && frameTimes.length < maxFrames; t += step) {
                     frameTimes.push(t);
                 }
             }
-            
+
             return frameTimes;
         }
 
         async function extractFramesWithFFmpeg(frameTimes, format, button) {
             try {
                 showNotification('📹 Processing video with FFmpeg...');
-                
+
                 // Write input file to FFmpeg filesystem
                 const inputFileName = 'input_video.' + currentVideoFile.name.split('.').pop();
                 await ffmpeg.writeFile(inputFileName, await fetchFile(currentVideoFile));
-                
+
                 showProgressNotification(0, frameTimes.length);
-                
+
                 // Extract all frames at once using a more efficient approach
                 if (frameTimes.length === 1) {
                     // Single frame extraction
                     const time = frameTimes[0];
                     const outputFileName = `frame_0000.${format}`;
-                    
+
                     await ffmpeg.exec([
                         '-i', inputFileName,
                         '-ss', time.toString(),
                         '-vframes', '1',
                         '-q:v', '2',
-                        outputFileName
+                        '-y', outputFileName
                     ]);
-                    
+
                     const data = await ffmpeg.readFile(outputFileName);
                     const blob = new Blob([data.buffer], { type: `image/${format}` });
-                    
+
                     extractedFrames.push({
                         blob: blob,
                         url: URL.createObjectURL(blob),
                         time: time,
                         filename: `frame_${formatTime(time).replace(':', '-')}.${format}`
                     });
-                    
+
                     await ffmpeg.deleteFile(outputFileName);
                 } else {
                     // Multiple frames - extract them individually for better memory management
                     for (let i = 0; i < frameTimes.length; i++) {
                         const time = frameTimes[i];
                         const outputFileName = `frame_${i.toString().padStart(4, '0')}.${format}`;
-                        
+
                         try {
                             await ffmpeg.exec([
                                 '-i', inputFileName,
@@ -792,37 +797,37 @@
                                 '-y', // Overwrite output files
                                 outputFileName
                             ]);
-                            
+
                             const data = await ffmpeg.readFile(outputFileName);
                             const blob = new Blob([data.buffer], { type: `image/${format}` });
-                            
+
                             extractedFrames.push({
                                 blob: blob,
                                 url: URL.createObjectURL(blob),
                                 time: time,
                                 filename: `frame_${formatTime(time).replace(':', '-')}.${format}`
                             });
-                            
+
                             // Clean up output file to save memory
                             await ffmpeg.deleteFile(outputFileName);
-                            
+
                             // Update progress
                             showProgressNotification(i + 1, frameTimes.length);
-                            
+
                         } catch (frameError) {
                             console.warn(`Failed to extract frame at ${time}s:`, frameError);
                             // Continue with other frames
                         }
                     }
                 }
-                
+
                 // Clean up input file
                 await ffmpeg.deleteFile(inputFileName);
-                
+
                 if (extractedFrames.length === 0) {
                     throw new Error('No frames were successfully extracted');
                 }
-                
+
             } catch (error) {
                 console.error('FFmpeg extraction error:', error);
                 throw new Error('FFmpeg frame extraction failed: ' + error.message);
@@ -832,47 +837,47 @@
         async function extractFramesWithCanvas(frameTimes, format, button) {
             const videoPlayer = document.getElementById('videoPlayer');
             extractedFrames = [];
-            
+
             for (let i = 0; i < frameTimes.length; i++) {
                 const time = frameTimes[i];
-                
+
                 // Seek to the specific time
                 videoPlayer.currentTime = time;
-                
+
                 // Wait for video to seek
                 await new Promise((resolve, reject) => {
                     const timeout = setTimeout(() => {
                         reject(new Error('Video seek timeout'));
                     }, 5000);
-                    
+
                     videoPlayer.addEventListener('seeked', () => {
                         clearTimeout(timeout);
                         resolve();
                     }, { once: true });
                 });
-                
+
                 // Extract frame using Canvas
                 const canvas = document.createElement('canvas');
                 canvas.width = videoPlayer.videoWidth;
                 canvas.height = videoPlayer.videoHeight;
-                
+
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
-                
+
                 // Convert to blob
                 const blob = await new Promise((resolve) => {
                     canvas.toBlob(resolve, `image/${format}`, format === 'jpg' ? 0.9 : 1);
                 });
-                
+
                 const frameData = {
                     blob: blob,
                     url: URL.createObjectURL(blob),
                     time: time,
                     filename: `frame_${formatTime(time).replace(':', '-')}.${format}`
                 };
-                
+
                 extractedFrames.push(frameData);
-                
+
                 // Update progress
                 showProgressNotification(i + 1, frameTimes.length);
             }
@@ -883,10 +888,10 @@
             const progressContainer = document.getElementById('progressContainer');
             const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
-            
+
             if (progressContainer) {
                 progressContainer.style.display = 'block';
-                
+
                 const percent = Math.round((current / total) * 100);
                 progressFill.style.width = percent + '%';
                 progressText.textContent = `Extracting ${current}/${total} frames (${percent}%)`;
@@ -918,10 +923,10 @@
             const resultsSummary = document.getElementById('resultsSummary');
             const framesGrid = document.getElementById('framesGrid');
             const downloadAllButton = document.getElementById('downloadAllButton');
-            
+
             // Show results section
             resultsSection.style.display = 'block';
-            
+
             // Update summary
             resultsSummary.innerHTML = `
                 <div class="summary-stats">
@@ -939,7 +944,7 @@
                     </div>
                 </div>
             `;
-            
+
             // Display frames in grid
             framesGrid.innerHTML = '';
             extractedFrames.forEach((frame, index) => {
@@ -961,7 +966,7 @@
                 `;
                 framesGrid.appendChild(frameCard);
             });
-            
+
             // Show download all button
             downloadAllButton.style.display = 'inline-block';
         }
@@ -972,13 +977,13 @@
             link.href = frame.url;
             link.download = frame.filename;
             link.click();
-            
+
             showNotification(`💾 Downloaded ${frame.filename}`);
         }
 
         function downloadAllFrames() {
             if (extractedFrames.length === 0) return;
-            
+
             // Create a zip-like behavior by triggering downloads
             extractedFrames.forEach((frame, index) => {
                 setTimeout(() => {
@@ -988,7 +993,7 @@
                     link.click();
                 }, index * 100); // Small delay between downloads
             });
-            
+
             showNotification(`📦 Downloading ${extractedFrames.length} frames...`);
         }
 
@@ -1001,17 +1006,18 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: var(--color-success);
+                background: #10B981;
                 color: white;
                 padding: 12px 20px;
-                border-radius: var(--radius-button);
+                border-radius: 8px;
                 font-weight: 500;
                 z-index: 10000;
                 animation: slideIn 0.3s ease-out;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
@@ -1023,7 +1029,7 @@
         // Mobile menu functionality
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-        
+
         menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', !isExpanded);
@@ -1043,7 +1049,7 @@
                     opacity: 1;
                 }
             }
-            
+
             @keyframes slideOut {
                 from {
                     transform: translateX(0);
@@ -1537,16 +1543,16 @@
             .options-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .frames-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
-            
+
             .privacy-content {
                 flex-direction: column;
                 text-align: center;
             }
-            
+
             .frame-info {
                 flex-direction: column;
                 align-items: stretch;
@@ -1554,4 +1560,3 @@
         }
     </style>
 </body>
-</html>

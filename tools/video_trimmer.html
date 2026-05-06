@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -83,7 +83,7 @@
             </div>
             
             <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                <span>☰</span>
+                <span>â˜°</span>
             </button>
         </div>
     </nav>
@@ -101,7 +101,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Trimmer Tool</h3>
                     <p class="tool-subtitle">Trim and cut video clips with precision. Upload your video, set start and end times using the timeline scrubber, preview in real-time, and download the trimmed clip instantly. No quality loss, completely private.</p>
-                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Timeline Controls</span>
                         <span class="feature-tag">Real-time Preview</span>
@@ -121,7 +121,7 @@
                 <div class="upload-section">
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">📹</div>
+                            <div class="upload-icon">ðŸ“¹</div>
                             <h3 class="upload-title">Drop your video here</h3>
                             <p class="upload-subtitle">or click to browse files</p>
                             <input type="file" id="videoInput" accept="video/*" class="file-input" aria-describedby="uploadHelp">
@@ -203,9 +203,9 @@
                             </div>
                         </div>
                         <div class="control-buttons">
-                            <button class="btn btn-secondary" onclick="setStartFromCurrent()">⏮️ Set Start from Current</button>
-                            <button class="btn btn-secondary" onclick="setEndFromCurrent()">⏭️ Set End from Current</button>
-                            <button class="btn btn-secondary" onclick="resetSelection()">🔄 Reset Selection</button>
+                            <button class="btn btn-secondary" onclick="setStartFromCurrent()">â®ï¸ Set Start from Current</button>
+                            <button class="btn btn-secondary" onclick="setEndFromCurrent()">â­ï¸ Set End from Current</button>
+                            <button class="btn btn-secondary" onclick="resetSelection()">ðŸ”„ Reset Selection</button>
                         </div>
                     </div>
                 </div>
@@ -250,10 +250,10 @@
                     <!-- Download Button -->
                     <div class="download-section">
                         <button class="btn btn-primary btn-large" id="trimButton" onclick="processVideo()">
-                            ✂️ Trim Video
+                            âœ‚ï¸ Trim Video
                         </button>
                         <button class="btn btn-success btn-large" id="downloadButton" onclick="downloadVideo()" style="display: none;">
-                            ⬇️ Download Trimmed Video
+                            â¬‡ï¸ Download Trimmed Video
                         </button>
                     </div>
                 </div>
@@ -301,7 +301,7 @@
         <section class="privacy-notice">
             <div class="container">
                 <div class="privacy-card">
-                    <div class="privacy-icon">🔒</div>
+                    <div class="privacy-icon">ðŸ”’</div>
                     <div class="privacy-content">
                         <h4>Your Privacy is Protected</h4>
                         <p>All video processing happens entirely in your browser. Your files are never uploaded to our servers, ensuring complete privacy and security. The video trimmer uses client-side processing with FFmpeg.wasm technology.</p>
@@ -316,21 +316,21 @@
                 <h3 class="related-title">More Video & Audio Tools</h3>
                 <div class="related-grid">
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">🗜️</div>
+                        <div class="related-icon">ðŸ—œï¸</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality with advanced algorithms</p>
                         </div>
                     </a>
                     <a href="audio_converter.html" class="related-card">
-                        <div class="related-icon">🎵</div>
+                        <div class="related-icon">ðŸŽµ</div>
                         <div class="related-content">
                             <h4>Audio Converter</h4>
                             <p>Convert audio files between different formats like MP3, WAV, AAC, and more</p>
                         </div>
                     </a>
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">🔄</div>
+                        <div class="related-icon">ðŸ”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos to different formats and resolutions with customizable settings</p>
@@ -338,6 +338,14 @@
                     </a>
                 </div>
             </div>
+        </section>
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Video Trimmer</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Video Trimmer is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+            
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Trimmer leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
         </section>
     </main>
 
@@ -462,13 +470,13 @@
         async function handleFile(file) {
             // Validate file type
             if (!file.type.startsWith('video/')) {
-                showNotification('❌ Please select a valid video file', 'error');
+                showNotification('âŒ Please select a valid video file', 'error');
                 return;
             }
 
             // Validate file size (100MB limit)
             if (file.size > 100 * 1024 * 1024) {
-                showNotification('❌ File size must be less than 100MB', 'error');
+                showNotification('âŒ File size must be less than 100MB', 'error');
                 return;
             }
 
@@ -490,7 +498,7 @@
             document.getElementById('fileSize').textContent = formatFileSize(file.size);
             document.getElementById('videoFormat').textContent = file.type.split('/')[1].toUpperCase();
 
-            showNotification('📹 Video loaded successfully!');
+            showNotification('ðŸ“¹ Video loaded successfully!');
         }
 
         function handleVideoMetadata() {
@@ -503,7 +511,7 @@
 
             // Update video info
             document.getElementById('videoDuration').textContent = formatTime(video.duration);
-            document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
+            document.getElementById('videoResolution').textContent = `${video.videoWidth} Ã— ${video.videoHeight}`;
 
             // Set initial selection
             selectionStart = 0;
@@ -683,7 +691,7 @@
 
         async function processVideo() {
             if (!currentVideo) {
-                showNotification('❌ Please select a video first', 'error');
+                showNotification('âŒ Please select a video first', 'error');
                 return;
             }
 
@@ -775,20 +783,20 @@
                     console.warn('Cleanup error:', cleanupError);
                 }
                 
-                showNotification('✅ Video trimmed successfully!', 'success');
+                showNotification('âœ… Video trimmed successfully!', 'success');
                 
                 // Show download button
                 document.getElementById('downloadButton').style.display = 'inline-block';
                 
             } catch (error) {
                 console.error('Processing error:', error);
-                showNotification('❌ Failed to process video: ' + error.message, 'error');
+                showNotification('âŒ Failed to process video: ' + error.message, 'error');
             } finally {
                 // Hide processing status after a short delay
                 setTimeout(() => {
                     document.getElementById('processingStatus').style.display = 'none';
                     document.getElementById('trimButton').disabled = false;
-                    document.getElementById('trimButton').textContent = '✂️ Trim Video';
+                    document.getElementById('trimButton').textContent = 'âœ‚ï¸ Trim Video';
                 }, 1000);
             }
         }
@@ -803,7 +811,7 @@
 
         function downloadVideo() {
             if (!processedBlob) {
-                showNotification('❌ No processed video to download', 'error');
+                showNotification('âŒ No processed video to download', 'error');
                 return;
             }
 
@@ -816,7 +824,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            showNotification('⬇️ Video download started!', 'success');
+            showNotification('â¬‡ï¸ Video download started!', 'success');
         }
 
         // Utility functions
@@ -1410,3 +1418,4 @@
     </style>
 </body>
 </html>
+

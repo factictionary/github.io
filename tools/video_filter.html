@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -84,7 +84,7 @@
             </div>
             
             <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                <span>☰</span>
+                <span>â˜°</span>
             </button>
         </div>
     </nav>
@@ -102,7 +102,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Filter Tool</h3>
                     <p class="tool-subtitle">Apply professional video filters and effects to your videos with real-time preview. Adjust brightness, contrast, saturation, and more with our advanced video processing tool.</p>
-                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Real-time Preview</span>
                         <span class="feature-tag">Brightness Control</span>
@@ -125,7 +125,7 @@
                     <label class="input-label">Upload Your Video</label>
                     <div id="videoUpload" class="video-upload-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)">
                         <div class="upload-content">
-                            <div class="upload-icon">📹</div>
+                            <div class="upload-icon">ðŸ“¹</div>
                             <h3>Drop your video file here</h3>
                             <p>or click to browse</p>
                             <input type="file" id="videoFileInput" accept="video/*" style="display: none;" onchange="handleFileSelect(event)">
@@ -143,35 +143,35 @@
                     <h3 class="section-title">Filter Controls</h3>
                     <div class="filter-controls">
                         <div class="filter-group">
-                            <label for="brightnessRange" class="filter-label">🌞 Brightness: <span id="brightnessValue">0</span>%</label>
+                            <label for="brightnessRange" class="filter-label">ðŸŒž Brightness: <span id="brightnessValue">0</span>%</label>
                             <input type="range" id="brightnessRange" class="filter-slider" min="-100" max="100" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="contrastRange" class="filter-label">⚡ Contrast: <span id="contrastValue">0</span>%</label>
+                            <label for="contrastRange" class="filter-label">âš¡ Contrast: <span id="contrastValue">0</span>%</label>
                             <input type="range" id="contrastRange" class="filter-slider" min="-100" max="100" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="saturationRange" class="filter-label">🌈 Saturation: <span id="saturationValue">0</span>%</label>
+                            <label for="saturationRange" class="filter-label">ðŸŒˆ Saturation: <span id="saturationValue">0</span>%</label>
                             <input type="range" id="saturationRange" class="filter-slider" min="-100" max="100" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="hueRange" class="filter-label">🎨 Hue: <span id="hueValue">0</span>°</label>
+                            <label for="hueRange" class="filter-label">ðŸŽ¨ Hue: <span id="hueValue">0</span>Â°</label>
                             <input type="range" id="hueRange" class="filter-slider" min="-180" max="180" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="sepiaRange" class="filter-label">📜 Sepia: <span id="sepiaValue">0</span>%</label>
+                            <label for="sepiaRange" class="filter-label">ðŸ“œ Sepia: <span id="sepiaValue">0</span>%</label>
                             <input type="range" id="sepiaRange" class="filter-slider" min="0" max="100" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="grayscaleRange" class="filter-label">⚫ Grayscale: <span id="grayscaleValue">0</span>%</label>
+                            <label for="grayscaleRange" class="filter-label">âš« Grayscale: <span id="grayscaleValue">0</span>%</label>
                             <input type="range" id="grayscaleRange" class="filter-slider" min="0" max="100" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="blurRange" class="filter-label">✨ Blur: <span id="blurValue">0</span>px</label>
+                            <label for="blurRange" class="filter-label">âœ¨ Blur: <span id="blurValue">0</span>px</label>
                             <input type="range" id="blurRange" class="filter-slider" min="0" max="10" step="0.5" value="0" oninput="updateFilter()">
                         </div>
                         <div class="filter-group">
-                            <label for="sharpenRange" class="filter-label">🔪 Sharpen: <span id="sharpenValue">0</span>%</label>
+                            <label for="sharpenRange" class="filter-label">ðŸ”ª Sharpen: <span id="sharpenValue">0</span>%</label>
                             <input type="range" id="sharpenRange" class="filter-slider" min="0" max="100" value="0" oninput="updateFilter()">
                         </div>
                     </div>
@@ -182,42 +182,42 @@
                     <h3 class="section-title">Filter Presets</h3>
                     <div class="preset-grid">
                         <div class="preset-card" onclick="applyPreset('vintage')">
-                            <div class="preset-icon">📻</div>
+                            <div class="preset-icon">ðŸ“»</div>
                             <div class="preset-name">Vintage</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('cinematic')">
-                            <div class="preset-icon">🎬</div>
+                            <div class="preset-icon">ðŸŽ¬</div>
                             <div class="preset-name">Cinematic</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('highContrast')">
-                            <div class="preset-icon">⚡</div>
+                            <div class="preset-icon">âš¡</div>
                             <div class="preset-name">High Contrast</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('warm')">
-                            <div class="preset-icon">🔥</div>
+                            <div class="preset-icon">ðŸ”¥</div>
                             <div class="preset-name">Warm Tone</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('cool')">
-                            <div class="preset-icon">❄️</div>
+                            <div class="preset-icon">â„ï¸</div>
                             <div class="preset-name">Cool Tone</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('vibrant')">
-                            <div class="preset-icon">🌈</div>
+                            <div class="preset-icon">ðŸŒˆ</div>
                             <div class="preset-name">Vibrant</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('blackWhite')">
-                            <div class="preset-icon">⚫</div>
+                            <div class="preset-icon">âš«</div>
                             <div class="preset-name">Black & White</div>
                         </div>
                         <div class="preset-card" onclick="applyPreset('reset')">
-                            <div class="preset-icon">🔄</div>
+                            <div class="preset-icon">ðŸ”„</div>
                             <div class="preset-name">Reset All</div>
                         </div>
                     </div>
                     
                     <!-- Processing Workflow Information -->
                     <div class="workflow-info" style="margin-top: 20px; padding: 16px; background: var(--color-info); color: white; border-radius: var(--radius-card); font-size: 14px;">
-                        <strong>ℹ️ How it works:</strong> 
+                        <strong>â„¹ï¸ How it works:</strong> 
                         <ul style="margin: 8px 0; padding-left: 20px;">
                             <li>Adjust filters below to see real-time preview</li>
                             <li>Click "Process Video" to generate final filtered output</li>
@@ -230,9 +230,9 @@
                 <div class="preview-section" id="previewSection" style="display: none;">
                     <h3 class="section-title">Video Preview</h3>
                     <div class="preview-controls">
-                        <button class="btn btn-secondary" onclick="toggleComparisonMode()">🔀 Comparison Mode</button>
-                        <button class="btn btn-secondary" onclick="resetFilters()">🔄 Reset Filters</button>
-                        <button class="btn btn-primary" onclick="processVideo()">⚙️ Process Video</button>
+                        <button class="btn btn-secondary" onclick="toggleComparisonMode()">ðŸ”€ Comparison Mode</button>
+                        <button class="btn btn-secondary" onclick="resetFilters()">ðŸ”„ Reset Filters</button>
+                        <button class="btn btn-primary" onclick="processVideo()">âš™ï¸ Process Video</button>
                     </div>
                     
                     <div class="video-preview-container" id="videoPreview">
@@ -248,7 +248,7 @@
                     </div>
 
                     <div class="download-section" id="downloadSection" style="display: none;">
-                        <button class="btn btn-primary" onclick="downloadFilteredVideo()">⬇️ Download Filtered Video</button>
+                        <button class="btn btn-primary" onclick="downloadFilteredVideo()">â¬‡ï¸ Download Filtered Video</button>
                     </div>
                 </div>
             </div>
@@ -263,7 +263,7 @@
         <section class="privacy-notice">
             <div class="container">
                 <div class="privacy-content">
-                    <div class="privacy-icon">🔒</div>
+                    <div class="privacy-icon">ðŸ”’</div>
                     <div class="privacy-text">
                         <h4>Your Privacy is Protected</h4>
                         <p>All video processing happens in your browser using local algorithms. Your video files never leave your device and are not stored on our servers. We cannot access or view your content.</p>
@@ -278,21 +278,21 @@
                 <h3 class="related-title">More Video Tools</h3>
                 <div class="related-grid">
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">📹</div>
+                        <div class="related-icon">ðŸ“¹</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality</p>
                         </div>
                     </a>
                     <a href="audio_extractor.html" class="related-card">
-                        <div class="related-icon">🎵</div>
+                        <div class="related-icon">ðŸŽµ</div>
                         <div class="related-content">
                             <h4>Audio Extractor</h4>
                             <p>Extract audio from video files in various formats</p>
                         </div>
                     </a>
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">🔄</div>
+                        <div class="related-icon">ðŸ”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos between different formats and qualities</p>
@@ -300,6 +300,14 @@
                     </a>
                 </div>
             </div>
+        </section>
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Video Filter</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Video Filter is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+            
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Filter leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
         </section>
     </main>
 
@@ -445,9 +453,9 @@
             const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
             fileInfo.innerHTML = `
                 <div class="file-info-content">
-                    <div class="file-name">📹 ${file.name}</div>
-                    <div class="file-details">${sizeMB} MB • ${file.type}</div>
-                    <button class="btn btn-secondary" onclick="clearVideo()">🗑️ Remove</button>
+                    <div class="file-name">ðŸ“¹ ${file.name}</div>
+                    <div class="file-details">${sizeMB} MB â€¢ ${file.type}</div>
+                    <button class="btn btn-secondary" onclick="clearVideo()">ðŸ—‘ï¸ Remove</button>
                 </div>
             `;
             fileInfo.style.display = 'block';
@@ -632,16 +640,16 @@
             comparisonMode = !comparisonMode;
             const button = event.target;
             if (comparisonMode) {
-                button.textContent = '👁️ Normal Mode';
+                button.textContent = 'ðŸ‘ï¸ Normal Mode';
                 button.classList.remove('btn-secondary');
                 button.classList.add('btn-primary');
                 // Implement comparison view
-                showNotification('🔀 Comparison mode enabled - showing before/after view');
+                showNotification('ðŸ”€ Comparison mode enabled - showing before/after view');
             } else {
-                button.textContent = '🔀 Comparison Mode';
+                button.textContent = 'ðŸ”€ Comparison Mode';
                 button.classList.remove('btn-primary');
                 button.classList.add('btn-secondary');
-                showNotification('👁️ Normal mode enabled');
+                showNotification('ðŸ‘ï¸ Normal mode enabled');
             }
         }
 
@@ -707,7 +715,7 @@
         // Video processing with FFmpeg
         async function processVideo() {
             if (!currentVideoFile) {
-                showNotification('❌ Please upload a video first');
+                showNotification('âŒ Please upload a video first');
                 return;
             }
 
@@ -726,7 +734,7 @@
                     await initializeFFmpeg();
                 }
 
-                showNotification('⚙️ Processing video with filters...');
+                showNotification('âš™ï¸ Processing video with filters...');
 
                 // Read the video file
                 const videoData = await currentVideoFile.arrayBuffer();
@@ -763,11 +771,11 @@
                 // Show success
                 progressSection.style.display = 'none';
                 downloadSection.style.display = 'block';
-                showNotification('✅ Video processing complete!');
+                showNotification('âœ… Video processing complete!');
 
             } catch (error) {
                 console.error('Video processing error:', error);
-                showNotification('❌ Video processing failed: ' + error.message);
+                showNotification('âŒ Video processing failed: ' + error.message);
                 
                 // Hide progress section on error
                 const progressSection = document.getElementById('progressSection');
@@ -839,7 +847,7 @@
         // Download processed video
         function downloadFilteredVideo() {
             if (!processedVideoBlob) {
-                showNotification('❌ No processed video available');
+                showNotification('âŒ No processed video available');
                 return;
             }
 
@@ -853,10 +861,10 @@
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
                 
-                showNotification('⬇️ Video download started');
+                showNotification('â¬‡ï¸ Video download started');
             } catch (error) {
                 console.error('Download error:', error);
-                showNotification('❌ Download failed: ' + error.message);
+                showNotification('âŒ Download failed: ' + error.message);
             }
         }
 
@@ -1411,3 +1419,4 @@
     </style>
 </body>
 </html>
+

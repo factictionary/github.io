@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factictionary Deals - Best Deals on Amazon India</title>
+    <meta name="description" content="Your one-stop destination for the best deals on Amazon India. Curated products with discount pricing, 4+ star ratings, and smart filtering.">
+    <meta name="keywords" content="amazon deals, best deals, product reviews, online shopping india, amazon affiliate store">
+    <link rel="canonical" href="https://factictionary.github.io/deals/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #667eea;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Navigation */
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        
+        /* Hero Section */
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 16px; font-weight: 800; }
+        .hero p { font-size: 1.3rem; opacity: 0.95; margin-bottom: 32px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; display: inline-block; }
+        .btn-primary { background: white; color: var(--primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: white; border: 2px solid white; }
+        .btn-secondary:hover { background: white; color: var(--primary); }
+        
+        /* Featured Deals Banner */
+        .featured-banner { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); color: white; padding: 24px; margin: 40px 0; border-radius: var(--radius); text-align: center; }
+        .featured-banner h2 { font-size: 2rem; margin-bottom: 12px; }
+        .featured-banner p { font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; }
+        .featured-banner .btn { background: white; color: #FF6B6B; }
+        
+        /* Categories Grid */
+        .section { padding: 60px 0; }
+        .section-header { text-align: center; margin-bottom: 48px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 16px; color: var(--dark); }
+        .section-header p { font-size: 1.1rem; color: var(--gray); }
+        
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .category-card { background: white; border-radius: var(--radius); padding: 32px; text-align: center; box-shadow: var(--shadow); transition: all 0.3s; text-decoration: none; color: var(--dark); border: 2px solid transparent; }
+        .category-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); border-color: var(--primary); }
+        .category-icon { font-size: 4rem; margin-bottom: 16px; }
+        .category-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+        .category-desc { color: var(--gray); margin-bottom: 16px; font-size: 0.95rem; }
+        .category-count { display: inline-block; padding: 6px 16px; background: var(--light); border-radius: 20px; color: var(--primary); font-weight: 600; font-size: 0.9rem; }
+        
+        /* Stats Section */
+        .stats-section { background: white; padding: 60px 0; margin: 60px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: center; }
+        .stat-item h3 { font-size: 3rem; color: var(--primary); font-weight: 800; margin-bottom: 8px; }
+        .stat-item p { color: var(--gray); font-size: 1.1rem; }
+        
+        /* Why Shop Section */
+        .why-shop { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); padding: 60px 0; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-top: 40px; }
+        .feature-card { background: white; padding: 32px; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .feature-icon { font-size: 3rem; margin-bottom: 16px; }
+        .feature-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; color: var(--dark); }
+        .feature-desc { color: var(--gray); line-height: 1.6; }
+        
+        /* CTA Section */
+        .cta-section { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 80px 0; text-align: center; margin-top: 60px; }
+        .cta-section h2 { font-size: 2.5rem; margin-bottom: 16px; }
+        .cta-section p { font-size: 1.2rem; opacity: 0.95; margin-bottom: 32px; }
+        
+        /* Footer */
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer h4 { margin-bottom: 16px; font-weight: 600; }
+        .footer ul { list-style: none; padding: 0; }
+        .footer a { color: #666; text-decoration: none; transition: color 0.3s; }
+        .footer a:hover { color: var(--primary); }
+        .footer-bottom { border-top: 1px solid #eee; padding-top: 24px; text-align: center; color: #666; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .nav-links { gap: 1rem; font-size: 0.9rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/deals/" class="nav-link active">Deals</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>🔥 Factictionary Deals</h1>
+            <p>Your trusted source for the best deals on Amazon India</p>
+            <div class="hero-buttons">
+                <a href="/deals/today/" class="btn btn-primary">🔥 Today's Deals</a>
+                <a href="#categories" class="btn btn-secondary">Browse Categories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Deals Banner -->
+    <div class="container">
+        <div class="featured-banner">
+            <h2>🔥 Today's Hot Deals</h2>
+            <p>Don't miss out on today's best offers - Updated daily with discount pricing!</p>
+            <a href="/deals/today/" class="btn">View All Deals →</a>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Curated Products</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10+</h3>
+                    <p>Categories</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Daily</h3>
+                    <p>Updated Deals</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Honest Reviews</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <p>Explore our curated collections across popular categories</p>
+            </div>
+
+            <div class="categories-grid">
+                <a href="/deals/today/" class="category-card">
+                    <div class="category-icon">🔥</div>
+                    <h3 class="category-title">Today's Deals</h3>
+                    <p class="category-desc">Best deals updated daily with smart filtering, discount pricing, and 4+ star ratings only</p>
+                    <span class="category-count">Updated Daily</span>
+                </a>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">💻</div>
+                    <h3 class="category-title">Electronics</h3>
+                    <p class="category-desc">Laptops, tablets, phones, and gadgets</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">🎧</div>
+                    <h3 class="category-title">Audio</h3>
+                    <p class="category-desc">Headphones, earbuds, speakers, and more</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">🎮</div>
+                    <h3 class="category-title">Gaming</h3>
+                    <p class="category-desc">Gaming laptops, accessories, and gear</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">🏠</div>
+                    <h3 class="category-title">Home & Kitchen</h3>
+                    <p class="category-desc">Appliances, cookware, and home essentials</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">⚽</div>
+                    <h3 class="category-title">Sports & Fitness</h3>
+                    <p class="category-desc">Gym equipment, yoga mats, and fitness gear</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">👗</div>
+                    <h3 class="category-title">Fashion</h3>
+                    <p class="category-desc">Clothing, accessories, and footwear</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">📚</div>
+                    <h3 class="category-title">Books</h3>
+                    <p class="category-desc">Best-sellers, educational, and fiction</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+
+                <div class="category-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="category-icon">💄</div>
+                    <h3 class="category-title">Beauty</h3>
+                    <p class="category-desc">Skincare, makeup, and personal care</p>
+                    <span class="category-count">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Shop With Us -->
+    <section class="why-shop">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Shop With Us?</h2>
+                <p>We make online shopping easier and smarter</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">Curated Selection</h3>
+                    <p class="feature-desc">Every product is handpicked and reviewed by our team. Only the best makes it to our store.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Detailed Specs</h3>
+                    <p class="feature-desc">Get key specifications, use cases, and expert tips for every product to make informed decisions.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Smart Filtering</h3>
+                    <p class="feature-desc">Filter by category, price range, and sort options to find exactly what you need quickly.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Best Prices</h3>
+                    <p class="feature-desc">We track prices and highlight the best deals so you always get great value for money.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Daily Updates</h3>
+                    <p class="feature-desc">Fresh deals and new products added every day. Never miss out on the latest offers.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Trusted Reviews</h3>
+                    <p class="feature-desc">Honest, unbiased reviews based on real features and customer feedback. No fake reviews.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Shopping?</h2>
+            <p>Explore our curated collections and find your next favorite product</p>
+            <div class="hero-buttons">
+                <a href="/shop/deals/" class="btn btn-primary">🔥 View Today's Deals</a>
+                <a href="#categories" class="btn btn-secondary">Browse All Categories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Deals</h4>
+                    <ul>
+                        <li><a href="/deals/today/">Today's Deals</a></li>
+                        <li><a href="/deals/">All Categories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">Articles</a></li>
+                        <li><a href="/tools/">Tools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/disclaimer.html">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p><strong>Amazon Associate Disclosure:</strong> Factictionary (factictionary-21) is a participant in the Amazon Associates Program. We earn from qualifying purchases.</p>
+                <p style="margin-top: 8px;">&copy; 2026 Factictionary. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

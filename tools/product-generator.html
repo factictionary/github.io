@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card Generator | Factictionary</title>
+    <meta name="description" content="Generate product cards for affiliate marketing. Quick and easy product HTML generator.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #667eea;
+            --success: #10b981;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 40px 0; }
+        .hero h1 { font-size: 2rem; margin-bottom: 12px; }
+        .content { padding: 40px 0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .panel { background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
+        .form-input, .form-textarea, .form-select { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.95rem; font-family: inherit; }
+        .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1); }
+        .form-textarea { min-height: 100px; resize: vertical; font-family: 'Monaco', 'Courier New', monospace; }
+        .btn { padding: 12px 24px; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+        .btn-primary { background: var(--primary); color: white; width: 100%; }
+        .btn-primary:hover { background: #0052cc; transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: white; border-color: var(--primary); }
+        .code-output { background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: var(--radius); font-family: 'Monaco', 'Courier New', monospace; font-size: 0.85rem; overflow-x: auto; max-height: 600px; overflow-y: auto; }
+        .preview { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; background: var(--light); }
+        .product-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); max-width: 400px; margin: 0 auto; }
+        .product-image { width: 100%; height: 200px; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .product-body { padding: 20px; }
+        .product-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .product-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+        .product-desc { color: var(--gray); margin-bottom: 16px; font-size: 0.9rem; }
+        .pros-cons { margin: 16px 0; font-size: 0.85rem; }
+        .pros-cons h4 { font-size: 0.9rem; margin-bottom: 6px; }
+        .pros-cons ul { margin-left: 20px; }
+        .pros { color: var(--success); }
+        .cons { color: var(--error); }
+        .btn-amazon { display: block; width: 100%; padding: 10px; background: #FF9900; color: white; text-align: center; text-decoration: none; border-radius: var(--radius); font-weight: 600; }
+        .alert { padding: 16px; border-radius: var(--radius); margin-bottom: 20px; }
+        .alert-info { background: #e3f2fd; border: 1px solid #2196f3; color: #1565c0; }
+        .alert-warning { background: #fff3cd; border: 1px solid #ffc107; color: #856404; }
+        .actions { display: flex; gap: 12px; margin-top: 20px; }
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container" style="text-align: center;">
+            <h1>🛍️ Product Card Generator</h1>
+            <p>Generate affiliate product cards in seconds</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="alert alert-info">
+                <strong>💡 How it works:</strong> Fill in the product details below, and we'll generate the HTML code for you. 
+                Copy the code and paste it into your product review page. Takes 2 minutes per product!
+            </div>
+
+            <div class="grid">
+                <!-- Input Form -->
+                <div class="panel">
+                    <h2 style="margin-bottom: 24px;">Product Details</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Product Name *</label>
+                        <input type="text" id="productName" class="form-input" placeholder="Premium Yoga Mat - Non-Slip Exercise Mat">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Emoji Icon</label>
+                        <input type="text" id="productEmoji" class="form-input" placeholder="🧘" maxlength="2">
+                        <small style="color: var(--gray);">Single emoji for the product image</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Price Range *</label>
+                        <input type="text" id="productPrice" class="form-input" placeholder="₹999 - ₹1,499">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description *</label>
+                        <textarea id="productDesc" class="form-textarea" placeholder="High-quality yoga mat with excellent grip and cushioning. Perfect for yoga, pilates, and floor exercises. 6mm thickness provides optimal comfort."></textarea>
+                        <small style="color: var(--gray);">2-3 sentences about the product</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Pros (one per line) *</label>
+                        <textarea id="productPros" class="form-textarea" placeholder="Non-slip surface for safety
+Eco-friendly materials
+Easy to clean and maintain
+Comes with carrying strap"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cons (one per line) *</label>
+                        <textarea id="productCons" class="form-textarea" placeholder="May have initial rubber smell
+Takes time to flatten completely"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Amazon Search Term *</label>
+                        <input type="text" id="searchTerm" class="form-input" placeholder="yoga+mat">
+                        <small style="color: var(--gray);">Use + instead of spaces (e.g., yoga+mat)</small>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="generateProduct()">🚀 Generate Product Card</button>
+                    
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-secondary" onclick="loadSample()" style="width: 100%;">📄 Load Sample Data</button>
+                    </div>
+                </div>
+
+                <!-- Output -->
+                <div>
+                    <div class="panel" style="margin-bottom: 20px;">
+                        <h2 style="margin-bottom: 16px;">Preview</h2>
+                        <div class="preview" id="preview">
+                            <p style="text-align: center; color: var(--gray);">Fill in the form and click "Generate" to see preview</p>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h2 style="margin-bottom: 16px;">HTML Code</h2>
+                        <div class="alert alert-warning" style="font-size: 0.85rem;">
+                            <strong>📋 How to use:</strong> Copy the code below and paste it into your product review page (e.g., sports-fitness.html) inside the product-grid div.
+                        </div>
+                        <div class="code-output" id="codeOutput">
+                            <p style="color: #94a3b8;">// Generated HTML will appear here...</p>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-primary" onclick="copyCode()">📋 Copy Code</button>
+                            <button class="btn btn-secondary" onclick="downloadCode()">⬇️ Download HTML</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function generateProduct() {
+            // Get form values
+            const name = document.getElementById('productName').value.trim();
+            const emoji = document.getElementById('productEmoji').value.trim() || '🛍️';
+            const price = document.getElementById('productPrice').value.trim();
+            const desc = document.getElementById('productDesc').value.trim();
+            const prosText = document.getElementById('productPros').value.trim();
+            const consText = document.getElementById('productCons').value.trim();
+            const searchTerm = document.getElementById('searchTerm').value.trim();
+
+            // Validate
+            if (!name || !price || !desc || !prosText || !consText || !searchTerm) {
+                alert('Please fill in all required fields (*)');
+                return;
+            }
+
+            // Parse pros and cons
+            const pros = prosText.split('\n').filter(p => p.trim());
+            const cons = consText.split('\n').filter(c => c.trim());
+
+            // Generate HTML
+            const html = generateHTML(name, emoji, price, desc, pros, cons, searchTerm);
+            
+            // Show preview
+            document.getElementById('preview').innerHTML = html;
+            
+            // Show code
+            const codeOutput = document.getElementById('codeOutput');
+            codeOutput.textContent = html;
+            
+            // Scroll to output
+            codeOutput.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function generateHTML(name, emoji, price, desc, pros, cons, searchTerm) {
+            const prosHTML = pros.map(p => `                <li>${escapeHtml(p)}</li>`).join('\n');
+            const consHTML = cons.map(c => `                <li>${escapeHtml(c)}</li>`).join('\n');
+
+            return `<div class="product-card">
+    <div class="product-image">${emoji}</div>
+    <div class="product-body">
+        <h3 class="product-title">${escapeHtml(name)}</h3>
+        <div class="product-price">${escapeHtml(price)}</div>
+        <p class="product-desc">
+            ${escapeHtml(desc)}
+        </p>
+        <div class="pros-cons">
+            <h4 class="pros">✅ Pros:</h4>
+            <ul class="pros">
+${prosHTML}
+            </ul>
+        </div>
+        <div class="pros-cons">
+            <h4 class="cons">❌ Cons:</h4>
+            <ul class="cons">
+${consHTML}
+            </ul>
+        </div>
+        <a href="https://www.amazon.in/s?k=${searchTerm}&tag=factictionary-21" 
+           class="btn-amazon" target="_blank" rel="nofollow noopener">
+            🛒 View on Amazon
+        </a>
+    </div>
+</div>`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('codeOutput').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Code copied to clipboard!');
+            }).catch(() => {
+                alert('❌ Failed to copy. Please select and copy manually.');
+            });
+        }
+
+        function downloadCode() {
+            const code = document.getElementById('codeOutput').textContent;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'product-card.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function loadSample() {
+            document.getElementById('productName').value = 'Premium Yoga Mat - Non-Slip Exercise Mat';
+            document.getElementById('productEmoji').value = '🧘';
+            document.getElementById('productPrice').value = '₹999 - ₹1,499';
+            document.getElementById('productDesc').value = 'High-quality yoga mat with excellent grip and cushioning. Perfect for yoga, pilates, and floor exercises. 6mm thickness provides optimal comfort.';
+            document.getElementById('productPros').value = `Non-slip surface for safety
+Eco-friendly materials
+Easy to clean and maintain
+Comes with carrying strap`;
+            document.getElementById('productCons').value = `May have initial rubber smell
+Takes time to flatten completely`;
+            document.getElementById('searchTerm').value = 'yoga+mat';
+            
+            generateProduct();
+        }
+
+        // Auto-generate search term from product name
+        document.getElementById('productName').addEventListener('blur', function() {
+            const searchTermInput = document.getElementById('searchTerm');
+            if (!searchTermInput.value) {
+                const name = this.value.toLowerCase()
+                    .replace(/[^\w\s]/g, '')
+                    .split(' ')
+                    .slice(0, 3)
+                    .join('+');
+                searchTermInput.value = name;
+            }
+        });
+    </script>
+</body>
+</html>

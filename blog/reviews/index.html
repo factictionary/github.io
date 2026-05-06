@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reviews | Factictionary</title>
+    <meta name="description" content="Honest product reviews and recommendations. Find the best products across sports, kitchen, tech, books, and fashion.">
+    <meta name="keywords" content="product reviews, amazon products, best products, product recommendations">
+    <link rel="canonical" href="https://factictionary.github.io/blog/reviews/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #667eea;
+            --success: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 60px 0; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.2rem; opacity: 0.95; }
+        .categories { padding: 60px 0; }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .category-card { background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); transition: transform 0.3s; text-decoration: none; color: var(--dark); }
+        .category-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .category-icon { font-size: 3rem; margin-bottom: 16px; }
+        .category-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; }
+        .category-desc { color: var(--gray); margin-bottom: 16px; }
+        .category-count { color: var(--primary); font-weight: 600; }
+        .deals-banner { display: block; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); color: white; padding: 40px; border-radius: var(--radius); text-decoration: none; box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3); transition: transform 0.3s, box-shadow 0.3s; }
+        .deals-banner:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4); }
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
+        @media (max-width: 768px) {
+            .nav-links { gap: 1rem; font-size: 0.9rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .categories-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/deals/" class="nav-link active">Deals</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Product Reviews & Recommendations</h1>
+            <p>Honest reviews to help you make informed buying decisions</p>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <!-- Featured: Today's Deals -->
+            <div style="margin-bottom: 60px;">
+                <a href="/blog/reviews/todays-deals.html" class="deals-banner">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 16px;">🔥</div>
+                        <h2 style="font-size: 2rem; margin-bottom: 12px;">Today's Best Deals</h2>
+                        <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 16px;">Handpicked deals updated daily</p>
+                        <span style="display: inline-block; background: white; color: #FF6B6B; padding: 10px 24px; border-radius: 25px; font-weight: 600;">View Deals →</span>
+                    </div>
+                </a>
+            </div>
+
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 16px;">Browse by Category</h2>
+            <p style="text-align: center; color: var(--gray); margin-bottom: 40px;">Find the best products for your needs</p>
+
+            <div class="categories-grid">
+                <a href="/blog/reviews/sports-fitness.html" class="category-card">
+                    <div class="category-icon">⚽</div>
+                    <h3 class="category-title">Sports & Fitness</h3>
+                    <p class="category-desc">Gym equipment, yoga mats, fitness trackers, sports gear, and more</p>
+                    <span class="category-count">30+ Products</span>
+                </a>
+
+                <a href="/blog/reviews/kitchen-home.html" class="category-card">
+                    <div class="category-icon">🍳</div>
+                    <h3 class="category-title">Kitchen & Home</h3>
+                    <p class="category-desc">Cookware, appliances, storage solutions, home decor, and essentials</p>
+                    <span class="category-count">30+ Products</span>
+                </a>
+
+                <a href="/blog/reviews/tech-electronics.html" class="category-card">
+                    <div class="category-icon">💻</div>
+                    <h3 class="category-title">Tech & Electronics</h3>
+                    <p class="category-desc">Laptops, smartphones, headphones, cameras, and gadgets</p>
+                    <span class="category-count">30+ Products</span>
+                </a>
+
+                <a href="/blog/reviews/books-learning.html" class="category-card">
+                    <div class="category-icon">📚</div>
+                    <h3 class="category-title">Books & Learning</h3>
+                    <p class="category-desc">Best-selling books, educational resources, and learning materials</p>
+                    <span class="category-count">20+ Products</span>
+                </a>
+
+                <a href="/blog/reviews/fashion-beauty.html" class="category-card">
+                    <div class="category-icon">👗</div>
+                    <h3 class="category-title">Fashion & Beauty</h3>
+                    <p class="category-desc">Clothing, accessories, skincare, makeup, and beauty products</p>
+                    <span class="category-count">20+ Products</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Articles</a></li>
+                        <li><a href="/blog/reviews/" style="color: #666; text-decoration: none;">Product Reviews</a></li>
+                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
+                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
+                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
+                        <li><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
+                <p style="color: #666; margin: 0; font-size: 0.9rem;">
+                    <strong>Affiliate Disclosure:</strong> We earn from qualifying purchases through Amazon Associates.
+                </p>
+                <p style="color: #666; margin: 8px 0 0 0;">&copy; 2026 Factictionary. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

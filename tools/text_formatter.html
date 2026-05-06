@@ -1,838 +1,266 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Formatter & Analyzer | Factictionary</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Professional text formatting, analysis, and conversion tools. Format text, count words, encode data, generate hashes, and more with privacy-first processing.">
-    <meta name="keywords" content="text formatter, word counter, case converter, json formatter, base64 encoder, url encoder, hash generator, text analyzer">
+    <title>Text Formatter | Factictionary</title>
+    <meta name="description" content="Free online text formatter. Convert case, remove extra spaces, trim text, and format text professionally. 100% privacy-protected.">
+    <meta name="keywords" content="text formatter, case converter, text cleaner, uppercase, lowercase, capitalize">
     <meta name="author" content="Factictionary Team">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Text Formatter & Analyzer | Factictionary">
-    <meta property="og:description" content="Powerful text processing utilities including formatting, counting, encoding, and analysis tools.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/text_formatter.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Text Formatter & Analyzer | Factictionary">
-    <meta name="twitter:description" content="Professional text processing tools for formatting, analysis, and conversion.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://factictionary.github.io/tools/text_formatter.html">
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Factictionary Text Formatter",
-        "description": "Professional text formatting and analysis tools including case conversion, word counting, JSON formatting, and data encoding.",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "provider": {
-            "@type": "Organization",
-            "name": "Factictionary"
+    <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #667eea;
+            --success: #10b981;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
         }
-    }
-    </script>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        main { min-height: calc(100vh - 70px - 200px); padding: 40px 0; }
+        .tool-header { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 40px 0; margin-bottom: 40px; }
+        .tool-header-content { text-align: center; }
+        .tool-icon { font-size: 3rem; margin-bottom: 16px; }
+        .tool-title { font-size: 2.5rem; margin-bottom: 16px; font-weight: 700; }
+        .tool-subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .privacy-badge { display: inline-block; background: rgba(255, 255, 255, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 20px; }
+        .tool-features { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+        .feature-tag { background: rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .tool-workspace { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 40px; }
+        .input-section, .output-section { margin-bottom: 30px; }
+        .input-label { display: block; font-weight: 600; margin-bottom: 12px; color: var(--dark); }
+        .text-input-area, .text-output-area { width: 100%; min-height: 200px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); font-family: 'Monaco', 'Courier New', monospace; font-size: 0.95rem; resize: vertical; transition: border-color 0.3s; }
+        .text-input-area:focus, .text-output-area:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1); }
+        .text-output-area { background: #f8fafc; cursor: text; }
+        .input-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .btn { padding: 10px 20px; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #0052cc; transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: white; border-color: var(--primary); }
+        .format-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h4 { font-weight: 600; margin-bottom: 16px; color: var(--dark); }
+        .footer-section ul { list-style: none; }
+        .footer-section a { color: var(--gray); text-decoration: none; transition: color 0.3s; display: block; margin-bottom: 8px; }
+        .footer-section a:hover { color: var(--primary); }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; text-align: center; color: var(--gray); font-size: 0.9rem; }
+        .hidden { display: none !important; }
+        .status-message { font-size: 0.875rem; font-weight: 500; margin-top: 8px; }
+        .status-message.success { color: var(--success); }
+        .status-message.error { color: var(--error); }
+        @media (max-width: 768px) {
+            .nav-links { gap: 1rem; font-size: 0.9rem; }
+            .tool-title { font-size: 1.8rem; }
+            .tool-workspace { padding: 20px; }
+            .input-actions { flex-direction: column; }
+            .btn { width: 100%; }
+            .format-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <nav class="navbar" role="navigation">
         <div class="nav-container">
             <a href="/" class="logo">Factictionary</a>
-            
             <ul class="nav-links">
-                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
                 <li><a href="/tools/" class="nav-link active">Tools</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
             </ul>
-            
-            <div class="nav-cta">
-                <a href="/blog/" class="btn btn-primary">Read Articles</a>
-            </div>
-            
-            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                <span>☰</span>
-            </button>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main id="main">
-        <!-- AdSense Container -->
-        <div class="ad-container top-ad">
-            <!-- AdSense code will be inserted here -->
-        </div>
-
-        <!-- Tool Header -->
         <header class="tool-header">
             <div class="container">
                 <div class="tool-header-content">
-                    <h3 class="tool-title">📝 Text Formatter & Analyzer</h3>
-                    <p class="tool-subtitle">Format, analyze, and manipulate text with powerful utilities including case conversion, word counting, JSON formatting, and data encoding.</p>
+                    <div class="tool-icon">📝</div>
+                    <h1 class="tool-title">Text Formatter</h1>
+                    <p class="tool-subtitle">Format and transform text with case conversion, spacing cleanup, and text manipulation tools.</p>
                     <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Case Conversion</span>
-                        <span class="feature-tag">Word Count Analysis</span>
-                        <span class="feature-tag">JSON Formatter</span>
-                        <span class="feature-tag">Data Encoding</span>
-                        <span class="feature-tag">Hash Generation</span>
+                        <span class="feature-tag">Remove Spaces</span>
+                        <span class="feature-tag">Text Cleanup</span>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="container">
-                <div class="tool-tabs">
-                    <div class="tab-button active" data-tab="case">🔤 Case Converter</div>
-                    <div class="tab-button" data-tab="counter">🔢 Word Counter</div>
-                    <div class="tab-button" data-tab="json">📋 JSON Formatter</div>
-                    <div class="tab-button" data-tab="encode">🔐 Base64 Encoder</div>
-                    <div class="tab-button" data-tab="url">🔗 URL Encoder</div>
-                    <div class="tab-button" data-tab="hash">🔒 Hash Generator</div>
-                    <div class="tab-button" data-tab="remove">🧹 Remove Spaces</div>
-                    <div class="tab-button" data-tab="reverse">🔄 Reverse Text</div>
-                </div>
-
-                <div class="workspace-content">
-                    <!-- Input Section -->
-                    <div class="input-section">
-                        <label class="input-label">Input Text</label>
-                        <textarea id="textInput" class="text-input-area" placeholder="Enter or paste your text here..."></textarea>
-                    </div>
-
-                    <!-- Controls Section -->
-                    <div id="controls" class="controls-section" style="display: none;">
-                        <h3 class="controls-title">Actions</h3>
-                        <div class="action-buttons">
-                            <!-- Dynamic controls will be inserted here -->
-                        </div>
-                    </div>
-
-                    <!-- Output Section -->
-                    <div id="outputArea" class="output-section" style="display: none;">
-                        <label class="input-label">Result</label>
-                        <div class="output-display" id="outputDisplay">
-                            <!-- Result will appear here -->
-                        </div>
-                        <div class="output-actions">
-                            <button class="btn btn-secondary" onclick="copyOutput()">📋 Copy Result</button>
-                            <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear All</button>
-                        </div>
-                    </div>
-
-                    <!-- Stats Section -->
-                    <div id="statsArea" class="stats-section" style="display: none;">
-                        <h3 class="stats-title">Text Statistics</h3>
-                        <div class="stats-grid">
-                            <!-- Dynamic stats will be inserted here -->
-                        </div>
+                <div class="input-section">
+                    <label class="input-label">Input Text</label>
+                    <textarea id="textInput" class="text-input-area" placeholder="Enter text to format..."></textarea>
+                    <div class="input-actions">
+                        <button class="btn btn-secondary" onclick="loadSample()">📄 Load Sample</button>
+                        <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear</button>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- AdSense Container -->
-        <div class="ad-container bottom-ad">
-            <!-- AdSense code will be inserted here -->
-        </div>
+                <div style="margin: 30px 0;">
+                    <label class="input-label">Format Options</label>
+                    <div class="format-buttons">
+                        <button class="btn btn-primary" onclick="formatText('uppercase')">UPPERCASE</button>
+                        <button class="btn btn-primary" onclick="formatText('lowercase')">lowercase</button>
+                        <button class="btn btn-primary" onclick="formatText('capitalize')">Capitalize</button>
+                        <button class="btn btn-primary" onclick="formatText('title')">Title Case</button>
+                        <button class="btn btn-primary" onclick="formatText('reverse')">Reverse</button>
+                        <button class="btn btn-primary" onclick="formatText('trim')">Trim Spaces</button>
+                        <button class="btn btn-primary" onclick="formatText('remove-spaces')">Remove Spaces</button>
+                        <button class="btn btn-primary" onclick="formatText('remove-newlines')">Remove Newlines</button>
+                    </div>
+                </div>
 
-        <!-- Related Tools -->
-        <section class="related-tools">
-            <div class="container">
-                <h3 class="related-title">More Text Tools</h3>
-                <div class="related-grid">
-                    <a href="text_analyzer.html" class="related-card">
-                        <div class="related-icon">🔍</div>
-                        <div class="related-content">
-                            <h4>Text Analyzer</h4>
-                            <p>Analyze text for readability, keywords, and linguistic patterns</p>
-                        </div>
-                    </a>
-                    <a href="image_converter.html" class="related-card">
-                        <div class="related-icon">🖼️</div>
-                        <div class="related-content">
-                            <h4>Image Converter</h4>
-                            <p>Convert between different image formats with quality control</p>
-                        </div>
-                    </a>
-                    <a href="pdf_merger.html" class="related-card">
-                        <div class="related-icon">📄</div>
-                        <div class="related-content">
-                            <h4>PDF Merger</h4>
-                            <p>Combine multiple PDF files into a single document</p>
-                        </div>
-                    </a>
+                <div class="output-section hidden" id="outputSection">
+                    <label class="input-label">Output</label>
+                    <textarea id="textOutput" class="text-output-area" readonly></textarea>
+                    <div class="input-actions">
+                        <button class="btn btn-primary" onclick="copyOutput()">📋 Copy</button>
+                        <button class="btn btn-secondary" onclick="downloadOutput()">⬇️ Download</button>
+                    </div>
+                    <div class="status-message" id="statusMessage"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Content</h4>
-                    <ul>
-                        <li><a href="/blog/">All Articles</a></li>
-                        <li><a href="/blog/?category=productivity">Productivity</a></li>
-                        <li><a href="/blog/?category=technology">Technology</a></li>
-                        <li><a href="/blog/?category=business">Business</a></li>
-                        <li><a href="/blog/?category=learning">Learning</a></li>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Articles</a></li>
+                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Tools</h4>
-                    <ul>
-                        <li><a href="/tools/">All Tools</a></li>
-                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
-                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
-                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
-                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
+                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="mailto:factictionary@gmail.com">Email Us</a></li>
-                        <li><a href="/contact.html">Support</a></li>
-                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
+                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
+                <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        let currentTool = 'case';
-        let currentTabElement = null;
-
-        // Initialize the tool
-        document.addEventListener('DOMContentLoaded', function() {
-            setupTabs();
-            setupInputHandler();
-            showCurrentTool();
-        });
-
-        function setupTabs() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all tabs
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Add active class to clicked tab
-                    this.classList.add('active');
-                    currentTabElement = this;
-                    currentTool = this.dataset.tab;
-                    
-                    showCurrentTool();
-                });
-            });
-        }
-
-        function setupInputHandler() {
-            const textInput = document.getElementById('textInput');
-            textInput.addEventListener('input', function() {
-                if (currentTool === 'counter') {
-                    updateWordCount();
-                }
-            });
-        }
-
-        function showCurrentTool() {
-            const controls = document.getElementById('controls');
-            const actionButtons = controls.querySelector('.action-buttons');
-            const outputArea = document.getElementById('outputArea');
-            const statsArea = document.getElementById('statsArea');
-            
-            controls.style.display = 'flex';
-            actionButtons.innerHTML = '';
-            outputArea.style.display = 'none';
-            statsArea.style.display = 'none';
-            
-            switch(currentTool) {
-                case 'case':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="convertCase('upper')">UPPERCASE</button>
-                        <button class="btn btn-primary" onclick="convertCase('lower')">lowercase</button>
-                        <button class="btn btn-primary" onclick="convertCase('title')">Title Case</button>
-                        <button class="btn btn-primary" onclick="convertCase('sentence')">Sentence case</button>
-                        <button class="btn btn-primary" onclick="convertCase('toggle')">tOGGLE cASE</button>
-                    `;
-                    break;
-                    
-                case 'counter':
-                    statsArea.style.display = 'block';
-                    updateWordCount();
-                    break;
-                    
-                case 'json':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="formatJSON()">Format JSON</button>
-                        <button class="btn btn-primary" onclick="minifyJSON()">Minify JSON</button>
-                        <button class="btn btn-primary" onclick="validateJSON()">Validate JSON</button>
-                    `;
-                    break;
-                    
-                case 'encode':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="encodeBase64()">Encode to Base64</button>
-                        <button class="btn btn-primary" onclick="decodeBase64()">Decode from Base64</button>
-                    `;
-                    break;
-                    
-                case 'url':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="encodeURL()">Encode URL</button>
-                        <button class="btn btn-primary" onclick="decodeURL()">Decode URL</button>
-                    `;
-                    break;
-                    
-                case 'hash':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="generateHash('sha1')">SHA-1</button>
-                        <button class="btn btn-primary" onclick="generateHash('sha256')">SHA-256</button>
-                    `;
-                    break;
-                    
-                case 'remove':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="removeSpaces('extra')">Remove Extra Spaces</button>
-                        <button class="btn btn-primary" onclick="removeSpaces('all')">Remove All Spaces</button>
-                        <button class="btn btn-primary" onclick="removeSpaces('breaks')">Remove Line Breaks</button>
-                        <button class="btn btn-primary" onclick="removeSpaces('duplicates')">Remove Duplicate Lines</button>
-                    `;
-                    break;
-                    
-                case 'reverse':
-                    actionButtons.innerHTML = `
-                        <button class="btn btn-primary" onclick="reverseText('chars')">Reverse Characters</button>
-                        <button class="btn btn-primary" onclick="reverseText('words')">Reverse Words</button>
-                        <button class="btn btn-primary" onclick="reverseText('lines')">Reverse Lines</button>
-                    `;
-                    break;
-            }
-        }
-
-        function updateWordCount() {
-            const text = document.getElementById('textInput').value;
-            const statsArea = document.getElementById('statsArea');
-            
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            const chars = text.length;
-            const charsNoSpace = text.replace(/\s/g, '').length;
-            const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length;
-            const paragraphs = text.split(/\n\n+/).filter(p => p.trim()).length;
-            const lines = text.split(/\n/).length;
-            
-            const statsGrid = statsArea.querySelector('.stats-grid');
-            statsGrid.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-value">${words}</div>
-                    <div class="stat-label">Words</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${chars}</div>
-                    <div class="stat-label">Characters</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${charsNoSpace}</div>
-                    <div class="stat-label">No Spaces</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${sentences}</div>
-                    <div class="stat-label">Sentences</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${paragraphs}</div>
-                    <div class="stat-label">Paragraphs</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">${lines}</div>
-                    <div class="stat-label">Lines</div>
-                </div>
-            `;
-        }
-
-        function convertCase(type) {
-            const text = document.getElementById('textInput').value;
-            let result = '';
-            
-            switch(type) {
-                case 'upper':
-                    result = text.toUpperCase();
-                    break;
-                case 'lower':
-                    result = text.toLowerCase();
-                    break;
-                case 'title':
-                    result = text.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-                    break;
-                case 'sentence':
-                    result = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
-                    break;
-                case 'toggle':
-                    result = text.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('');
-                    break;
-            }
-            
-            showOutput(result);
-        }
-
-        function formatJSON() {
-            const text = document.getElementById('textInput').value;
-            try {
-                const json = JSON.parse(text);
-                const formatted = JSON.stringify(json, null, 2);
-                showOutput(formatted);
-            } catch(e) {
-                showOutput('❌ Invalid JSON: ' + e.message);
-            }
-        }
-
-        function minifyJSON() {
-            const text = document.getElementById('textInput').value;
-            try {
-                const json = JSON.parse(text);
-                const minified = JSON.stringify(json);
-                showOutput(minified);
-            } catch(e) {
-                showOutput('❌ Invalid JSON: ' + e.message);
-            }
-        }
-
-        function validateJSON() {
-            const text = document.getElementById('textInput').value;
-            try {
-                JSON.parse(text);
-                showOutput('✅ Valid JSON!');
-            } catch(e) {
-                showOutput('❌ Invalid JSON: ' + e.message);
-            }
-        }
-
-        function encodeBase64() {
-            const text = document.getElementById('textInput').value;
-            const encoded = btoa(unescape(encodeURIComponent(text)));
-            showOutput(encoded);
-        }
-
-        function decodeBase64() {
-            const text = document.getElementById('textInput').value;
-            try {
-                const decoded = decodeURIComponent(escape(atob(text)));
-                showOutput(decoded);
-            } catch(e) {
-                showOutput('❌ Invalid Base64 string');
-            }
-        }
-
-        function encodeURL() {
-            const text = document.getElementById('textInput').value;
-            const encoded = encodeURIComponent(text);
-            showOutput(encoded);
-        }
-
-        function decodeURL() {
-            const text = document.getElementById('textInput').value;
-            try {
-                const decoded = decodeURIComponent(text);
-                showOutput(decoded);
-            } catch(e) {
-                showOutput('❌ Invalid URL encoding');
-            }
-        }
-
-        async function generateHash(type) {
-            const text = document.getElementById('textInput').value;
-            
-            const encoder = new TextEncoder();
-            const data = encoder.encode(text);
-            const hashBuffer = await crypto.subtle.digest(type === 'sha1' ? 'SHA-1' : 'SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            
-            showOutput(hashHex);
-        }
-
-        function removeSpaces(type) {
-            const text = document.getElementById('textInput').value;
-            let result = '';
-            
-            switch(type) {
-                case 'extra':
-                    result = text.replace(/\s+/g, ' ').trim();
-                    break;
-                case 'all':
-                    result = text.replace(/\s/g, '');
-                    break;
-                case 'breaks':
-                    result = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-                    break;
-                case 'duplicates':
-                    const lines = text.split('\n');
-                    result = [...new Set(lines)].join('\n');
-                    break;
-            }
-            
-            showOutput(result);
-        }
-
-        function reverseText(type) {
-            const text = document.getElementById('textInput').value;
-            let result = '';
-            
-            switch(type) {
-                case 'chars':
-                    result = text.split('').reverse().join('');
-                    break;
-                case 'words':
-                    result = text.split(' ').reverse().join(' ');
-                    break;
-                case 'lines':
-                    result = text.split('\n').reverse().join('\n');
-                    break;
-            }
-            
-            showOutput(result);
-        }
-
-        function showOutput(text) {
-            const outputArea = document.getElementById('outputArea');
-            const outputDisplay = document.getElementById('outputDisplay');
-            outputArea.style.display = 'block';
-            outputDisplay.textContent = text;
-        }
-
-        function copyOutput() {
-            const outputDisplay = document.getElementById('outputDisplay');
-            if (outputDisplay.textContent) {
-                navigator.clipboard.writeText(outputDisplay.textContent);
-                
-                // Show temporary success message
-                const toast = document.createElement('div');
-                toast.className = 'toast-message';
-                toast.textContent = '✅ Copied to clipboard!';
-                document.body.appendChild(toast);
-                
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 2000);
-            }
+        function loadSample() {
+            document.getElementById('textInput').value = 'Hello World! This is a sample text for formatting.';
         }
 
         function clearAll() {
             document.getElementById('textInput').value = '';
-            document.getElementById('outputDisplay').textContent = '';
-            document.getElementById('outputArea').style.display = 'none';
-            
-            if (currentTool === 'counter') {
-                updateWordCount();
-            }
+            document.getElementById('textOutput').value = '';
+            document.getElementById('outputSection').classList.add('hidden');
         }
 
-        // Mobile menu functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
-        });
+        function formatText(format) {
+            const input = document.getElementById('textInput').value;
+            if (!input.trim()) {
+                showStatus('Please enter text', 'error');
+                return;
+            }
+
+            let output = '';
+            switch(format) {
+                case 'uppercase':
+                    output = input.toUpperCase();
+                    break;
+                case 'lowercase':
+                    output = input.toLowerCase();
+                    break;
+                case 'capitalize':
+                    output = input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+                    break;
+                case 'title':
+                    output = input.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+                    break;
+                case 'reverse':
+                    output = input.split('').reverse().join('');
+                    break;
+                case 'trim':
+                    output = input.trim().split('\n').map(line => line.trim()).join('\n');
+                    break;
+                case 'remove-spaces':
+                    output = input.replace(/\s+/g, '');
+                    break;
+                case 'remove-newlines':
+                    output = input.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+                    break;
+            }
+
+            showOutput(output);
+            showStatus('✓ Formatted successfully', 'success');
+        }
+
+        function showOutput(text) {
+            document.getElementById('textOutput').value = text;
+            document.getElementById('outputSection').classList.remove('hidden');
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = 'status-message ' + type;
+            setTimeout(() => { statusEl.textContent = ''; }, 3000);
+        }
+
+        function copyOutput() {
+            const output = document.getElementById('textOutput');
+            navigator.clipboard.writeText(output.value).then(() => {
+                showStatus('✓ Copied to clipboard', 'success');
+            }).catch(() => {
+                showStatus('Failed to copy', 'error');
+            });
+        }
+
+        function downloadOutput() {
+            const output = document.getElementById('textOutput').value;
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(output));
+            element.setAttribute('download', 'formatted-text.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
     </script>
-
-    <style>
-        /* Tool-specific styles */
-        .tool-tabs {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xl);
-            overflow-x: auto;
-            padding-bottom: var(--spacing-sm);
-        }
-
-        .tab-button {
-            padding: var(--spacing-sm) var(--spacing-md);
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-button);
-            cursor: pointer;
-            transition: all var(--duration-standard) var(--easing-standard);
-            white-space: nowrap;
-            font-weight: var(--font-weight-medium);
-            font-size: var(--font-size-small);
-        }
-
-        .tab-button:hover {
-            background: var(--color-primary-50);
-            border-color: var(--color-primary-100);
-        }
-
-        .tab-button.active {
-            background: var(--color-primary-500);
-            color: white;
-            border-color: var(--color-primary-500);
-        }
-
-        .workspace-content {
-            display: grid;
-            gap: var(--spacing-xl);
-        }
-
-        .input-section, .output-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-        }
-
-        .input-label {
-            display: block;
-            font-weight: var(--font-weight-medium);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-sm);
-            font-size: var(--font-size-body);
-        }
-
-        .text-input-area {
-            width: 100%;
-            min-height: 250px;
-            padding: var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            font-family: var(--font-family-primary);
-            resize: vertical;
-            transition: border-color var(--duration-fast);
-        }
-
-        .text-input-area:focus {
-            outline: none;
-            border-color: var(--color-primary-500);
-        }
-
-        .controls-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-        }
-
-        .controls-title {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-        }
-
-        .output-display {
-            background: var(--color-neutral-50);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            padding: var(--spacing-md);
-            min-height: 100px;
-            white-space: pre-wrap;
-            font-family: var(--font-family-primary);
-            font-size: var(--font-size-body);
-            overflow-x: auto;
-        }
-
-        .output-actions {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-md);
-        }
-
-        .stats-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-        }
-
-        .stats-title {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--spacing-md);
-            background: var(--color-neutral-50);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-button);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            color: var(--color-primary-500);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .stat-label {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-700);
-        }
-
-        .related-tools {
-            padding: var(--spacing-3xl) 0;
-            background: var(--color-neutral-50);
-        }
-
-        .related-title {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xl);
-            text-align: center;
-        }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
-        }
-
-        .related-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-decoration: none;
-            transition: all var(--duration-standard) var(--easing-standard);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .related-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: var(--color-primary-100);
-        }
-
-        .related-icon {
-            font-size: 2em;
-            flex-shrink: 0;
-        }
-
-        .related-content h4 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .related-content p {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-body);
-            margin: 0;
-        }
-
-        .toast-message {
-            position: fixed;
-            top: var(--spacing-lg);
-            right: var(--spacing-lg);
-            background: var(--color-success);
-            color: white;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-button);
-            font-weight: var(--font-weight-medium);
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .tool-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .output-actions {
-                flex-direction: column;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
 </body>
 </html>

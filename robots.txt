@@ -1,4 +1,16 @@
-# robots.txt
 User-agent: *
 Allow: /
-Sitemap: https://factictionary.in/sitemap.xml
+Disallow: /assets/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /.kiro/
+
+# Allow Google AdSense crawler
+User-agent: Googlebot-Image
+Allow: /
+
+# Sitemap
+Sitemap: https://factictionary.github.io/sitemap.xml
+
+# Crawl delay (optional - helps with server load)
+Crawl-delay: 1

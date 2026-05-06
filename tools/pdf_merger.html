@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -166,12 +166,34 @@
     </style>
 </head>
 <body>
-    <!-- Keep your existing header and navigation -->
-
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            
+            <ul class="nav-links">
+                <li><a href="/blog/" class="nav-link">Blog</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-cta">
+                <a href="/blog/" class="btn btn-primary">Read Articles</a>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span>â˜°</span>
+            </button>
+        </div>
+    </nav>
     <main class="tool-main">
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div style="font-size: 3.5rem; margin-bottom: 16px;">📄</div>
+                <div style="font-size: 3.5rem; margin-bottom: 16px;">ðŸ“„</div>
                 <div style="font-size: 1.1rem; margin-bottom: 12px;">Drop PDF files here or</div>
                 <button onclick="document.getElementById('fileInput').click()" 
                         style="background:#F59E0B;color:white;padding:12px 28px;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
@@ -183,7 +205,7 @@
             <div id="fileList" style="display:none;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <h3>Files to Merge <span id="fileCount" style="color:#F59E0B"></span></h3>
-                    <small class="visual-hint">👆 Drag cards to reorder • Drop between files to rearrange</small>
+                    <small class="visual-hint">ðŸ‘† Drag cards to reorder â€¢ Drop between files to rearrange</small>
                 </div>
                 
                 <div id="fileItems"></div>
@@ -193,13 +215,74 @@
             <!-- ... (you can keep your previous tab system and merge settings here) ... -->
 
             <div class="tool-actions" style="margin-top: 30px;">
-                <button class="btn-tool" id="processBtn" disabled>🚀 Merge PDFs</button>
-                <button class="btn-tool" id="downloadBtn" disabled>⬇️ Download</button>
+                <button class="btn-tool" id="processBtn" disabled>ðŸš€ Merge PDFs</button>
+                <button class="btn-tool" id="downloadBtn" disabled>â¬‡ï¸ Download</button>
                 <button class="btn-tool" id="resetBtn">Reset</button>
             </div>
         </section>
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Pdf Merger</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Pdf Merger is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+            
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Pdf Merger leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+        </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Content</h4>
+                    <ul>
+                        <li><a href="/blog/">All Articles</a></li>
+                        <li><a href="/blog/?category=productivity">Productivity</a></li>
+                        <li><a href="/blog/?category=technology">Technology</a></li>
+                        <li><a href="/blog/?category=business">Business</a></li>
+                        <li><a href="/blog/?category=learning">Learning</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul>
+                        <li><a href="/tools/">All Tools</a></li>
+                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
+                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
+                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
+                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="mailto:factictionary@gmail.com">Email Us</a></li>
+                        <li><a href="/contact.html">Support</a></li>
+                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Templates -->
     <script>
         let selectedFiles = [];
         let dragSrcElement = null;
@@ -258,7 +341,7 @@
         }
 
         function formatFileSize(bytes) {
-            if (!bytes) return '—';
+            if (!bytes) return 'â€”';
             const i = Math.floor(Math.log(bytes) / Math.log(1024));
             return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + ['B', 'KB', 'MB'][i];
         }
@@ -278,28 +361,28 @@
 
                 card.innerHTML = `
                     <div class="order-number">${index + 1}</div>
-                    <div class="drag-handle">≡</div>
-                    <div class="pdf-icon">📕</div>
+                    <div class="drag-handle">â‰¡</div>
+                    <div class="pdf-icon">ðŸ“•</div>
                     <div class="file-info">
                         <div class="file-name">${fileData.name}</div>
                         <div class="file-meta">
-                            ${formatFileSize(fileData.size)} • 
+                            ${formatFileSize(fileData.size)} â€¢ 
                             ${fileData.pages ? fileData.pages + ' pages' : 'Loading...'}
                         </div>
                     </div>
                     <div class="file-options">
                         <select onchange="updateFileOption(${fileData.id}, 'rotation', this.value)">
-                            <option value="0" ${fileData.rotation==0?'selected':''}>0°</option>
-                            <option value="90" ${fileData.rotation==90?'selected':''}>90°</option>
-                            <option value="180" ${fileData.rotation==180?'selected':''}>180°</option>
-                            <option value="270" ${fileData.rotation==270?'selected':''}>270°</option>
+                            <option value="0" ${fileData.rotation==0?'selected':''}>0Â°</option>
+                            <option value="90" ${fileData.rotation==90?'selected':''}>90Â°</option>
+                            <option value="180" ${fileData.rotation==180?'selected':''}>180Â°</option>
+                            <option value="270" ${fileData.rotation==270?'selected':''}>270Â°</option>
                         </select>
                         <label style="display:flex;align-items:center;gap:4px;font-size:13px;">
                             <input type="checkbox" ${fileData.reversePages?'checked':''} 
                                    onchange="updateFileOption(${fileData.id}, 'reversePages', this.checked)"> Reverse
                         </label>
                     </div>
-                    <button class="btn-remove" onclick="removeFile(${fileData.id})">×</button>
+                    <button class="btn-remove" onclick="removeFile(${fileData.id})">Ã—</button>
                 `;
 
                 // Drag events
@@ -372,8 +455,75 @@
         window.updateFileOption = updateFileOption;
         window.resetTool = resetTool;
 
+        let mergedPdfBytes = null;
+
+        processBtn.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) return;
+            try {
+                processBtn.disabled = true;
+                processBtn.textContent = 'â³ Merging...';
+                
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                
+                for (let fileData of selectedFiles) {
+                    const arrayBuffer = await fileData.file.arrayBuffer();
+                    const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                    
+                    let pageIndices = pdf.getPageIndices();
+                    
+                    if (fileData.reversePages) {
+                        pageIndices.reverse();
+                    }
+                    
+                    const copiedPages = await mergedPdf.copyPages(pdf, pageIndices);
+                    
+                    copiedPages.forEach((page) => {
+                        if (fileData.rotation && parseInt(fileData.rotation) !== 0) {
+                            const currentRotation = page.getRotation().angle;
+                            page.setRotation(PDFLib.degrees(currentRotation + parseInt(fileData.rotation)));
+                        }
+                        mergedPdf.addPage(page);
+                    });
+                }
+                
+                mergedPdfBytes = await mergedPdf.save();
+                
+                processBtn.textContent = 'âœ… Merged Successfully!';
+                document.getElementById('downloadBtn').disabled = false;
+                
+                setTimeout(() => {
+                    processBtn.textContent = 'ðŸš€ Merge PDFs';
+                    processBtn.disabled = false;
+                }, 3000);
+                
+            } catch (err) {
+                console.error(err);
+                alert('Error merging PDFs. Ensure files are valid PDFs.');
+                processBtn.textContent = 'ðŸš€ Merge PDFs';
+                processBtn.disabled = false;
+            }
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            if (!mergedPdfBytes) return;
+            const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Factictionary_Merged.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
         // Initialize
-        document.getElementById('resetBtn').addEventListener('click', resetTool);
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            resetTool();
+            mergedPdfBytes = null;
+            document.getElementById('downloadBtn').disabled = true;
+        });
     </script>
 </body>
 </html>
+

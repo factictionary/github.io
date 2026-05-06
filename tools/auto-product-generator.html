@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Product Generator | Factictionary</title>
+    <meta name="description" content="Automatically generate product cards from Amazon ASIN. Just enter ASIN and get HTML.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --secondary: #667eea;
+            --success: #10b981;
+            --error: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        .hero { background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); color: white; padding: 40px 0; }
+        .hero h1 { font-size: 2rem; margin-bottom: 12px; }
+        .content { padding: 40px 0; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .panel { background: white; border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+        .alert { padding: 16px; border-radius: var(--radius); margin-bottom: 20px; }
+        .alert-info { background: #e3f2fd; border: 1px solid #2196f3; color: #1565c0; }
+        .alert-warning { background: #fff3cd; border: 1px solid #ffc107; color: #856404; }
+        .alert-error { background: #ffebee; border: 1px solid #f44336; color: #c62828; }
+        .alert-success { background: #e8f5e9; border: 1px solid #4caf50; color: #2e7d32; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
+        .form-input { width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: var(--radius); font-size: 0.95rem; font-family: inherit; }
+        .form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1); }
+        .btn { padding: 12px 24px; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+        .btn-primary { background: var(--primary); color: white; width: 100%; }
+        .btn-primary:hover { background: #0052cc; transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-primary:disabled { background: var(--gray); cursor: not-allowed; transform: none; }
+        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: white; border-color: var(--primary); }
+        .loading { display: none; text-align: center; padding: 20px; }
+        .loading.active { display: block; }
+        .spinner { border: 3px solid var(--border); border-top: 3px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 16px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .code-output { background: #1e293b; color: #e2e8f0; padding: 20px; border-radius: var(--radius); font-family: 'Monaco', 'Courier New', monospace; font-size: 0.85rem; overflow-x: auto; max-height: 600px; overflow-y: auto; }
+        .preview { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; background: var(--light); }
+        .product-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); max-width: 400px; margin: 0 auto; }
+        .product-image { width: 100%; height: 200px; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+        .product-body { padding: 20px; }
+        .product-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; }
+        .product-price { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+        .product-desc { color: var(--gray); margin-bottom: 16px; font-size: 0.9rem; }
+        .pros-cons { margin: 16px 0; font-size: 0.85rem; }
+        .pros-cons h4 { font-size: 0.9rem; margin-bottom: 6px; }
+        .pros-cons ul { margin-left: 20px; }
+        .pros { color: var(--success); }
+        .cons { color: var(--error); }
+        .btn-amazon { display: block; width: 100%; padding: 10px; background: #FF9900; color: white; text-align: center; text-decoration: none; border-radius: var(--radius); font-weight: 600; }
+        .actions { display: flex; gap: 12px; margin-top: 20px; }
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
+        .method-tabs { display: flex; gap: 12px; margin-bottom: 20px; }
+        .tab { padding: 10px 20px; border: 2px solid var(--border); border-radius: var(--radius); background: white; cursor: pointer; transition: all 0.3s; }
+        .tab.active { border-color: var(--primary); background: var(--primary); color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container" style="text-align: center;">
+            <h1>🤖 Auto Product Generator</h1>
+            <p>Enter ASIN → Get Product HTML (Automatic!)</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="alert alert-warning">
+                <strong>⚠️ Important:</strong> Due to browser security (CORS), automatic fetching from Amazon doesn't work directly. 
+                I've provided 3 methods below - choose the one that works best for you!
+            </div>
+
+            <div class="method-tabs">
+                <div class="tab active" onclick="switchTab('method1')">Method 1: Browser Extension</div>
+                <div class="tab" onclick="switchTab('method2')">Method 2: Bookmarklet</div>
+                <div class="tab" onclick="switchTab('method3')">Method 3: Python Script</div>
+            </div>
+
+            <!-- Method 1: Browser Extension -->
+            <div id="method1" class="tab-content active">
+                <div class="panel">
+                    <h2 style="margin-bottom: 16px;">Method 1: Browser Extension (Easiest)</h2>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 How it works:</strong> Install a browser extension that extracts data from Amazon product pages and sends it to this tool.
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Step 1: Install Extension</h3>
+                    <p style="color: var(--gray); margin-bottom: 16px;">
+                        I'll create a simple Chrome extension for you. For now, use this bookmarklet (works in all browsers):
+                    </p>
+
+                    <div style="background: var(--light); padding: 16px; border-radius: var(--radius); margin-bottom: 20px;">
+                        <p style="font-weight: 600; margin-bottom: 8px;">Drag this to your bookmarks bar:</p>
+                        <a href="javascript:(function(){const t=document.querySelector('#productTitle')?.innerText.trim();const p=document.querySelector('.a-price-whole')?.innerText.trim();const f=Array.from(document.querySelectorAll('#feature-bullets li')).map(li=>li.innerText.trim()).filter(f=>f&&f.length>10).slice(0,6);const asin=window.location.pathname.match(/\/dp\/([A-Z0-9]{10})/)?.[1];const data={title:t,price:'₹'+p,features:f,asin:asin};window.open('http://localhost:8000/tools/auto-product-generator.html?data='+encodeURIComponent(JSON.stringify(data)),'_blank');})();" 
+                           style="display: inline-block; padding: 10px 20px; background: var(--primary); color: white; text-decoration: none; border-radius: var(--radius); font-weight: 600;">
+                            📦 Extract Amazon Product
+                        </a>
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Step 2: Use It</h3>
+                    <ol style="margin-left: 20px; color: var(--gray);">
+                        <li>Go to any Amazon.in product page</li>
+                        <li>Click the bookmarklet in your bookmarks bar</li>
+                        <li>Product data will be extracted automatically</li>
+                        <li>This page will open with data pre-filled</li>
+                        <li>Review and generate HTML</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Method 2: Bookmarklet -->
+            <div id="method2" class="tab-content">
+                <div class="panel">
+                    <h2 style="margin-bottom: 16px;">Method 2: Copy-Paste Bookmarklet</h2>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 How it works:</strong> Click a bookmark on Amazon page, copy the extracted data, paste here.
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Step 1: Create Bookmarklet</h3>
+                    <ol style="margin-left: 20px; color: var(--gray); margin-bottom: 20px;">
+                        <li>Create a new bookmark in your browser</li>
+                        <li>Name it: "Extract Amazon Data"</li>
+                        <li>Copy the code below and paste as URL</li>
+                    </ol>
+
+                    <div style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: var(--radius); margin-bottom: 20px; font-family: monospace; font-size: 0.85rem; overflow-x: auto;">
+javascript:(function(){const t=document.querySelector('#productTitle')?.innerText.trim();const p=document.querySelector('.a-price-whole')?.innerText.trim();const f=Array.from(document.querySelectorAll('#feature-bullets li')).map(li=>li.innerText.trim()).filter(f=>f&&f.length>10).slice(0,6);const asin=window.location.pathname.match(/\/dp\/([A-Z0-9]{10})/)?.[1];const data=JSON.stringify({title:t,price:'₹'+p,features:f,asin:asin},null,2);prompt('Copy this data and paste in the generator:',data);})();
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Step 2: Use It</h3>
+                    <ol style="margin-left: 20px; color: var(--gray); margin-bottom: 20px;">
+                        <li>Go to Amazon.in product page</li>
+                        <li>Click the bookmarklet</li>
+                        <li>Copy the data from the popup</li>
+                        <li>Paste below and click "Parse Data"</li>
+                    </ol>
+
+                    <div class="form-group">
+                        <label class="form-label">Paste Extracted Data:</label>
+                        <textarea id="pastedData" style="width: 100%; min-height: 150px; padding: 12px; border: 2px solid var(--border); border-radius: var(--radius); font-family: monospace; font-size: 0.85rem;" placeholder='{"title":"Product Name","price":"₹999","features":["Feature 1","Feature 2"],"asin":"B08XYZ1234"}'></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="parseData()">📥 Parse Data & Generate</button>
+                </div>
+            </div>
+
+            <!-- Method 3: Python Script -->
+            <div id="method3" class="tab-content">
+                <div class="panel">
+                    <h2 style="margin-bottom: 16px;">Method 3: Python Script (Most Powerful)</h2>
+                    
+                    <div class="alert alert-info">
+                        <strong>💡 How it works:</strong> Run a Python script that fetches data from Amazon and generates HTML files.
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Installation:</h3>
+                    <div style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: var(--radius); margin-bottom: 20px; font-family: monospace; font-size: 0.85rem;">
+pip install requests beautifulsoup4
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Python Script:</h3>
+                    <p style="color: var(--gray); margin-bottom: 12px;">Save this as <code>amazon_fetcher.py</code>:</p>
+                    
+                    <div style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: var(--radius); margin-bottom: 20px; font-family: monospace; font-size: 0.75rem; overflow-x: auto; max-height: 400px; overflow-y: auto;">
+import requests
+from bs4 import BeautifulSoup
+import json
+import time
+
+def fetch_amazon_product(asin):
+    url = f'https://www.amazon.in/dp/{asin}'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept-Language': 'en-US,en;q=0.9',
+    }
+    
+    try:
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Extract title
+        title_elem = soup.find('span', {'id': 'productTitle'})
+        title = title_elem.text.strip() if title_elem else 'N/A'
+        
+        # Extract price
+        price_elem = soup.find('span', {'class': 'a-price-whole'})
+        price = f"₹{price_elem.text.strip()}" if price_elem else 'N/A'
+        
+        # Extract features
+        features = []
+        feature_div = soup.find('div', {'id': 'feature-bullets'})
+        if feature_div:
+            items = feature_div.find_all('li')
+            features = [item.text.strip() for item in items if item.text.strip()][:6]
+        
+        # Generate HTML
+        html = generate_product_html(title, price, features, asin)
+        
+        # Save to file
+        filename = f'product_{asin}.html'
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(html)
+        
+        print(f'✅ Generated: {filename}')
+        return html
+        
+    except Exception as e:
+        print(f'❌ Error: {e}')
+        return None
+
+def generate_product_html(title, price, features, asin):
+    # Split features into pros (first 4) and cons (last 2)
+    pros = features[:4] if len(features) >= 4 else features
+    cons = ['Check reviews for detailed cons', 'Verify compatibility before purchase']
+    
+    pros_html = '\\n'.join([f'                <li>{p}</li>' for p in pros])
+    cons_html = '\\n'.join([f'                <li>{c}</li>' for c in cons])
+    
+    # Generate search term from title
+    search_term = '+'.join(title.lower().split()[:3])
+    
+    html = f'''<div class="product-card">
+    <div class="product-image">🛍️</div>
+    <div class="product-body">
+        <h3 class="product-title">{title}</h3>
+        <div class="product-price">{price}</div>
+        <p class="product-desc">
+            {features[0] if features else 'High-quality product from Amazon.'}
+        </p>
+        <div class="pros-cons">
+            <h4 class="pros">✅ Pros:</h4>
+            <ul class="pros">
+{pros_html}
+            </ul>
+        </div>
+        <div class="pros-cons">
+            <h4 class="cons">❌ Cons:</h4>
+            <ul class="cons">
+{cons_html}
+            </ul>
+        </div>
+        <a href="https://www.amazon.in/dp/{asin}?tag=factictionary-21" 
+           class="btn-amazon" target="_blank" rel="nofollow noopener">
+            🛒 View on Amazon
+        </a>
+    </div>
+</div>'''
+    
+    return html
+
+# Usage
+if __name__ == '__main__':
+    asins = [
+        'B08XYZ1234',  # Replace with real ASINs
+        'B08ABC5678',
+    ]
+    
+    for asin in asins:
+        fetch_amazon_product(asin)
+        time.sleep(2)  # Be respectful, don't hammer the server
+                    </div>
+
+                    <h3 style="margin: 24px 0 12px 0;">Usage:</h3>
+                    <div style="background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: var(--radius); margin-bottom: 20px; font-family: monospace; font-size: 0.85rem;">
+python amazon_fetcher.py
+                    </div>
+
+                    <p style="color: var(--gray);">
+                        This will create HTML files for each ASIN. Copy the content and paste into your product pages!
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <div class="panel">
+                    <h2 style="margin-bottom: 16px;">🎯 Recommended Approach</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div style="padding: 20px; background: var(--light); border-radius: var(--radius);">
+                            <h3 style="margin-bottom: 12px;">🥇 Best: Python Script</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">
+                                Most powerful. Batch process multiple ASINs. Saves files automatically.
+                            </p>
+                        </div>
+                        
+                        <div style="padding: 20px; background: var(--light); border-radius: var(--radius);">
+                            <h3 style="margin-bottom: 12px;">🥈 Good: Bookmarklet</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">
+                                Works in browser. One click extraction. Copy-paste data.
+                            </p>
+                        </div>
+                        
+                        <div style="padding: 20px; background: var(--light); border-radius: var(--radius);">
+                            <h3 style="margin-bottom: 12px;">🥉 Future: API</h3>
+                            <p style="color: var(--gray); font-size: 0.9rem;">
+                                After 3 sales, get official API. Fully automated.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function parseData() {
+            const dataText = document.getElementById('pastedData').value.trim();
+            
+            if (!dataText) {
+                alert('Please paste the extracted data first!');
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(dataText);
+                
+                // Generate HTML from parsed data
+                const pros = data.features.slice(0, 4);
+                const cons = ['Check reviews for detailed cons', 'Verify compatibility before purchase'];
+                
+                const html = generateProductHTML(
+                    data.title,
+                    data.price,
+                    data.features[0] || 'High-quality product from Amazon.',
+                    pros,
+                    cons,
+                    data.asin
+                );
+                
+                // Show result
+                alert('✅ Product HTML generated! Scroll down to see the code.');
+                
+                // Display in a new section
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'panel';
+                resultDiv.style.marginTop = '20px';
+                resultDiv.innerHTML = `
+                    <h2 style="margin-bottom: 16px;">Generated HTML</h2>
+                    <div class="code-output">${escapeHtml(html)}</div>
+                    <div class="actions">
+                        <button class="btn btn-primary" onclick="copyToClipboard(\`${html.replace(/`/g, '\\`')}\`)">📋 Copy Code</button>
+                    </div>
+                `;
+                
+                document.getElementById('method2').appendChild(resultDiv);
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (e) {
+                alert('❌ Invalid JSON data. Please check the format.');
+                console.error(e);
+            }
+        }
+
+        function generateProductHTML(title, price, desc, pros, cons, asin) {
+            const prosHTML = pros.map(p => `                <li>${p}</li>`).join('\n');
+            const consHTML = cons.map(c => `                <li>${c}</li>`).join('\n');
+            
+            return `<div class="product-card">
+    <div class="product-image">🛍️</div>
+    <div class="product-body">
+        <h3 class="product-title">${title}</h3>
+        <div class="product-price">${price}</div>
+        <p class="product-desc">
+            ${desc}
+        </p>
+        <div class="pros-cons">
+            <h4 class="pros">✅ Pros:</h4>
+            <ul class="pros">
+${prosHTML}
+            </ul>
+        </div>
+        <div class="pros-cons">
+            <h4 class="cons">❌ Cons:</h4>
+            <ul class="cons">
+${consHTML}
+            </ul>
+        </div>
+        <a href="https://www.amazon.in/dp/${asin}?tag=factictionary-21" 
+           class="btn-amazon" target="_blank" rel="nofollow noopener">
+            🛒 View on Amazon
+        </a>
+    </div>
+</div>`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Copied to clipboard!');
+            }).catch(() => {
+                alert('❌ Failed to copy');
+            });
+        }
+
+        // Check if data was passed via URL (from bookmarklet)
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    const data = JSON.parse(decodeURIComponent(dataParam));
+                    document.getElementById('pastedData').value = JSON.stringify(data, null, 2);
+                    switchTab('method2');
+                    parseData();
+                } catch (e) {
+                    console.error('Error parsing URL data:', e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
