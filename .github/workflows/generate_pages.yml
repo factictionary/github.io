@@ -1,0 +1,48 @@
+name: Generate SEO Pages from Facts
+
+on:
+  repository_dispatch:
+    types: [update-facts]
+  workflow_dispatch:
+    inputs:
+      force_generate:
+        description: 'Force generate from cached files'
+        type: boolean
+        default: true
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout website repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Checkout news-content repository
+        run: |
+          git clone --depth 1 https://github.com/factictionary/news-content.git temp-news
+          
+      - name: List all .dat files found
+        run: |
+          echo "📁 Finding .dat files in news-content:"
+          find temp-news -name "*.dat" -type f | head -20
+          echo "Total .dat files: $(find temp-news -name "*.dat" -type f | wc -l)"
+          
+      - name: Generate SEO pages
+        run: |
+          python generate_pages.py temp-news/facts website/
+          
+      - name: Commit and push changes
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add spoof/ data/ sitemap.xml
+          git diff --staged --quiet || git commit -m "Update facts from .dat files"
+          git push
