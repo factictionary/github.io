@@ -1,48 +1,76 @@
-name: Generate SEO Pages from Facts
+# .github/workflows/generate_pages.yml
+#
+# WHERE THIS FILE LIVES: in your CONTENT repo (e.g. spoofdaily-content),
+# the same repo where daily_feed.yml commits new YYYY-MM-DD.dat files.
+#
+# WHAT IT DOES: whenever a new .dat file lands in content/ (either from
+# the daily_feed.yml cron job or a manual push), this workflow:
+#   1. Checks out this content repo
+#   2. Checks out your WEBSITE repo (github.io) into a sibling folder
+#   3. Runs generate_pages.py to turn the new .dat into HTML pages
+#   4. Commits and pushes the generated pages back to the website repo
+#
+# SETUP REQUIRED:
+#   1. Copy generate_pages.py into this content repo's root (or /scripts/)
+#   2. Create a Personal Access Token (classic) with `repo` scope that
+#      has write access to your website repo
+#   3. Add it as a secret in THIS repo: Settings → Secrets → Actions
+#      → New repository secret → name it WEBSITE_REPO_TOKEN
+#   4. Update WEBSITE_REPO below to your actual github.io repo path
+
+name: Generate Website Pages From New Content
 
 on:
-  repository_dispatch:
-    types: [update-facts]
-  workflow_dispatch:
-    inputs:
-      force_generate:
-        description: 'Force generate from cached files'
-        type: boolean
-        default: true
+  push:
+    branches: [main]
+    paths:
+      - 'content/*.dat'
+      - 'content/*.json'
+  workflow_dispatch:   # allows manual trigger from the Actions tab
 
 jobs:
-  generate:
+  generate-and-deploy:
     runs-on: ubuntu-latest
-    
+
+    env:
+      # ⚠️  CHANGE THIS to your actual website repo (owner/repo)
+      WEBSITE_REPO: YOUR_ORG/github.io
+
     steps:
-      - name: Checkout website repository
+      - name: Checkout content repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Setup Python
+          path: content-repo
+
+      - name: Checkout website repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.WEBSITE_REPO }}
+          token: ${{ secrets.WEBSITE_REPO_TOKEN }}
+          path: website-repo
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          
-      - name: Checkout news-content repository
+          python-version: '3.12'   # PEP 701 relaxed f-strings — safest match
+
+      - name: Install dependencies
+        run: pip install pycryptodome
+
+      - name: Generate HTML pages
+        working-directory: content-repo
         run: |
-          git clone --depth 1 https://github.com/factictionary/news-content.git temp-news
-          
-      - name: List all .dat files found
+          python generate_pages.py \
+            ./content \
+            ../website-repo \
+            --decrypt
+
+      - name: Commit and push to website repo
+        working-directory: website-repo
         run: |
-          echo "📁 Finding .dat files in news-content:"
-          find temp-news -name "*.dat" -type f | head -20
-          echo "Total .dat files: $(find temp-news -name "*.dat" -type f | wc -l)"
-          
-      - name: Generate SEO pages
-        run: |
-          python generate_pages.py temp-news/facts website/
-          
-      - name: Commit and push changes
-        run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          git add spoof/ data/ sitemap.xml
-          git diff --staged --quiet || git commit -m "Update facts from .dat files"
+          git config user.name  "SpoofDailyPagesBot"
+          git config user.email "bot@factictionary.in"
+          git add spoof/ sitemap.xml robots.txt
+          git diff --staged --quiet || \
+            git commit -m "📰 Auto-generate pages from content update $(date +%Y-%m-%d)"
           git push

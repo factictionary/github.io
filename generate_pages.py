@@ -375,6 +375,24 @@ def generate_fact_page_html(fact: Dict, html_filename: str) -> str:
     is_breaking = fact.get('isBreaking', fact.get('is_breaking', False))
     date_str = fact.get('_date', datetime.now().strftime('%Y-%m-%d'))
 
+    # Pre-build the optional <img> tag OUTSIDE the f-string expression.
+    # f-string expressions (the {...} parts) cannot contain a backslash
+    # in Python < 3.12 — the previous version embedded \' inside
+    # onerror="this.style.display=\'none\'" directly inside an f-string
+    # {...} block, which raises:
+    #   SyntaxError: f-string expression part cannot include a backslash
+    # GitHub Actions' default Python (3.10/3.11 on ubuntu-latest runners)
+    # does not yet support PEP 701's relaxed f-string grammar, so this
+    # must be avoided regardless of local testing environment.
+    img_tag = ''
+    if image_url:
+        safe_url = escape_html(image_url)
+        safe_alt = escape_html(headline)
+        img_tag = (
+            f'<img class="featured-image" src="{safe_url}" alt="{safe_alt}" '
+            f'loading="lazy" onerror="this.style.display=\'none\'" />'
+        )
+
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -565,7 +583,7 @@ def generate_fact_page_html(fact: Dict, html_filename: str) -> str:
 
                     <h1 class="headline">{escape_html(headline)}</h1>
 
-                    {f'<img class="featured-image" src="{escape_html(image_url)}" alt="{escape_html(headline)}" loading="lazy" onerror="this.style.display=\'none\'" />' if image_url else ''}
+                    {img_tag}
 
                     {f'<div class="summary">{escape_html(summary)}</div>' if summary else ''}
 
