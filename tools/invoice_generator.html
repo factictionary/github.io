@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Instant Invoice & Receipt Generator Pro | Factictionary</title>
+    
+    <meta name="description" content="Create professional PDF invoices and receipts online for free. Custom logo, tax calculation, line items, and instant PDF download. 100% private in-browser tool.">
+    <meta name="keywords" content="free invoice generator, invoice maker, receipt generator online, pdf invoice creator, freelancer invoice tool">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.github.io/tools/invoice_generator.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- html2pdf.js for Client-Side PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        .invoice-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--color-neutral-200);
+            margin-bottom: 40px;
+        }
+
+        .invoice-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .invoice-grid-2 { grid-template-columns: 1fr; }
+        }
+
+        .inv-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--color-neutral-200);
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .inv-input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .item-table th, .item-table td {
+            padding: 10px;
+            border-bottom: 1px solid var(--color-neutral-200);
+            text-align: left;
+        }
+
+        .item-table th {
+            background: #F8FAFC;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--color-neutral-700);
+        }
+
+        .btn-delete-row {
+            background: #FEE2E2;
+            color: #DC2626;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Print Printable Invoice Template Box */
+        #invoicePrintArea {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--color-neutral-200);
+            margin-top: 30px;
+        }
+
+        .inv-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #0066FF;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .inv-totals-box {
+            width: 280px;
+            margin-left: auto;
+            margin-top: 20px;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .totals-row.grand {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #0066FF;
+            border-top: 2px solid #E2E8F0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1000px;">
+        <div class="text-center">
+            <div class="privacy-shield-bar">
+                <span class="pulse-dot"></span>
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+            </div>
+
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">Instant Invoice & <span style="color: var(--color-primary-500);">Receipt Generator Pro</span></h1>
+            <p class="lead-text" style="max-width: 650px; margin: 12px auto 30px; color: var(--color-neutral-700);">
+                Build professional PDF invoices with logo upload, itemized calculations, client profiles, and instant download.
+            </p>
+        </div>
+
+        <!-- Invoice Form Workspace -->
+        <div class="invoice-card">
+            <div class="invoice-grid-2">
+                <!-- My Company Info -->
+                <div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 12px;">Your Business Info</h3>
+                    <label style="font-size: 0.85rem; font-weight: 600;">Business / Name:</label>
+                    <input type="text" id="myCompany" class="inv-input" placeholder="e.g. Acme Tech LLC">
+                    
+                    <label style="font-size: 0.85rem; font-weight: 600; margin-top: 8px; display: block;">Email / Phone:</label>
+                    <input type="text" id="myContact" class="inv-input" placeholder="billing@acmetechexample.com">
+                    
+                    <label style="font-size: 0.85rem; font-weight: 600; margin-top: 8px; display: block;">Address & Tax ID:</label>
+                    <input type="text" id="myAddress" class="inv-input" placeholder="123 Innovation Way, Suite 400">
+                </div>
+
+                <!-- Client Info & Meta -->
+                <div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 12px;">Client & Invoice Details</h3>
+                    <label style="font-size: 0.85rem; font-weight: 600;">Billed To (Client Name):</label>
+                    <input type="text" id="clientName" class="inv-input" placeholder="e.g. Global Solutions Inc">
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 8px;">
+                        <div style="flex:1;">
+                            <label style="font-size: 0.85rem; font-weight: 600;">Invoice #:</label>
+                            <input type="text" id="invNumber" class="inv-input" value="INV-2026-001">
+                        </div>
+                        <div style="flex:1;">
+                            <label style="font-size: 0.85rem; font-weight: 600;">Currency:</label>
+                            <select id="invCurrency" class="inv-input" onchange="calculateTotals()">
+                                <option value="$">$ USD</option>
+                                <option value="€">€ EUR</option>
+                                <option value="£">£ GBP</option>
+                                <option value="₹">₹ INR</option>
+                                <option value="CA$">CA$ CAD</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Line Items Table -->
+            <h3 style="font-size: 1.1rem; margin-top: 20px;">Itemized Products / Services</h3>
+            <table class="item-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Description</th>
+                        <th style="width: 15%;">Qty</th>
+                        <th style="width: 20%;">Price</th>
+                        <th style="width: 15%;">Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="itemsBody">
+                    <tr>
+                        <td><input type="text" class="inv-input item-desc" value="Web Development & Consulting Services"></td>
+                        <td><input type="number" class="inv-input item-qty" value="1" min="1" oninput="calculateTotals()"></td>
+                        <td><input type="number" class="inv-input item-price" value="500" min="0" oninput="calculateTotals()"></td>
+                        <td class="item-line-total">$500.00</td>
+                        <td><button class="btn-delete-row" onclick="deleteRow(this)">&times;</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button onclick="addRow()" class="btn btn-secondary" style="border-radius: 20px; font-size: 0.85rem;">+ Add Line Item</button>
+
+            <!-- Tax / Discount Calculations -->
+            <div class="invoice-grid-2" style="margin-top: 24px;">
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600;">Tax Rate (%):</label>
+                    <input type="number" id="taxRate" class="inv-input" value="10" min="0" oninput="calculateTotals()">
+                </div>
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 600;">Discount (%):</label>
+                    <input type="number" id="discountRate" class="inv-input" value="0" min="0" oninput="calculateTotals()">
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button onclick="generatePDF()" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 14px 36px; font-weight: 700;">
+                    ⬇️ Download PDF Invoice
+                </button>
+                <button onclick="saveProfile()" class="btn btn-secondary" style="border-radius: 50px; padding: 14px 24px;">
+                    💾 Save Business Template
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Printable Invoice Preview Box -->
+        <div id="invoicePrintArea">
+            <div class="inv-header-flex">
+                <div>
+                    <h2 id="prevCompany" style="font-size: 1.8rem; font-weight: 800; color: #0F172A;">Acme Tech LLC</h2>
+                    <p id="prevAddress" style="color: #64748B; font-size: 0.9rem;">123 Innovation Way, Suite 400</p>
+                    <p id="prevContact" style="color: #64748B; font-size: 0.9rem;">billing@acmetechexample.com</p>
+                </div>
+                <div style="text-align: right;">
+                    <h2 style="font-size: 2rem; color: #0066FF; font-weight: 800;">INVOICE</h2>
+                    <p style="font-weight: 600; font-size: 0.95rem; color: #1E293B;" id="prevInvNum">INV-2026-001</p>
+                    <p style="color: #64748B; font-size: 0.85rem;" id="prevDate">Date: 2026-08-19</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: #94A3B8;">Billed To:</span>
+                <h4 id="prevClient" style="font-size: 1.2rem; font-weight: 700; color: #0F172A; margin-top: 4px;">Global Solutions Inc</h4>
+            </div>
+
+            <table class="item-table" style="margin-bottom: 20px;">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Description</th>
+                        <th style="width: 15%; text-align: center;">Qty</th>
+                        <th style="width: 15%; text-align: right;">Unit Price</th>
+                        <th style="width: 15%; text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="prevItemsBody">
+                </tbody>
+            </table>
+
+            <div class="inv-totals-box">
+                <div class="totals-row">
+                    <span>Subtotal:</span>
+                    <span id="prevSubtotal">$0.00</span>
+                </div>
+                <div class="totals-row">
+                    <span>Tax:</span>
+                    <span id="prevTax">$0.00</span>
+                </div>
+                <div class="totals-row grand">
+                    <span>Grand Total:</span>
+                    <span id="prevGrand">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Utility</span>
+            <h3>Saved Time Creating Invoices?</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more free privacy tools by supporting us!</p>
+            
+            <div class="donation-btn-group">
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                    💖 GitHub Sponsors
+                </a>
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+                    🪙 Crypto / UPI Donation
+                </button>
+            </div>
+        </div>
+
+        <!-- Crypto Modal -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        function addRow() {
+            const tbody = document.getElementById('itemsBody');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" class="inv-input item-desc" placeholder="Product or service description"></td>
+                <td><input type="number" class="inv-input item-qty" value="1" min="1" oninput="calculateTotals()"></td>
+                <td><input type="number" class="inv-input item-price" value="100" min="0" oninput="calculateTotals()"></td>
+                <td class="item-line-total">$100.00</td>
+                <td><button class="btn-delete-row" onclick="deleteRow(this)">&times;</button></td>
+            `;
+            tbody.appendChild(tr);
+            calculateTotals();
+        }
+
+        function deleteRow(btn) {
+            const row = btn.closest('tr');
+            if (document.querySelectorAll('#itemsBody tr').length > 1) {
+                row.remove();
+                calculateTotals();
+            }
+        }
+
+        function calculateTotals() {
+            const currency = document.getElementById('invCurrency').value;
+            const rows = document.querySelectorAll('#itemsBody tr');
+            let subtotal = 0;
+            const prevBody = document.getElementById('prevItemsBody');
+            prevBody.innerHTML = '';
+
+            rows.forEach(tr => {
+                const desc = tr.querySelector('.item-desc').value || 'Service Item';
+                const qty = parseFloat(tr.querySelector('.item-qty').value) || 0;
+                const price = parseFloat(tr.querySelector('.item-price').value) || 0;
+                const total = qty * price;
+                subtotal += total;
+
+                tr.querySelector('.item-line-total').textContent = currency + total.toFixed(2);
+
+                prevBody.innerHTML += `
+                    <tr>
+                        <td>${desc}</td>
+                        <td style="text-align:center;">${qty}</td>
+                        <td style="text-align:right;">${currency}${price.toFixed(2)}</td>
+                        <td style="text-align:right;">${currency}${total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const tax = (subtotal * taxRate) / 100;
+            const grand = subtotal + tax;
+
+            document.getElementById('prevCompany').textContent = document.getElementById('myCompany').value || 'Your Company Name';
+            document.getElementById('prevContact').textContent = document.getElementById('myContact').value || 'contact@example.com';
+            document.getElementById('prevAddress').textContent = document.getElementById('myAddress').value || '123 Business Way';
+            document.getElementById('prevClient').textContent = document.getElementById('clientName').value || 'Client Name';
+            document.getElementById('prevInvNum').textContent = document.getElementById('invNumber').value || 'INV-001';
+
+            document.getElementById('prevSubtotal').textContent = currency + subtotal.toFixed(2);
+            document.getElementById('prevTax').textContent = currency + tax.toFixed(2);
+            document.getElementById('prevGrand').textContent = currency + grand.toFixed(2);
+        }
+
+        function saveProfile() {
+            const profile = {
+                company: document.getElementById('myCompany').value,
+                contact: document.getElementById('myContact').value,
+                address: document.getElementById('myAddress').value
+            };
+            localStorage.setItem('factictionary_inv_profile', JSON.stringify(profile));
+            alert('Business Profile saved to your browser!');
+        }
+
+        function loadProfile() {
+            const saved = localStorage.getItem('factictionary_inv_profile');
+            if (saved) {
+                const p = JSON.parse(saved);
+                document.getElementById('myCompany').value = p.company || '';
+                document.getElementById('myContact').value = p.contact || '';
+                document.getElementById('myAddress').value = p.address || '';
+            }
+        }
+
+        function generatePDF() {
+            const element = document.getElementById('invoicePrintArea');
+            const opt = {
+                margin:       10,
+                filename:     (document.getElementById('invNumber').value || 'Invoice') + '.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProfile();
+            calculateTotals();
+        });
+    </script>
+</body>
+</html>

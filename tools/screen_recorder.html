@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Screen & Webcam Recorder (No Watermark) | Factictionary</title>
+    
+    <meta name="description" content="Record your screen, browser tab, or webcam online with audio. Zero watermarks, no time limits, and 100% client-side privacy. Instant WebM/MP4 download.">
+    <meta name="keywords" content="free screen recorder, online screen recorder, record webcam, screen capture no watermark, browser screen recorder">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.github.io/tools/screen_recorder.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        .rec-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--color-neutral-200);
+            margin-bottom: 40px;
+        }
+
+        .preview-container {
+            width: 100%;
+            height: 400px;
+            background: #0F172A;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        #videoPreview {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .rec-status-dot {
+            width: 12px;
+            height: 12px;
+            background: #EF4444;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            animation: blink-rec 1s infinite;
+        }
+
+        @keyframes blink-rec {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .timer-display {
+            font-family: monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 20px;
+        }
+
+        .rec-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-rec-start {
+            background: #EF4444;
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-rec-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
+        }
+
+        .btn-rec-stop {
+            background: #0F172A;
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1000px;">
+        <div class="text-center">
+            <div class="privacy-shield-bar">
+                <span class="pulse-dot"></span>
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+            </div>
+
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">Screen & Webcam <span style="color: var(--color-primary-500);">Recorder</span></h1>
+            <p class="lead-text" style="max-width: 650px; margin: 12px auto 30px; color: var(--color-neutral-700);">
+                Record screen, browser tabs, or webcam with microphone audio. Zero watermarks, no time limits, and instant local download.
+            </p>
+        </div>
+
+        <!-- Recorder Workspace -->
+        <div class="rec-card text-center">
+            <!-- Video Preview Box -->
+            <div class="preview-container">
+                <video id="videoPreview" autoplay playsinline muted></video>
+                <span id="placeholderText" style="color: #64748B; font-size: 1.1rem;">Click "Start Recording" to select a screen or tab</span>
+            </div>
+
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+
+            <!-- Controls -->
+            <div class="rec-controls">
+                <button id="startBtn" onclick="startRecording()" class="btn-rec-start">
+                    🔴 Start Recording
+                </button>
+                <button id="stopBtn" onclick="stopRecording()" class="btn-rec-stop" style="display:none;">
+                    ⏹️ Stop Recording
+                </button>
+                <button id="downloadBtn" onclick="downloadRecording()" class="btn btn-primary" style="border-radius: 50px; padding: 14px 28px; background: #10B981; border: none; font-weight: 700; display:none;">
+                    ⬇️ Download Video File
+                </button>
+            </div>
+        </div>
+
+        <!-- Documentation -->
+        <div style="background: white; border-radius: 16px; padding: 32px; border: 1px solid var(--color-neutral-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px;">How to Record Screen Online Without Watermark</h2>
+            <ol style="margin-left: 20px; line-height: 1.8; color: var(--color-neutral-700);">
+                <li>Click <strong>Start Recording</strong> to prompt your browser's screen sharing picker.</li>
+                <li>Select whether to share your Entire Screen, a Specific Window, or a Chrome Tab.</li>
+                <li>Check <strong>Share System Audio</strong> if you want to record internal computer sounds.</li>
+                <li>Click <strong>Stop Recording</strong> when finished, and click <strong>Download Video File</strong> to save your recording.</li>
+            </ol>
+        </div>
+
+        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Utility</span>
+            <h3>Enjoying Free Screen Recording?</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more free privacy tools by supporting us!</p>
+            
+            <div class="donation-btn-group">
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                    💖 GitHub Sponsors
+                </a>
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+                    🪙 Crypto / UPI Donation
+                </button>
+            </div>
+        </div>
+
+        <!-- Crypto Modal -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        let mediaRecorder;
+        let recordedChunks = [];
+        let stream;
+        let timerInterval;
+        let secondsElapsed = 0;
+
+        async function startRecording() {
+            try {
+                stream = await navigator.mediaDevices.getDisplayMedia({
+                    video: { cursor: "always" },
+                    audio: true
+                });
+
+                document.getElementById('videoPreview').srcObject = stream;
+                document.getElementById('placeholderText').style.display = 'none';
+
+                let mimeType = 'video/webm;codecs=vp9';
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'video/webm';
+                }
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+                recordedChunks = [];
+
+                mediaRecorder.ondataavailable = e => {
+                    if (e.data.size > 0) recordedChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    document.getElementById('downloadBtn').style.display = 'inline-block';
+                    document.getElementById('startBtn').style.display = 'inline-block';
+                    document.getElementById('stopBtn').style.display = 'none';
+                    clearInterval(timerInterval);
+                };
+
+                // Handle user stopping screen share from browser UI
+                stream.getVideoTracks()[0].onended = () => {
+                    if (mediaRecorder.state !== 'inactive') stopRecording();
+                };
+
+                mediaRecorder.start();
+
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('stopBtn').style.display = 'inline-block';
+                document.getElementById('downloadBtn').style.display = 'none';
+
+                secondsElapsed = 0;
+                timerInterval = setInterval(() => {
+                    secondsElapsed++;
+                    const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+                    const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+                    const secs = String(secondsElapsed % 60).padStart(2, '0');
+                    document.getElementById('timerDisplay').textContent = `${hrs}:${mins}:${secs}`;
+                }, 1000);
+
+            } catch (err) {
+                console.error("Recording error:", err);
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        }
+
+        function downloadRecording() {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Factictionary_ScreenRecord_${Date.now()}.webm`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
