@@ -1,80 +1,83 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Merger Pro | Visual Reordering | Factictionary</title>
+    <title>PDF Merger & Combiner Pro | Factictionary</title>
     
-    <meta name="description" content="Advanced PDF merger with visual drag-and-drop reordering, rotation, reverse pages, bookmarks, and more.">
+    <meta name="description" content="Merge multiple PDF files into one document in your browser with visual drag-and-drop reordering, page rotation, and instant download. 100% free & zero server uploads.">
+    <meta name="keywords" content="pdf merger, combine pdf, join pdf files, pdf reorder, browser pdf tool, privacy pdf merger">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.github.io/tools/pdf_merger.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
     
-    <!-- Fonts & PDF-lib -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- PDF-lib Library -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    
+
     <style>
-        :root {
-            --primary: #F59E0B;
+        .pdf-tool-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--color-neutral-200);
+            margin-bottom: 40px;
         }
-        
-        .tool-workspace {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-        
+
         .drop-zone {
-            border: 3px dashed #F59E0B40;
-            background: #FFF7ED;
-            border-radius: 12px;
-            padding: 60px 20px;
+            border: 3px dashed var(--color-primary-500);
+            background: rgba(0, 102, 255, 0.03);
+            border-radius: 16px;
+            padding: 50px 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
+            cursor: pointer;
         }
-        
+
+        .drop-zone:hover,
         .drop-zone.drag-over {
-            background: #FEF3C7;
-            border-color: var(--primary);
-            transform: scale(1.02);
+            background: rgba(0, 102, 255, 0.08);
+            border-color: var(--color-primary-600);
+            transform: scale(1.01);
         }
-        
-        /* Visual File List */
+
         #fileItems {
             display: grid;
             gap: 16px;
             margin: 24px 0;
         }
-        
+
         .file-card {
-            background: white;
-            border: 2px solid #E5E7EB;
+            background: #FFFFFF;
+            border: 1.5px solid var(--color-neutral-200);
             border-radius: 12px;
             padding: 16px;
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: move;
-            position: relative;
         }
-        
+
         .file-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
-            transform: translateY(-2px);
+            border-color: var(--color-primary-500);
+            box-shadow: 0 6px 18px rgba(0, 102, 255, 0.1);
         }
-        
+
         .file-card.dragging {
-            opacity: 0.6;
-            transform: scale(0.98) rotate(2deg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            z-index: 100;
+            opacity: 0.5;
+            background: var(--color-neutral-100);
         }
-        
+
         .order-number {
             width: 32px;
             height: 32px;
-            background: #F59E0B;
+            background: var(--color-primary-500);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -84,222 +87,314 @@
             font-size: 14px;
             flex-shrink: 0;
         }
-        
-        .pdf-icon {
-            width: 48px;
-            height: 48px;
-            background: #FEF3C7;
-            border-radius: 8px;
+
+        .pdf-icon-badge {
+            width: 44px;
+            height: 44px;
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 22px;
             flex-shrink: 0;
         }
-        
-        .file-info {
+
+        .file-details {
             flex: 1;
             min-width: 0;
         }
-        
-        .file-name {
+
+        .file-title {
             font-weight: 600;
-            color: #1F2937;
+            color: var(--color-neutral-900);
+            font-size: 0.95rem;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
-        .file-meta {
-            font-size: 13px;
-            color: #6B7280;
+
+        .file-meta-info {
+            font-size: 0.82rem;
+            color: var(--color-neutral-500);
+            margin-top: 2px;
         }
-        
-        .drag-handle {
-            width: 28px;
-            height: 28px;
+
+        .file-controls {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #9CA3AF;
-            font-size: 20px;
-            cursor: grab;
+            gap: 10px;
         }
-        
-        .file-card:active .drag-handle {
-            cursor: grabbing;
-        }
-        
-        .file-options {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-        
-        .file-options select,
-        .file-options input {
-            font-size: 13px;
+
+        .file-controls select {
+            font-size: 0.85rem;
             padding: 6px 10px;
-            border-radius: 6px;
-            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            border: 1px solid var(--color-neutral-200);
+            background: white;
         }
-        
-        .btn-remove {
-            background: #EF4444;
-            color: white;
+
+        .btn-delete-file {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
             border: none;
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            font-size: 18px;
+            font-size: 1.1rem;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
-        
-        .visual-hint {
-            text-align: center;
-            color: #6B7280;
-            font-size: 14px;
-            margin: 12px 0;
-            font-style: italic;
+
+        .btn-delete-file:hover {
+            background: #EF4444;
+            color: white;
+        }
+
+        .action-button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-merge-action {
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-merge-action:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.45);
+        }
+
+        .btn-merge-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-download-action {
+            background: #10B981;
+            color: white;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-download-action:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+        }
+
+        .btn-download-action:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <nav class="navbar" role="navigation">
         <div class="nav-container">
             <a href="/" class="logo">Factictionary</a>
-            
             <ul class="nav-links">
-                <li><a href="/blog/" class="nav-link">Blog</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools</a></li>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
             </ul>
-            
-            <div class="nav-cta">
-                <a href="/blog/" class="btn btn-primary">Read Articles</a>
-            </div>
-            
-            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
-                <span>â˜°</span>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
     </nav>
-    <main class="tool-main">
-        <section class="tool-workspace">
-            <div class="drop-zone" id="dropZone">
-                <div style="font-size: 3.5rem; margin-bottom: 16px;">ðŸ“„</div>
-                <div style="font-size: 1.1rem; margin-bottom: 12px;">Drop PDF files here or</div>
-                <button onclick="document.getElementById('fileInput').click()" 
-                        style="background:#F59E0B;color:white;padding:12px 28px;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
-                    Browse Files
-                </button>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1000px;">
+        <div class="text-center">
+            <div class="privacy-shield-bar">
+                <span class="pulse-dot"></span>
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+            </div>
+
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">PDF Merger & <span style="color: var(--color-primary-500);">Combiner Pro</span></h1>
+            <p class="lead-text" style="max-width: 650px; margin: 12px auto 30px; color: var(--color-neutral-700);">
+                Merge multiple PDF files into a single document with visual reordering, page rotation, and zero file uploads.
+            </p>
+        </div>
+
+        <!-- PDF Merger Workspace Card -->
+        <div class="pdf-tool-card">
+            <!-- Dropzone -->
+            <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                <div style="font-size: 3.2rem; margin-bottom: 12px;">📄</div>
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Drag & Drop PDF Files Here</h3>
+                <p style="color: var(--color-neutral-500); font-size: 0.9rem; margin-bottom: 16px;">or click to select files from your computer</p>
+                <button class="btn btn-primary" style="border-radius: 30px; padding: 10px 24px; pointer-events: none;">Browse PDF Files</button>
                 <input type="file" id="fileInput" multiple accept=".pdf" style="display:none;">
             </div>
 
-            <div id="fileList" style="display:none;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                    <h3>Files to Merge <span id="fileCount" style="color:#F59E0B"></span></h3>
-                    <small class="visual-hint">ðŸ‘† Drag cards to reorder â€¢ Drop between files to rearrange</small>
+            <!-- Queue Container -->
+            <div id="fileListContainer" style="display:none; margin-top: 30px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
+                    <h3 style="font-size: 1.15rem; font-weight: 700;">Files to Merge <span id="fileCountBadge" style="color: var(--color-primary-600);"></span></h3>
+                    <span style="font-size: 0.85rem; color: var(--color-neutral-500); font-style: italic;">💡 Drag cards to reorder sequence</span>
                 </div>
-                
+
                 <div id="fileItems"></div>
-            </div>
 
-            <!-- Rest of your controls (tabs, buttons, etc.) remain the same -->
-            <!-- ... (you can keep your previous tab system and merge settings here) ... -->
-
-            <div class="tool-actions" style="margin-top: 30px;">
-                <button class="btn-tool" id="processBtn" disabled>ðŸš€ Merge PDFs</button>
-                <button class="btn-tool" id="downloadBtn" disabled>â¬‡ï¸ Download</button>
-                <button class="btn-tool" id="resetBtn">Reset</button>
+                <!-- Control Buttons -->
+                <div class="action-button-group">
+                    <button class="btn-merge-action" id="processBtn" disabled>🚀 Merge PDFs Now</button>
+                    <button class="btn-download-action" id="downloadBtn" disabled>⬇️ Download Merged PDF</button>
+                    <button class="btn btn-secondary" id="resetBtn" style="border-radius: 30px; padding: 14px 24px;">Reset All</button>
+                </div>
             </div>
-        </section>
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Pdf Merger</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Pdf Merger is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+        </div>
+
+        <!-- Documentation & Guide -->
+        <div style="background: white; border-radius: 16px; padding: 32px; border: 1px solid var(--color-neutral-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+            <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 14px;">How to Merge PDFs Online Safely</h2>
+            <ol style="margin-left: 20px; line-height: 1.8; color: var(--color-neutral-700); margin-bottom: 24px;">
+                <li>Upload your PDF files by dropping them into the dropzone above or clicking <strong>Browse Files</strong>.</li>
+                <li>Drag and drop the file cards up or down to set your desired page sequence.</li>
+                <li>Optionally select rotation angles (90°, 180°, 270°) or page reversal per document.</li>
+                <li>Click <strong>Merge PDFs Now</strong> to combine all files locally using WebAssembly and PDF-lib.</li>
+                <li>Click <strong>Download Merged PDF</strong> to save the final compiled document directly to your device.</li>
+            </ol>
+
+            <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 8px;">Why Client-Side Privacy Matters</h3>
+            <p style="line-height: 1.7; color: var(--color-neutral-700);">
+                Most online PDF mergers require you to upload your sensitive financial statements, contracts, or personal tax documents to cloud servers. Factictionary processes all PDF files locally inside your browser using WebAssembly. Your files are never transmitted across the network, ensuring complete confidentiality.
+            </p>
+        </div>
+
+        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>Saved Time Merging PDFs?</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
             
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Pdf Merger leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-        </section>
+            <div class="donation-btn-group">
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                    💖 GitHub Sponsors
+                </a>
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+                    🪙 Crypto / UPI Donation
+                </button>
+            </div>
+        </div>
+
+        <!-- Crypto Modal -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Content</h4>
-                    <ul>
-                        <li><a href="/blog/">All Articles</a></li>
-                        <li><a href="/blog/?category=productivity">Productivity</a></li>
-                        <li><a href="/blog/?category=technology">Technology</a></li>
-                        <li><a href="/blog/?category=business">Business</a></li>
-                        <li><a href="/blog/?category=learning">Learning</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Tools</h4>
-                    <ul>
-                        <li><a href="/tools/">All Tools</a></li>
-                        <li><a href="/tools/categories/image.html">Image Tools</a></li>
-                        <li><a href="/tools/categories/pdf.html">PDF Tools</a></li>
-                        <li><a href="/tools/categories/video.html">Video/Audio Tools</a></li>
-                        <li><a href="/tools/categories/text.html">Text Tools</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                        <li><a href="/privacy.html">Privacy Policy</a></li>
-                        <li><a href="/terms.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <ul>
-                        <li><a href="mailto:factictionary@gmail.com">Email Us</a></li>
-                        <li><a href="/contact.html">Support</a></li>
-                        <li><a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Back to Top</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2026 Factictionary. All rights reserved. Privacy-first educational platform for the modern web.</p>
-            </div>
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
         </div>
     </footer>
 
-    <!-- Templates -->
+    <script src="/assets/js/main.js"></script>
     <script>
         let selectedFiles = [];
         let dragSrcElement = null;
+        let mergedPdfBytes = null;
 
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
         const fileItems = document.getElementById('fileItems');
-        const fileListContainer = document.getElementById('fileList');
-        const fileCount = document.getElementById('fileCount');
+        const fileListContainer = document.getElementById('fileListContainer');
+        const fileCountBadge = document.getElementById('fileCountBadge');
         const processBtn = document.getElementById('processBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
 
-        // Drag and Drop on zone
         dropZone.addEventListener('dragover', e => {
             e.preventDefault();
             dropZone.classList.add('drag-over');
         });
+
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+
         dropZone.addEventListener('drop', e => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
@@ -309,8 +404,8 @@
         fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
         function handleFiles(files) {
-            const pdfs = Array.from(files).filter(f => f.type === 'application/pdf');
-            if (pdfs.length === 0) return alert("Please select only PDF files.");
+            const pdfs = Array.from(files).filter(f => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf'));
+            if (pdfs.length === 0) return alert("Please select valid PDF files.");
 
             pdfs.forEach(file => {
                 selectedFiles.push({
@@ -319,10 +414,8 @@
                     name: file.name,
                     size: file.size,
                     pages: null,
-                    pageRange: '',
                     rotation: 0,
-                    reversePages: false,
-                    bookmarkName: file.name.replace(/\.pdf$/i, '')
+                    reversePages: false
                 });
             });
 
@@ -336,19 +429,19 @@
                 fileData.pages = pdf.getPageCount();
                 updateFileList();
             } catch (err) {
-                console.error("Failed to load page count", err);
+                console.error("Failed to load PDF page count", err);
             }
         }
 
         function formatFileSize(bytes) {
-            if (!bytes) return 'â€”';
+            if (!bytes) return '—';
             const i = Math.floor(Math.log(bytes) / Math.log(1024));
             return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + ['B', 'KB', 'MB'][i];
         }
 
         function updateFileList() {
             fileListContainer.style.display = selectedFiles.length ? 'block' : 'none';
-            fileCount.textContent = `(${selectedFiles.length} files)`;
+            fileCountBadge.textContent = `(${selectedFiles.length} file${selectedFiles.length === 1 ? '' : 's'})`;
             processBtn.disabled = selectedFiles.length === 0;
 
             fileItems.innerHTML = '';
@@ -361,31 +454,29 @@
 
                 card.innerHTML = `
                     <div class="order-number">${index + 1}</div>
-                    <div class="drag-handle">â‰¡</div>
-                    <div class="pdf-icon">ðŸ“•</div>
-                    <div class="file-info">
-                        <div class="file-name">${fileData.name}</div>
-                        <div class="file-meta">
-                            ${formatFileSize(fileData.size)} â€¢ 
-                            ${fileData.pages ? fileData.pages + ' pages' : 'Loading...'}
+                    <div class="pdf-icon-badge">📄</div>
+                    <div class="file-details">
+                        <div class="file-title">${fileData.name}</div>
+                        <div class="file-meta-info">
+                            ${formatFileSize(fileData.size)} • 
+                            ${fileData.pages ? fileData.pages + ' pages' : 'Analyzing...'}
                         </div>
                     </div>
-                    <div class="file-options">
-                        <select onchange="updateFileOption(${fileData.id}, 'rotation', this.value)">
-                            <option value="0" ${fileData.rotation==0?'selected':''}>0Â°</option>
-                            <option value="90" ${fileData.rotation==90?'selected':''}>90Â°</option>
-                            <option value="180" ${fileData.rotation==180?'selected':''}>180Â°</option>
-                            <option value="270" ${fileData.rotation==270?'selected':''}>270Â°</option>
+                    <div class="file-controls">
+                        <select onchange="updateFileOption(${fileData.id}, 'rotation', this.value)" aria-label="Rotate PDF">
+                            <option value="0" ${fileData.rotation==0?'selected':''}>0° Normal</option>
+                            <option value="90" ${fileData.rotation==90?'selected':''}>90° Clockwise</option>
+                            <option value="180" ${fileData.rotation==180?'selected':''}>180° Invert</option>
+                            <option value="270" ${fileData.rotation==270?'selected':''}>270° Counter</option>
                         </select>
-                        <label style="display:flex;align-items:center;gap:4px;font-size:13px;">
+                        <label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;">
                             <input type="checkbox" ${fileData.reversePages?'checked':''} 
                                    onchange="updateFileOption(${fileData.id}, 'reversePages', this.checked)"> Reverse
                         </label>
+                        <button class="btn-delete-file" onclick="removeFile(${fileData.id})" title="Remove file">&times;</button>
                     </div>
-                    <button class="btn-remove" onclick="removeFile(${fileData.id})">Ã—</button>
                 `;
 
-                // Drag events
                 card.addEventListener('dragstart', handleDragStart);
                 card.addEventListener('dragover', handleDragOver);
                 card.addEventListener('drop', handleDrop);
@@ -407,7 +498,6 @@
             updateFileList();
         }
 
-        // ==================== DRAG & DROP REORDERING ====================
         function handleDragStart(e) {
             dragSrcElement = this;
             setTimeout(() => this.classList.add('dragging'), 0);
@@ -417,8 +507,6 @@
         function handleDragOver(e) {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
-            this.style.borderColor = '#F59E0B';
-            this.style.background = '#FEFCE8';
         }
 
         function handleDrop(e) {
@@ -439,29 +527,14 @@
         function handleDragEnd() {
             document.querySelectorAll('.file-card').forEach(card => {
                 card.classList.remove('dragging');
-                card.style.borderColor = '';
-                card.style.background = '';
             });
         }
-
-        // Reset function
-        function resetTool() {
-            selectedFiles = [];
-            updateFileList();
-        }
-
-        // Expose functions to window
-        window.removeFile = removeFile;
-        window.updateFileOption = updateFileOption;
-        window.resetTool = resetTool;
-
-        let mergedPdfBytes = null;
 
         processBtn.addEventListener('click', async () => {
             if (selectedFiles.length === 0) return;
             try {
                 processBtn.disabled = true;
-                processBtn.textContent = 'â³ Merging...';
+                processBtn.textContent = '⏳ Merging PDFs...';
                 
                 const mergedPdf = await PDFLib.PDFDocument.create();
                 
@@ -470,7 +543,6 @@
                     const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
                     
                     let pageIndices = pdf.getPageIndices();
-                    
                     if (fileData.reversePages) {
                         pageIndices.reverse();
                     }
@@ -488,23 +560,23 @@
                 
                 mergedPdfBytes = await mergedPdf.save();
                 
-                processBtn.textContent = 'âœ… Merged Successfully!';
-                document.getElementById('downloadBtn').disabled = false;
+                processBtn.textContent = '✅ Merged Successfully!';
+                downloadBtn.disabled = false;
                 
                 setTimeout(() => {
-                    processBtn.textContent = 'ðŸš€ Merge PDFs';
+                    processBtn.textContent = '🚀 Merge PDFs Now';
                     processBtn.disabled = false;
                 }, 3000);
                 
             } catch (err) {
-                console.error(err);
-                alert('Error merging PDFs. Ensure files are valid PDFs.');
-                processBtn.textContent = 'ðŸš€ Merge PDFs';
+                console.error("Merge error:", err);
+                alert('Error merging PDFs. Please ensure all uploaded files are valid PDF documents.');
+                processBtn.textContent = '🚀 Merge PDFs Now';
                 processBtn.disabled = false;
             }
         });
 
-        document.getElementById('downloadBtn').addEventListener('click', () => {
+        downloadBtn.addEventListener('click', () => {
             if (!mergedPdfBytes) return;
             const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
@@ -517,13 +589,16 @@
             URL.revokeObjectURL(url);
         });
 
-        // Initialize
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            resetTool();
+        resetBtn.addEventListener('click', () => {
+            selectedFiles = [];
             mergedPdfBytes = null;
-            document.getElementById('downloadBtn').disabled = true;
+            downloadBtn.disabled = true;
+            fileInput.value = '';
+            updateFileList();
         });
+
+        window.removeFile = removeFile;
+        window.updateFileOption = updateFileOption;
     </script>
 </body>
 </html>
-
