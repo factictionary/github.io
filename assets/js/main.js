@@ -368,6 +368,96 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // ===== DONATION MODAL & CRYPTO HELPERS =====
+    window.openDonationModal = function() {
+        const modal = document.querySelector('#donation-modal');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    window.closeDonationModal = function() {
+        const modal = document.querySelector('#donation-modal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    };
+
+    window.copyCryptoAddress = function(btnElement, addressText) {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(addressText).then(() => {
+                const origText = btnElement.textContent;
+                btnElement.textContent = 'Copied! ✓';
+                btnElement.style.background = '#10B981';
+                setTimeout(() => {
+                    btnElement.textContent = origText;
+                    btnElement.style.background = '';
+                }, 2000);
+            });
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = addressText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            btnElement.textContent = 'Copied! ✓';
+            setTimeout(() => { btnElement.textContent = 'Copy'; }, 2000);
+        }
+    };
+
+    // Close modal on backdrop click
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+        backdrop.addEventListener('click', function(e) {
+            if (e.target === this) {
+                window.closeDonationModal();
+            }
+        });
+    });
+
+    // ===== HERO LIVE SEARCH DROPDOWN =====
+    const heroSearchInput = document.querySelector('#hero-live-search');
+    const heroSearchDropdown = document.querySelector('#hero-search-dropdown');
+
+    if (heroSearchInput && heroSearchDropdown) {
+        heroSearchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            if (!query) {
+                heroSearchDropdown.classList.remove('active');
+                return;
+            }
+
+            const items = heroSearchDropdown.querySelectorAll('.search-result-item');
+            let matchCount = 0;
+            items.forEach(item => {
+                const title = item.getAttribute('data-title')?.toLowerCase() || item.textContent.toLowerCase();
+                const keywords = item.getAttribute('data-keywords')?.toLowerCase() || '';
+                if (title.includes(query) || keywords.includes(query)) {
+                    item.style.display = 'flex';
+                    matchCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (matchCount > 0) {
+                heroSearchDropdown.classList.add('active');
+            } else {
+                heroSearchDropdown.classList.remove('active');
+            }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!heroSearchInput.contains(e.target) && !heroSearchDropdown.contains(e.target)) {
+                heroSearchDropdown.classList.remove('active');
+            }
+        });
+    }
+
     console.log('Factictionary initialized successfully');
 });
 

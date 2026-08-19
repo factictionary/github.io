@@ -490,31 +490,255 @@
     </div>
 
     <main id="main">
-        <!-- Hero Section -->
-        <section class="hero" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);">
-            <div class="container text-center">
-                <div class="hero-content" style="max-width: 800px; margin: 0 auto; padding: 60px 0;">
-                    <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.1;">Navigate the Modern World with
-                        <span style="color: var(--color-primary-500);">Confidence.</span>
-                    </h1>
-                    <p class="hero-subtitle lead-text" style="margin-top: 24px;">Your ultimate resource for deep
-                        insights into Tech & AI, Personal Finance, Remote Work, and Modern Wellness in 2026.</p>
+        <!-- Hero Section - High Demand Web Utilities -->
+        <section class="hero" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; padding: 70px 20px 80px;">
+            <div class="container text-center" style="max-width: 900px; margin: 0 auto;">
+                <div class="privacy-shield-bar" style="background: rgba(16, 185, 129, 0.15); color: #34D399; border-color: rgba(52, 211, 153, 0.3);">
+                    <span class="pulse-dot"></span>
+                    <span>100% Client-Side Privacy Shield: 0 Bytes Uploaded to Server</span>
+                </div>
 
-                    <div class="hero-cta" style="margin-top: 40px;">
-                        <a href="/blog/" class="btn btn-primary btn-lg">Read Our Latest Articles</a>
+                <h1 class="hero-title" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; color: #FFFFFF; font-weight: 800; margin-top: 15px;">
+                    High-Demand <span style="background: linear-gradient(135deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Web Utilities</span>
+                </h1>
+                <p class="hero-subtitle" style="margin-top: 20px; color: #94A3B8; font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6;">
+                    Ultra-fast browser tools for PDF, Image, Video, Audio, Developer & Text processing. Zero file uploads, 100% on-device privacy guarantee.
+                </p>
+
+                <!-- Hero Search Bar with Live Suggestions -->
+                <div class="hero-search-wrapper">
+                    <span class="hero-search-icon">🔍</span>
+                    <input type="text" id="hero-live-search" class="hero-search-input" placeholder="Search 50+ high-demand utilities (e.g. PDF merger, bg remover, video compressor)..." aria-label="Search utilities">
+                    
+                    <div id="hero-search-dropdown" class="search-results-dropdown">
+                        <a href="/tools/pdf_merger.html" class="search-result-item" data-title="PDF Merger" data-keywords="pdf combine join merge">
+                            <span class="search-result-title">📄 PDF Merger & Combiner</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/image_background_remover.html" class="search-result-item" data-title="Image Background Remover" data-keywords="bg remove photo transparent">
+                            <span class="search-result-title">🖼️ Image Background Remover</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_compressor.html" class="search-result-item" data-title="Image Compressor" data-keywords="image shrink reduce kb webp">
+                            <span class="search-result-title">⚡ Instant Image Compressor</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/pdf_compressor.html" class="search-result-item" data-title="PDF Compressor" data-keywords="pdf shrink size email reduce">
+                            <span class="search-result-title">📉 PDF Compressor</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/video_trimmer.html" class="search-result-item" data-title="Video Trimmer & Cutter" data-keywords="video trim clip cut edit">
+                            <span class="search-result-title">✂️ Video Trimmer & Cutter</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/audio_converter.html" class="search-result-item" data-title="Audio Converter" data-keywords="mp3 wav ogg audio convert">
+                            <span class="search-result-title">🎵 Audio Format Converter</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/json_formatter.html" class="search-result-item" data-title="JSON Formatter & Validator" data-keywords="json prettify format validate">
+                            <span class="search-result-title">💻 JSON Formatter & Validator</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/base64_encoder.html" class="search-result-item" data-title="Base64 Encoder & Decoder" data-keywords="base64 encode decode binary string">
+                            <span class="search-result-title">🔒 Base64 Encoder / Decoder</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px;">
+                    <a href="/tools/" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 14px 32px; background: linear-gradient(135deg, #0066FF, #0052CC);">Explore All 50+ Tools →</a>
+                    <button onclick="openDonationModal()" class="btn btn-secondary btn-lg" style="border-radius: 50px; padding: 14px 28px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">☕ Support Us</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- High-Demand Utilities Showcase Grid -->
+        <section class="section" style="padding: 70px 0; background: var(--color-neutral-50);">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <span style="color: var(--color-primary-600); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Popular Essentials</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 6px;">Featured High-Demand Utilities</h2>
+                    <p class="lead-text" style="max-width: 600px; margin: 0 auto; color: var(--color-neutral-700);">Most popular browser-based web utilities used daily by millions worldwide.</p>
+                </div>
+
+                <div class="grid grid-3" style="gap: 24px;">
+                    <!-- PDF Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">📄</span>
+                            <span class="value-badge batch">Batch Mode</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">PDF Utility Suite</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Merge multiple PDFs, compress file sizes, extract text via OCR, protect/unprotect passwords, and convert images to PDF instantly.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Merge</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">OCR Text</span>
+                            <span class="feature-tag">Watermark</span>
+                        </div>
+                        <a href="/tools/pdf_merger.html" class="btn-tool-card">Launch PDF Tools →</a>
+                    </div>
+
+                    <!-- Image Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🖼️</span>
+                            <span class="value-badge pro-preset">Smart Presets</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Image Converter & Enhancer</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Remove image backgrounds, convert to WebP/AVIF/PNG, resize with aspect locking, apply HDR filters, and crop for social media.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">BG Removal</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">WebP / AVIF</span>
+                            <span class="feature-tag">Resize</span>
+                        </div>
+                        <a href="/tools/image_background_remover.html" class="btn-tool-card">Launch Image Tools →</a>
+                    </div>
+
+                    <!-- Video Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎬</span>
+                            <span class="value-badge offline">FFmpeg Wasm</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Video & GIF Studio</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Trim & cut videos, compress high-res clips for email/Discord, convert video to animated GIF, and extract MP3 audio.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Trim & Cut</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">Video to GIF</span>
+                            <span class="feature-tag">Extract Audio</span>
+                        </div>
+                        <a href="/tools/video_trimmer.html" class="btn-tool-card">Launch Video Tools →</a>
+                    </div>
+
+                    <!-- Audio Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎵</span>
+                            <span class="value-badge offline">Web Audio</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Audio Editor & Mixer</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Trim audio tracks, normalize volume, convert between MP3/WAV/OGG, change playback speed, and apply acoustic EQ filters.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Converter</span>
+                            <span class="feature-tag">Normalizer</span>
+                            <span class="feature-tag">Trimmer</span>
+                            <span class="feature-tag">Equalizer</span>
+                        </div>
+                        <a href="/tools/audio_converter.html" class="btn-tool-card">Launch Audio Tools →</a>
+                    </div>
+
+                    <!-- Developer Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">⚡</span>
+                            <span class="value-badge batch">Dev Toolkit</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Developer & Text Utilities</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            JSON formatting & tree validation, Base64 encoder/decoder, SHA256/MD5 hash generator, text diff comparer, and word counter.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">JSON Prettify</span>
+                            <span class="feature-tag">Base64</span>
+                            <span class="feature-tag">Hash Generator</span>
+                            <span class="feature-tag">Text Diff</span>
+                        </div>
+                        <a href="/tools/json_formatter.html" class="btn-tool-card">Launch Dev Tools →</a>
+                    </div>
+
+                    <!-- Games & Productivity Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎮</span>
+                            <span class="value-badge offline">Brain Exercises</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Brain Training & Games</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Enhance cognitive focus with memory challenges, word puzzles, brain teasers, and rapid reaction games.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Memory</span>
+                            <span class="feature-tag">Word Games</span>
+                            <span class="feature-tag">Teasers</span>
+                            <span class="feature-tag">Focus</span>
+                        </div>
+                        <a href="/tools/memory_games.html" class="btn-tool-card">Play Brain Games →</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- AdSense Container - Hero Below -->
-        <!-- <div class="adsense-container" style="margin: 40px auto; max-width: 900px;">
-            <div class="adsense-label" style="font-size: 0.8rem; color: #999; text-transform: uppercase;">Advertisement
+        <!-- Community Support & Donation Banner -->
+        <section class="section" style="padding: 40px 20px; background: #FFFFFF;">
+            <div class="container" style="max-width: 960px;">
+                <div class="donation-banner-card">
+                    <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Community</span>
+                    <h3>Support Privacy-First Web Utilities</h3>
+                    <p>Factictionary is hosted on GitHub Pages and runs completely client-side in your browser. We never monetize or sell user data. If these tools saved you time or money, consider supporting our project!</p>
+                    
+                    <div class="donation-btn-group">
+                        <a href="https://buymeacoffee.com/factictionary" target="_blank" rel="noopener" class="btn-donate-bmc">
+                            ☕ Buy Us a Coffee
+                        </a>
+                        <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                            💖 GitHub Sponsors
+                        </a>
+                        <button onclick="openDonationModal()" class="btn-donate-crypto">
+                            🪙 Crypto / UPI Donation
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div style="background: #f0f0f0; padding: 20px; text-align: center; color: #666; border: 1px dashed #ccc;">
-                728×90 Leaderboard Ad Space
+        </section>
+
+        <!-- Donation Modal Popup -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Ethereum / USDT (ERC-20) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">UPI / Direct Payment ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
             </div>
-        </div> -->
+        </div>
 
         <!-- ════════════════════════════════════════════════════════════════ -->
         <!-- SATIRICAL NEWS SECTION                                           -->
@@ -550,115 +774,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- ════════════════════════════════════════════════════════════════ -->
-        <!-- DISCLAIMER SECTION                                              -->
-        <!-- ════════════════════════════════════════════════════════════════ -->
-        <section class="disclaimer-section" aria-label="Legal Disclaimer">
-            <div class="container">
-                <div class="disclaimer-box">
-                    <h4>
-                        <span class="icon">⚖️</span>
-                        Important Legal Disclaimer
-                    </h4>
-                    <p>
-                        <strong>All news articles presented in the "SpoofDaily" section above are works of satire and
-                            parody.</strong>
-                        These stories are <strong>entirely fictional</strong> and are created for entertainment and
-                        humorous purposes only.
-                    </p>
-                    <p>
-                        <strong>Please note:</strong>
-                    </p>
-                    <ul>
-                        <li>Any resemblance to real persons, living or dead, or actual events is <strong>purely
-                                coincidental</strong> and unintentional.</li>
-                        <li>All names, characters, businesses, and incidents portrayed in these satirical articles are
-                            <strong>completely made up</strong>.
-                        </li>
-                        <li>These stories are <strong>not factual</strong> and should <strong>not</strong> be
-                            interpreted as real news, truth, or accurate reporting.</li>
-                        <li>No legal liability is accepted for any actions taken based on the content of these satirical
-                            articles.</li>
-                        <li>These articles are protected as <strong>parody and satire</strong> under applicable laws
-                            regarding freedom of expression.</li>
-                    </ul>
-                    <p style="margin-top: 8px;">
-                        <strong>If you are looking for real, factual news, we recommend visiting reputable news
-                            sources.</strong>
-                        The content in this section is for <strong>entertainment purposes only</strong>.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Articles -->
-        <section class="section">
-            <div class="container">
-                <div class="text-center mb-lg">
-                    <h2>Trending in 2026</h2>
-                    <p class="lead-text">Expert guides to help you optimize your life and career.</p>
-                </div>
-
-                <div class="grid grid-3">
-                    <article class="card">
-                        <div class="card-content">
-                            <span class="category-badge"
-                                style="background: var(--color-primary-100); color: var(--color-primary-700);">Tech &
-                                AI</span>
-                            <h3 class="card-title">Top 10 AI Tools for Everyday Productivity</h3>
-                            <p class="card-excerpt">Discover the best AI tools designed to supercharge your productivity
-                                and automate mundane tasks.</p>
-                            <a href="/blog/articles/top-ai-tools-for-everyday-productivity-2026.html"
-                                class="btn btn-ghost">Read Article →</a>
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <div class="card-content">
-                            <span class="category-badge" style="background: #e6f7ea; color: #1e7e34;">Finance</span>
-                            <h3 class="card-title">7 Realistic Online Side Hustles</h3>
-                            <p class="card-excerpt">Discover the most profitable and realistic online side hustles to
-                                start generating extra income today.</p>
-                            <a href="/blog/articles/best-online-side-hustles-2026.html" class="btn btn-ghost">Read
-                                Article →</a>
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <div class="card-content">
-                            <span class="category-badge" style="background: #e6f0ff; color: #0056b3;">Career</span>
-                            <h3 class="card-title">Mastering Remote Work Efficiency</h3>
-                            <p class="card-excerpt">Strategies for deep work, avoiding burnout, and maintaining
-                                work-life balance in a remote environment.</p>
-                            <a href="/blog/articles/mastering-remote-work-efficiency-2026.html"
-                                class="btn btn-ghost">Read Article →</a>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="text-center mt-lg">
-                    <a href="/blog/" class="btn btn-secondary">View All Articles</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter Signup -->
-        <section class="section-sm" style="background: #111; color: white;">
-            <div class="container text-center">
-                <div style="max-width: 600px; margin: 0 auto; padding: 40px 0;">
-                    <h2>Join 50,000+ Modern Professionals</h2>
-                    <p style="color: #aaa; margin-bottom: 24px;">Get our weekly newsletter with the best insights on
-                        tech, finance, and productivity.</p>
-                    <form style="display: flex; gap: 12px; max-width: 400px; margin: 0 auto;">
-                        <input type="email" placeholder="Your best email" required
-                            style="flex: 1; padding: 12px; border-radius: 4px; border: none;">
-                        <button type="submit" class="btn btn-primary" style="border: none;">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer class="footer">
