@@ -842,7 +842,7 @@
         <h1 class="tool-title">Image HDR Tool</h1>
         <p class="tool-subtitle">Professional HDR image processing tool. Create stunning high dynamic range photos from single images or bracketed sequences. Advanced tone mapping, exposure blending, and shadow/highlight recovery.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -857,19 +857,19 @@
             <!-- Upload Mode Selector -->
             <div class="upload-mode-selector">
                 <button class="mode-btn active" data-mode="single">
-                    <span class="mode-btn-icon">ðŸ“·</span>
+                    <span class="mode-btn-icon">📄·</span>
                     <div class="mode-btn-title">Single Image HDR</div>
                     <div class="mode-btn-desc">Apply HDR effects to one photo</div>
                 </button>
                 <button class="mode-btn" data-mode="bracketed">
-                    <span class="mode-btn-icon">ðŸ“¸</span>
+                    <span class="mode-btn-icon">📄¸</span>
                     <div class="mode-btn-title">Bracketed HDR</div>
                     <div class="mode-btn-desc">Merge multiple exposures</div>
                 </button>
             </div>
             
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸŒ…</div>
+                <div class="drop-zone-icon">Œ…</div>
                 <div class="drop-zone-text" id="dropZoneText">
                     Drop your image files here or click to browse
                 </div>
@@ -1120,7 +1120,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1533,8 +1533,8 @@
                 this.originalControls.style.display = 'block';
                 
                 // Update dimensions
-                this.originalDimensions.textContent = `${img.naturalWidth} Ã— ${img.naturalHeight}`;
-                this.hdrDimensions.textContent = `${img.naturalWidth} Ã— ${img.naturalHeight}`;
+                this.originalDimensions.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+                this.hdrDimensions.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
                 
                 // Initial HDR processing
                 this.updatePreview();
@@ -1583,8 +1583,8 @@
                 this.imageViewer.style.display = 'block';
                 
                 // Update dimensions
-                this.originalDimensions.textContent = `${this.originalImageData.naturalWidth} Ã— ${this.originalImageData.naturalHeight}`;
-                this.hdrDimensions.textContent = `${this.originalImageData.naturalWidth} Ã— ${this.originalImageData.naturalHeight}`;
+                this.originalDimensions.textContent = `${this.originalImageData.naturalWidth} × ${this.originalImageData.naturalHeight}`;
+                this.hdrDimensions.textContent = `${this.originalImageData.naturalWidth} × ${this.originalImageData.naturalHeight}`;
                 
                 // Initial HDR processing
                 this.updatePreview();
@@ -1719,7 +1719,7 @@
                 }
                 
                 this.hdrImage.src = this.hdrCanvas.toDataURL();
-                this.hdrDimensions.textContent = `${this.hdrCanvas.width} Ã— ${this.hdrCanvas.height}`;
+                this.hdrDimensions.textContent = `${this.hdrCanvas.width} × ${this.hdrCanvas.height}`;
             }
             
             applyHDRToSingle(canvas, settings) {

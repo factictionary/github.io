@@ -113,9 +113,9 @@
         <header class="tool-header" style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);">
             <div class="container">
                 <div class="tool-header-content">
-                    <h3 class="tool-title">ðŸŽµ Video Audio Extractor</h3>
+                    <h3 class="tool-title">🎬µ Video Audio Extractor</h3>
                     <p class="tool-subtitle">Extract high-quality audio from video files. Support for MP3, WAV, FLAC, AAC, OGG formats with customizable bitrate and sample rate settings. Perfect for creating music playlists, extracting soundtracks, and audio analysis.</p>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Multiple Formats</span>
                         <span class="feature-tag">High Quality</span>
@@ -136,7 +136,7 @@
                     <label class="input-label">Video File Upload</label>
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">ðŸ“¹</div>
+                            <div class="upload-icon">📹</div>
                             <h3>Drop your video file here</h3>
                             <p>or click to browse files</p>
                             <div class="upload-formats">
@@ -244,7 +244,7 @@
                             <canvas id="waveformCanvas" width="800" height="200"></canvas>
                             <div class="waveform-info">
                                 <span class="waveform-duration" id="audioDuration">00:00</span>
-                                <span class="waveform-format" id="audioFormatInfo">MP3 â€¢ 192 kbps â€¢ 44.1 kHz</span>
+                                <span class="waveform-format" id="audioFormatInfo">MP3 • 192 kbps • 44.1 kHz</span>
                             </div>
                         </div>
                     </div>
@@ -255,14 +255,14 @@
                     <h3 class="section-title">Download Audio</h3>
                     <div class="download-content">
                         <div class="download-card">
-                            <div class="download-icon">ðŸŽµ</div>
+                            <div class="download-icon">🎬µ</div>
                             <div class="download-info">
                                 <h4 id="downloadFileName">extracted_audio.mp3</h4>
-                                <p class="download-details" id="downloadFileDetails">192 kbps â€¢ 44.1 kHz â€¢ 3:45</p>
+                                <p class="download-details" id="downloadFileDetails">192 kbps • 44.1 kHz • 3:45</p>
                                 <p class="download-size" id="downloadFileSize">Size: 2.8 MB</p>
                             </div>
                             <button class="btn btn-primary btn-download" onclick="downloadAudio()">
-                                â¬‡ï¸ Download Audio
+                                ⬇ï¸ Download Audio
                             </button>
                         </div>
                     </div>
@@ -271,9 +271,9 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons" id="actionButtons">
                     <button class="btn btn-primary" id="extractBtn" onclick="extractAudio()" disabled>
-                        ðŸŽµ Extract Audio
+                        🎬µ Extract Audio
                     </button>
-                    <button class="btn btn-secondary" onclick="resetTool()">ðŸ”„ Reset</button>
+                    <button class="btn btn-secondary" onclick="resetTool()">”„ Reset</button>
                 </div>
 
                 <!-- Error Messages -->
@@ -299,7 +299,7 @@
         <section class="privacy-notice">
             <div class="container">
                 <div class="privacy-card">
-                    <div class="privacy-icon">ðŸ”’</div>
+                    <div class="privacy-icon">🔒</div>
                     <div class="privacy-content">
                         <h3>Privacy Protected</h3>
                         <p>Your video files are processed entirely in your browser using WebAssembly technology. No files are uploaded to our servers, ensuring complete privacy and security of your media content.</p>
@@ -314,21 +314,21 @@
                 <h3 class="related-title">More Video & Audio Tools</h3>
                 <div class="related-grid">
                     <a href="audio_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Audio Converter</h4>
                             <p>Convert between different audio formats with customizable quality settings</p>
                         </div>
                     </a>
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ“¹</div>
+                        <div class="related-icon">📹</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality</p>
                         </div>
                     </a>
                     <a href="audio_merger.html" class="related-card">
-                        <div class="related-icon">ðŸŽ­</div>
+                        <div class="related-icon">🎬­</div>
                         <div class="related-content">
                             <h4>Audio Merger</h4>
                             <p>Merge multiple audio files into a single track</p>
@@ -852,7 +852,7 @@
             const bitrate = document.getElementById('bitrate').value;
             const sampleRate = (document.getElementById('sampleRate').value / 1000).toFixed(1);
             
-            audioFormatInfo.textContent = `${format} â€¢ ${bitrate} kbps â€¢ ${sampleRate} kHz`;
+            audioFormatInfo.textContent = `${format} • ${bitrate} kbps • ${sampleRate} kHz`;
             
             // Try to get actual duration from audio element
             const audio = document.getElementById('audioPlayer');
@@ -879,7 +879,7 @@
             const newFileName = `${originalName}_extracted.${format}`;
             
             downloadFileName.textContent = newFileName;
-            downloadFileDetails.textContent = `${document.getElementById('bitrate').value} kbps â€¢ ${(document.getElementById('sampleRate').value / 1000).toFixed(1)} kHz â€¢ 3:45`;
+            downloadFileDetails.textContent = `${document.getElementById('bitrate').value} kbps • ${(document.getElementById('sampleRate').value / 1000).toFixed(1)} kHz • 3:45`;
             downloadFileSize.textContent = `Size: ${formatFileSize(extractedAudioBlob.size)}`;
             
             downloadSection.style.display = 'block';
@@ -1002,7 +1002,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showNotification('ðŸŽµ Audio file downloaded successfully!');
+            showNotification('🎬µ Audio file downloaded successfully!');
         }
 
         // Utility functions

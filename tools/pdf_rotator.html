@@ -6,7 +6,7 @@
     <title>PDF Page Rotator | Free Browser Tool | Factictionary</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Rotate PDF pages individually or in batch with our free browser-based tool. No uploads required, 100% privacy-protected. Rotate pages 90Â°, 180Â°, or 270Â°.">
+    <meta name="description" content="Rotate PDF pages individually or in batch with our free browser-based tool. No uploads required, 100% privacy-protected. Rotate pages 90°, 180°, or 270°.">
     <meta name="keywords" content="browser tool, pdf rotator, pdf, rotate pages, free, online, privacy-first">
     <meta name="author" content="Factictionary Team">
     <meta name="robots" content="index, follow">
@@ -614,7 +614,7 @@
         <h1 class="tool-title">PDF Page Rotator</h1>
         <p class="tool-subtitle">Rotate PDF pages individually or in batch. Perfect for correcting page orientation in scanned documents.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -627,7 +627,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“„</div>
+                <div class="drop-zone-icon">📄„</div>
                 <div class="drop-zone-text">
                     Drop your PDF file here or click to browse
                 </div>
@@ -658,13 +658,13 @@
             </div>
             
             <div class="batch-controls" id="batchControls" style="display: none;">
-                <button class="btn-batch" id="rotateAll90">Rotate All 90Â°</button>
-                <button class="btn-batch" id="rotateAll180">Rotate All 180Â°</button>
-                <button class="btn-batch" id="rotateAll270">Rotate All 270Â°</button>
+                <button class="btn-batch" id="rotateAll90">Rotate All 90°</button>
+                <button class="btn-batch" id="rotateAll180">Rotate All 180°</button>
+                <button class="btn-batch" id="rotateAll270">Rotate All 270°</button>
                 <button class="btn-batch" id="rotateAll0">Reset All</button>
-                <button class="btn-batch" id="rotateSelected90">Rotate Selected 90Â°</button>
-                <button class="btn-batch" id="rotateSelected180">Rotate Selected 180Â°</button>
-                <button class="btn-batch" id="rotateSelected270">Rotate Selected 270Â°</button>
+                <button class="btn-batch" id="rotateSelected90">Rotate Selected 90°</button>
+                <button class="btn-batch" id="rotateSelected180">Rotate Selected 180°</button>
+                <button class="btn-batch" id="rotateSelected270">Rotate Selected 270°</button>
                 <button class="btn-batch" id="rotateSelected0">Reset Selected</button>
             </div>
             
@@ -729,7 +729,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1069,7 +1069,7 @@
                 // Rotation indicator
                 const rotationIndicator = document.createElement('div');
                 rotationIndicator.className = 'rotation-indicator';
-                rotationIndicator.textContent = '0Â°';
+                rotationIndicator.textContent = '0°';
                 rotationIndicator.id = `rotation-${pageIndex}`;
                 
                 // Page controls
@@ -1079,7 +1079,7 @@
                 const rotateLeft = document.createElement('button');
                 rotateLeft.className = 'btn-rotate';
                 rotateLeft.innerHTML = 'âŸ²';
-                rotateLeft.title = 'Rotate Left 90Â°';
+                rotateLeft.title = 'Rotate Left 90°';
                 rotateLeft.addEventListener('click', (e) => {
                     e.stopPropagation();
                     this.rotatePage(pageIndex, -90);
@@ -1088,7 +1088,7 @@
                 const rotateRight = document.createElement('button');
                 rotateRight.className = 'btn-rotate';
                 rotateRight.innerHTML = 'âŸ³';
-                rotateRight.title = 'Rotate Right 90Â°';
+                rotateRight.title = 'Rotate Right 90°';
                 rotateRight.addEventListener('click', (e) => {
                     e.stopPropagation();
                     this.rotatePage(pageIndex, 90);
@@ -1169,7 +1169,7 @@
             updateRotationIndicator(pageIndex, rotation) {
                 const indicator = document.getElementById(`rotation-${pageIndex}`);
                 if (indicator) {
-                    indicator.textContent = `${rotation}Â°`;
+                    indicator.textContent = `${rotation}°`;
                     indicator.style.background = rotation === 0 ? 'var(--color-neutral-500)' : 'var(--color-primary-500)';
                 }
             }
@@ -1281,7 +1281,7 @@
                         this.summaryList.innerHTML += `
                             <div class="summary-item">
                                 <span>Page ${pageIndex + 1}</span>
-                                <span class="rotation-badge">${rotation}Â°</span>
+                                <span class="rotation-badge">${rotation}°</span>
                             </div>
                         `;
                     }

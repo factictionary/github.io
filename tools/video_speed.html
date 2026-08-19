@@ -114,7 +114,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Speed Controller</h3>
                     <p class="tool-subtitle">Adjust video playback speed from 0.25x to 4x with real-time preview and audio sync options. Perfect for content creators, educators, and students who need to control video speed efficiently.</p>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Real-time Preview</span>
                         <span class="feature-tag">Speed Control</span>
@@ -135,7 +135,7 @@
                     <label class="input-label">Upload Video</label>
                     <div class="video-upload-area" id="videoUploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">ðŸ“¹</div>
+                            <div class="upload-icon">📹</div>
                             <h3>Drop your video here</h3>
                             <p>or click to browse files</p>
                             <p class="upload-info">Supported formats: MP4, MOV, AVI, MKV, WebM (max 500MB)</p>
@@ -205,11 +205,11 @@
                 <!-- Process Button -->
                 <div class="process-button-section">
                     <button class="btn btn-primary btn-large" id="processVideoBtn" disabled>
-                        âš¡ Process Video with Speed Adjustment
+                        ⚠️¡ Process Video with Speed Adjustment
                     </button>
                     <p class="process-note">Click to generate a new video with your selected speed and audio settings</p>
                     <div class="processing-warning">
-                        <p><strong>âš ï¸ Note:</strong> Video processing runs entirely in your browser and may take several minutes for large files. Please keep this tab open during processing.</p>
+                        <p><strong>⚠️ ï¸ Note:</strong> Video processing runs entirely in your browser and may take several minutes for large files. Please keep this tab open during processing.</p>
                     </div>
                 </div>
 
@@ -223,7 +223,7 @@
                             </video>
                             <div class="preview-placeholder" id="previewPlaceholder">
                                 <div class="preview-content">
-                                    <div class="preview-icon">ðŸ“¹</div>
+                                    <div class="preview-icon">📹</div>
                                     <p>Upload a video to see preview with speed adjustment</p>
                                 </div>
                             </div>
@@ -279,8 +279,8 @@
                                 </div>
                             </div>
                             <div class="output-actions">
-                                <button class="btn btn-primary" id="downloadBtn">ðŸ“¥ Download Video</button>
-                                <button class="btn btn-secondary" id="processAnotherBtn">ðŸ”„ Process Another Video</button>
+                                <button class="btn btn-primary" id="downloadBtn">📄¥ Download Video</button>
+                                <button class="btn btn-secondary" id="processAnotherBtn">”„ Process Another Video</button>
                             </div>
                         </div>
                     </div>
@@ -289,7 +289,7 @@
                 <!-- Privacy Notice -->
                 <div class="privacy-notice">
                     <div class="privacy-content">
-                        <div class="privacy-icon">ðŸ”’</div>
+                        <div class="privacy-icon">🔒</div>
                         <div class="privacy-text">
                             <h4>Privacy Protected</h4>
                             <p>Your video is processed entirely in your browser. No files are uploaded to our servers, ensuring complete privacy and security of your content.</p>
@@ -310,14 +310,14 @@
                 <h3 class="related-title">More Video/Audio Tools</h3>
                 <div class="related-grid">
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ—œï¸</div>
+                        <div class="related-icon">🗑️œï¸</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality</p>
                         </div>
                     </a>
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos between different formats (MP4, AVI, MOV, etc.)</p>
@@ -580,7 +580,7 @@
             
             videoInfo.style.display = 'block';
             
-            showNotification('ðŸ“¹ Video loaded successfully!');
+            showNotification('📹 Video loaded successfully!');
         }
 
         function updateSpeedDisplay(speed) {
@@ -815,7 +815,7 @@
             
             outputSection.style.display = 'block';
             
-            showNotification('ðŸŽ‰ Video processed successfully!');
+            showNotification('🎬‰ Video processed successfully!');
         }
 
         function getAudioModeText(mode) {
@@ -850,7 +850,7 @@
             // Clean up URL
             setTimeout(() => URL.revokeObjectURL(downloadUrl), 100);
             
-            showNotification('ðŸ“¥ Video download started!');
+            showNotification('📄¥ Video download started!');
         }
 
         function resetTool() {
@@ -882,7 +882,7 @@
             
             currentVideoFile = null;
             
-            showNotification('ðŸ”„ Ready for new video');
+            showNotification('”„ Ready for new video');
         }
 
         function formatFileSize(bytes) {

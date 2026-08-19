@@ -672,7 +672,7 @@
         <h1 class="tool-title">PDF Metadata Editor</h1>
         <p class="tool-subtitle">Edit PDF metadata including title, author, subject, keywords, and dates. Add custom fields, save templates, and batch process multiple PDFs.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -685,7 +685,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“„</div>
+                <div class="drop-zone-icon">📄„</div>
                 <div class="drop-zone-text">
                     Drop your PDF files here or click to browse
                 </div>
@@ -856,12 +856,12 @@
                 <h3>Export Options</h3>
                 <div class="export-options">
                     <div class="export-option" onclick="metadataEditor.selectExport('individual')" data-export="individual">
-                        <div class="export-icon">ðŸ“„</div>
+                        <div class="export-icon">📄„</div>
                         <div class="export-title">Individual Files</div>
                         <div class="export-description">Download each PDF separately</div>
                     </div>
                     <div class="export-option selected" onclick="metadataEditor.selectExport('zip')" data-export="zip">
-                        <div class="export-icon">ðŸ“¦</div>
+                        <div class="export-icon">📄¦</div>
                         <div class="export-title">ZIP Archive</div>
                         <div class="export-description">Download all as ZIP</div>
                     </div>
@@ -871,7 +871,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1229,14 +1229,14 @@
                 
                 for (const file of this.selectedFiles) {
                     try {
-                        this.updateStatus(file.name, 'processing', 'ðŸ”„ Processing...');
+                        this.updateStatus(file.name, 'processing', '”„ Processing...');
                         this.updateProgress(processedFiles / totalFiles * 100, `Processing ${file.name}...`);
                         
                         const updatedFile = await this.processSingleFile(file, metadata);
                         this.processedFiles.push(updatedFile);
                         
                         this.resultsList.innerHTML += this.createResultItem(file, updatedFile);
-                        this.updateStatus(file.name, 'completed', 'âœ… Updated');
+                        this.updateStatus(file.name, 'completed', '✅ Updated');
                         
                         processedFiles++;
                         
@@ -1328,7 +1328,7 @@
                         <input type="text" placeholder="Field Name" class="custom-key" onchange="metadataEditor.updateCustomField(${fieldId}, 'key', this.value)">
                         <span style="color: var(--color-neutral-500);">:</span>
                         <input type="text" placeholder="Field Value" class="custom-value" onchange="metadataEditor.updateCustomField(${fieldId}, 'value', this.value)">
-                        <button class="btn-remove-field" onclick="metadataEditor.removeCustomField(${fieldId})">Ã—</button>
+                        <button class="btn-remove-field" onclick="metadataEditor.removeCustomField(${fieldId})">×</button>
                     </div>
                 `;
                 

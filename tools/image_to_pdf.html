@@ -609,7 +609,7 @@
         <h1 class="tool-title">Image to PDF Converter</h1>
         <p class="tool-subtitle">Convert images to PDF with advanced layout options, quality control, and batch processing.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -622,7 +622,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“„</div>
+                <div class="drop-zone-icon">📄„</div>
                 <div class="drop-zone-text">
                     Drop your image files here or click to browse
                 </div>
@@ -645,11 +645,11 @@
                 <div class="page-options" id="pageSizeOptions">
                     <div class="page-option selected" data-size="a4">
                         <strong>A4</strong><br>
-                        <small>210Ã—297mm</small>
+                        <small>210×297mm</small>
                     </div>
                     <div class="page-option" data-size="letter">
                         <strong>Letter</strong><br>
-                        <small>216Ã—279mm</small>
+                        <small>216×279mm</small>
                     </div>
                     <div class="page-option" data-size="custom">
                         <strong>Custom</strong><br>
@@ -658,8 +658,8 @@
                 </div>
                 
                 <div class="orientation-toggle">
-                    <button class="orientation-btn active" data-orientation="portrait">ðŸ“„ Portrait</button>
-                    <button class="orientation-btn" data-orientation="landscape">ðŸ“– Landscape</button>
+                    <button class="orientation-btn active" data-orientation="portrait">📄„ Portrait</button>
+                    <button class="orientation-btn" data-orientation="landscape">📄– Landscape</button>
                 </div>
                 
                 <div class="layout-grid">
@@ -834,7 +834,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1067,7 +1067,7 @@
                 info.className = 'image-info';
                 info.innerHTML = `
                     <div class="image-name">${file.name}</div>
-                    <div class="image-details">${formatFileSize(file.size)} â€¢ Page ${index + 1}</div>
+                    <div class="image-details">${formatFileSize(file.size)} • Page ${index + 1}</div>
                 `;
                 
                 const pageBtn = document.createElement('button');
@@ -1139,7 +1139,7 @@
                 const progressText = document.getElementById('progressText');
                 
                 progressFill.style.width = '100%';
-                progressText.textContent = 'âœ… PDF created successfully! Ready for download.';
+                progressText.textContent = '✅ PDF created successfully! Ready for download.';
                 
                 downloadBtn.disabled = false;
                 downloadBtn.textContent = 'Download PDF';

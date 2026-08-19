@@ -652,7 +652,7 @@
         <h1 class="tool-title">PDF OCR Tool</h1>
         <p class="tool-subtitle">Extract text from PDF files using advanced OCR technology. Convert scanned PDFs and images to searchable, editable text.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -665,7 +665,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“„</div>
+                <div class="drop-zone-icon">📄„</div>
                 <div class="drop-zone-text">
                     Drop your PDF files here or click to browse
                 </div>
@@ -863,7 +863,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1196,7 +1196,7 @@
                 
                 for (const file of this.selectedFiles) {
                     try {
-                        this.updateStatus(file.name, 'processing', 'ðŸ”„ Processing...');
+                        this.updateStatus(file.name, 'processing', '”„ Processing...');
                         this.updateProgress(processedFiles / totalFiles * 100, `Processing ${file.name}...`);
                         
                         const result = await this.processSingleFile(file);
@@ -1208,7 +1208,7 @@
                         
                         this.resultList.innerHTML += this.createResultItem(file, result);
                         this.appendToPreview(result);
-                        this.updateStatus(file.name, 'completed', 'âœ… Completed');
+                        this.updateStatus(file.name, 'completed', '✅ Completed');
                         
                         processedFiles++;
                         

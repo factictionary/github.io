@@ -700,7 +700,7 @@
         <h1 class="tool-title">PDF Bookmark Manager</h1>
         <p class="tool-subtitle">Professional PDF bookmark manager and table of contents generator. Create hierarchical bookmarks, auto-detect headings, edit bookmark structure, and export enhanced PDFs with navigation.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -713,7 +713,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“‘</div>
+                <div class="drop-zone-icon">📄‘</div>
                 <div class="drop-zone-text">
                     Drop your PDF files here or click to browse
                 </div>
@@ -876,12 +876,12 @@
                 <h3>Bookmark Features</h3>
                 
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“‘</div>
+                    <div class="tool-feature-icon">📄‘</div>
                     <div class="tool-feature-text">Hierarchical Bookmark Structure</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ”</div>
+                    <div class="tool-feature-icon">”</div>
                     <div class="tool-feature-text">Automatic Heading Detection</div>
                 </div>
             
@@ -891,27 +891,27 @@
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“‹</div>
+                    <div class="tool-feature-icon">📄‹</div>
                     <div class="tool-feature-text">Table of Contents Generation</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ”„</div>
+                    <div class="tool-feature-icon">”„</div>
                     <div class="tool-feature-text">Bookmark Import/Export</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“¤</div>
+                    <div class="tool-feature-icon">📄¤</div>
                     <div class="tool-feature-text">Enhanced PDF Export</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸŽ¯</div>
+                    <div class="tool-feature-icon">🎬¯</div>
                     <div class="tool-feature-text">Drag & Drop Interface</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“Š</div>
+                    <div class="tool-feature-icon">📄Š</div>
                     <div class="tool-feature-text">Progress Tracking</div>
                 </div>
             </div>
@@ -919,7 +919,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1213,7 +1213,7 @@
                 this.outputSection.style.display = 'block';
                 
                 try {
-                    this.updateStatus('processing', 'ðŸ”„ Analyzing PDF structure...');
+                    this.updateStatus('processing', '”„ Analyzing PDF structure...');
                     this.updateProgress(10, 'Loading PDF...');
                     
                     const arrayBuffer = await this.selectedFile.arrayBuffer();
@@ -1234,7 +1234,7 @@
                     this.renderDetectedHeadings();
                     
                     this.updateProgress(100, 'Analysis complete!');
-                    this.updateStatus('completed', 'âœ… Analysis complete');
+                    this.updateStatus('completed', '✅ Analysis complete');
                     
                 } catch (error) {
                     console.error('Error analyzing PDF:', error);
@@ -1471,7 +1471,7 @@
                                                 title="Move down">â†“</button>
                                         <button class="bookmark-btn delete" 
                                                 onclick="event.stopPropagation(); bookmarkManager.deleteBookmark(${this.getBookmarkIndex(bookmark)})"
-                                                title="Delete bookmark">ðŸ—‘ï¸</button>
+                                                title="Delete bookmark">🗑️‘ï¸</button>
                                     </div>
                                 </div>
                             </div>
@@ -1635,7 +1635,7 @@
                     this.updateButtonStates();
                     this.outputSection.style.display = 'block';
                     
-                    this.updateStatus('processing', 'ðŸ”„ Creating enhanced PDF...');
+                    this.updateStatus('processing', '”„ Creating enhanced PDF...');
                     this.updateProgress(20, 'Loading original PDF...');
                     
                     const arrayBuffer = await this.selectedFile.arrayBuffer();
@@ -1657,7 +1657,7 @@
                     const pdfBytes = await pdfDoc.save();
                     
                     this.updateProgress(100, 'Enhanced PDF created successfully!');
-                    this.updateStatus('completed', 'âœ… Enhanced PDF ready for download');
+                    this.updateStatus('completed', '✅ Enhanced PDF ready for download');
                     
                     // Download the enhanced PDF
                     const blob = new Blob([pdfBytes], { type: 'application/pdf' });

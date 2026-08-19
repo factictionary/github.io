@@ -115,7 +115,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Looper Tool</h3>
                     <p class="tool-subtitle">Loop your videos with custom repetitions, seamless transitions, and professional quality output. Perfect for social media content, presentations, and creative projects that need engaging video loops.</p>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Custom Repetitions</span>
                         <span class="feature-tag">Seamless Transitions</span>
@@ -136,11 +136,11 @@
                     <label class="input-label">Upload Video to Loop</label>
                     <div class="video-upload-area" id="videoUploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">ðŸ“¹</div>
+                            <div class="upload-icon">📹</div>
                             <div class="upload-text">
                                 <h3>Drop your video here</h3>
                                 <p>or click to browse files</p>
-                                <p class="upload-info">Supports MP4, WebM, MOV, AVI â€¢ Max size: 500MB</p>
+                                <p class="upload-info">Supports MP4, WebM, MOV, AVI • Max size: 500MB</p>
                             </div>
                         </div>
                         <input type="file" id="videoInput" accept="video/*" style="display: none;">
@@ -183,7 +183,7 @@
                     <h3 class="section-title">Loop Settings</h3>
                     <div class="settings-grid">
                         <div class="setting-card">
-                            <h4 class="setting-card-title">ðŸ” Repetition Count</h4>
+                            <h4 class="setting-card-title">” Repetition Count</h4>
                             <div class="repetition-options">
                                 <label class="option-item">
                                     <input type="radio" name="repetition" value="2" checked>
@@ -209,7 +209,7 @@
                         </div>
 
                         <div class="setting-card">
-                            <h4 class="setting-card-title">ðŸŽ­ Transition Style</h4>
+                            <h4 class="setting-card-title">🎬­ Transition Style</h4>
                             <div class="transition-options">
                                 <label class="option-item">
                                     <input type="radio" name="transition" value="hard" checked>
@@ -257,14 +257,14 @@
                     <h3 class="section-title">Create Loop</h3>
                     <div class="process-content">
                         <button class="btn btn-primary btn-large" id="processBtn">
-                            <span class="btn-icon">âš¡</span>
+                            <span class="btn-icon">⚠️¡</span>
                             <span class="btn-text">Create Looped Video</span>
                         </button>
                         <div class="processing-info">
-                            <p>â€¢ Processing happens locally in your browser using FFmpeg.wasm</p>
-                            <p>â€¢ No video data is uploaded to any server</p>
-                            <p>â€¢ Keep this tab open during processing</p>
-                            <p>â€¢ First use may take longer while FFmpeg.wasm loads</p>
+                            <p>• Processing happens locally in your browser using FFmpeg.wasm</p>
+                            <p>• No video data is uploaded to any server</p>
+                            <p>• Keep this tab open during processing</p>
+                            <p>• First use may take longer while FFmpeg.wasm loads</p>
                         </div>
                     </div>
                     
@@ -290,11 +290,11 @@
                         </div>
                         <div class="result-actions">
                             <button class="btn btn-success btn-large" id="downloadBtn">
-                                <span class="btn-icon">ðŸ’¾</span>
+                                <span class="btn-icon">💡¾</span>
                                 <span class="btn-text">Download Looped Video</span>
                             </button>
                             <button class="btn btn-secondary" id="newLoopBtn">
-                                <span class="btn-icon">ðŸ”„</span>
+                                <span class="btn-icon">”„</span>
                                 <span class="btn-text">Create New Loop</span>
                             </button>
                         </div>
@@ -319,7 +319,7 @@
 
                 <!-- Privacy Notice -->
                 <div class="privacy-notice">
-                    <div class="privacy-icon">ðŸ”’</div>
+                    <div class="privacy-icon">🔒</div>
                     <div class="privacy-content">
                         <h4>Privacy Protected</h4>
                         <p>Your video is processed entirely in your browser using WebAssembly technology. No video data is uploaded, stored, or transmitted to any server. All processing happens locally on your device for maximum privacy and security.</p>
@@ -339,21 +339,21 @@
                 <h3 class="related-title">More Video & Audio Tools</h3>
                 <div class="related-grid">
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos between different formats with quality options and batch processing support</p>
                         </div>
                     </a>
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ—œï¸</div>
+                        <div class="related-icon">🗑️œï¸</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress videos to reduce file size while maintaining quality for web and mobile</p>
                         </div>
                     </a>
                     <a href="audio_extractor.html" class="related-card">
-                        <div class="related-icon">ðŸŽµ</div>
+                        <div class="related-icon">🎬µ</div>
                         <div class="related-content">
                             <h4>Audio Extractor</h4>
                             <p>Extract audio from video files in various formats with high quality output</p>
@@ -455,7 +455,7 @@
         // Initialize the tool
         document.addEventListener('DOMContentLoaded', async function() {
             setupEventListeners();
-            showNotification('ðŸ”„ Loading FFmpeg.wasm... This may take a moment on first use.', 'info');
+            showNotification('”„ Loading FFmpeg.wasm... This may take a moment on first use.', 'info');
             
             // Add a timeout for FFmpeg initialization
             const initTimeout = setTimeout(() => {
@@ -468,7 +468,7 @@
             clearTimeout(initTimeout);
             
             if (!success) {
-                showNotification('âš ï¸ Some features may be limited if FFmpeg failed to load.', 'warning');
+                showNotification('⚠️ ï¸ Some features may be limited if FFmpeg failed to load.', 'warning');
             }
         });
 
@@ -517,7 +517,7 @@
 
         async function setupFFmpeg() {
             try {
-                showNotification('ðŸ”„ Initializing FFmpeg...', 'info');
+                showNotification('”„ Initializing FFmpeg...', 'info');
                 
                 // Wait a bit for CDN scripts to load
                 await new Promise(resolve => setTimeout(resolve, 100));
@@ -550,7 +550,7 @@
                     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
                 });
                 
-                showNotification('âœ… FFmpeg initialized successfully', 'success');
+                showNotification('✅ FFmpeg initialized successfully', 'success');
                 return true;
             } catch (error) {
                 console.error('FFmpeg setup failed:', error);
@@ -607,7 +607,7 @@
                 currentVideo = video;
                 displayVideoPreview(video, file);
                 updateDurationCalculator();
-                showNotification('âœ… Video loaded successfully', 'success');
+                showNotification('✅ Video loaded successfully', 'success');
             });
 
             video.addEventListener('error', function() {
@@ -984,7 +984,7 @@
                 loopCountElement.textContent = loopCount === 0 ? '10x (unlimited)' : loopCount + 'x';
             }
             
-            showNotification('âœ… Looped video created successfully!', 'success');
+            showNotification('✅ Looped video created successfully!', 'success');
         }
         
         function showFallbackLoopedVideo() {
@@ -1090,7 +1090,7 @@
                 // Show success message
                 const repetitionText = loopCount === 0 ? 'unlimited (10x)' : `${loopCount}x`;
                 const processType = window.loopedVideoBlob ? 'FFmpeg' : 'HTML5';
-                showNotification(`ðŸ’¾ Downloaded ${processType} looped video (${repetitionText})`, 'success');
+                showNotification(`💡¾ Downloaded ${processType} looped video (${repetitionText})`, 'success');
                 
             } catch (error) {
                 console.error('Download failed:', error);
@@ -1125,7 +1125,7 @@
             updateProgress(0, 'Preparing to process video...');
             isProcessing = false;
             
-            showNotification('ðŸ”„ Ready to create a new loop', 'info');
+            showNotification('”„ Ready to create a new loop', 'info');
         }
 
         function formatTime(seconds) {

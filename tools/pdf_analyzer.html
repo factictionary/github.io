@@ -591,7 +591,7 @@
         <h1 class="tool-title">PDF Analyzer</h1>
         <p class="tool-subtitle">Comprehensive PDF analysis tool with document statistics, content analysis, structure examination, metadata extraction, and security analysis.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -604,7 +604,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“Š</div>
+                <div class="drop-zone-icon">📄Š</div>
                 <div class="drop-zone-text">
                     Drop your PDF files here or click to browse
                 </div>
@@ -768,42 +768,42 @@
                 <h3>Analysis Features</h3>
                 
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“Š</div>
+                    <div class="tool-feature-icon">📄Š</div>
                     <div class="tool-feature-text">Document Statistics</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“</div>
+                    <div class="tool-feature-icon">📄</div>
                     <div class="tool-feature-text">Content Analysis</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ”</div>
+                    <div class="tool-feature-icon">”</div>
                     <div class="tool-feature-text">Metadata Extraction</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ”’</div>
+                    <div class="tool-feature-icon">🔒</div>
                     <div class="tool-feature-text">Security Analysis</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ”¤</div>
+                    <div class="tool-feature-icon">”¤</div>
                     <div class="tool-feature-text">Font Analysis</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ—ï¸</div>
+                    <div class="tool-feature-icon">—ï¸</div>
                     <div class="tool-feature-text">Structure Examination</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“ˆ</div>
+                    <div class="tool-feature-icon">📄ˆ</div>
                     <div class="tool-feature-text">Batch Processing</div>
                 </div>
             
                 <div class="tool-feature">
-                    <div class="tool-feature-icon">ðŸ“¤</div>
+                    <div class="tool-feature-icon">📄¤</div>
                     <div class="tool-feature-text">Export Options</div>
                 </div>
             </div>
@@ -811,7 +811,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1087,13 +1087,13 @@
                 
                 for (const file of this.selectedFiles) {
                     try {
-                        this.updateStatus(file.name, 'processing', 'ðŸ”„ Analyzing...');
+                        this.updateStatus(file.name, 'processing', '”„ Analyzing...');
                         this.updateProgress((processedFiles / totalFiles) * 100, `Analyzing ${file.name}...`);
                         
                         const analysis = await this.analyzeSingleFile(file);
                         this.analysisResults.set(file.name, analysis);
                         
-                        this.updateStatus(file.name, 'completed', 'âœ… Analysis Complete');
+                        this.updateStatus(file.name, 'completed', '✅ Analysis Complete');
                         processedFiles++;
                         
                     } catch (error) {
@@ -1475,7 +1475,7 @@
                             <div class="analysis-section">
                                 <h4>${result.fileName}</h4>
                                 <div class="security-indicator ${securityClass}">
-                                    ${result.security.securityLevel === 'Encrypted' ? 'ðŸ”’' : 'ðŸ”“'} 
+                                    ${result.security.securityLevel === 'Encrypted' ? '🔒' : '”“'} 
                                     ${result.security.securityLevel}
                                 </div>
                                 <p style="margin-top: var(--spacing-md);"><strong>Security Score:</strong> ${result.security.securityScore}/100</p>
@@ -1780,7 +1780,7 @@
             getPageSizes(pages) {
                 return pages.map(page => {
                     const { width, height } = page.getSize();
-                    return `${Math.round(width)}Ã—${Math.round(height)}`;
+                    return `${Math.round(width)}×${Math.round(height)}`;
                 });
             }
             

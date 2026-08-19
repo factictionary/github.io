@@ -115,7 +115,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Merger Tool</h3>
                     <p class="tool-subtitle">Combine multiple videos into one seamless video. Drag and drop to reorder, support for MP4, AVI, MOV, and more. Perfect for content creators, social media managers, and video editors.</p>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Drag & Drop</span>
                         <span class="feature-tag">Format Detection</span>
@@ -136,7 +136,7 @@
                     <label class="input-label">Video Files</label>
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">ðŸ“¹</div>
+                            <div class="upload-icon">📹</div>
                             <div class="upload-text">
                                 <h3>Drop video files here or click to upload</h3>
                                 <p>Support for MP4, AVI, MOV, MKV, WMV, FLV, and more. Maximum 500MB per file.</p>
@@ -153,7 +153,7 @@
                 <!-- Format Consistency Warning -->
                 <div class="warning-section" id="formatWarning" style="display: none;">
                     <div class="warning-content">
-                        <div class="warning-icon">âš ï¸</div>
+                        <div class="warning-icon">⚠️ ï¸</div>
                         <div class="warning-text">
                             <h4>Format Mismatch Detected</h4>
                             <p>Some videos have different formats. For best results, we recommend using the same format for all videos. The tool will attempt to convert them automatically.</p>
@@ -169,7 +169,7 @@
                         <!-- Files will be populated here -->
                     </div>
                     <div class="file-actions">
-                        <button class="btn btn-secondary" onclick="clearAllFiles()">ðŸ—‘ï¸ Clear All</button>
+                        <button class="btn btn-secondary" onclick="clearAllFiles()">🗑️‘ï¸ Clear All</button>
                         <button class="btn btn-primary" onclick="startMerge()" id="mergeButton">â–¶ï¸ Start Merging</button>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                 <div class="processing-section" id="processingSection" style="display: none;">
                     <h3 class="section-title">Processing Video Merge</h3>
                     <div class="processing-content">
-                        <div class="processing-icon">âš™ï¸</div>
+                        <div class="processing-icon">⚠️™ï¸</div>
                         <div class="processing-info">
                             <div class="overall-progress">
                                 <div class="progress-label">Overall Progress</div>
@@ -224,7 +224,7 @@
                 <div class="result-section" id="resultSection" style="display: none;">
                     <h3 class="section-title">Merged Video Ready</h3>
                     <div class="result-content">
-                        <div class="result-icon">âœ…</div>
+                        <div class="result-icon">✅</div>
                         <div class="result-info">
                             <div class="result-stats">
                                 <div class="stat-item">
@@ -245,8 +245,8 @@
                                 </div>
                             </div>
                             <div class="result-actions">
-                                <button class="btn btn-primary" onclick="downloadMergedVideo()">ðŸ’¾ Download Video</button>
-                                <button class="btn btn-secondary" onclick="startOver()">ðŸ”„ Merge More Videos</button>
+                                <button class="btn btn-primary" onclick="downloadMergedVideo()">💡¾ Download Video</button>
+                                <button class="btn btn-secondary" onclick="startOver()">”„ Merge More Videos</button>
                             </div>
                         </div>
                     </div>
@@ -255,7 +255,7 @@
                 <!-- Privacy Notice -->
                 <div class="privacy-notice">
                     <div class="privacy-content">
-                        <div class="privacy-icon">ðŸ”’</div>
+                        <div class="privacy-icon">🔒</div>
                         <div class="privacy-text">
                             <h4>Privacy Protection</h4>
                             <p>All video processing happens locally in your browser. Your videos never leave your device, ensuring complete privacy and security.</p>
@@ -276,21 +276,21 @@
                 <h3 class="related-title">More Video Tools</h3>
                 <div class="related-grid">
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos between different formats like MP4, AVI, MOV, and more</p>
                         </div>
                     </a>
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ“¦</div>
+                        <div class="related-icon">📄¦</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress videos to reduce file size while maintaining quality</p>
                         </div>
                     </a>
                     <a href="audio_extractor.html" class="related-card">
-                        <div class="related-icon">ðŸŽµ</div>
+                        <div class="related-icon">🎬µ</div>
                         <div class="related-content">
                             <h4>Audio Extractor</h4>
                             <p>Extract audio tracks from video files quickly and easily</p>
@@ -469,7 +469,7 @@
                 document.getElementById('fileListSection').style.display = 'block';
                 document.getElementById('timelineSection').style.display = 'block';
                 
-                showNotification(`âœ… Added ${videoFiles.length} video file${videoFiles.length > 1 ? 's' : ''} successfully`);
+                showNotification(`✅ Added ${videoFiles.length} video file${videoFiles.length > 1 ? 's' : ''} successfully`);
             }
         }
 
@@ -504,7 +504,7 @@
             fileList.innerHTML = selectedFiles.map((file, index) => `
                 <div class="file-item" data-index="${index}" draggable="true">
                     <div class="file-info">
-                        <div class="file-icon">ðŸŽ¬</div>
+                        <div class="file-icon">🎬¬</div>
                         <div class="file-details">
                             <div class="file-name">${file.name}</div>
                             <div class="file-meta">
@@ -602,7 +602,7 @@
             document.getElementById('fileListSection').style.display = 'none';
             document.getElementById('timelineSection').style.display = 'none';
             document.getElementById('formatWarning').style.display = 'none';
-            showNotification('ðŸ—‘ï¸ All files cleared');
+            showNotification('🗑️‘ï¸ All files cleared');
         }
 
         function updateTimeline() {
@@ -699,7 +699,7 @@
                 });
                 
                 ffmpegLoaded = true;
-                showNotification('âœ… FFmpeg loaded successfully');
+                showNotification('✅ FFmpeg loaded successfully');
             } catch (error) {
                 if (error.message.includes('Failed to fetch') || error.message.includes('network')) {
                     throw new Error('Network error: Could not load FFmpeg. Please check your internet connection.');
@@ -845,7 +845,7 @@
                 });
             }
             
-            showNotification('ðŸŽ‰ Video merge completed successfully!');
+            showNotification('🎬‰ Video merge completed successfully!');
         }
 
         function getVideoInfo(blob) {
@@ -885,7 +885,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showNotification('ðŸ’¾ Video download started!');
+            showNotification('💡¾ Video download started!');
         }
 
         function startOver() {
@@ -961,7 +961,7 @@
             
             document.getElementById('processingSection').style.display = 'none';
             document.getElementById('fileListSection').style.display = 'block';
-            showNotification('âš ï¸ Processing canceled');
+            showNotification('⚠️ ï¸ Processing canceled');
         }
 
         // Mobile menu functionality

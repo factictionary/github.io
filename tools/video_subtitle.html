@@ -125,7 +125,7 @@
                             <span><kbd>Ctrl + S</kbd> Sync to video</span>
                         </div>
                     </div>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">SRT Support</span>
                         <span class="feature-tag">Real-time Preview</span>
@@ -189,7 +189,7 @@
                             <label class="upload-label">
                                 <input type="file" id="videoUpload" accept="video/*" hidden>
                                 <div class="upload-area" id="videoDropArea">
-                                    <div class="upload-icon">ðŸ“¹</div>
+                                    <div class="upload-icon">📹</div>
                                     <div class="upload-text">Drag & drop video file here</div>
                                     <div class="upload-subtext">or click to browse</div>
                                     <div class="upload-formats">Supports: MP4, AVI, MOV, MKV, WebM</div>
@@ -209,7 +209,7 @@
                             <label class="upload-label">
                                 <input type="file" id="srtUpload" accept=".srt" hidden>
                                 <div class="upload-area" id="srtDropArea">
-                                    <div class="upload-icon">ðŸ“</div>
+                                    <div class="upload-icon">📄</div>
                                     <div class="upload-text">Upload SRT subtitle file</div>
                                     <div class="upload-subtext">or click to browse</div>
                                     <div class="upload-formats">Supports: .srt subtitle files</div>
@@ -262,13 +262,13 @@
                                 <h4>Subtitle Timeline</h4>
                                 <div class="subtitle-actions">
                                     <button class="btn btn-primary btn-sm" onclick="addSubtitle()" title="Add subtitle at current time (Ctrl+N)">+ Add</button>
-                                    <button class="btn btn-secondary btn-sm" onclick="duplicateCurrentSubtitle()" title="Duplicate selected subtitle">ðŸ“‹ Duplicate</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="duplicateCurrentSubtitle()" title="Duplicate selected subtitle">📄‹ Duplicate</button>
                                     <button class="btn btn-secondary btn-sm" onclick="splitCurrentSubtitle()" title="Split subtitle at current time">âœ‚ï¸ Split</button>
                                 </div>
                             </div>
                             <div class="subtitle-list" id="subtitleList">
                                 <div class="subtitle-placeholder">
-                                    <div class="subtitle-message">ðŸ“ Upload SRT file or add subtitles manually</div>
+                                    <div class="subtitle-message">📄 Upload SRT file or add subtitles manually</div>
                                 </div>
                             </div>
                         </div>
@@ -294,9 +294,9 @@
                                 </div>
 
                                 <div class="editor-actions">
-                                    <button class="btn btn-primary" onclick="updateCurrentSubtitle()">ðŸ’¾ Update</button>
-                                    <button class="btn btn-secondary" onclick="deleteCurrentSubtitle()">ðŸ—‘ï¸ Delete</button>
-                                    <button class="btn btn-secondary" onclick="syncToVideo()">ðŸŽ¯ Sync to Video</button>
+                                    <button class="btn btn-primary" onclick="updateCurrentSubtitle()">💡¾ Update</button>
+                                    <button class="btn btn-secondary" onclick="deleteCurrentSubtitle()">🗑️‘ï¸ Delete</button>
+                                    <button class="btn btn-secondary" onclick="syncToVideo()">🎬¯ Sync to Video</button>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                     <h3 class="section-title">Subtitle Styling</h3>
                     <div class="styling-grid">
                         <div class="style-card">
-                            <h4 class="style-card-title">ðŸŽ¨ Text Style</h4>
+                            <h4 class="style-card-title">🎬¨ Text Style</h4>
                             <div class="style-controls">
                                 <div class="form-group">
                                     <label for="fontSize">Font Size</label>
@@ -334,7 +334,7 @@
                         </div>
 
                         <div class="style-card">
-                            <h4 class="style-card-title">ðŸ“ Position & Layout</h4>
+                            <h4 class="style-card-title">📄 Position & Layout</h4>
                             <div class="style-controls">
                                 <div class="form-group">
                                     <label for="subtitlePosition">Position</label>
@@ -363,7 +363,7 @@
                         </div>
 
                         <div class="style-card">
-                            <h4 class="style-card-title">ðŸŽ­ Background & Effects</h4>
+                            <h4 class="style-card-title">🎬­ Background & Effects</h4>
                             <div class="style-controls">
                                 <div class="form-group">
                                     <label for="backgroundColor">Background Color</label>
@@ -390,7 +390,7 @@
                         </div>
 
                         <div class="style-card">
-                            <h4 class="style-card-title">âš™ï¸ Advanced</h4>
+                            <h4 class="style-card-title">⚠️™ï¸ Advanced</h4>
                             <div class="style-controls">
                                 <div class="form-group">
                                     <label for="textShadow">Text Shadow</label>
@@ -415,8 +415,8 @@
                     </div>
                     
                     <div class="styling-actions">
-                        <button class="btn btn-secondary" onclick="resetStyles()">ðŸ”„ Reset to Default</button>
-                        <button class="btn btn-primary" onclick="applyStyles()">âœ… Apply Styles</button>
+                        <button class="btn btn-secondary" onclick="resetStyles()">”„ Reset to Default</button>
+                        <button class="btn btn-primary" onclick="applyStyles()">✅ Apply Styles</button>
                     </div>
                 </div>
 
@@ -426,7 +426,7 @@
                     <div class="export-content">
                         <div class="processing-info">
                             <div class="privacy-notice">
-                                <div class="privacy-icon">ðŸ”’</div>
+                                <div class="privacy-icon">🔒</div>
                                 <div class="privacy-text">
                                     <h4>100% Privacy Protected</h4>
                                     <p>All processing is done locally in your browser. Your video and subtitle files never leave your device.</p>
@@ -445,13 +445,13 @@
 
                         <div class="export-actions">
                             <button class="btn btn-primary btn-large" onclick="processVideo()" id="processBtn">
-                                ðŸŽ¬ Process Video
+                                🎬¬ Process Video
                             </button>
                             <button class="btn btn-secondary" onclick="downloadSRT()" id="downloadSrtBtn" disabled>
-                                ðŸ“„ Download SRT
+                                📄„ Download SRT
                             </button>
                             <button class="btn btn-secondary" onclick="downloadVideo()" id="downloadVideoBtn" disabled>
-                                ðŸ“¹ Download Video
+                                📹 Download Video
                             </button>
                         </div>
                     </div>
@@ -470,21 +470,21 @@
                 <h3 class="related-title">More Video/Audio Tools</h3>
                 <div class="related-grid">
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ—œï¸</div>
+                        <div class="related-icon">🗑️œï¸</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality</p>
                         </div>
                     </a>
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos between different formats (MP4, AVI, MOV, etc.)</p>
                         </div>
                     </a>
                     <a href="audio_extractor.html" class="related-card">
-                        <div class="related-icon">ðŸŽµ</div>
+                        <div class="related-icon">🎬µ</div>
                         <div class="related-content">
                             <h4>Audio Extractor</h4>
                             <p>Extract audio from video files and save as MP3, WAV, or other formats</p>
@@ -697,7 +697,7 @@
                     displayVideoFile(file);
                     loadVideoIntoPlayer(file);
                     resetProcessingState();
-                    showNotification(`âœ… Video file loaded: ${file.name}`);
+                    showNotification(`✅ Video file loaded: ${file.name}`);
                 } else {
                     showNotification('âŒ Please select a valid video file (MP4, AVI, MOV, MKV, WebM)');
                 }
@@ -757,7 +757,7 @@
                 const srtContent = e.target.result;
                 subtitleData = parseSRT(srtContent);
                 displaySubtitleList();
-                showNotification(`âœ… Loaded ${subtitleData.length} subtitles`);
+                showNotification(`✅ Loaded ${subtitleData.length} subtitles`);
             };
             reader.readAsText(file);
         }
@@ -870,7 +870,7 @@
             if (subtitleData.length === 0) {
                 subtitleList.innerHTML = `
                     <div class="subtitle-placeholder">
-                        <div class="subtitle-message">ðŸ“ No subtitles loaded</div>
+                        <div class="subtitle-message">📄 No subtitles loaded</div>
                     </div>
                 `;
                 return;
@@ -909,7 +909,7 @@
                 
                 displaySubtitleList();
                 resetProcessingState();
-                showNotification('âœ… Subtitle updated');
+                showNotification('✅ Subtitle updated');
             } else {
                 showNotification('âŒ Please select a subtitle to update');
             }
@@ -922,7 +922,7 @@
                 displaySubtitleList();
                 clearEditor();
                 resetProcessingState();
-                showNotification('âœ… Subtitle deleted');
+                showNotification('✅ Subtitle deleted');
             } else {
                 showNotification('âŒ Please select a subtitle to delete');
             }
@@ -944,7 +944,7 @@
                 }
                 displaySubtitleList();
                 resetProcessingState();
-                showNotification('âœ… Synced to current video time');
+                showNotification('✅ Synced to current video time');
             } else {
                 showNotification('âŒ Please select a subtitle to sync');
             }
@@ -966,7 +966,7 @@
             subtitleData.sort((a, b) => a.start - b.start);
             displaySubtitleList();
             resetProcessingState();
-            showNotification('âœ… New subtitle added at current time');
+            showNotification('✅ New subtitle added at current time');
         }
 
         function duplicateCurrentSubtitle() {
@@ -983,7 +983,7 @@
                 subtitleData.sort((a, b) => a.start - b.start);
                 displaySubtitleList();
                 resetProcessingState();
-                showNotification('âœ… Subtitle duplicated');
+                showNotification('✅ Subtitle duplicated');
             } else {
                 showNotification('âŒ Please select a subtitle to duplicate');
             }
@@ -1017,7 +1017,7 @@
                     
                     displaySubtitleList();
                     resetProcessingState();
-                    showNotification('âœ… Subtitle split at current time');
+                    showNotification('✅ Subtitle split at current time');
                 } else {
                     showNotification('âŒ Current time is not within the selected subtitle');
                 }
@@ -1158,7 +1158,7 @@
 
         function applyStyles() {
             updateSubtitleDisplay();
-            showNotification('âœ… Styles applied successfully');
+            showNotification('✅ Styles applied successfully');
         }
 
         function resetStyles() {
@@ -1176,7 +1176,7 @@
             document.getElementById('animation').value = 'none';
             
             updateStylePreview();
-            showNotification('ðŸ”„ Styles reset to default');
+            showNotification('”„ Styles reset to default');
         }
 
         // Video processing functions with FFmpeg.wasm integration
@@ -1184,7 +1184,7 @@
             if (ffmpegLoaded) return;
             
             try {
-                showNotification('ðŸ“¦ Loading FFmpeg...');
+                showNotification('📄¦ Loading FFmpeg...');
                 updateProgress(10, 'Initializing FFmpeg engine...');
                 
                 const { FFmpeg } = window;
@@ -1201,7 +1201,7 @@
                 await ffmpeg.load();
                 ffmpegLoaded = true;
                 updateProgress(30, 'FFmpeg engine ready');
-                showNotification('âœ… FFmpeg loaded successfully');
+                showNotification('✅ FFmpeg loaded successfully');
                 return { FFmpeg, fetchFile };
             } catch (error) {
                 console.error('Failed to load FFmpeg:', error);
@@ -1262,7 +1262,7 @@
                 
                 document.getElementById('downloadVideoBtn').disabled = false;
                 document.getElementById('downloadSrtBtn').disabled = false;
-                showNotification('ðŸŽ‰ Video processing complete!');
+                showNotification('🎬‰ Video processing complete!');
                 
             } catch (error) {
                 handleProcessingError(error, 'video processing');
@@ -1372,7 +1372,7 @@
             a.download = 'subtitles.srt';
             a.click();
             URL.revokeObjectURL(url);
-            showNotification('ðŸ“„ SRT file downloaded');
+            showNotification('📄„ SRT file downloaded');
         }
 
         function downloadVideo() {
@@ -1390,7 +1390,7 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showNotification('ðŸ“¹ Processed video downloaded successfully');
+                showNotification('📹 Processed video downloaded successfully');
             } catch (error) {
                 console.error('Download error:', error);
                 showNotification('âŒ Failed to download video');

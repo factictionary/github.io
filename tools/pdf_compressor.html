@@ -577,7 +577,7 @@
         <h1 class="tool-title">PDF Compressor</h1>
         <p class="tool-subtitle">Compress PDF files to reduce file size for easier sharing and storage while maintaining readability.</p>
         <div class="privacy-badge">
-            ðŸ”’ 100% Privacy Protected
+            🔒 100% Privacy Protected
         </div>
     </header>
     
@@ -590,7 +590,7 @@
         <!-- Tool Workspace -->
         <section class="tool-workspace">
             <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">ðŸ“</div>
+                <div class="drop-zone-icon">📄</div>
                 <div class="drop-zone-text">
                     Drop your pdf files here or click to browse
                 </div>
@@ -737,7 +737,7 @@
             <!-- AdSense Container -->
             <div class="adsense-tool">
                 <div>
-                    <div>ðŸ› ï¸ Advertisement</div>
+                    <div>› ï¸ Advertisement</div>
                     <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
                 </div>
             </div>
@@ -1014,7 +1014,7 @@
                 
                 for (const file of this.selectedFiles) {
                     try {
-                        this.updateStatus(file.name, 'processing', 'ðŸ”„ Compressing...');
+                        this.updateStatus(file.name, 'processing', '”„ Compressing...');
                         this.updateProgress(processedFiles / totalFiles * 100, `Compressing ${file.name}...`);
                         
                         totalOriginalSize += file.size;
@@ -1027,7 +1027,7 @@
                         const compressionRatio = Math.round((savedSize / file.size) * 100);
                         
                         this.resultList.innerHTML += this.createResultItem(file, compressedFile, savedSize, compressionRatio);
-                        this.updateStatus(file.name, 'completed', 'âœ… Compressed');
+                        this.updateStatus(file.name, 'completed', '✅ Compressed');
                         
                         processedFiles++;
                         

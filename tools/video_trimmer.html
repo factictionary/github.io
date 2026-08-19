@@ -114,7 +114,7 @@
                 <div class="tool-header-content">
                     <h3 class="tool-title">Video Trimmer Tool</h3>
                     <p class="tool-subtitle">Trim and cut video clips with precision. Upload your video, set start and end times using the timeline scrubber, preview in real-time, and download the trimmed clip instantly. No quality loss, completely private.</p>
-                    <div class="privacy-badge">ðŸ”’ 100% Privacy Protected</div>
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
                     <div class="tool-features">
                         <span class="feature-tag">Timeline Controls</span>
                         <span class="feature-tag">Real-time Preview</span>
@@ -134,7 +134,7 @@
                 <div class="upload-section">
                     <div class="upload-area" id="uploadArea">
                         <div class="upload-content">
-                            <div class="upload-icon">ðŸ“¹</div>
+                            <div class="upload-icon">📹</div>
                             <h3 class="upload-title">Drop your video here</h3>
                             <p class="upload-subtitle">or click to browse files</p>
                             <input type="file" id="videoInput" accept="video/*" class="file-input" aria-describedby="uploadHelp">
@@ -218,7 +218,7 @@
                         <div class="control-buttons">
                             <button class="btn btn-secondary" onclick="setStartFromCurrent()">â®ï¸ Set Start from Current</button>
                             <button class="btn btn-secondary" onclick="setEndFromCurrent()">â­ï¸ Set End from Current</button>
-                            <button class="btn btn-secondary" onclick="resetSelection()">ðŸ”„ Reset Selection</button>
+                            <button class="btn btn-secondary" onclick="resetSelection()">”„ Reset Selection</button>
                         </div>
                     </div>
                 </div>
@@ -266,7 +266,7 @@
                             âœ‚ï¸ Trim Video
                         </button>
                         <button class="btn btn-success btn-large" id="downloadButton" onclick="downloadVideo()" style="display: none;">
-                            â¬‡ï¸ Download Trimmed Video
+                            ⬇ï¸ Download Trimmed Video
                         </button>
                     </div>
                 </div>
@@ -314,7 +314,7 @@
         <section class="privacy-notice">
             <div class="container">
                 <div class="privacy-card">
-                    <div class="privacy-icon">ðŸ”’</div>
+                    <div class="privacy-icon">🔒</div>
                     <div class="privacy-content">
                         <h4>Your Privacy is Protected</h4>
                         <p>All video processing happens entirely in your browser. Your files are never uploaded to our servers, ensuring complete privacy and security. The video trimmer uses client-side processing with FFmpeg.wasm technology.</p>
@@ -329,21 +329,21 @@
                 <h3 class="related-title">More Video & Audio Tools</h3>
                 <div class="related-grid">
                     <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">ðŸ—œï¸</div>
+                        <div class="related-icon">🗑️œï¸</div>
                         <div class="related-content">
                             <h4>Video Compressor</h4>
                             <p>Compress video files to reduce size while maintaining quality with advanced algorithms</p>
                         </div>
                     </a>
                     <a href="audio_converter.html" class="related-card">
-                        <div class="related-icon">ðŸŽµ</div>
+                        <div class="related-icon">🎬µ</div>
                         <div class="related-content">
                             <h4>Audio Converter</h4>
                             <p>Convert audio files between different formats like MP3, WAV, AAC, and more</p>
                         </div>
                     </a>
                     <a href="video_converter.html" class="related-card">
-                        <div class="related-icon">ðŸ”„</div>
+                        <div class="related-icon">”„</div>
                         <div class="related-content">
                             <h4>Video Converter</h4>
                             <p>Convert videos to different formats and resolutions with customizable settings</p>
@@ -531,7 +531,7 @@
             document.getElementById('fileSize').textContent = formatFileSize(file.size);
             document.getElementById('videoFormat').textContent = file.type.split('/')[1].toUpperCase();
 
-            showNotification('ðŸ“¹ Video loaded successfully!');
+            showNotification('📹 Video loaded successfully!');
         }
 
         function handleVideoMetadata() {
@@ -544,7 +544,7 @@
 
             // Update video info
             document.getElementById('videoDuration').textContent = formatTime(video.duration);
-            document.getElementById('videoResolution').textContent = `${video.videoWidth} Ã— ${video.videoHeight}`;
+            document.getElementById('videoResolution').textContent = `${video.videoWidth} × ${video.videoHeight}`;
 
             // Set initial selection
             selectionStart = 0;
@@ -816,7 +816,7 @@
                     console.warn('Cleanup error:', cleanupError);
                 }
                 
-                showNotification('âœ… Video trimmed successfully!', 'success');
+                showNotification('✅ Video trimmed successfully!', 'success');
                 
                 // Show download button
                 document.getElementById('downloadButton').style.display = 'inline-block';
@@ -857,7 +857,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            showNotification('â¬‡ï¸ Video download started!', 'success');
+            showNotification('⬇ï¸ Video download started!', 'success');
         }
 
         // Utility functions
