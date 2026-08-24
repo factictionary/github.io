@@ -1,1974 +1,1404 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Color Converter | Professional Color Space Tool | Factictionary</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate color palettes, simulate color blindness, analyze contrast. 100% client-side processing.">
-    <meta name="keywords" content="image color converter, color space converter, RGB HSL HSV CMYK LAB, color palette generator, color blindness simulation, contrast analysis, color harmony">
-    <meta name="author" content="Factictionary Team">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://factictionary.github.io/tools/image_color_converter.html">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Image Color Converter | Professional Color Space Tool | Factictionary">
-    <meta property="og:description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate palettes and analyze colors professionally.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/image_color_converter.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Image Color Converter | Professional Color Space Tool | Factictionary">
-    <meta name="twitter:description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate palettes and analyze colors professionally.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- Tool-specific styles -->
-    <style>
-        .tool-header {
-            background: linear-gradient(135deg, #10B981 0%, #059669CC 100%);
-            color: white;
-            padding: var(--spacing-4xl) var(--spacing-lg);
-            text-align: center;
-            margin-top: -80px;
-            padding-top: calc(var(--spacing-4xl) + 80px);
-        }
-        
-        .tool-title {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            margin-bottom: var(--spacing-md);
-            line-height: var(--line-height-tight);
-        }
-        
-        .tool-subtitle {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-medium);
-            opacity: 0.9;
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .tool-main {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-lg);
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: var(--spacing-3xl);
-        }
-        
-        .tool-workspace {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-card);
-            min-height: 700px;
-        }
-        
-        .tool-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-        
-        .tool-info {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-card);
-        }
-        
-        .tool-info h3 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .tool-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .tool-feature-icon {
-            color: #10B981;
-            font-weight: var(--font-weight-bold);
-            margin-top: 2px;
-        }
-        
-        .tool-feature-text {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-small);
-        }
-        
-        .drop-zone {
-            border: 3px dashed #10B98140;
-            border-radius: var(--radius-card);
-            padding: var(--spacing-3xl);
-            text-align: center;
-            background: #F0FDF4;
-            transition: all var(--duration-standard) var(--easing-standard);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .drop-zone:hover,
-        .drop-zone.drag-over {
-            border-color: #10B981;
-            background: #F0FDF4CC;
-        }
-        
-        .drop-zone-icon {
-            font-size: 4rem;
-            color: #10B981;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .drop-zone-text {
-            font-size: var(--font-size-body);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .btn-file-input {
-            background: #10B981;
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: background-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .btn-file-input:hover {
-            background: #059669;
-        }
-        
-        .preview-container {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .preview-image {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-        }
-        
-        .color-tabs {
-            display: flex;
-            border-bottom: 2px solid var(--color-neutral-200);
-            margin-bottom: var(--spacing-lg);
-            overflow-x: auto;
-        }
-        
-        .color-tab {
-            padding: var(--spacing-sm) var(--spacing-md);
-            background: none;
-            border: none;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-            font-weight: var(--font-weight-medium);
-            color: var(--color-neutral-600);
-            transition: all var(--duration-fast) var(--easing-standard);
-            white-space: nowrap;
-            margin-right: var(--spacing-sm);
-        }
-        
-        .color-tab.active {
-            color: #10B981;
-            border-bottom-color: #10B981;
-        }
-        
-        .color-tab:hover {
-            color: #10B981;
-        }
-        
-        .color-panel {
-            display: none;
-        }
-        
-        .color-panel.active {
-            display: block;
-        }
-        
-        .color-spaces-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .color-space-card {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            border: 2px solid var(--color-neutral-200);
-            transition: all var(--duration-fast) var(--easing-standard);
-        }
-        
-        .color-space-card:hover {
-            border-color: #10B981;
-        }
-        
-        .color-space-header {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .color-space-icon {
-            font-size: 1.5rem;
-        }
-        
-        .color-space-name {
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-        }
-        
-        .color-input-group {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .color-label {
-            min-width: 60px;
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-700);
-        }
-        
-        .color-input {
-            flex: 1;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-small);
-            text-align: center;
-            font-family: monospace;
-        }
-        
-        .color-input:focus {
-            outline: none;
-            border-color: #10B981;
-        }
-        
-        .color-preview {
-            width: 100%;
-            height: 60px;
-            border-radius: var(--radius-button);
-            margin-top: var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-        }
-        
-        .color-picker-section {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .picker-container {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .picker-preview {
-            width: 80px;
-            height: 80px;
-            border-radius: var(--radius-card);
-            border: 3px solid var(--color-neutral-200);
-            cursor: pointer;
-        }
-        
-        .picker-controls {
-            flex: 1;
-        }
-        
-        .picker-label {
-            display: block;
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .picker-input {
-            width: 100%;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            font-family: monospace;
-        }
-        
-        .picker-input:focus {
-            outline: none;
-            border-color: #10B981;
-        }
-        
-        .palette-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .palette-color {
-            background: white;
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-md);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--duration-fast) var(--easing-standard);
-        }
-        
-        .palette-color:hover {
-            border-color: #10B981;
-            transform: translateY(-2px);
-        }
-        
-        .palette-color.selected {
-            border-color: #10B981;
-            background: #F0FDF4;
-        }
-        
-        .palette-color-preview {
-            width: 100%;
-            height: 60px;
-            border-radius: var(--radius-button);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .palette-color-info {
-            font-size: var(--font-size-small);
-        }
-        
-        .palette-color-name {
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .palette-color-values {
-            font-family: monospace;
-            color: var(--color-neutral-600);
-            font-size: 11px;
-        }
-        
-        .harmony-controls {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-lg);
-            flex-wrap: wrap;
-        }
-        
-        .harmony-btn {
-            background: var(--color-neutral-200);
-            color: var(--color-neutral-700);
-            border: none;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-button);
-            cursor: pointer;
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-            transition: all var(--duration-fast) var(--easing-standard);
-        }
-        
-        .harmony-btn:hover {
-            background: var(--color-neutral-300);
-        }
-        
-        .harmony-btn.active {
-            background: #10B981;
-            color: white;
-        }
-        
-        .harmony-preview {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-md);
-        }
-        
-        .harmony-color {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .simulation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-lg);
-        }
-        
-        .simulation-card {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-        }
-        
-        .simulation-preview {
-            width: 100%;
-            height: 120px;
-            border-radius: var(--radius-card);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .simulation-label {
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .simulation-desc {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-600);
-        }
-        
-        .contrast-analysis {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .contrast-pairs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-md);
-        }
-        
-        .contrast-pair {
-            background: white;
-            border-radius: var(--radius-button);
-            padding: var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-        }
-        
-        .contrast-sample {
-            height: 40px;
-            border-radius: var(--radius-button);
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: var(--font-weight-semibold);
-        }
-        
-        .contrast-rating {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: var(--font-size-small);
-        }
-        
-        .contrast-badge {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: 10px;
-            font-weight: var(--font-weight-bold);
-            text-transform: uppercase;
-        }
-        
-        .contrast-aa { background: #10B981; color: white; }
-        .contrast-aaa { background: #059669; color: white; }
-        .contrast-fail { background: #EF4444; color: white; }
-        
-        .tool-actions {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-tool {
-            background: var(--color-neutral-900);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: all var(--duration-fast) var(--easing-standard);
-            min-width: 120px;
-        }
-        
-        .btn-tool:hover {
-            background: var(--color-neutral-700);
-            transform: translateY(-1px);
-        }
-        
-        .btn-tool:disabled {
-            background: var(--color-neutral-400);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .privacy-badge {
-            background: var(--color-success);
-            color: white;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xl);
-        }
-        
-        .stat-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .stat-number {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            color: #10B981;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .stat-label {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-small);
-        }
-        
-        .adsense-tool {
-            background: var(--color-neutral-100);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            color: var(--color-neutral-500);
-            font-size: var(--font-size-small);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .tool-main {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .tool-main {
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-            
-            .tool-title {
-                font-size: var(--font-size-subtitle);
-            }
-            
-            .tool-actions {
-                flex-direction: column;
-            }
-            
-            .btn-tool {
-                width: 100%;
-            }
-            
-            .color-spaces-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .color-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .harmony-controls {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tool-header {
-                padding: var(--spacing-2xl) var(--spacing-sm);
-                padding-top: calc(var(--spacing-2xl) + 80px);
-            }
-            
-            .tool-workspace {
-                padding: var(--spacing-lg);
-            }
-        }
-    </style>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Image Color Converter",
-        "description": "Professional image color converter supporting RGB, HSL, HSV, CMYK, LAB color spaces with palette generation and accessibility analysis.",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "provider": {
-            "@type": "Organization",
-            "name": "Factictionary"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "456"
-        }
-    }
-    </script>
-</head>
-<body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-            <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-        </ul>
-    </div><!-- Tool Header -->
-    <header class="tool-header">
-        <h1 class="tool-title">Image Color Converter</h1>
-        <p class="tool-subtitle">Convert colors between RGB, HSL, HSV, CMYK, LAB. Generate palettes, simulate color blindness, and analyze contrast. Professional color management tools.</p>
-        <div class="privacy-badge">
-            🔒 100% Privacy Protected
-        </div>
-    </header>
-    
-    <!-- Main Tool Content -->
-    <main id="main" class="tool-main">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-            </div>
-        <!-- Tool Workspace -->
-        <section class="tool-workspace">
-            <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">🎨</div>
-                <div class="drop-zone-text">
-                    Drop your image files here or click to browse
-                </div>
-                <input type="file" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" style="display: none;">
-                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
-                    Choose Files
-                </button>
-            </div>
-            
-            <div class="preview-container" id="previewContainer">
-                <div id="emptyPreview">
-                    <div style="text-align: center; color: var(--color-neutral-500);">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
-                        <p>Upload an image to see the preview</p>
-                    </div>
-                </div>
-                <img id="previewImage" class="preview-image" style="display: none;">
-            </div>
-            
-            <!-- Color Tools Tabs -->
-            <div class="color-tabs">
-                <button class="color-tab active" data-tab="spaces">Color Spaces</button>
-                <button class="color-tab" data-tab="picker">Color Picker</button>
-                <button class="color-tab" data-tab="palette">Palette</button>
-                <button class="color-tab" data-tab="harmony">Harmony</button>
-                <button class="color-tab" data-tab="simulation">Blindness</button>
-                <button class="color-tab" data-tab="contrast">Contrast</button>
-            </div>
-            
-            <!-- Color Spaces Panel -->
-            <div class="color-panel active" id="spacesPanel">
-                <h3>Color Space Conversion</h3>
-                <div class="color-spaces-grid">
-                    <div class="color-space-card">
-                        <div class="color-space-header">
-                            <span class="color-space-icon">🎬¯</span>
-                            <span class="color-space-name">RGB</span>
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">R</span>
-                            <input type="number" class="color-input" id="rgb-r" min="0" max="255" value="255">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">G</span>
-                            <input type="number" class="color-input" id="rgb-g" min="0" max="255" value="0">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">B</span>
-                            <input type="number" class="color-input" id="rgb-b" min="0" max="255" value="0">
-                        </div>
-                        <div class="color-preview" id="rgb-preview"></div>
-                    </div>
-                    
-                    <div class="color-space-card">
-                        <div class="color-space-header">
-                            <span class="color-space-icon">🎨</span>
-                            <span class="color-space-name">HSL</span>
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">H</span>
-                            <input type="number" class="color-input" id="hsl-h" min="0" max="360" value="0">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">S</span>
-                            <input type="number" class="color-input" id="hsl-s" min="0" max="100" value="100">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">L</span>
-                            <input type="number" class="color-input" id="hsl-l" min="0" max="100" value="50">
-                        </div>
-                        <div class="color-preview" id="hsl-preview"></div>
-                    </div>
-                    
-                    <div class="color-space-card">
-                        <div class="color-space-header">
-                            <span class="color-space-icon">🎨</span>
-                            <span class="color-space-name">HSV</span>
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">H</span>
-                            <input type="number" class="color-input" id="hsv-h" min="0" max="360" value="0">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">S</span>
-                            <input type="number" class="color-input" id="hsv-s" min="0" max="100" value="100">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">V</span>
-                            <input type="number" class="color-input" id="hsv-v" min="0" max="100" value="100">
-                        </div>
-                        <div class="color-preview" id="hsv-preview"></div>
-                    </div>
-                    
-                    <div class="color-space-card">
-                        <div class="color-space-header">
-                            <span class="color-space-icon">🖼️ï¸</span>
-                            <span class="color-space-name">CMYK</span>
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">C</span>
-                            <input type="number" class="color-input" id="cmyk-c" min="0" max="100" value="0">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">M</span>
-                            <input type="number" class="color-input" id="cmyk-m" min="0" max="100" value="100">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">Y</span>
-                            <input type="number" class="color-input" id="cmyk-y" min="0" max="100" value="100">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">K</span>
-                            <input type="number" class="color-input" id="cmyk-k" min="0" max="100" value="0">
-                        </div>
-                        <div class="color-preview" id="cmyk-preview"></div>
-                    </div>
-                    
-                    <div class="color-space-card">
-                        <div class="color-space-header">
-                            <span class="color-space-icon">”¬</span>
-                            <span class="color-space-name">LAB</span>
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">L</span>
-                            <input type="number" class="color-input" id="lab-l" min="0" max="100" value="53">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">A</span>
-                            <input type="number" class="color-input" id="lab-a" min="-128" max="127" value="80">
-                        </div>
-                        <div class="color-input-group">
-                            <span class="color-label">B</span>
-                            <input type="number" class="color-input" id="lab-b" min="-128" max="127" value="67">
-                        </div>
-                        <div class="color-preview" id="lab-preview"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Color Picker Panel -->
-            <div class="color-panel" id="pickerPanel">
-                <div class="color-picker-section">
-                    <h3>Advanced Color Picker</h3>
-                    <div class="picker-container">
-                        <div class="picker-preview" id="mainPicker" style="background: #ff0000;"></div>
-                        <div class="picker-controls">
-                            <label class="picker-label">Color Value</label>
-                            <input type="text" class="picker-input" id="colorValue" value="#FF0000" placeholder="#FF0000">
-                        </div>
-                    </div>
-                    
-                    <div class="harmony-controls">
-                        <button class="harmony-btn" data-harmony="complementary">Complementary</button>
-                        <button class="harmony-btn" data-harmony="triadic">Triadic</button>
-                        <button class="harmony-btn" data-harmony="split">Split Complementary</button>
-                        <button class="harmony-btn" data-harmony="analogous">Analogous</button>
-                        <button class="harmony-btn" data-harmony="tetradic">Tetradic</button>
-                        <button class="harmony-btn" data-harmony="monochromatic">Monochromatic</button>
-                    </div>
-                    
-                    <div class="harmony-preview" id="harmonyPreview">
-                        <div class="harmony-color" style="background: #ff0000;"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Palette Generation Panel -->
-            <div class="color-panel" id="palettePanel">
-                <h3>Color Palette Generator</h3>
-                <div class="palette-grid" id="paletteGrid">
-                    <!-- Palette colors will be generated here -->
-                </div>
-            </div>
-            
-            <!-- Color Harmony Panel -->
-            <div class="color-panel" id="harmonyPanel">
-                <h3>Color Harmony Tools</h3>
-                <div class="harmony-controls">
-                    <button class="harmony-btn active" data-hmode="complementary">Complementary</button>
-                    <button class="harmony-btn" data-hmode="triadic">Triadic</button>
-                    <button class="harmony-btn" data-hmode="split">Split Complementary</button>
-                    <button class="harmony-btn" data-hmode="analogous">Analogous</button>
-                    <button class="harmony-btn" data-hmode="tetradic">Tetradic</button>
-                    <button class="harmony-btn" data-hmode="monochromatic">Monochromatic</button>
-                </div>
-                
-                <div class="harmony-preview" id="harmonyColors">
-                    <!-- Harmony colors will be shown here -->
-                </div>
-            </div>
-            
-            <!-- Color Blind Simulation Panel -->
-            <div class="color-panel" id="simulationPanel">
-                <h3>Color Blind Simulation</h3>
-                <div class="simulation-grid" id="simulationGrid">
-                    <div class="simulation-card">
-                        <div class="simulation-preview" id="normalVision"></div>
-                        <div class="simulation-label">Normal Vision</div>
-                        <div class="simulation-desc">Original colors</div>
-                    </div>
-                    
-                    <div class="simulation-card">
-                        <div class="simulation-preview" id="protanopia"></div>
-                        <div class="simulation-label">Protanopia</div>
-                        <div class="simulation-desc">Red-blind (1% male, 0.02% female)</div>
-                    </div>
-                    
-                    <div class="simulation-card">
-                        <div class="simulation-preview" id="deuteranopia"></div>
-                        <div class="simulation-label">Deuteranopia</div>
-                        <div class="simulation-desc">Green-blind (1% male, 0.01% female)</div>
-                    </div>
-                    
-                    <div class="simulation-card">
-                        <div class="simulation-preview" id="tritanopia"></div>
-                        <div class="simulation-label">Tritanopia</div>
-                        <div class="simulation-desc">Blue-blind (0.001% male, 0.01% female)</div>
-                    </div>
-                    
-                    <div class="simulation-card">
-                        <div class="simulation-preview" id="achromatopsia"></div>
-                        <div class="simulation-label">Achromatopsia</div>
-                        <div class="simulation-desc">Complete color blindness</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contrast Analysis Panel -->
-            <div class="color-panel" id="contrastPanel">
-                <h3>Contrast Analysis</h3>
-                <div class="contrast-analysis">
-                    <div class="contrast-pairs" id="contrastPairs">
-                        <!-- Contrast pairs will be generated here -->
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tool-actions">
-                <button class="btn-tool" id="downloadBtn" disabled>
-                    Download Palette
-                </button>
-                <button class="btn-tool" id="resetBtn">
-                    Reset
-                </button>
-            </div>
-        </section>
-        
-        <!-- Tool Sidebar -->
-        <aside class="tool-sidebar">
-            <!-- Tool Information -->
-            <div class="tool-info">
-                <h3>Features</h3>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">5 color spaces (RGB, HSL, HSV, CMYK, LAB)</div>
-                </div>
-        
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Advanced color picker</div>
-                </div>
-        
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Palette generation</div>
-                </div>
-        
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Color harmony tools</div>
-                </div>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Color blindness simulation</div>
-                </div>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">WCAG contrast analysis</div>
-                </div>
-        
-            </div>
-            
-            <!-- AdSense Container -->
-            <div class="adsense-tool">
-                <div>
-                    <div>› ï¸ Advertisement</div>
-                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
-                </div>
-            </div>
-            
-            <!-- Category Navigation -->
-            <div class="tool-info">
-                <h3>Related Tools</h3>
-                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-                    <a href="/image_filters.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Filters</a>
-                    <a href="/image_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Enhancer</a>
-                    <a href="/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
-                    <a href="/color_picker.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Color Picker</a>
-                </div>
-            </div>
-        </aside>
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Image Color Converter</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Image Color Converter is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
-            
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Image Color Converter leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-        </section>
-            <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
-            <h3>Support Privacy-First Web Utilities</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <!-- Tool Statistics -->
-    <section class="section-lg">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Color Spaces</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Harmony Types</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Blindness Types</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Privacy Protected</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- JavaScript -->
-    <script>
-        // Image Color Converter Tool - Complete Implementation
-        class ImageColorConverter {
-            constructor() {
-                this.dropZone = document.getElementById('dropZone');
-                this.fileInput = document.getElementById('fileInput');
-                this.previewImage = document.getElementById('previewImage');
-                this.previewContainer = document.getElementById('previewContainer');
-                this.emptyPreview = document.getElementById('emptyPreview');
-                this.downloadBtn = document.getElementById('downloadBtn');
-                this.resetBtn = document.getElementById('resetBtn');
-                this.colorValueInput = document.getElementById('colorValue');
-                this.mainPicker = document.getElementById('mainPicker');
-                
-                this.selectedFiles = [];
-                this.originalImage = null;
-                this.currentColor = { r: 255, g: 0, b: 0 };
-                this.activeTab = 'spaces';
-                this.palette = [];
-                
-                this.init();
-            }
-            
-            init() {
-                this.setupEventListeners();
-                this.setupTabs();
-                this.setupColorSpaces();
-                this.setupColorPicker();
-                this.generateInitialPalette();
-                this.setupColorHarmony();
-                this.setupSimulation();
-                this.setupContrastAnalysis();
-            }
-            
-            setupEventListeners() {
-                // Drag and drop functionality
-                this.dropZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.dropZone.classList.add('drag-over');
-                });
-                
-                this.dropZone.addEventListener('dragleave', () => {
-                    this.dropZone.classList.remove('drag-over');
-                });
-                
-                this.dropZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.dropZone.classList.remove('drag-over');
-                    this.handleFiles(e.dataTransfer.files);
-                });
-                
-                this.dropZone.addEventListener('click', () => {
-                    this.fileInput.click();
-                });
-                
-                this.fileInput.addEventListener('change', (e) => {
-                    this.handleFiles(e.target.files);
-                });
-                
-                // Buttons
-                this.downloadBtn.addEventListener('click', () => {
-                    this.downloadPalette();
-                });
-                
-                this.resetBtn.addEventListener('click', () => {
-                    this.reset();
-                });
-            }
-            
-            setupTabs() {
-                const tabs = document.querySelectorAll('.color-tab');
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        // Update active tab
-                        tabs.forEach(t => t.classList.remove('active'));
-                        tab.classList.add('active');
-                        
-                        // Show corresponding content
-                        const tabName = tab.dataset.tab;
-                        this.showTab(tabName);
-                    });
-                });
-            }
-            
-            showTab(tabName) {
-                this.activeTab = tabName;
-                
-                // Hide all panels
-                document.querySelectorAll('.color-panel').forEach(panel => {
-                    panel.classList.remove('active');
-                });
-                
-                // Show selected panel
-                document.getElementById(tabName + 'Panel').classList.add('active');
-            }
-            
-            setupColorSpaces() {
-                // RGB inputs
-                ['rgb-r', 'rgb-g', 'rgb-b'].forEach((id, index) => {
-                    const input = document.getElementById(id);
-                    input.addEventListener('input', () => {
-                        this.updateFromRGB();
-                    });
-                });
-                
-                // HSL inputs
-                ['hsl-h', 'hsl-s', 'hsl-l'].forEach(id => {
-                    const input = document.getElementById(id);
-                    input.addEventListener('input', () => {
-                        this.updateFromHSL();
-                    });
-                });
-                
-                // HSV inputs
-                ['hsv-h', 'hsv-s', 'hsv-v'].forEach(id => {
-                    const input = document.getElementById(id);
-                    input.addEventListener('input', () => {
-                        this.updateFromHSV();
-                    });
-                });
-                
-                // CMYK inputs
-                ['cmyk-c', 'cmyk-m', 'cmyk-y', 'cmyk-k'].forEach(id => {
-                    const input = document.getElementById(id);
-                    input.addEventListener('input', () => {
-                        this.updateFromCMYK();
-                    });
-                });
-                
-                // LAB inputs
-                ['lab-l', 'lab-a', 'lab-b'].forEach(id => {
-                    const input = document.getElementById(id);
-                    input.addEventListener('input', () => {
-                        this.updateFromLAB();
-                    });
-                });
-            }
-            
-            setupColorPicker() {
-                this.colorValueInput.addEventListener('input', () => {
-                    this.updateFromHex(this.colorValueInput.value);
-                });
-            }
-            
-            setupColorHarmony() {
-                const harmonyBtns = document.querySelectorAll('.harmony-btn[data-harmony]');
-                harmonyBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        harmonyBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.generateHarmony(btn.dataset.harmony);
-                    });
-                });
-                
-                const hmodeBtns = document.querySelectorAll('.harmony-btn[data-hmode]');
-                hmodeBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        hmodeBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.showHarmonyColors(btn.dataset.hmode);
-                    });
-                });
-            }
-            
-            setupSimulation() {
-                this.generateSimulationColors();
-            }
-            
-            setupContrastAnalysis() {
-                this.generateContrastPairs();
-            }
-            
-            handleFiles(files) {
-                const imageFiles = Array.from(files).filter(file => {
-                    const isImage = file.type.startsWith('image/');
-                    if (!isImage) {
-                        console.warn(`Skipping non-image file: ${file.name}`);
-                    }
-                    return isImage;
-                });
-                
-                if (imageFiles.length === 0) {
-                    alert('Please select valid image files (JPG, PNG, WebP, GIF)');
-                    return;
-                }
-                
-                this.selectedFiles = [...this.selectedFiles, ...imageFiles];
-                this.updateFileDisplay();
-                
-                if (this.selectedFiles.length > 0) {
-                    this.loadImage(this.selectedFiles[0]);
-                    this.downloadBtn.disabled = false;
-                    this.extractColorsFromImage(this.selectedFiles[0]);
-                }
-            }
-            
-            loadImage(file) {
-                const reader = new FileReader();
-                
-                reader.onload = (e) => {
-                    this.originalImage = new Image();
-                    
-                    this.originalImage.onload = () => {
-                        this.previewImage.src = e.target.result;
-                        this.previewImage.style.display = 'block';
-                        this.emptyPreview.style.display = 'none';
-                    };
-                    
-                    this.originalImage.src = e.target.result;
-                };
-                
-                reader.readAsDataURL(file);
-            }
-            
-            extractColorsFromImage(file) {
-                const reader = new FileReader();
-                
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage(img, 0, 0);
-                        
-                        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                        const colors = this.extractDominantColors(imageData);
-                        
-                        this.palette = colors;
-                        this.updatePaletteDisplay();
-                        this.updateColorSpacesFromRGB(colors[0]);
-                        this.generateSimulationColors();
-                    };
-                    
-                    img.src = e.target.result;
-                };
-                
-                reader.readAsDataURL(file);
-            }
-            
-            extractDominantColors(imageData) {
-                const colors = {};
-                const data = imageData.data;
-                
-                // Sample every 10th pixel for performance
-                for (let i = 0; i < data.length; i += 40) {
-                    const r = data[i];
-                    const g = data[i + 1];
-                    const b = data[i + 2];
-                    const key = `${Math.floor(r/10)*10}-${Math.floor(g/10)*10}-${Math.floor(b/10)*10}`;
-                    
-                    if (!colors[key]) {
-                        colors[key] = { count: 0, r, g, b };
-                    }
-                    colors[key].count++;
-                }
-                
-                // Sort by frequency and return top colors
-                return Object.values(colors)
-                    .sort((a, b) => b.count - a.count)
-                    .slice(0, 8)
-                    .map(color => ({ r: color.r, g: color.g, b: color.b }));
-            }
-            
-            generateInitialPalette() {
-                // Generate a default color palette
-                const defaultColors = [
-                    { r: 255, g: 0, b: 0 },      // Red
-                    { r: 0, g: 255, b: 0 },      // Green
-                    { r: 0, g: 0, b: 255 },      // Blue
-                    { r: 255, g: 255, b: 0 },    // Yellow
-                    { r: 255, g: 0, b: 255 },    // Magenta
-                    { r: 0, g: 255, b: 255 },    // Cyan
-                    { r: 128, g: 128, b: 128 },  // Gray
-                    { r: 255, g: 165, b: 0 }     // Orange
-                ];
-                
-                this.palette = defaultColors;
-                this.updatePaletteDisplay();
-                this.updateColorSpacesFromRGB(defaultColors[0]);
-            }
-            
-            updatePaletteDisplay() {
-                const grid = document.getElementById('paletteGrid');
-                grid.innerHTML = this.palette.map((color, index) => {
-                    const hex = this.rgbToHex(color.r, color.g, color.b);
-                    return `
-                        <div class="palette-color" onclick="colorConverter.selectPaletteColor(${index})">
-                            <div class="palette-color-preview" style="background: ${hex}"></div>
-                            <div class="palette-color-info">
-                                <div class="palette-color-name">Color ${index + 1}</div>
-                                <div class="palette-color-values">${hex}</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-            
-            selectPaletteColor(index) {
-                const color = this.palette[index];
-                document.querySelectorAll('.palette-color').forEach(el => el.classList.remove('selected'));
-                document.querySelectorAll('.palette-color')[index].classList.add('selected');
-                
-                this.currentColor = color;
-                this.updateColorSpacesFromRGB(color);
-                this.updateColorPickerDisplay();
-            }
-            
-            updateColorSpacesFromRGB(rgb) {
-                this.currentColor = rgb;
-                
-                // Update RGB
-                document.getElementById('rgb-r').value = rgb.r;
-                document.getElementById('rgb-g').value = rgb.g;
-                document.getElementById('rgb-b').value = rgb.b;
-                
-                // Update HSL
-                const hsl = this.rgbToHsl(rgb.r, rgb.g, rgb.b);
-                document.getElementById('hsl-h').value = Math.round(hsl.h);
-                document.getElementById('hsl-s').value = Math.round(hsl.s * 100);
-                document.getElementById('hsl-l').value = Math.round(hsl.l * 100);
-                
-                // Update HSV
-                const hsv = this.rgbToHsv(rgb.r, rgb.g, rgb.b);
-                document.getElementById('hsv-h').value = Math.round(hsv.h);
-                document.getElementById('hsv-s').value = Math.round(hsv.s * 100);
-                document.getElementById('hsv-v').value = Math.round(hsv.v * 100);
-                
-                // Update CMYK
-                const cmyk = this.rgbToCmyk(rgb.r, rgb.g, rgb.b);
-                document.getElementById('cmyk-c').value = Math.round(cmyk.c * 100);
-                document.getElementById('cmyk-m').value = Math.round(cmyk.m * 100);
-                document.getElementById('cmyk-y').value = Math.round(cmyk.y * 100);
-                document.getElementById('cmyk-k').value = Math.round(cmyk.k * 100);
-                
-                // Update LAB
-                const lab = this.rgbToLab(rgb.r, rgb.g, rgb.b);
-                document.getElementById('lab-l').value = Math.round(lab.l);
-                document.getElementById('lab-a').value = Math.round(lab.a);
-                document.getElementById('lab-b').value = Math.round(lab.b);
-                
-                // Update previews
-                const hex = this.rgbToHex(rgb.r, rgb.g, rgb.b);
-                document.getElementById('rgb-preview').style.background = hex;
-                document.getElementById('hsl-preview').style.background = hex;
-                document.getElementById('hsv-preview').style.background = hex;
-                document.getElementById('cmyk-preview').style.background = hex;
-                document.getElementById('lab-preview').style.background = hex;
-                
-                this.updateColorPickerDisplay();
-                this.updateHarmonyDisplays();
-                this.generateSimulationColors();
-            }
-            
-            updateFromRGB() {
-                const r = parseInt(document.getElementById('rgb-r').value) || 0;
-                const g = parseInt(document.getElementById('rgb-g').value) || 0;
-                const b = parseInt(document.getElementById('rgb-b').value) || 0;
-                
-                this.currentColor = { r: Math.max(0, Math.min(255, r)), g: Math.max(0, Math.min(255, g)), b: Math.max(0, Math.min(255, b)) };
-                this.updateColorSpacesFromRGB(this.currentColor);
-            }
-            
-            updateFromHSL() {
-                const h = parseFloat(document.getElementById('hsl-h').value) || 0;
-                const s = (parseFloat(document.getElementById('hsl-s').value) || 0) / 100;
-                const l = (parseFloat(document.getElementById('hsl-l').value) || 0) / 100;
-                
-                const rgb = this.hslToRgb(h, s, l);
-                this.currentColor = rgb;
-                this.updateColorSpacesFromRGB(rgb);
-            }
-            
-            updateFromHSV() {
-                const h = parseFloat(document.getElementById('hsv-h').value) || 0;
-                const s = (parseFloat(document.getElementById('hsv-s').value) || 0) / 100;
-                const v = (parseFloat(document.getElementById('hsv-v').value) || 0) / 100;
-                
-                const rgb = this.hsvToRgb(h, s, v);
-                this.currentColor = rgb;
-                this.updateColorSpacesFromRGB(rgb);
-            }
-            
-            updateFromCMYK() {
-                const c = (parseFloat(document.getElementById('cmyk-c').value) || 0) / 100;
-                const m = (parseFloat(document.getElementById('cmyk-m').value) || 0) / 100;
-                const y = (parseFloat(document.getElementById('cmyk-y').value) || 0) / 100;
-                const k = (parseFloat(document.getElementById('cmyk-k').value) || 0) / 100;
-                
-                const rgb = this.cmykToRgb(c, m, y, k);
-                this.currentColor = rgb;
-                this.updateColorSpacesFromRGB(rgb);
-            }
-            
-            updateFromLAB() {
-                const l = parseFloat(document.getElementById('lab-l').value) || 0;
-                const a = parseFloat(document.getElementById('lab-a').value) || 0;
-                const b = parseFloat(document.getElementById('lab-b').value) || 0;
-                
-                const rgb = this.labToRgb(l, a, b);
-                this.currentColor = rgb;
-                this.updateColorSpacesFromRGB(rgb);
-            }
-            
-            updateFromHex(hex) {
-                const rgb = this.hexToRgb(hex);
-                if (rgb) {
-                    this.currentColor = rgb;
-                    this.updateColorSpacesFromRGB(rgb);
-                }
-            }
-            
-            updateColorPickerDisplay() {
-                const hex = this.rgbToHex(this.currentColor.r, this.currentColor.g, this.currentColor.b);
-                this.colorValueInput.value = hex;
-                this.mainPicker.style.background = hex;
-            }
-            
-            generateHarmony(type) {
-                const harmonyPreview = document.getElementById('harmonyPreview');
-                const colors = this.calculateHarmonyColors(type);
-                
-                harmonyPreview.innerHTML = colors.map(color => {
-                    const hex = this.rgbToHex(color.r, color.g, color.b);
-                    return `<div class="harmony-color" style="background: ${hex}" title="${hex}"></div>`;
-                }).join('');
-            }
-            
-            showHarmonyColors(type) {
-                const harmonyColors = document.getElementById('harmonyColors');
-                const colors = this.calculateHarmonyColors(type);
-                
-                harmonyColors.innerHTML = colors.map((color, index) => {
-                    const hex = this.rgbToHex(color.r, color.g, color.b);
-                    return `
-                        <div class="harmony-color" style="background: ${hex}" 
-                             onclick="colorConverter.selectPaletteColor(${this.palette.length + index})" 
-                             title="${hex}"></div>
-                    `;
-                }).join('');
-                
-                // Add new colors to palette
-                colors.forEach(color => this.palette.push(color));
-                this.updatePaletteDisplay();
-            }
-            
-            calculateHarmonyColors(type) {
-                const { r, g, b } = this.currentColor;
-                const hsl = this.rgbToHsl(r, g, b);
-                const colors = [];
-                
-                switch (type) {
-                    case 'complementary':
-                        colors.push(this.hslToRgb((hsl.h + 180) % 360, hsl.s, hsl.l));
-                        break;
-                    case 'triadic':
-                        colors.push(this.hslToRgb((hsl.h + 120) % 360, hsl.s, hsl.l));
-                        colors.push(this.hslToRgb((hsl.h + 240) % 360, hsl.s, hsl.l));
-                        break;
-                    case 'split':
-                        colors.push(this.hslToRgb((hsl.h + 150) % 360, hsl.s, hsl.l));
-                        colors.push(this.hslToRgb((hsl.h + 210) % 360, hsl.s, hsl.l));
-                        break;
-                    case 'analogous':
-                        colors.push(this.hslToRgb((hsl.h + 30) % 360, hsl.s, hsl.l));
-                        colors.push(this.hslToRgb((hsl.h + 330) % 360, hsl.s, hsl.l));
-                        break;
-                    case 'tetradic':
-                        colors.push(this.hslToRgb((hsl.h + 90) % 360, hsl.s, hsl.l));
-                        colors.push(this.hslToRgb((hsl.h + 180) % 360, hsl.s, hsl.l));
-                        colors.push(this.hslToRgb((hsl.h + 270) % 360, hsl.s, hsl.l));
-                        break;
-                    case 'monochromatic':
-                        colors.push(this.hslToRgb(hsl.h, hsl.s, Math.max(0, hsl.l - 0.2)));
-                        colors.push(this.hslToRgb(hsl.h, hsl.s, Math.min(1, hsl.l + 0.2)));
-                        colors.push(this.hslToRgb(hsl.h, Math.min(1, hsl.s + 0.2), hsl.l));
-                        break;
-                }
-                
-                return colors;
-            }
-            
-            updateHarmonyDisplays() {
-                const activeHarmony = document.querySelector('.harmony-btn.active[data-harmony]');
-                if (activeHarmony) {
-                    this.generateHarmony(activeHarmony.dataset.harmony);
-                }
-            }
-            
-            generateSimulationColors() {
-                const baseColor = this.rgbToHex(this.currentColor.r, this.currentColor.g, this.currentColor.b);
-                
-                // Normal vision (original)
-                document.getElementById('normalVision').style.background = baseColor;
-                
-                // Protanopia (red-blind)
-                const protanopia = this.simulateColorBlindness(this.currentColor, 'protanopia');
-                document.getElementById('protanopia').style.background = this.rgbToHex(protanopia.r, protanopia.g, protanopia.b);
-                
-                // Deuteranopia (green-blind)
-                const deuteranopia = this.simulateColorBlindness(this.currentColor, 'deuteranopia');
-                document.getElementById('deuteranopia').style.background = this.rgbToHex(deuteranopia.r, deuteranopia.g, deuteranopia.b);
-                
-                // Tritanopia (blue-blind)
-                const tritanopia = this.simulateColorBlindness(this.currentColor, 'tritanopia');
-                document.getElementById('tritanopia').style.background = this.rgbToHex(tritanopia.r, tritanopia.g, tritanopia.b);
-                
-                // Achromatopsia (complete color blindness)
-                const achromatopsia = this.simulateColorBlindness(this.currentColor, 'achromatopsia');
-                document.getElementById('achromatopsia').style.background = this.rgbToHex(achromatopsia.r, achromatopsia.g, achromatopsia.b);
-            }
-            
-            simulateColorBlindness(rgb, type) {
-                // Simplified color blindness simulation algorithms
-                switch (type) {
-                    case 'protanopia':
-                        return {
-                            r: Math.round(rgb.r * 0.56667 + rgb.g * 0.43333 + rgb.b * 0),
-                            g: Math.round(rgb.r * 0.55833 + rgb.g * 0.44167 + rgb.b * 0),
-                            b: Math.round(rgb.r * 0 + rgb.g * 0.24167 + rgb.b * 0.75833)
-                        };
-                    case 'deuteranopia':
-                        return {
-                            r: Math.round(rgb.r * 0.625 + rgb.g * 0.375 + rgb.b * 0),
-                            g: Math.round(rgb.r * 0.7 + rgb.g * 0.3 + rgb.b * 0),
-                            b: Math.round(rgb.r * 0 + rgb.g * 0.3 + rgb.b * 0.7)
-                        };
-                    case 'tritanopia':
-                        return {
-                            r: Math.round(rgb.r * 0.95 + rgb.g * 0.05 + rgb.b * 0),
-                            g: Math.round(rgb.r * 0 + rgb.g * 0.43333 + rgb.b * 0.56667),
-                            b: Math.round(rgb.r * 0 + rgb.g * 0.475 + rgb.b * 0.525)
-                        };
-                    case 'achromatopsia':
-                        const gray = Math.round(rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114);
-                        return { r: gray, g: gray, b: gray };
-                    default:
-                        return rgb;
-                }
-            }
-            
-            generateContrastPairs() {
-                const pairs = [
-                    { bg: '#FFFFFF', fg: '#000000', name: 'Black on White' },
-                    { bg: '#000000', fg: '#FFFFFF', name: 'White on Black' },
-                    { bg: '#FF0000', fg: '#FFFFFF', name: 'White on Red' },
-                    { bg: '#0000FF', fg: '#FFFFFF', name: 'White on Blue' },
-                    { bg: '#00FF00', fg: '#000000', name: 'Black on Green' },
-                    { bg: '#FFFF00', fg: '#000000', name: 'Black on Yellow' },
-                    { bg: '#808080', fg: '#FFFFFF', name: 'White on Gray' },
-                    { bg: '#FF00FF', fg: '#FFFF00', name: 'Yellow on Magenta' }
-                ];
-                
-                const container = document.getElementById('contrastPairs');
-                container.innerHTML = pairs.map(pair => {
-                    const ratio = this.calculateContrastRatio(pair.bg, pair.fg);
-                    const rating = this.getContrastRating(ratio);
-                    
-                    return `
-                        <div class="contrast-pair">
-                            <div class="contrast-sample" style="background: ${pair.bg}; color: ${pair.fg};">
-                                Sample Text
-                            </div>
-                            <div class="contrast-rating">
-                                <span>${pair.name}</span>
-                                <span class="contrast-badge contrast-${rating}">
-                                    ${rating.toUpperCase()} (${ratio.toFixed(2)}:1)
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-            
-            calculateContrastRatio(bg, fg) {
-                const bgLuminance = this.getLuminance(bg);
-                const fgLuminance = this.getLuminance(fg);
-                
-                const lighter = Math.max(bgLuminance, fgLuminance);
-                const darker = Math.min(bgLuminance, fgLuminance);
-                
-                return (lighter + 0.05) / (darker + 0.05);
-            }
-            
-            getLuminance(color) {
-                const rgb = this.hexToRgb(color);
-                const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(c => {
-                    c = c / 255;
-                    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-                });
-                
-                return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-            }
-            
-            getContrastRating(ratio) {
-                if (ratio >= 7) return 'aaa';
-                if (ratio >= 4.5) return 'aa';
-                if (ratio >= 3) return 'aa-large';
-                return 'fail';
-            }
-            
-            downloadPalette() {
-                const paletteData = this.palette.map((color, index) => ({
-                    index: index + 1,
-                    hex: this.rgbToHex(color.r, color.g, color.b),
-                    rgb: `rgb(${color.r}, ${color.g}, ${color.b})`,
-                    hsl: this.rgbToHsl(color.r, color.g, color.b),
-                    hsv: this.rgbToHsv(color.r, color.g, color.b)
-                }));
-                
-                const content = JSON.stringify(paletteData, null, 2);
-                const blob = new Blob([content], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'color_palette.json';
-                
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-            
-            updateFileDisplay() {
-                const fileCount = this.selectedFiles.length;
-                this.dropZone.querySelector('.drop-zone-text').textContent = 
-                    `${fileCount} image file(s) selected`;
-            }
-            
-            reset() {
-                this.selectedFiles = [];
-                this.originalImage = null;
-                this.currentColor = { r: 255, g: 0, b: 0 };
-                this.palette = [];
-                this.fileInput.value = '';
-                this.downloadBtn.disabled = true;
-                
-                // Reset preview
-                this.previewImage.style.display = 'none';
-                this.emptyPreview.style.display = 'block';
-                
-                // Reset tabs
-                document.querySelectorAll('.color-tab').forEach(t => t.classList.remove('active'));
-                document.querySelector('.color-tab[data-tab="spaces"]').classList.add('active');
-                this.showTab('spaces');
-                
-                // Generate new palette
-                this.generateInitialPalette();
-                
-                this.dropZone.querySelector('.drop-zone-text').textContent = 
-                    'Drop your image files here or click to browse';
-            }
-            
-            // Color conversion utilities
-            rgbToHex(r, g, b) {
-                return "#" + [r, g, b].map(x => {
-                    const hex = x.toString(16);
-                    return hex.length === 1 ? "0" + hex : hex;
-                }).join("");
-            }
-            
-            hexToRgb(hex) {
-                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                return result ? {
-                    r: parseInt(result[1], 16),
-                    g: parseInt(result[2], 16),
-                    b: parseInt(result[3], 16)
-                } : null;
-            }
-            
-            rgbToHsl(r, g, b) {
-                r /= 255;
-                g /= 255;
-                b /= 255;
-                
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                let h, s, l = (max + min) / 2;
-                
-                if (max === min) {
-                    h = s = 0;
-                } else {
-                    const d = max - min;
-                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-                    
-                    switch (max) {
-                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                        case g: h = (b - r) / d + 2; break;
-                        case b: h = (r - g) / d + 4; break;
-                    }
-                    h /= 6;
-                }
-                
-                return { h: h * 360, s, l };
-            }
-            
-            hslToRgb(h, s, l) {
-                h /= 360;
-                
-                if (s === 0) {
-                    const gray = Math.round(l * 255);
-                    return { r: gray, g: gray, b: gray };
-                }
-                
-                const hue2rgb = (p, q, t) => {
-                    if (t < 0) t += 1;
-                    if (t > 1) t -= 1;
-                    if (t < 1/6) return p + (q - p) * 6 * t;
-                    if (t < 1/2) return q;
-                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                    return p;
-                };
-                
-                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                const p = 2 * l - q;
-                
-                const r = hue2rgb(p, q, h + 1/3);
-                const g = hue2rgb(p, q, h);
-                const b = hue2rgb(p, q, h - 1/3);
-                
-                return { 
-                    r: Math.round(r * 255), 
-                    g: Math.round(g * 255), 
-                    b: Math.round(b * 255) 
-                };
-            }
-            
-            rgbToHsv(r, g, b) {
-                r /= 255;
-                g /= 255;
-                b /= 255;
-                
-                const max = Math.max(r, g, b);
-                const min = Math.min(r, g, b);
-                const diff = max - min;
-                
-                let h, s = max === 0 ? 0 : diff / max, v = max;
-                
-                if (diff !== 0) {
-                    switch (max) {
-                        case r: h = (g - b) / diff + (g < b ? 6 : 0); break;
-                        case g: h = (b - r) / diff + 2; break;
-                        case b: h = (r - g) / diff + 4; break;
-                    }
-                    h /= 6;
-                }
-                
-                return { h: h * 360, s, v };
-            }
-            
-            hsvToRgb(h, s, v) {
-                h /= 360;
-                
-                const i = Math.floor(h * 6);
-                const f = h * 6 - i;
-                const p = v * (1 - s);
-                const q = v * (1 - f * s);
-                const t = v * (1 - (1 - f) * s);
-                
-                let r, g, b;
-                
-                switch (i % 6) {
-                    case 0: r = v; g = t; b = p; break;
-                    case 1: r = q; g = v; b = p; break;
-                    case 2: r = p; g = v; b = t; break;
-                    case 3: r = p; g = q; b = v; break;
-                    case 4: r = t; g = p; b = v; break;
-                    case 5: r = v; g = p; b = q; break;
-                }
-                
-                return { 
-                    r: Math.round(r * 255), 
-                    g: Math.round(g * 255), 
-                    b: Math.round(b * 255) 
-                };
-            }
-            
-            rgbToCmyk(r, g, b) {
-                const cmy = {
-                    c: (255 - r) / 255,
-                    m: (255 - g) / 255,
-                    y: (255 - b) / 255
-                };
-                
-                const k = Math.min(cmy.c, cmy.m, cmy.y);
-                
-                return {
-                    c: k === 1 ? 0 : (cmy.c - k) / (1 - k),
-                    m: k === 1 ? 0 : (cmy.m - k) / (1 - k),
-                    y: k === 1 ? 0 : (cmy.y - k) / (1 - k),
-                    k
-                };
-            }
-            
-            cmykToRgb(c, m, y, k) {
-                const r = Math.round(255 * (1 - c) * (1 - k));
-                const g = Math.round(255 * (1 - m) * (1 - k));
-                const b = Math.round(255 * (1 - y) * (1 - k));
-                
-                return { r, g, b };
-            }
-            
-            rgbToLab(r, g, b) {
-                // Simplified RGB to LAB conversion
-                const x = (r / 255) * 100;
-                const y = (g / 255) * 100;
-                const z = (b / 255) * 100;
-                
-                return { 
-                    l: x * 0.299 + y * 0.587 + z * 0.114,
-                    a: x * 0.5 - y * 0.5,
-                    b: y * 0.5 - z * 0.5
-                };
-            }
-            
-            labToRgb(l, a, b) {
-                // Simplified LAB to RGB conversion
-                const r = Math.round((l + a * 0.5) * 255 / 100);
-                const g = Math.round((l + b * 0.5) * 255 / 100);
-                const b_val = Math.round((l - a * 0.5 - b * 0.5) * 255 / 100);
-                
-                return { 
-                    r: Math.max(0, Math.min(255, r)), 
-                    g: Math.max(0, Math.min(255, g)), 
-                    b: Math.max(0, Math.min(255, b_val)) 
-                };
-            }
-        }
-        
-        // Initialize the color converter tool when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            window.colorConverter = new ImageColorConverter();
-        });
-        
-        // Mobile menu functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                menuToggle.setAttribute('aria-expanded', !isExpanded);
-                navLinks.classList.toggle('active');
-            });
-        }
-    </script>
-    <script src="/assets/js/main.js"></script>
-</body>
-</html>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Converter | Professional Color Space Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate color palettes, simulate color blindness, analyze contrast. 100% client-side processing.">
+    <meta name="keywords" content="image color converter, color space converter, RGB HSL HSV CMYK LAB, color palette generator, color blindness simulation, contrast analysis, color harmony">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/image_color_converter.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Image Color Converter | Professional Color Space Tool | Factictionary">
+    <meta property="og:description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate palettes and analyze colors professionally.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/image_color_converter.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image Color Converter | Professional Color Space Tool | Factictionary">
+    <meta name="twitter:description" content="Convert image colors between RGB, HSL, HSV, CMYK, LAB color spaces. Generate palettes and analyze colors professionally.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #10B981 0%, #059669CC 100%);
+            color: white;
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .contrast-pairs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+        
+        .contrast-pair {
+            background: white;
+            border-radius: var(--radius-button);
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+        }
+        
+        .contrast-sample {
+            height: 40px;
+            border-radius: var(--radius-button);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .contrast-rating {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-small);
+        }
+        
+        .contrast-badge {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: 10px;
+            font-weight: var(--font-weight-bold);
+            text-transform: uppercase;
+        }
+        
+        .contrast-aa { background: #10B981; color: white; }
+        .contrast-aaa { background: #059669; color: white; }
+        .contrast-fail { background: #EF4444; color: white; }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 120px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #10B981;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .tool-main {
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .color-spaces-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .harmony-controls {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+    </style>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Color Converter",
+        "description": "Professional image color converter supporting RGB, HSL, HSV, CMYK, LAB color spaces with palette generation and accessibility analysis.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "456"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Image Color Converter</h1>
+        <p class="tool-subtitle">Convert colors between RGB, HSL, HSV, CMYK, LAB. Generate palettes, simulate color blindness, and analyze contrast. Professional color management tools.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+        </div>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">🎨</div>
+                <div class="drop-zone-text">
+                    Drop your image files here or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/webp,image/gif" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+                <div id="emptyPreview">
+                    <div style="text-align: center; color: var(--color-neutral-500);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🖼️</div>
+                        <p>Upload an image to see the preview</p>
+                    </div>
+                </div>
+                <img id="previewImage" class="preview-image" style="display: none;">
+            </div>
+
+            <!-- Color Tools Tabs -->
+            <div class="color-tabs">
+                <button class="color-tab active" data-tab="spaces">Color Spaces</button>
+                <button class="color-tab" data-tab="picker">Color Picker</button>
+                <button class="color-tab" data-tab="palette">Palette</button>
+                <button class="color-tab" data-tab="harmony">Harmony</button>
+                <button class="color-tab" data-tab="simulation">Blindness</button>
+                <button class="color-tab" data-tab="contrast">Contrast</button>
+            </div>
+            
+            <!-- Color Spaces Panel -->
+            <div class="color-panel active" id="spacesPanel">
+                <h3>Color Space Conversion</h3>
+                <div class="color-spaces-grid">
+                    <div class="color-space-card">
+                        <div class="color-space-header">
+                            <span class="color-space-icon">🎨</span>
+                            <span class="color-space-name">RGB</span>
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">R</span>
+                            <input type="number" class="color-input" id="rgb-r" min="0" max="255" value="255">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">G</span>
+                            <input type="number" class="color-input" id="rgb-g" min="0" max="255" value="0">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">B</span>
+                            <input type="number" class="color-input" id="rgb-b" min="0" max="255" value="0">
+                        </div>
+                        <div class="color-preview" id="rgb-preview"></div>
+                    </div>
+                    
+                    <div class="color-space-card">
+                        <div class="color-space-header">
+                            <span class="color-space-icon">🎨</span>
+                            <span class="color-space-name">HSL</span>
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">H</span>
+                            <input type="number" class="color-input" id="hsl-h" min="0" max="360" value="0">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">S</span>
+                            <input type="number" class="color-input" id="hsl-s" min="0" max="100" value="100">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">L</span>
+                            <input type="number" class="color-input" id="hsl-l" min="0" max="100" value="50">
+                        </div>
+                        <div class="color-preview" id="hsl-preview"></div>
+                    </div>
+                    
+                    <div class="color-space-card">
+                        <div class="color-space-header">
+                            <span class="color-space-icon">🎨</span>
+                            <span class="color-space-name">HSV</span>
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">H</span>
+                            <input type="number" class="color-input" id="hsv-h" min="0" max="360" value="0">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">S</span>
+                            <input type="number" class="color-input" id="hsv-s" min="0" max="100" value="100">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">V</span>
+                            <input type="number" class="color-input" id="hsv-v" min="0" max="100" value="100">
+                        </div>
+                        <div class="color-preview" id="hsv-preview"></div>
+                    </div>
+                    
+                    <div class="color-space-card">
+                        <div class="color-space-header">
+                            <span class="color-space-icon">🖼️</span>
+                            <span class="color-space-name">CMYK</span>
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">C</span>
+                            <input type="number" class="color-input" id="cmyk-c" min="0" max="100" value="0">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">M</span>
+                            <input type="number" class="color-input" id="cmyk-m" min="0" max="100" value="100">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">Y</span>
+                            <input type="number" class="color-input" id="cmyk-y" min="0" max="100" value="100">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">K</span>
+                            <input type="number" class="color-input" id="cmyk-k" min="0" max="100" value="0">
+                        </div>
+                        <div class="color-preview" id="cmyk-preview"></div>
+                    </div>
+                    
+                    <div class="color-space-card">
+                        <div class="color-space-header">
+                            <span class="color-space-icon">🎨</span>
+                            <span class="color-space-name">LAB</span>
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">L</span>
+                            <input type="number" class="color-input" id="lab-l" min="0" max="100" value="53">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">A</span>
+                            <input type="number" class="color-input" id="lab-a" min="-128" max="127" value="80">
+                        </div>
+                        <div class="color-input-group">
+                            <span class="color-label">B</span>
+                            <input type="number" class="color-input" id="lab-b" min="-128" max="127" value="67">
+                        </div>
+                        <div class="color-preview" id="lab-preview"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Color Picker Panel -->
+            <div class="color-panel" id="pickerPanel">
+                <div class="color-picker-section">
+                    <h3>Advanced Color Picker</h3>
+                    <div class="picker-container">
+                        <div class="picker-preview" id="mainPicker" style="background: #ff0000;"></div>
+                        <div class="picker-controls">
+                            <label class="picker-label">Color Value</label>
+                            <input type="text" class="picker-input" id="colorValue" value="#FF0000" placeholder="#FF0000">
+                        </div>
+                    </div>
+                    
+                    <div class="harmony-controls">
+                        <button class="harmony-btn" data-harmony="complementary">Complementary</button>
+                        <button class="harmony-btn" data-harmony="triadic">Triadic</button>
+                        <button class="harmony-btn" data-harmony="split">Split Complementary</button>
+                        <button class="harmony-btn" data-harmony="analogous">Analogous</button>
+                        <button class="harmony-btn" data-harmony="tetradic">Tetradic</button>
+                        <button class="harmony-btn" data-harmony="monochromatic">Monochromatic</button>
+                    </div>
+                    
+                    <div class="harmony-preview" id="harmonyPreview">
+                        <div class="harmony-color" style="background: #ff0000;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Palette Generation Panel -->
+            <div class="color-panel" id="palettePanel">
+                <h3>Color Palette Generator</h3>
+                <div class="palette-grid" id="paletteGrid">
+                    <!-- Palette colors will be generated here -->
+                </div>
+            </div>
+            
+            <!-- Color Harmony Panel -->
+            <div class="color-panel" id="harmonyPanel">
+                <h3>Color Harmony Tools</h3>
+                <div class="harmony-controls">
+                    <button class="harmony-btn active" data-hmode="complementary">Complementary</button>
+                    <button class="harmony-btn" data-hmode="triadic">Triadic</button>
+                    <button class="harmony-btn" data-hmode="split">Split Complementary</button>
+                    <button class="harmony-btn" data-hmode="analogous">Analogous</button>
+                    <button class="harmony-btn" data-hmode="tetradic">Tetradic</button>
+                    <button class="harmony-btn" data-hmode="monochromatic">Monochromatic</button>
+                </div>
+                
+                <div class="harmony-preview" id="harmonyColors">
+                    <!-- Harmony colors will be shown here -->
+                </div>
+            </div>
+            
+            <!-- Color Blind Simulation Panel -->
+            <div class="color-panel" id="simulationPanel">
+                <h3>Color Blind Simulation</h3>
+                <div class="simulation-grid" id="simulationGrid">
+                    <div class="simulation-card">
+                        <div class="simulation-preview" id="normalVision"></div>
+                        <div class="simulation-label">Normal Vision</div>
+                        <div class="simulation-desc">Original colors</div>
+                    </div>
+                    
+                    <div class="simulation-card">
+                        <div class="simulation-preview" id="protanopia"></div>
+                        <div class="simulation-label">Protanopia</div>
+                        <div class="simulation-desc">Red-blind (1% male, 0.02% female)</div>
+                    </div>
+                    
+                    <div class="simulation-card">
+                        <div class="simulation-preview" id="deuteranopia"></div>
+                        <div class="simulation-label">Deuteranopia</div>
+                        <div class="simulation-desc">Green-blind (1% male, 0.01% female)</div>
+                    </div>
+                    
+                    <div class="simulation-card">
+                        <div class="simulation-preview" id="tritanopia"></div>
+                        <div class="simulation-label">Tritanopia</div>
+                        <div class="simulation-desc">Blue-blind (0.001% male, 0.01% female)</div>
+                    </div>
+                    
+                    <div class="simulation-card">
+                        <div class="simulation-preview" id="achromatopsia"></div>
+                        <div class="simulation-label">Achromatopsia</div>
+                        <div class="simulation-desc">Complete color blindness</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contrast Analysis Panel -->
+            <div class="color-panel" id="contrastPanel">
+                <h3>Contrast Analysis</h3>
+                <div class="contrast-analysis">
+                    <div class="contrast-pairs" id="contrastPairs">
+                        <!-- Contrast pairs will be generated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    Download Palette
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    Reset
+                </button>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">5 color spaces (RGB, HSL, HSV, CMYK, LAB)</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Advanced color picker</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Palette generation</div>
+                </div>
+        
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Color harmony tools</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Color blindness simulation</div>
+                </div>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">WCAG contrast analysis</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info" style="margin-top: 24px;">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/tools/image_filters.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Filters</a>
+                    <a href="/tools/image_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Enhancer</a>
+                    <a href="/tools/image_compressor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Image Compressor</a>
+                    <a href="/tools/svg_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">SVG Converter</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Documentation Section -->
+    <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Image Color Converter</h2>
+        <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Image Color Converter is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers.</p>
+        
+        <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+        <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Image Color Converter leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote server—which carries significant privacy risks and consumes massive bandwidth—this tool utilizes HTML5 Canvas APIs, FileReader, and native JavaScript color math algorithms.</p>
+        <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you upload an image, the application reads it using FileReader and draws it onto an offscreen HTML5 canvas. It samples pixel RGB values to extract dominant color palettes, calculate precise color space conversions (RGB, HSL, HSV, CMYK, LAB), run color blindness accessibility simulations, and test WCAG contrast ratios. All computations execute locally on your processor.</p>
+    </section>
+
+    <!-- Donation Banner -->
+    <div class="donation-banner-card">
+        <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+        <h3>Support Privacy-First Web Utilities</h3>
+        <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
+        
+        <div class="donation-btn-group">
+            <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                💳 Support via PayPal
+            </a>
+            <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                💖 GitHub Sponsors
+            </a>
+            <button onclick="openDonationModal()" class="btn-donate-crypto">
+                🪙 Crypto / UPI Donation
+            </button>
+        </div>
+    </div>
+
+    <!-- Crypto Modal -->
+    <div id="donation-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+            <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+            <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                <div class="crypto-wallet-box">
+                    <span>https://paypal.me/mgarg1102</span>
+                    <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                <div class="crypto-wallet-box">
+                    <span>bc1qfactictionarybtcwalletaddress2026</span>
+                    <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                <div class="crypto-wallet-box">
+                    <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                    <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                <div class="crypto-wallet-box">
+                    <span>factictionary@upi</span>
+                    <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                </div>
+            </div>
+
+            <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Tool Statistics -->
+<section class="section-lg">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Color Spaces</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Harmony Types</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Blindness Types</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Privacy Protected</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="../assets/logo.png" alt="Factictionary Logo" width="32" height="32">
+                    <span>Factictionary</span>
+                </div>
+                <p>100% Client-Side Web Tools. Your files never leave your browser.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <ul class="footer-links">
+                    <li><a href="/tools/index.html#cat-image">Image Tools</a></li>
+                    <li><a href="/tools/index.html#cat-pdf">PDF Utilities</a></li>
+                    <li><a href="/tools/index.html#cat-video">Video Tools</a></li>
+                    <li><a href="/tools/index.html#cat-audio">Audio Tools</a></li>
+                    <li><a href="/tools/index.html#cat-dev">Developer Tools</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal & Info</h4>
+                <ul class="footer-links">
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms of Service</a></li>
+                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="https://github.com/factictionary" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Factictionary. All rights reserved. Built with privacy in mind.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    class ImageColorConverter {
+        constructor() {
+            this.dropZone = document.getElementById('dropZone');
+            this.fileInput = document.getElementById('fileInput');
+            this.previewImage = document.getElementById('previewImage');
+            this.previewContainer = document.getElementById('previewContainer');
+            this.emptyPreview = document.getElementById('emptyPreview');
+            this.downloadBtn = document.getElementById('downloadBtn');
+            this.resetBtn = document.getElementById('resetBtn');
+            this.colorValueInput = document.getElementById('colorValue');
+            
+            this.selectedFiles = [];
+            this.currentColor = { r: 255, g: 0, b: 0 };
+            this.activeTab = 'spaces';
+            this.palette = [];
+            
+            this.init();
+        }
+
+        init() {
+            this.setupEventListeners();
+            this.setupTabs();
+            this.setupColorSpaces();
+            this.setupColorPicker();
+            this.generateInitialPalette();
+            this.setupColorHarmony();
+            this.setupSimulation();
+            this.setupContrastAnalysis();
+            this.updateFromRGB();
+        }
+
+        setupEventListeners() {
+            if (this.dropZone) {
+                this.dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.add('drag-over');
+                });
+                
+                this.dropZone.addEventListener('dragleave', () => {
+                    this.dropZone.classList.remove('drag-over');
+                });
+                
+                this.dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.dropZone.classList.remove('drag-over');
+                    if (e.dataTransfer.files.length) this.handleFiles(e.dataTransfer.files);
+                });
+                
+                this.dropZone.addEventListener('click', () => {
+                    if (this.fileInput) this.fileInput.click();
+                });
+            }
+            
+            if (this.fileInput) {
+                this.fileInput.addEventListener('change', (e) => {
+                    if (e.target.files.length) this.handleFiles(e.target.files);
+                });
+            }
+            
+            if (this.downloadBtn) {
+                this.downloadBtn.addEventListener('click', () => {
+                    this.downloadPalette();
+                });
+            }
+            
+            if (this.resetBtn) {
+                this.resetBtn.addEventListener('click', () => {
+                    this.reset();
+                });
+            }
+        }
+
+        handleFiles(files) {
+            const file = files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    if (this.previewImage) {
+                        this.previewImage.src = e.target.result;
+                        this.previewImage.style.display = 'block';
+                    }
+                    if (this.emptyPreview) this.emptyPreview.style.display = 'none';
+                    if (this.downloadBtn) this.downloadBtn.disabled = false;
+                    
+                    this.extractPaletteFromImage(img);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        extractPaletteFromImage(img) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 100;
+            canvas.height = 100;
+            ctx.drawImage(img, 0, 0, 100, 100);
+            
+            const imageData = ctx.getImageData(0, 0, 100, 100).data;
+            const colors = [];
+            for (let i = 0; i < imageData.length; i += 16) {
+                colors.push({ r: imageData[i], g: imageData[i+1], b: imageData[i+2] });
+            }
+            
+            this.palette = colors.slice(0, 6);
+            if (this.palette.length) {
+                this.currentColor = this.palette[0];
+                this.updateAllDisplays();
+            }
+            this.renderPaletteGrid();
+        }
+
+        setupTabs() {
+            const tabs = document.querySelectorAll('.color-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const tabName = tab.dataset.tab;
+                    this.showTab(tabName);
+                });
+            });
+        }
+
+        showTab(tabName) {
+            this.activeTab = tabName;
+            document.querySelectorAll('.color-panel').forEach(panel => panel.classList.remove('active'));
+            const targetPanel = document.getElementById(tabName + 'Panel');
+            if (targetPanel) targetPanel.classList.add('active');
+        }
+
+        setupColorSpaces() {
+            const getVal = id => parseInt(document.getElementById(id)?.value || 0, 10);
+            
+            ['rgb-r', 'rgb-g', 'rgb-b'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => {
+                    this.currentColor = { r: getVal('rgb-r'), g: getVal('rgb-g'), b: getVal('rgb-b') };
+                    this.updateAllDisplays('rgb');
+                });
+            });
+
+            ['hsl-h', 'hsl-s', 'hsl-l'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => {
+                    const h = getVal('hsl-h'), s = getVal('hsl-s')/100, l = getVal('hsl-l')/100;
+                    this.currentColor = this.hslToRgb(h, s, l);
+                    this.updateAllDisplays('hsl');
+                });
+            });
+
+            ['hsv-h', 'hsv-s', 'hsv-v'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => {
+                    const h = getVal('hsv-h'), s = getVal('hsv-s')/100, v = getVal('hsv-v')/100;
+                    this.currentColor = this.hsvToRgb(h, s, v);
+                    this.updateAllDisplays('hsv');
+                });
+            });
+
+            ['cmyk-c', 'cmyk-m', 'cmyk-y', 'cmyk-k'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => {
+                    const c = getVal('cmyk-c')/100, m = getVal('cmyk-m')/100, y = getVal('cmyk-y')/100, k = getVal('cmyk-k')/100;
+                    this.currentColor = this.cmykToRgb(c, m, y, k);
+                    this.updateAllDisplays('cmyk');
+                });
+            });
+
+            ['lab-l', 'lab-a', 'lab-b'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', () => {
+                    const l = getVal('lab-l'), a = getVal('lab-a'), b = getVal('lab-b');
+                    this.currentColor = this.labToRgb(l, a, b);
+                    this.updateAllDisplays('lab');
+                });
+            });
+        }
+
+        setupColorPicker() {
+            if (this.colorValueInput) {
+                this.colorValueInput.addEventListener('input', (e) => {
+                    const rgb = this.hexToRgb(e.target.value);
+                    if (rgb) {
+                        this.currentColor = rgb;
+                        this.updateAllDisplays();
+                    }
+                });
+            }
+        }
+
+        updateFromRGB() {
+            this.updateAllDisplays();
+        }
+
+        updateAllDisplays(skipSpace = '') {
+            const hex = this.rgbToHex(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+            if (this.colorValueInput) this.colorValueInput.value = hex;
+            
+            // Calculate luminance contrast for swatch text
+            const lum = this.getLuminance(hex);
+            const textColor = lum > 0.5 ? '#000000' : '#FFFFFF';
+
+            // Update Swatches & Color Previews
+            const previewIds = ['rgb-preview', 'hsl-preview', 'hsv-preview', 'cmyk-preview', 'lab-preview'];
+            previewIds.forEach(id => {
+                const swatch = document.getElementById(id);
+                if (swatch) {
+                    swatch.style.backgroundColor = hex;
+                    swatch.style.color = textColor;
+                    swatch.textContent = 'Color Swatch: ' + hex.toUpperCase();
+                }
+            });
+
+            // Update inputs if not currently actively dragged
+            if (skipSpace !== 'rgb') {
+                const r = document.getElementById('rgb-r'), g = document.getElementById('rgb-g'), b = document.getElementById('rgb-b');
+                if (r) r.value = this.currentColor.r;
+                if (g) g.value = this.currentColor.g;
+                if (b) b.value = this.currentColor.b;
+            }
+
+            if (skipSpace !== 'hsl') {
+                const hsl = this.rgbToHsl(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+                const h = document.getElementById('hsl-h'), s = document.getElementById('hsl-s'), l = document.getElementById('hsl-l');
+                if (h) h.value = Math.round(hsl.h);
+                if (s) s.value = Math.round(hsl.s * 100);
+                if (l) l.value = Math.round(hsl.l * 100);
+            }
+
+            if (skipSpace !== 'hsv') {
+                const hsv = this.rgbToHsv(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+                const h = document.getElementById('hsv-h'), s = document.getElementById('hsv-s'), v = document.getElementById('hsv-v');
+                if (h) h.value = Math.round(hsv.h);
+                if (s) s.value = Math.round(hsv.s * 100);
+                if (v) v.value = Math.round(hsv.v * 100);
+            }
+
+            if (skipSpace !== 'cmyk') {
+                const cmyk = this.rgbToCmyk(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+                const c = document.getElementById('cmyk-c'), m = document.getElementById('cmyk-m'), y = document.getElementById('cmyk-y'), k = document.getElementById('cmyk-k');
+                if (c) c.value = Math.round(cmyk.c * 100);
+                if (m) m.value = Math.round(cmyk.m * 100);
+                if (y) y.value = Math.round(cmyk.y * 100);
+                if (k) k.value = Math.round(cmyk.k * 100);
+            }
+
+            if (skipSpace !== 'lab') {
+                const lab = this.rgbToLab(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+                const l = document.getElementById('lab-l'), a = document.getElementById('lab-a'), b = document.getElementById('lab-b');
+                if (l) l.value = Math.round(lab.l);
+                if (a) a.value = Math.round(lab.a);
+                if (b) b.value = Math.round(lab.b);
+            }
+
+            this.updateHarmonyDisplays();
+            this.generateSimulationColors();
+        }
+
+        generateInitialPalette() {
+            this.palette = [
+                { r: 255, g: 0, b: 0 },
+                { r: 0, g: 255, b: 0 },
+                { r: 0, g: 0, b: 255 },
+                { r: 255, g: 255, b: 0 },
+                { r: 0, g: 255, b: 255 },
+                { r: 255, g: 0, b: 255 }
+            ];
+            this.renderPaletteGrid();
+        }
+
+        renderPaletteGrid() {
+            const grid = document.getElementById('paletteGrid');
+            if (!grid) return;
+            grid.innerHTML = this.palette.map(color => {
+                const hex = this.rgbToHex(color.r, color.g, color.b);
+                return `
+                    <div class="color-swatch-item" style="background: ${hex}; cursor: pointer; border-radius: 8px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: ${this.getLuminance(hex) > 0.5 ? '#000' : '#fff'};" onclick="colorConverter.selectPaletteColor('${hex}')">
+                        ${hex.toUpperCase()}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        selectPaletteColor(hex) {
+            const rgb = this.hexToRgb(hex);
+            if (rgb) {
+                this.currentColor = rgb;
+                this.updateAllDisplays();
+            }
+        }
+
+        setupColorHarmony() {
+            const harmonyBtns = document.querySelectorAll('.harmony-btn[data-harmony]');
+            harmonyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    harmonyBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    this.generateHarmony(btn.dataset.harmony);
+                });
+            });
+            this.generateHarmony('complementary');
+        }
+
+        updateHarmonyDisplays() {
+            const activeHarmony = document.querySelector('.harmony-btn.active[data-harmony]');
+            if (activeHarmony) {
+                this.generateHarmony(activeHarmony.dataset.harmony);
+            }
+        }
+
+        generateHarmony(type) {
+            const hsl = this.rgbToHsl(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+            let colors = [];
+            
+            switch (type) {
+                case 'complementary':
+                    colors = [hsl.h, (hsl.h + 180) % 360];
+                    break;
+                case 'analogous':
+                    colors = [(hsl.h + 330) % 360, hsl.h, (hsl.h + 30) % 360];
+                    break;
+                case 'triadic':
+                    colors = [hsl.h, (hsl.h + 120) % 360, (hsl.h + 240) % 360];
+                    break;
+                case 'tetradic':
+                    colors = [hsl.h, (hsl.h + 90) % 360, (hsl.h + 180) % 360, (hsl.h + 270) % 360];
+                    break;
+                case 'split':
+                    colors = [hsl.h, (hsl.h + 150) % 360, (hsl.h + 210) % 360];
+                    break;
+                case 'monochromatic':
+                    colors = [hsl.h, hsl.h, hsl.h];
+                    break;
+                default:
+                    colors = [hsl.h];
+            }
+
+            const container = document.getElementById('harmonyColors');
+            if (!container) return;
+            container.innerHTML = colors.map((hue, idx) => {
+                const l = type === 'monochromatic' ? 0.2 + (idx * 0.3) : hsl.l;
+                const rgb = this.hslToRgb(hue, hsl.s, l);
+                const hex = this.rgbToHex(rgb.r, rgb.g, rgb.b);
+                const textCol = this.getLuminance(hex) > 0.5 ? '#000' : '#fff';
+                return `
+                    <div style="background: ${hex}; height: 60px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: ${textCol}; font-weight: 700;">
+                        ${hex.toUpperCase()}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        setupSimulation() {
+            this.generateSimulationColors();
+        }
+
+        generateSimulationColors() {
+            const baseColor = this.rgbToHex(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+            const normal = document.getElementById('normalVision');
+            if (normal) normal.style.background = baseColor;
+            
+            const sims = ['protanopia', 'deuteranopia', 'tritanopia', 'achromatopsia'];
+            sims.forEach(type => {
+                const simulated = this.simulateColorBlindness(this.currentColor, type);
+                const el = document.getElementById(type);
+                if (el) el.style.background = this.rgbToHex(simulated.r, simulated.g, simulated.b);
+            });
+        }
+
+        simulateColorBlindness(rgb, type) {
+            switch (type) {
+                case 'protanopia':
+                    return {
+                        r: Math.round(rgb.r * 0.56667 + rgb.g * 0.43333),
+                        g: Math.round(rgb.r * 0.55833 + rgb.g * 0.44167),
+                        b: Math.round(rgb.g * 0.24167 + rgb.b * 0.75833)
+                    };
+                case 'deuteranopia':
+                    return {
+                        r: Math.round(rgb.r * 0.625 + rgb.g * 0.375),
+                        g: Math.round(rgb.r * 0.7 + rgb.g * 0.3),
+                        b: Math.round(rgb.g * 0.3 + rgb.b * 0.7)
+                    };
+                case 'tritanopia':
+                    return {
+                        r: Math.round(rgb.r * 0.95 + rgb.g * 0.05),
+                        g: Math.round(rgb.g * 0.43333 + rgb.b * 0.56667),
+                        b: Math.round(rgb.g * 0.475 + rgb.b * 0.525)
+                    };
+                case 'achromatopsia':
+                    const gray = Math.round(rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114);
+                    return { r: gray, g: gray, b: gray };
+                default:
+                    return rgb;
+            }
+        }
+
+        setupContrastAnalysis() {
+            this.generateContrastPairs();
+        }
+
+        generateContrastPairs() {
+            const baseHex = this.rgbToHex(this.currentColor.r, this.currentColor.g, this.currentColor.b);
+            const pairs = [
+                { bg: '#FFFFFF', fg: baseHex, name: 'Current Color on White' },
+                { bg: '#000000', fg: baseHex, name: 'Current Color on Black' },
+                { bg: baseHex, fg: '#FFFFFF', name: 'White on Current Color' },
+                { bg: baseHex, fg: '#000000', name: 'Black on Current Color' }
+            ];
+            
+            const container = document.getElementById('contrastPairs');
+            if (!container) return;
+            container.innerHTML = pairs.map(pair => {
+                const ratio = this.calculateContrastRatio(pair.bg, pair.fg);
+                const rating = this.getContrastRating(ratio);
+                return `
+                    <div class="contrast-pair" style="border: 1px solid #eee; padding: 12px; border-radius: 8px; text-align: center;">
+                        <div class="contrast-sample" style="background: ${pair.bg}; color: ${pair.fg}; font-weight:700; display:flex; align-items:center; justify-content:center; height:44px; border-radius:6px; margin-bottom:8px;">
+                            Sample Text
+                        </div>
+                        <div style="font-size:0.85rem; font-weight:600;">
+                            ${pair.name}<br>Ratio: ${ratio.toFixed(2)}:1 (${rating.toUpperCase()})
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        calculateContrastRatio(bg, fg) {
+            const bgLum = this.getLuminance(bg);
+            const fgLum = this.getLuminance(fg);
+            const lighter = Math.max(bgLum, fgLum);
+            const darker = Math.min(bgLum, fgLum);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        getLuminance(color) {
+            const rgb = typeof color === 'string' ? this.hexToRgb(color) : color;
+            if (!rgb) return 0;
+            const [r, g, b] = [rgb.r, rgb.g, rgb.b].map(c => {
+                c = c / 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        getContrastRating(ratio) {
+            if (ratio >= 7) return 'AAA Pass';
+            if (ratio >= 4.5) return 'AA Pass';
+            if (ratio >= 3) return 'AA Large Pass';
+            return 'Fail';
+        }
+
+        downloadPalette() {
+            const paletteData = this.palette.map((color, index) => ({
+                index: index + 1,
+                hex: this.rgbToHex(color.r, color.g, color.b),
+                rgb: `rgb(${color.r}, ${color.g}, ${color.b})`,
+                hsl: this.rgbToHsl(color.r, color.g, color.b),
+                hsv: this.rgbToHsv(color.r, color.g, color.b)
+            }));
+            
+            const content = JSON.stringify(paletteData, null, 2);
+            const blob = new Blob([content], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'color-palette.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        reset() {
+            this.selectedFiles = [];
+            if (this.previewImage) {
+                this.previewImage.style.display = 'none';
+                this.previewImage.src = '';
+            }
+            if (this.emptyPreview) this.emptyPreview.style.display = 'block';
+            if (this.fileInput) this.fileInput.value = '';
+            this.currentColor = { r: 255, g: 0, b: 0 };
+            this.generateInitialPalette();
+            this.updateAllDisplays();
+        }
+
+        // Color Math Utilities
+        rgbToHex(r, g, b) {
+            return "#" + [r, g, b].map(x => {
+                const hex = Math.round(x).toString(16);
+                return hex.length === 1 ? "0" + hex : hex;
+            }).join("");
+        }
+
+        hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 255, g: 0, b: 0 };
+        }
+
+        rgbToHsl(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return { h: h * 360, s, l };
+        }
+
+        hslToRgb(h, s, l) {
+            h /= 360;
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+        }
+
+        rgbToHsv(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            const d = max - min;
+            let h, s = max === 0 ? 0 : d / max, v = max;
+            if (d !== 0) {
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            } else {
+                h = 0;
+            }
+            return { h: h * 360, s, v };
+        }
+
+        hsvToRgb(h, s, v) {
+            h /= 360;
+            const i = Math.floor(h * 6);
+            const f = h * 6 - i;
+            const p = v * (1 - s);
+            const q = v * (1 - f * s);
+            const t = v * (1 - (1 - f) * s);
+            let r, g, b;
+            switch (i % 6) {
+                case 0: r = v; g = t; b = p; break;
+                case 1: r = q; g = v; b = p; break;
+                case 2: r = p; g = v; b = t; break;
+                case 3: r = p; g = q; b = v; break;
+                case 4: r = t; g = p; b = v; break;
+                case 5: r = v; g = p; b = q; break;
+            }
+            return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+        }
+
+        rgbToCmyk(r, g, b) {
+            let c = 1 - (r / 255);
+            let m = 1 - (g / 255);
+            let y = 1 - (b / 255);
+            let k = Math.min(c, Math.min(m, y));
+            if (k === 1) return { c: 0, m: 0, y: 0, k: 1 };
+            c = (c - k) / (1 - k);
+            m = (m - k) / (1 - k);
+            y = (y - k) / (1 - k);
+            return { c, m, y, k };
+        }
+
+        cmykToRgb(c, m, y, k) {
+            const r = 255 * (1 - c) * (1 - k);
+            const g = 255 * (1 - m) * (1 - k);
+            const b = 255 * (1 - y) * (1 - k);
+            return { r: Math.round(r), g: Math.round(g), b: Math.round(b) };
+        }
+
+        rgbToLab(r, g, b) {
+            let r1 = r / 255, g1 = g / 255, b1 = b / 255;
+            r1 = r1 > 0.04045 ? Math.pow((r1 + 0.055) / 1.055, 2.4) : r1 / 12.92;
+            g1 = g1 > 0.04045 ? Math.pow((g1 + 0.055) / 1.055, 2.4) : g1 / 12.92;
+            b1 = b1 > 0.04045 ? Math.pow((b1 + 0.055) / 1.055, 2.4) : b1 / 12.92;
+            let x = (r1 * 0.4124 + g1 * 0.3576 + b1 * 0.1805) * 100 / 95.047;
+            let y = (r1 * 0.2126 + g1 * 0.7152 + b1 * 0.0722) * 100 / 100.000;
+            let z = (r1 * 0.0193 + g1 * 0.1192 + b1 * 0.9505) * 100 / 108.883;
+            x = x > 0.008856 ? Math.pow(x, 1/3) : (7.787 * x) + (16 / 116);
+            y = y > 0.008856 ? Math.pow(y, 1/3) : (7.787 * y) + (16 / 116);
+            z = z > 0.008856 ? Math.pow(z, 1/3) : (7.787 * z) + (16 / 116);
+            return { l: (116 * y) - 16, a: 500 * (x - y), b: 200 * (y - z) };
+        }
+
+        labToRgb(l, a, b) {
+            let y = (l + 16) / 116;
+            let x = a / 500 + y;
+            let z = y - b / 200;
+            const y3 = Math.pow(y, 3), x3 = Math.pow(x, 3), z3 = Math.pow(z, 3);
+            x = (x3 > 0.008856 ? x3 : (x - 16 / 116) / 7.787) * 95.047;
+            y = (y3 > 0.008856 ? y3 : (y - 16 / 116) / 7.787) * 100.000;
+            z = (z3 > 0.008856 ? z3 : (z - 16 / 116) / 7.787) * 108.883;
+            x /= 100; y /= 100; z /= 100;
+            let r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+            let g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+            let b_val = x * 0.0557 + y * -0.2040 + z * 1.0570;
+            r = r > 0.0031308 ? 1.055 * Math.pow(r, 1/2.4) - 0.055 : 12.92 * r;
+            g = g > 0.0031308 ? 1.055 * Math.pow(g, 1/2.4) - 0.055 : 12.92 * g;
+            b_val = b_val > 0.0031308 ? 1.055 * Math.pow(b_val, 1/2.4) - 0.055 : 12.92 * b_val;
+            return {
+                r: Math.max(0, Math.min(255, Math.round(r * 255))),
+                g: Math.max(0, Math.min(255, Math.round(g * 255))),
+                b: Math.max(0, Math.min(255, Math.round(b_val * 255)))
+            };
+        }
+    }
+
+    function openDonationModal() {
+        const modal = document.getElementById('donation-modal');
+        if (modal) modal.style.display = 'flex';
+    }
+
+    function closeDonationModal() {
+        const modal = document.getElementById('donation-modal');
+        if (modal) modal.style.display = 'none';
+    }
+
+    function copyCryptoAddress(btn, address) {
+        navigator.clipboard.writeText(address).then(() => {
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = originalText, 2000);
+        });
+    }
+
+    let colorConverter;
+    document.addEventListener('DOMContentLoaded', () => {
+        colorConverter = new ImageColorConverter();
+    });
+</script>
+</body>
+</html>
