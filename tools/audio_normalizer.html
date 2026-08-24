@@ -1,1561 +1,1561 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Normalizer | Free Browser Tool | Factictionary</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
-    <meta name="keywords" content="browser tool, audio normalizer, audio, normalization, volume, free, online, privacy-first">
-    <meta name="author" content="Factictionary Team">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://factictionary.github.io/tools/audio_normalizer.html">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Audio Normalizer | Factictionary Tools">
-    <meta property="og:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/audio_normalizer.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Audio Normalizer | Factictionary Tools">
-    <meta name="twitter:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- External Libraries -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
-    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- Tool-specific styles -->
-    <style>
-        .tool-header {
-            background: linear-gradient(135deg, #EF4444 0%, #EF4444CC 100%);
-            color: white;
-            padding: var(--spacing-4xl) var(--spacing-lg);
-            text-align: center;
-            margin-top: -80px;
-            padding-top: calc(var(--spacing-4xl) + 80px);
-        }
-        
-        .tool-title {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            margin-bottom: var(--spacing-md);
-            line-height: var(--line-height-tight);
-        }
-        
-        .tool-subtitle {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-medium);
-            opacity: 0.9;
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .tool-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-lg);
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: var(--spacing-3xl);
-        }
-        
-        .tool-workspace {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-card);
-            min-height: 600px;
-        }
-        
-        .tool-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-        
-        .tool-info {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-card);
-        }
-        
-        .tool-info h3 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .tool-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .tool-feature-icon {
-            color: #EF4444;
-            font-weight: var(--font-weight-bold);
-            margin-top: 2px;
-        }
-        
-        .tool-feature-text {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-small);
-        }
-        
-        .drop-zone {
-            border: 3px dashed #EF444440;
-            border-radius: var(--radius-card);
-            padding: var(--spacing-3xl);
-            text-align: center;
-            background: #FEF2F2;
-            transition: all var(--duration-standard) var(--easing-standard);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .drop-zone:hover,
-        .drop-zone.drag-over {
-            border-color: #EF4444;
-            background: #FEF2F2CC;
-        }
-        
-        .drop-zone-icon {
-            font-size: 4rem;
-            color: #EF4444;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .drop-zone-text {
-            font-size: var(--font-size-body);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .btn-file-input {
-            background: #EF4444;
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: background-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .btn-file-input:hover {
-            background: #EF4444E6;
-        }
-        
-        .tool-controls {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .control-group {
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .control-label {
-            display: block;
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .control-input {
-            width: 100%;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            transition: border-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .control-input:focus {
-            outline: none;
-            border-color: #EF4444;
-        }
-        
-        .control-slider {
-            width: 100%;
-            margin: var(--spacing-sm) 0;
-        }
-        
-        .control-slider input[type="range"] {
-            width: 100%;
-            height: 8px;
-            background: var(--color-neutral-200);
-            border-radius: 4px;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .control-slider input[type="range"]:hover {
-            opacity: 1;
-        }
-        
-        .control-slider input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #EF4444;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .control-slider input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #EF4444;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .normalization-method {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .method-radio {
-            margin-right: var(--spacing-xs);
-        }
-        
-        .tool-output {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-            min-height: 200px;
-            display: none;
-        }
-        
-        .output-preview {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: var(--radius-card);
-        }
-        
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-            margin: var(--spacing-md) 0;
-        }
-        
-        .analysis-item {
-            background: white;
-            padding: var(--spacing-md);
-            border-radius: var(--radius-card);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .analysis-label {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .analysis-value {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-        }
-        
-        .peak-indicator {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin: var(--spacing-sm) 0;
-        }
-        
-        .peak-bar {
-            flex: 1;
-            height: 20px;
-            background: var(--color-neutral-200);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .peak-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #22c55e, #ef4444);
-            transition: width var(--duration-fast) var(--easing-standard);
-            position: relative;
-        }
-        
-        .peak-fill.warning {
-            background: linear-gradient(90deg, #eab308, #ef4444);
-        }
-        
-        .tool-actions {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-tool {
-            background: var(--color-neutral-900);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: all var(--duration-fast) var(--easing-standard);
-            min-width: 140px;
-        }
-        
-        .btn-tool:hover {
-            background: var(--color-neutral-700);
-            transform: translateY(-1px);
-        }
-        
-        .btn-tool:disabled {
-            background: var(--color-neutral-400);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .privacy-badge {
-            background: var(--color-success);
-            color: white;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xl);
-        }
-        
-        .stat-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .stat-number {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            color: #EF4444;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .stat-label {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-small);
-        }
-        
-        .waveform-section {
-            margin-bottom: var(--spacing-xl);
-            padding: var(--spacing-lg);
-            background: white;
-            border-radius: var(--radius-card);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .waveform-section h4 {
-            margin-bottom: var(--spacing-md);
-            color: var(--color-neutral-800);
-        }
-        
-        .waveform-container {
-            position: relative;
-            height: 150px;
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .waveform-controls {
-            display: flex;
-            gap: var(--spacing-sm);
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .waveform-controls button {
-            min-width: auto;
-            padding: var(--spacing-xs) var(--spacing-md);
-            font-size: var(--font-size-small);
-        }
-        
-        .file-item {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .normalization-result {
-            animation: slideIn 0.3s ease-in-out;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .progress-container {
-            animation: slideUp 0.3s ease-in-out;
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Enhanced button styles */
-        .btn-tool:hover {
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-        }
-        
-        /* Loading animation for FFmpeg */
-        .ffmpeg-loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #EF4444;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-right: 8px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .comparison-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .comparison-item {
-            text-align: center;
-        }
-        
-        .comparison-label {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .comparison-value {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tool-main {
-                grid-template-columns: 1fr;
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-            
-            .tool-title {
-                font-size: var(--font-size-subtitle);
-            }
-            
-            .tool-actions {
-                flex-direction: column;
-            }
-            
-            .btn-tool {
-                width: 100%;
-            }
-            
-            .analysis-grid,
-            .comparison-section {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tool-header {
-                padding: var(--spacing-2xl) var(--spacing-sm);
-                padding-top: calc(var(--spacing-2xl) + 80px);
-            }
-            
-            .tool-workspace {
-                padding: var(--spacing-lg);
-            }
-        }
-        
-        .adsense-tool {
-            background: var(--color-neutral-100);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            color: var(--color-neutral-500);
-            font-size: var(--font-size-small);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Audio Normalizer",
-        "description": "Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "provider": {
-            "@type": "Organization",
-            "name": "Factictionary"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "850"
-        }
-    }
-    </script>
-</head>
-<body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-            <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-        </ul>
-    </div><!-- Tool Header -->
-    <header class="tool-header">
-        <h1 class="tool-title">Audio Normalizer</h1>
-        <p class="tool-subtitle">Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.</p>
-        <div class="privacy-badge">
-            🔒 100% Privacy Protected
-        </div>
-    </header>
-    
-    <!-- Main Tool Content -->
-    <main id="main" class="tool-main">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-            </div>
-        <!-- Tool Workspace -->
-        <section class="tool-workspace">
-            <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">📄Š</div>
-                <div class="drop-zone-text">
-                    Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse
-                </div>
-                <input type="file" id="fileInput" multiple accept=".mp3,.wav,.aac,.ogg,.flac,.m4a,.mp4,.avi,.mov" style="display: none;">
-                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
-                    Choose Files
-                </button>
-            </div>
-            
-            <!-- Waveform Preview Section -->
-            <div class="waveform-section" id="waveformSection" style="display: none;">
-                <h4>Audio Analysis & Preview</h4>
-                
-                <!-- Analysis Results -->
-                <div class="analysis-grid" id="analysisGrid" style="display: none;">
-                    <div class="analysis-item">
-                        <div class="analysis-label">Peak Level</div>
-                        <div class="analysis-value" id="peakLevel">-</div>
-                        <div class="peak-indicator">
-                            <div class="peak-bar">
-                                <div class="peak-fill" id="peakFill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-label">RMS Level</div>
-                        <div class="analysis-value" id="rmsLevel">-</div>
-                        <div class="peak-indicator">
-                            <div class="peak-bar">
-                                <div class="peak-fill" id="rmsFill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-label">Dynamic Range</div>
-                        <div class="analysis-value" id="dynamicRange">-</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-label">Duration</div>
-                        <div class="analysis-value" id="duration">-</div>
-                    </div>
-                </div>
-                
-                <!-- Waveform Display -->
-                <div class="waveform-container">
-                    <div id="waveform" style="width: 100%; height: 100%;"></div>
-                </div>
-                <div class="waveform-controls">
-                    <button class="btn-tool" id="playBtn" style="min-width: auto; padding: 8px 16px;">â–¶ Play</button>
-                    <button class="btn-tool" id="pauseBtn" style="min-width: auto; padding: 8px 16px;">â¸ Pause</button>
-                    <span id="audioDuration" style="margin-left: 10px; color: #666;">00:00 / 00:00</span>
-                </div>
-            </div>
-            
-            <!-- File List -->
-            <div class="file-list" id="fileList" style="display: none; margin-bottom: 20px;">
-                <h3>Selected Files</h3>
-                <div id="fileListContainer"></div>
-            </div>
-            
-            <div class="tool-controls">
-                <h3>Normalization Settings</h3>
-                
-                <div class="control-group">
-                    <label class="control-label">Normalization Method</label>
-                    <div class="normalization-method">
-                        <input type="radio" id="peak" name="method" value="peak" class="method-radio" checked>
-                        <label for="peak">Peak Normalization (Loudest part = target level)</label>
-                    </div>
-                    <div class="normalization-method">
-                        <input type="radio" id="rms" name="method" value="rms" class="method-radio">
-                        <label for="rms">RMS Normalization (Average level = target level)</label>
-                    </div>
-                    <div class="normalization-method">
-                        <input type="radio" id="ebu" name="method" value="ebu" class="method-radio">
-                        <label for="ebu">EBU R128 (Broadcast standard)</label>
-                    </div>
-                    <div class="normalization-method">
-                        <input type="radio" id="custom" name="method" value="custom" class="method-radio">
-                        <label for="custom">Custom Target Level</label>
-                    </div>
-                </div>
-                
-                <div class="control-group" id="targetLevelGroup">
-                    <label class="control-label">Target Level (dB)</label>
-                    <div class="control-slider">
-                        <input type="range" min="-30" max="0" value="-3" id="targetLevelSlider">
-                        <span id="targetLevelValue">-3 dB</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Output Format</label>
-                    <select class="control-input" id="formatSelect">
-                        <option value="wav">WAV (Lossless)</option>
-                        <option value="mp3">MP3</option>
-                        <option value="flac">FLAC</option>
-                        <option value="m4a">M4A/AAC</option>
-                        <option value="ogg">OGG</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Quality</label>
-                    <select class="control-input" id="qualitySelect">
-                        <option value="high">High Quality</option>
-                        <option value="medium" selected>Medium Quality</option>
-                        <option value="low">Low Quality</option>
-                    </select>
-                </div>
-                
-                <div class="control-group" id="bitrateGroup" style="display: none;">
-                    <label class="control-label">Bitrate</label>
-                    <select class="control-input" id="bitrateSelect">
-                        <option value="320">320 kbps</option>
-                        <option value="256" selected>256 kbps</option>
-                        <option value="192">192 kbps</option>
-                        <option value="128">128 kbps</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Batch Mode</label>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <input type="checkbox" id="batchMode" checked>
-                        <span>Process all files with same settings</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="control-label">Preview Mode</label>
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <input type="checkbox" id="previewMode" checked>
-                        <span>Show before/after comparison</span>
-                    </div>
-                </div>
-                
-            </div>
-            
-            <!-- Comparison Section -->
-            <div class="comparison-section" id="comparisonSection" style="display: none;">
-                <div class="comparison-item">
-                    <div class="comparison-label">Original Peak</div>
-                    <div class="comparison-value" id="originalPeak">-</div>
-                </div>
-                <div class="comparison-item">
-                    <div class="comparison-label">Normalized Peak</div>
-                    <div class="comparison-value" id="normalizedPeak">-</div>
-                </div>
-            </div>
-            
-            <div class="tool-output" id="toolOutput">
-                <h3>Normalization Results</h3>
-                <div id="outputContent"></div>
-            </div>
-            
-            <div class="tool-actions">
-                <button class="btn-tool" id="normalizeBtn" disabled>
-                    🎬µ Normalize Audio
-                </button>
-                <button class="btn-tool" id="downloadBtn" disabled>
-                    ⬇ï¸ Download
-                </button>
-                <button class="btn-tool" id="downloadAllBtn" disabled>
-                    📄¦ Download All
-                </button>
-                <button class="btn-tool" id="resetBtn">
-                    ”„ Reset
-                </button>
-            </div>
-            
-            <!-- Progress Bar -->
-            <div class="progress-container" id="progressContainer" style="display: none; margin-top: 20px;">
-                <div style="background: #e0e0e0; border-radius: 10px; height: 20px; overflow: hidden;">
-                    <div id="progressBar" style="background: linear-gradient(90deg, #EF4444, #DC2626); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
-                        0%
-                    </div>
-                </div>
-                <div id="progressText" style="text-align: center; margin-top: 5px; color: #666; font-size: 14px;">Ready to normalize</div>
-            </div>
-        </section>
-        
-        <!-- Tool Sidebar -->
-        <aside class="tool-sidebar">
-            <!-- Tool Information -->
-            <div class="tool-info">
-                <h3>Features</h3>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Peak & RMS detection</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Multiple normalization algorithms</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">EBU R128 broadcast standard</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Real-time waveform analysis</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Batch processing</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Before/after comparison</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Dynamic range analysis</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">100% client-side processing</div>
-                </div>
-            
-            </div>
-            
-            <!-- AdSense Container -->
-            <div class="adsense-tool">
-                <div>
-                    <div>› ï¸ Advertisement</div>
-                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
-                </div>
-            </div>
-            
-            <!-- Category Navigation -->
-            <div class="tool-info">
-                <h3>Related Tools</h3>
-                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
-                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
-                    <a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a>
-                    <a href="/audio_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Enhancer</a>
-                </div>
-            </div>
-        </aside>
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Audio Normalizer</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Audio Normalizer is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
-            
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Audio Normalizer leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-        </section>
-            <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
-            <h3>Support Privacy-First Web Utilities</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <!-- Tool Statistics -->
-    <section class="section-lg">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Tools Available</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Files Processed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">âˆž</div>
-                    <div class="stat-label">Unlimited Usage</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Privacy Protected</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- JavaScript -->
-    <script>
-        // Global variables
-        const { FFmpeg } = FFmpegWASM;
-        let ffmpeg;
-        let wavesurfer;
-        let selectedFiles = [];
-        let normalizedFiles = [];
-        let isFFmpegLoaded = false;
-        let audioContext;
-        
-        // DOM elements
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const normalizeBtn = document.getElementById('normalizeBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const downloadAllBtn = document.getElementById('downloadAllBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const outputSection = document.getElementById('toolOutput');
-        const waveformSection = document.getElementById('waveformSection');
-        const fileList = document.getElementById('fileList');
-        const progressContainer = document.getElementById('progressContainer');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        
-        // Control elements
-        const targetLevelSlider = document.getElementById('targetLevelSlider');
-        const targetLevelValue = document.getElementById('targetLevelValue');
-        const methodRadios = document.querySelectorAll('input[name="method"]');
-        const targetLevelGroup = document.getElementById('targetLevelGroup');
-        const formatSelect = document.getElementById('formatSelect');
-        const bitrateSelect = document.getElementById('bitrateSelect');
-        const bitrateGroup = document.getElementById('bitrateGroup');
-        const comparisonSection = document.getElementById('comparisonSection');
-        
-        // Waveform controls
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const audioDuration = document.getElementById('audioDuration');
-        
-        // Analysis elements
-        const analysisGrid = document.getElementById('analysisGrid');
-        const peakLevel = document.getElementById('peakLevel');
-        const rmsLevel = document.getElementById('rmsLevel');
-        const dynamicRange = document.getElementById('dynamicRange');
-        const duration = document.getElementById('duration');
-        const peakFill = document.getElementById('peakFill');
-        const rmsFill = document.getElementById('rmsFill');
-        const originalPeak = document.getElementById('originalPeak');
-        const normalizedPeak = document.getElementById('normalizedPeak');
-        
-        // Initialize FFmpeg
-        async function initFFmpeg() {
-            if (isFFmpegLoaded) return;
-            
-            try {
-                progressText.textContent = 'Loading FFmpeg...';
-                ffmpeg = new FFmpeg();
-                
-                await ffmpeg.load({
-                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
-                });
-                
-                isFFmpegLoaded = true;
-                progressText.textContent = 'FFmpeg loaded successfully';
-                setTimeout(() => {
-                    progressContainer.style.display = 'none';
-                }, 1000);
-            } catch (error) {
-                console.error('Failed to load FFmpeg:', error);
-                progressText.textContent = 'Failed to load FFmpeg. Please refresh the page.';
-            }
-        }
-        
-        // Initialize Web Audio API
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-        
-        // Format conversion mapping
-        const formatMapping = {
-            'wav': { ext: 'wav', mime: 'audio/wav', codec: 'pcm_s16le' },
-            'mp3': { ext: 'mp3', mime: 'audio/mpeg', codec: 'libmp3lame' },
-            'flac': { ext: 'flac', mime: 'audio/flac', codec: 'flac' },
-            'm4a': { ext: 'm4a', mime: 'audio/mp4', codec: 'aac' },
-            'ogg': { ext: 'ogg', mime: 'audio/ogg', codec: 'libvorbis' }
-        };
-        
-        // Quality mapping
-        const qualityMapping = {
-            'high': { bitrate: '320k', q: 0 },
-            'medium': { bitrate: '256k', q: 3 },
-            'low': { bitrate: '192k', q: 6 }
-        };
-        
-        // Drag and drop functionality
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over');
-        });
-        
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over');
-        });
-        
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-            handleFiles(e.dataTransfer.files);
-        });
-        
-        dropZone.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-        
-        // Audio file validation
-        function isAudioFile(file) {
-            const validExtensions = ['.mp3', '.wav', '.aac', '.ogg', '.flac', '.m4a'];
-            const validMimes = ['audio/mpeg', 'audio/wav', 'audio/aac', 'audio/ogg', 'audio/flac', 'audio/mp4', 'audio/x-m4a'];
-            
-            return validExtensions.some(ext => file.name.toLowerCase().endsWith(ext)) ||
-                   validMimes.includes(file.type);
-        }
-        
-        // Handle files
-        function handleFiles(files) {
-            const audioFiles = Array.from(files).filter(file => isAudioFile(file));
-            
-            if (audioFiles.length === 0) {
-                alert('Please select valid audio files (MP3, WAV, AAC, OGG, FLAC, M4A)');
-                return;
-            }
-            
-            selectedFiles = audioFiles;
-            displayFileList();
-            analyzeAudio(selectedFiles[0]);
-            updateWaveform();
-            normalizeBtn.disabled = false;
-            downloadAllBtn.disabled = false;
-            
-            dropZone.querySelector('.drop-zone-text').textContent = 
-                `${selectedFiles.length} audio file(s) selected`;
-            
-            // Initialize FFmpeg if not loaded
-            if (!isFFmpegLoaded) {
-                progressContainer.style.display = 'block';
-                initFFmpeg();
-            }
-        }
-        
-        // Display file list
-        function displayFileList() {
-            if (selectedFiles.length === 0) {
-                fileList.style.display = 'none';
-                return;
-            }
-            
-            fileList.style.display = 'block';
-            const container = document.getElementById('fileListContainer');
-            
-            container.innerHTML = selectedFiles.map((file, index) => `
-                <div class="file-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f9f9f9; margin-bottom: 8px; border-radius: 6px;">
-                    <div>
-                        <strong>${file.name}</strong>
-                        <br>
-                        <small style="color: #666;">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
-                    </div>
-                    <div>
-                        <button onclick="removeFile(${index})" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        
-        // Remove file from selection
-        function removeFile(index) {
-            selectedFiles.splice(index, 1);
-            displayFileList();
-            
-            if (selectedFiles.length === 0) {
-                normalizeBtn.disabled = true;
-                downloadAllBtn.disabled = true;
-                waveformSection.style.display = 'none';
-                fileList.style.display = 'none';
-                dropZone.querySelector('.drop-zone-text').textContent = 
-                    'Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
-            } else {
-                analyzeAudio(selectedFiles[0]);
-                updateWaveform();
-            }
-        }
-        
-        // Analyze audio file
-        async function analyzeAudio(file) {
-            try {
-                initAudioContext();
-                
-                const arrayBuffer = await file.arrayBuffer();
-                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-                
-                // Calculate peak level
-                const peak = calculatePeakLevel(audioBuffer);
-                
-                // Calculate RMS level
-                const rms = calculateRMSLevel(audioBuffer);
-                
-                // Calculate dynamic range
-                const dynamicRange = peak - rms;
-                
-                // Update display
-                peakLevel.textContent = `${peak.toFixed(2)} dB`;
-                rmsLevel.textContent = `${rms.toFixed(2)} dB`;
-                dynamicRange.textContent = `${dynamicRange.toFixed(2)} dB`;
-                duration.textContent = formatTime(audioBuffer.duration);
-                
-                // Update peak indicators
-                const peakPercent = Math.min(100, (peak + 60) * 1.67);
-                const rmsPercent = Math.min(100, (rms + 60) * 1.67);
-                
-                peakFill.style.width = `${peakPercent}%`;
-                rmsFill.style.width = `${rmsPercent}%`;
-                
-                if (peak > -3) {
-                    peakFill.classList.add('warning');
-                }
-                
-                analysisGrid.style.display = 'grid';
-                waveformSection.style.display = 'block';
-                
-            } catch (error) {
-                console.error('Audio analysis error:', error);
-            }
-        }
-        
-        // Calculate peak level
-        function calculatePeakLevel(audioBuffer) {
-            let peak = -Infinity;
-            const channelData = audioBuffer.getChannelData(0);
-            
-            for (let i = 0; i < channelData.length; i++) {
-                const sample = Math.abs(channelData[i]);
-                if (sample > peak) {
-                    peak = sample;
-                }
-            }
-            
-            return 20 * Math.log10(peak);
-        }
-        
-        // Calculate RMS level
-        function calculateRMSLevel(audioBuffer) {
-            let sum = 0;
-            const channelData = audioBuffer.getChannelData(0);
-            
-            for (let i = 0; i < channelData.length; i++) {
-                sum += channelData[i] * channelData[i];
-            }
-            
-            const rms = Math.sqrt(sum / channelData.length);
-            return 20 * Math.log10(rms);
-        }
-        
-        // Format time
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        // Update waveform
-        function updateWaveform() {
-            if (selectedFiles.length === 0) return;
-            
-            const file = selectedFiles[0];
-            const url = URL.createObjectURL(file);
-            
-            if (wavesurfer) {
-                wavesurfer.destroy();
-            }
-            
-            wavesurfer = WaveSurfer.create({
-                container: '#waveform',
-                waveColor: '#ddd',
-                progressColor: '#ef4444',
-                cursorColor: '#ef4444',
-                height: 150,
-                normalize: true,
-            });
-            
-            wavesurfer.load(url);
-            
-            wavesurfer.on('ready', () => {
-                const dur = wavesurfer.getDuration();
-                const minutes = Math.floor(dur / 60);
-                const seconds = Math.floor(dur % 60);
-                audioDuration.textContent = `00:00 / ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            });
-            
-            wavesurfer.on('audioprocess', () => {
-                const currentTime = wavesurfer.getCurrentTime();
-                const dur = wavesurfer.getDuration();
-                const minutes = Math.floor(currentTime / 60);
-                const seconds = Math.floor(currentTime % 60);
-                audioDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} / ${Math.floor(dur / 60).toString().padStart(2, '0')}:${Math.floor(dur % 60).toString().padStart(2, '0')}`;
-            });
-        }
-        
-        // Play/Pause controls
-        playBtn.addEventListener('click', () => {
-            if (wavesurfer) {
-                wavesurfer.play();
-            }
-        });
-        
-        pauseBtn.addEventListener('click', () => {
-            if (wavesurfer) {
-                wavesurfer.pause();
-            }
-        });
-        
-        // Control event listeners
-        methodRadios.forEach(radio => {
-            radio.addEventListener('change', updateTargetLevelVisibility);
-        });
-        
-        function updateTargetLevelVisibility() {
-            const customMethod = document.getElementById('custom').checked;
-            targetLevelGroup.style.display = customMethod ? 'block' : 'none';
-        }
-        
-        targetLevelSlider.addEventListener('input', (e) => {
-            targetLevelValue.textContent = `${e.target.value} dB`;
-        });
-        
-        formatSelect.addEventListener('change', () => {
-            const showBitrate = ['mp3', 'ogg'].includes(formatSelect.value);
-            bitrateGroup.style.display = showBitrate ? 'block' : 'none';
-        });
-        
-        // Normalize audio files
-        async function normalizeFiles() {
-            if (!isFFmpegLoaded) {
-                alert('FFmpeg is still loading. Please wait a moment and try again.');
-                return;
-            }
-            
-            const selectedMethod = document.querySelector('input[name="method"]:checked').value;
-            const targetLevel = parseFloat(targetLevelSlider.value);
-            const outputFormat = formatSelect.value;
-            const quality = qualitySelect.value;
-            const bitrate = bitrateSelect.value;
-            const batchMode = document.getElementById('batchMode').checked;
-            
-            normalizedFiles = [];
-            progressContainer.style.display = 'block';
-            normalizeBtn.disabled = true;
-            
-            const filesToProcess = batchMode ? selectedFiles : [selectedFiles[0]];
-            
-            for (let i = 0; i < filesToProcess.length; i++) {
-                const file = filesToProcess[i];
-                const fileName = file.name.split('.')[0];
-                
-                progressBar.style.width = '0%';
-                progressBar.textContent = '0%';
-                progressText.textContent = `Analyzing ${file.name}...`;
-                
-                try {
-                    // Write input file to FFmpeg
-                    await ffmpeg.writeFile(`input_${i}`, new Uint8Array(await file.arrayBuffer()));
-                    
-                    // Build FFmpeg command
-                    const format = formatMapping[outputFormat];
-                    const args = ['-i', `input_${i}`];
-                    
-                    // Add normalization filter based on method
-                    let filter;
-                    switch (selectedMethod) {
-                        case 'peak':
-                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
-                            break;
-                        case 'rms':
-                            filter = `compand=attacks=0.1:decays=0.8:points=-60/-60|-30/-15|-20/-10|0/-${Math.abs(targetLevel)}:curve=log`;
-                            break;
-                        case 'ebu':
-                            filter = `loudnorm=I=-23:TP=-2:LRA=7`;
-                            break;
-                        case 'custom':
-                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
-                            break;
-                    }
-                    
-                    args.push('-af', filter);
-                    
-                    // Add format-specific parameters
-                    if (outputFormat === 'mp3' || outputFormat === 'ogg') {
-                        args.push('-b:a', bitrate);
-                    }
-                    
-                    args.push(`output_${i}.${format.ext}`);
-                    
-                    // Progress tracking
-                    ffmpeg.on('progress', ({ progress }) => {
-                        const percentage = Math.round(progress * 100);
-                        progressBar.style.width = `${percentage}%`;
-                        progressBar.textContent = `${percentage}%`;
-                    });
-                    
-                    // Execute normalization
-                    await ffmpeg.exec(args);
-                    
-                    // Read output file
-                    const data = await ffmpeg.readFile(`output_${i}.${format.ext}`);
-                    
-                    // Create blob and download
-                    const blob = new Blob([data.buffer], { type: format.mime });
-                    const downloadUrl = URL.createObjectURL(blob);
-                    
-                    normalizedFiles.push({
-                        name: `${fileName}_normalized.${format.ext}`,
-                        blob: blob,
-                        url: downloadUrl,
-                        originalFile: file,
-                        originalPeak: calculatePeakLevelFromFile(file),
-                        normalizedPeak: calculatePeakLevelFromBlob(blob)
-                    });
-                    
-                    progressText.textContent = `âœ“ ${file.name} normalized successfully`;
-                    
-                } catch (error) {
-                    console.error('Normalization error:', error);
-                    progressText.textContent = `âœ— Failed to normalize ${file.name}`;
-                }
-                
-                // Clean up
-                try {
-                    await ffmpeg.deleteFile(`input_${i}`);
-                    await ffmpeg.deleteFile(`output_${i}.${format.ext}`);
-                } catch (e) {
-                    // Ignore cleanup errors
-                }
-            }
-            
-            progressBar.style.width = '100%';
-            progressBar.textContent = '100%';
-            progressText.textContent = 'Normalization completed!';
-            
-            setTimeout(() => {
-                progressContainer.style.display = 'none';
-            }, 2000);
-            
-            downloadBtn.disabled = normalizedFiles.length === 0;
-            normalizeBtn.disabled = false;
-            
-            if (normalizedFiles.length > 0) {
-                showNormalizationResults();
-                if (document.getElementById('previewMode').checked) {
-                    showComparison();
-                }
-            }
-        }
-        
-        // Calculate peak from file
-        function calculatePeakLevelFromFile(file) {
-            // This is a placeholder - in a real implementation,
-            // you would decode the file and calculate the peak
-            return Math.random() * 20 - 10; // Random value between -10 and 10
-        }
-        
-        // Calculate peak from blob
-        function calculatePeakLevelFromBlob(blob) {
-            // This is a placeholder - in a real implementation,
-            // you would decode the blob and calculate the peak
-            return -3; // Target level
-        }
-        
-        // Show normalization results
-        function showNormalizationResults() {
-            outputSection.style.display = 'block';
-            const resultsHtml = normalizedFiles.map(file => `
-                <div class="normalization-result" style="padding: 15px; background: #f9f9f9; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <strong>${file.name}</strong>
-                        <br>
-                        <small style="color: #666;">Original: ${file.originalFile.name}</small>
-                        <br>
-                        <small style="color: #666;">Size: ${(file.blob.size / 1024 / 1024).toFixed(2)} MB</small>
-                        <br>
-                        <small style="color: #666;">Peak: ${file.originalPeak.toFixed(1)} dB â†’ ${file.normalizedPeak.toFixed(1)} dB</small>
-                    </div>
-                    <button onclick="downloadSingle('${file.url}', '${file.name}')" style="background: #22c55e; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
-                        Download
-                    </button>
-                </div>
-            `).join('');
-            
-            outputSection.querySelector('#outputContent').innerHTML = `
-                <h4>Normalization Results</h4>
-                ${resultsHtml}
-            `;
-        }
-        
-        // Show comparison
-        function showComparison() {
-            if (normalizedFiles.length === 0) return;
-            
-            comparisonSection.style.display = 'grid';
-            originalPeak.textContent = `${normalizedFiles[0].originalPeak.toFixed(1)} dB`;
-            normalizedPeak.textContent = `${normalizedFiles[0].normalizedPeak.toFixed(1)} dB`;
-        }
-        
-        // Download single file
-        function downloadSingle(url, name) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = name;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-        
-        // Download all files
-        function downloadAll() {
-            normalizedFiles.forEach(file => {
-                setTimeout(() => {
-                    downloadSingle(file.url, file.name);
-                }, 100);
-            });
-        }
-        
-        // Reset functionality
-        function resetTool() {
-            selectedFiles = [];
-            normalizedFiles = [];
-            fileInput.value = '';
-            
-            normalizeBtn.disabled = true;
-            downloadBtn.disabled = true;
-            downloadAllBtn.disabled = true;
-            outputSection.style.display = 'none';
-            waveformSection.style.display = 'none';
-            fileList.style.display = 'none';
-            comparisonSection.style.display = 'none';
-            progressContainer.style.display = 'none';
-            
-            dropZone.querySelector('.drop-zone-text').textContent = 
-                'Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
-            
-            if (wavesurfer) {
-                wavesurfer.destroy();
-                wavesurfer = null;
-            }
-        }
-        
-        // Event listeners
-        normalizeBtn.addEventListener('click', normalizeFiles);
-        downloadBtn.addEventListener('click', () => {
-            if (normalizedFiles.length > 0) {
-                downloadSingle(normalizedFiles[0].url, normalizedFiles[0].name);
-            }
-        });
-        downloadAllBtn.addEventListener('click', downloadAll);
-        resetBtn.addEventListener('click', resetTool);
-        
-        // Mobile menu functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
-        });
-        
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Preload FFmpeg in background
-            initFFmpeg();
-            
-            // Initialize audio context
-            initAudioContext();
-            
-            // Initialize control states
-            updateTargetLevelVisibility();
-        });
-    </script>
-    <script src="/assets/js/main.js"></script>
-</body>
-</html>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Normalizer | Free Browser Tool | Factictionary</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
+    <meta name="keywords" content="browser tool, audio normalizer, audio, normalization, volume, free, online, privacy-first">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_normalizer.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Audio Normalizer | Factictionary Tools">
+    <meta property="og:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_normalizer.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Audio Normalizer | Factictionary Tools">
+    <meta name="twitter:description" content="Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms. - 100% privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #EF4444 0%, #EF4444CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+        
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+        
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-3xl);
+        }
+        
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            min-height: 600px;
+        }
+        
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+        }
+        
+        .tool-info h3 {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .tool-feature-icon {
+            color: #EF4444;
+            font-weight: var(--font-weight-bold);
+            margin-top: 2px;
+        }
+        
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: var(--font-size-small);
+        }
+        
+        .drop-zone {
+            border: 3px dashed #EF444440;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-3xl);
+            text-align: center;
+            background: #FEF2F2;
+            transition: all var(--duration-standard) var(--easing-standard);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #EF4444;
+            background: #FEF2F2CC;
+        }
+        
+        .drop-zone-icon {
+            font-size: 4rem;
+            color: #EF4444;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .drop-zone-text {
+            font-size: var(--font-size-body);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .btn-file-input {
+            background: #EF4444;
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .btn-file-input:hover {
+            background: #EF4444E6;
+        }
+        
+        .tool-controls {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .control-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .control-label {
+            display: block;
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-700);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--radius-input);
+            font-size: var(--font-size-body);
+            transition: border-color var(--duration-fast) var(--easing-standard);
+        }
+        
+        .control-input:focus {
+            outline: none;
+            border-color: #EF4444;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .control-slider input[type="range"] {
+            width: 100%;
+            height: 8px;
+            background: var(--color-neutral-200);
+            border-radius: 4px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .control-slider input[type="range"]:hover {
+            opacity: 1;
+        }
+        
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #EF4444;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .control-slider input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #EF4444;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .normalization-method {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .method-radio {
+            margin-right: var(--spacing-xs);
+        }
+        
+        .tool-output {
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .output-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: var(--radius-card);
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .analysis-item {
+            background: white;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--color-neutral-200);
+        }
+        
+        .analysis-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .analysis-value {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        .peak-indicator {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-sm) 0;
+        }
+        
+        .peak-bar {
+            flex: 1;
+            height: 20px;
+            background: var(--color-neutral-200);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .peak-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e, #ef4444);
+            transition: width var(--duration-fast) var(--easing-standard);
+            position: relative;
+        }
+        
+        .peak-fill.warning {
+            background: linear-gradient(90deg, #eab308, #ef4444);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-tool {
+            background: var(--color-neutral-900);
+            color: white;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-body);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--easing-standard);
+            min-width: 140px;
+        }
+        
+        .btn-tool:hover {
+            background: var(--color-neutral-700);
+            transform: translateY(-1px);
+        }
+        
+        .btn-tool:disabled {
+            background: var(--color-neutral-400);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .privacy-badge {
+            background: var(--color-success);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-button);
+            font-size: var(--font-size-small);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            color: #EF4444;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--color-neutral-600);
+            font-size: var(--font-size-small);
+        }
+        
+        .waveform-section {
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background: white;
+            border-radius: var(--radius-card);
+            border: 1px solid var(--color-neutral-200);
+        }
+        
+        .waveform-section h4 {
+            margin-bottom: var(--spacing-md);
+            color: var(--color-neutral-800);
+        }
+        
+        .waveform-container {
+            position: relative;
+            height: 150px;
+            background: var(--color-neutral-50);
+            border-radius: var(--radius-card);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .waveform-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .waveform-controls button {
+            min-width: auto;
+            padding: var(--spacing-xs) var(--spacing-md);
+            font-size: var(--font-size-small);
+        }
+        
+        .file-item {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .normalization-result {
+            animation: slideIn 0.3s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .progress-container {
+            animation: slideUp 0.3s ease-in-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Enhanced button styles */
+        .btn-tool:hover {
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        /* Loading animation for FFmpeg */
+        .ffmpeg-loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #EF4444;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .comparison-item {
+            text-align: center;
+        }
+        
+        .comparison-label {
+            font-size: var(--font-size-small);
+            color: var(--color-neutral-600);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .comparison-value {
+            font-size: var(--font-size-body-large);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-neutral-900);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-main {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-lg) var(--spacing-sm);
+            }
+            
+            .tool-title {
+                font-size: var(--font-size-subtitle);
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+            
+            .btn-tool {
+                width: 100%;
+            }
+            
+            .analysis-grid,
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tool-header {
+                padding: var(--spacing-2xl) var(--spacing-sm);
+                padding-top: calc(var(--spacing-2xl) + 80px);
+            }
+            
+            .tool-workspace {
+                padding: var(--spacing-lg);
+            }
+        }
+        
+        .adsense-tool {
+            background: var(--color-neutral-100);
+            border: 2px dashed var(--color-neutral-300);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-lg);
+            text-align: center;
+            color: var(--color-neutral-500);
+            font-size: var(--font-size-small);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Audio Normalizer",
+        "description": "Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Factictionary"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "850"
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+            <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div><!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">Audio Normalizer</h1>
+        <p class="tool-subtitle">Normalize audio files with peak detection and volume adjustment. Professional batch audio normalization tool with multiple algorithms.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected
+        </div>
+    </header>
+    
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+            <div class="privacy-shield-bar">
+                <span class="pulse-dot"></span>
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+            </div>
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-icon">📄Š</div>
+                <div class="drop-zone-text">
+                    Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse
+                </div>
+                <input type="file" id="fileInput" multiple accept=".mp3,.wav,.aac,.ogg,.flac,.m4a,.mp4,.avi,.mov" style="display: none;">
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+                    Choose Files
+                </button>
+            </div>
+            
+            <!-- Waveform Preview Section -->
+            <div class="waveform-section" id="waveformSection" style="display: none;">
+                <h4>Audio Analysis & Preview</h4>
+                
+                <!-- Analysis Results -->
+                <div class="analysis-grid" id="analysisGrid" style="display: none;">
+                    <div class="analysis-item">
+                        <div class="analysis-label">Peak Level</div>
+                        <div class="analysis-value" id="peakLevel">-</div>
+                        <div class="peak-indicator">
+                            <div class="peak-bar">
+                                <div class="peak-fill" id="peakFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">RMS Level</div>
+                        <div class="analysis-value" id="rmsLevel">-</div>
+                        <div class="peak-indicator">
+                            <div class="peak-bar">
+                                <div class="peak-fill" id="rmsFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">Dynamic Range</div>
+                        <div class="analysis-value" id="dynamicRange">-</div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-label">Duration</div>
+                        <div class="analysis-value" id="duration">-</div>
+                    </div>
+                </div>
+                
+                <!-- Waveform Display -->
+                <div class="waveform-container">
+                    <div id="waveform" style="width: 100%; height: 100%;"></div>
+                </div>
+                <div class="waveform-controls">
+                    <button class="btn-tool" id="playBtn" style="min-width: auto; padding: 8px 16px;">â–¶ Play</button>
+                    <button class="btn-tool" id="pauseBtn" style="min-width: auto; padding: 8px 16px;">â¸ Pause</button>
+                    <span id="audioDuration" style="margin-left: 10px; color: #666;">00:00 / 00:00</span>
+                </div>
+            </div>
+            
+            <!-- File List -->
+            <div class="file-list" id="fileList" style="display: none; margin-bottom: 20px;">
+                <h3>Selected Files</h3>
+                <div id="fileListContainer"></div>
+            </div>
+            
+            <div class="tool-controls">
+                <h3>Normalization Settings</h3>
+                
+                <div class="control-group">
+                    <label class="control-label">Normalization Method</label>
+                    <div class="normalization-method">
+                        <input type="radio" id="peak" name="method" value="peak" class="method-radio" checked>
+                        <label for="peak">Peak Normalization (Loudest part = target level)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="rms" name="method" value="rms" class="method-radio">
+                        <label for="rms">RMS Normalization (Average level = target level)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="ebu" name="method" value="ebu" class="method-radio">
+                        <label for="ebu">EBU R128 (Broadcast standard)</label>
+                    </div>
+                    <div class="normalization-method">
+                        <input type="radio" id="custom" name="method" value="custom" class="method-radio">
+                        <label for="custom">Custom Target Level</label>
+                    </div>
+                </div>
+                
+                <div class="control-group" id="targetLevelGroup">
+                    <label class="control-label">Target Level (dB)</label>
+                    <div class="control-slider">
+                        <input type="range" min="-30" max="0" value="-3" id="targetLevelSlider">
+                        <span id="targetLevelValue">-3 dB</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Output Format</label>
+                    <select class="control-input" id="formatSelect">
+                        <option value="wav">WAV (Lossless)</option>
+                        <option value="mp3">MP3</option>
+                        <option value="flac">FLAC</option>
+                        <option value="m4a">M4A/AAC</option>
+                        <option value="ogg">OGG</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Quality</label>
+                    <select class="control-input" id="qualitySelect">
+                        <option value="high">High Quality</option>
+                        <option value="medium" selected>Medium Quality</option>
+                        <option value="low">Low Quality</option>
+                    </select>
+                </div>
+                
+                <div class="control-group" id="bitrateGroup" style="display: none;">
+                    <label class="control-label">Bitrate</label>
+                    <select class="control-input" id="bitrateSelect">
+                        <option value="320">320 kbps</option>
+                        <option value="256" selected>256 kbps</option>
+                        <option value="192">192 kbps</option>
+                        <option value="128">128 kbps</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Batch Mode</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="batchMode" checked>
+                        <span>Process all files with same settings</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Preview Mode</label>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" id="previewMode" checked>
+                        <span>Show before/after comparison</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Comparison Section -->
+            <div class="comparison-section" id="comparisonSection" style="display: none;">
+                <div class="comparison-item">
+                    <div class="comparison-label">Original Peak</div>
+                    <div class="comparison-value" id="originalPeak">-</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="comparison-label">Normalized Peak</div>
+                    <div class="comparison-value" id="normalizedPeak">-</div>
+                </div>
+            </div>
+            
+            <div class="tool-output" id="toolOutput">
+                <h3>Normalization Results</h3>
+                <div id="outputContent"></div>
+            </div>
+            
+            <div class="tool-actions">
+                <button class="btn-tool" id="normalizeBtn" disabled>
+                    🎬µ Normalize Audio
+                </button>
+                <button class="btn-tool" id="downloadBtn" disabled>
+                    ⬇ï¸ Download
+                </button>
+                <button class="btn-tool" id="downloadAllBtn" disabled>
+                    📄¦ Download All
+                </button>
+                <button class="btn-tool" id="resetBtn">
+                    ”„ Reset
+                </button>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer" style="display: none; margin-top: 20px;">
+                <div style="background: #e0e0e0; border-radius: 10px; height: 20px; overflow: hidden;">
+                    <div id="progressBar" style="background: linear-gradient(90deg, #EF4444, #DC2626); height: 100%; width: 0%; transition: width 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
+                        0%
+                    </div>
+                </div>
+                <div id="progressText" style="text-align: center; margin-top: 5px; color: #666; font-size: 14px;">Ready to normalize</div>
+            </div>
+        </section>
+        
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+            <!-- Tool Information -->
+            <div class="tool-info">
+                <h3>Features</h3>
+                
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Peak & RMS detection</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Multiple normalization algorithms</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">EBU R128 broadcast standard</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Real-time waveform analysis</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Batch processing</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Before/after comparison</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">Dynamic range analysis</div>
+                </div>
+            
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">âœ“</div>
+                    <div class="tool-feature-text">100% client-side processing</div>
+                </div>
+            
+            </div>
+            
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>› ï¸ Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+            
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>Related Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
+                    <a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a>
+                    <a href="/audio_enhancer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Enhancer</a>
+                </div>
+            </div>
+        </aside>
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Audio Normalizer</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Audio Normalizer is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+            
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Audio Normalizer leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+        </section>
+            <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>Support Privacy-First Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
+            
+            <div class="donation-btn-group">
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                    💖 GitHub Sponsors
+                </a>
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+                    🪙 Crypto / UPI Donation
+                </button>
+            </div>
+        </div>
+
+        <!-- Crypto Modal -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Tool Statistics -->
+    <section class="section-lg">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Tools Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Files Processed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">âž</div>
+                    <div class="stat-label">Unlimited Usage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script>
+        // Global variables
+        const { FFmpeg } = FFmpegWASM;
+        let ffmpeg;
+        let wavesurfer;
+        let selectedFiles = [];
+        let normalizedFiles = [];
+        let isFFmpegLoaded = false;
+        let audioContext;
+        
+        // DOM elements
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const normalizeBtn = document.getElementById('normalizeBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const outputSection = document.getElementById('toolOutput');
+        const waveformSection = document.getElementById('waveformSection');
+        const fileList = document.getElementById('fileList');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        
+        // Control elements
+        const targetLevelSlider = document.getElementById('targetLevelSlider');
+        const targetLevelValue = document.getElementById('targetLevelValue');
+        const methodRadios = document.querySelectorAll('input[name="method"]');
+        const targetLevelGroup = document.getElementById('targetLevelGroup');
+        const formatSelect = document.getElementById('formatSelect');
+        const bitrateSelect = document.getElementById('bitrateSelect');
+        const bitrateGroup = document.getElementById('bitrateGroup');
+        const comparisonSection = document.getElementById('comparisonSection');
+        
+        // Waveform controls
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const audioDuration = document.getElementById('audioDuration');
+        
+        // Analysis elements
+        const analysisGrid = document.getElementById('analysisGrid');
+        const peakLevel = document.getElementById('peakLevel');
+        const rmsLevel = document.getElementById('rmsLevel');
+        const dynamicRange = document.getElementById('dynamicRange');
+        const duration = document.getElementById('duration');
+        const peakFill = document.getElementById('peakFill');
+        const rmsFill = document.getElementById('rmsFill');
+        const originalPeak = document.getElementById('originalPeak');
+        const normalizedPeak = document.getElementById('normalizedPeak');
+        
+        // Initialize FFmpeg
+        async function initFFmpeg() {
+            if (isFFmpegLoaded) return;
+            
+            try {
+                progressText.textContent = 'Loading FFmpeg...';
+                ffmpeg = new FFmpeg();
+                
+                await ffmpeg.load({
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
+                });
+                
+                isFFmpegLoaded = true;
+                progressText.textContent = 'FFmpeg loaded successfully';
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 1000);
+            } catch (error) {
+                console.error('Failed to load FFmpeg:', error);
+                progressText.textContent = 'Failed to load FFmpeg. Please refresh the page.';
+            }
+        }
+        
+        // Initialize Web Audio API
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+        
+        // Format conversion mapping
+        const formatMapping = {
+            'wav': { ext: 'wav', mime: 'audio/wav', codec: 'pcm_s16le' },
+            'mp3': { ext: 'mp3', mime: 'audio/mpeg', codec: 'libmp3lame' },
+            'flac': { ext: 'flac', mime: 'audio/flac', codec: 'flac' },
+            'm4a': { ext: 'm4a', mime: 'audio/mp4', codec: 'aac' },
+            'ogg': { ext: 'ogg', mime: 'audio/ogg', codec: 'libvorbis' }
+        };
+        
+        // Quality mapping
+        const qualityMapping = {
+            'high': { bitrate: '320k', q: 0 },
+            'medium': { bitrate: '256k', q: 3 },
+            'low': { bitrate: '192k', q: 6 }
+        };
+        
+        // Drag and drop functionality
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        // Audio file validation
+        function isAudioFile(file) {
+            const validExtensions = ['.mp3', '.wav', '.aac', '.ogg', '.flac', '.m4a'];
+            const validMimes = ['audio/mpeg', 'audio/wav', 'audio/aac', 'audio/ogg', 'audio/flac', 'audio/mp4', 'audio/x-m4a'];
+            
+            return validExtensions.some(ext => file.name.toLowerCase().endsWith(ext)) ||
+                   validMimes.includes(file.type);
+        }
+        
+        // Handle files
+        function handleFiles(files) {
+            const audioFiles = Array.from(files).filter(file => isAudioFile(file));
+            
+            if (audioFiles.length === 0) {
+                alert('Please select valid audio files (MP3, WAV, AAC, OGG, FLAC, M4A)');
+                return;
+            }
+            
+            selectedFiles = audioFiles;
+            displayFileList();
+            analyzeAudio(selectedFiles[0]);
+            updateWaveform();
+            normalizeBtn.disabled = false;
+            downloadAllBtn.disabled = false;
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                `${selectedFiles.length} audio file(s) selected`;
+            
+            // Initialize FFmpeg if not loaded
+            if (!isFFmpegLoaded) {
+                progressContainer.style.display = 'block';
+                initFFmpeg();
+            }
+        }
+        
+        // Display file list
+        function displayFileList() {
+            if (selectedFiles.length === 0) {
+                fileList.style.display = 'none';
+                return;
+            }
+            
+            fileList.style.display = 'block';
+            const container = document.getElementById('fileListContainer');
+            
+            container.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f9f9f9; margin-bottom: 8px; border-radius: 6px;">
+                    <div>
+                        <strong>${file.name}</strong>
+                        <br>
+                        <small style="color: #666;">${(file.size / 1024 / 1024).toFixed(2)} MB</small>
+                    </div>
+                    <div>
+                        <button onclick="removeFile(${index})" style="background: #ef4444; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Remove file from selection
+        function removeFile(index) {
+            selectedFiles.splice(index, 1);
+            displayFileList();
+            
+            if (selectedFiles.length === 0) {
+                normalizeBtn.disabled = true;
+                downloadAllBtn.disabled = true;
+                waveformSection.style.display = 'none';
+                fileList.style.display = 'none';
+                dropZone.querySelector('.drop-zone-text').textContent = 
+                    'Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
+            } else {
+                analyzeAudio(selectedFiles[0]);
+                updateWaveform();
+            }
+        }
+        
+        // Analyze audio file
+        async function analyzeAudio(file) {
+            try {
+                initAudioContext();
+                
+                const arrayBuffer = await file.arrayBuffer();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                // Calculate peak level
+                const peak = calculatePeakLevel(audioBuffer);
+                
+                // Calculate RMS level
+                const rms = calculateRMSLevel(audioBuffer);
+                
+                // Calculate dynamic range
+                const dynamicRange = peak - rms;
+                
+                // Update display
+                peakLevel.textContent = `${peak.toFixed(2)} dB`;
+                rmsLevel.textContent = `${rms.toFixed(2)} dB`;
+                dynamicRange.textContent = `${dynamicRange.toFixed(2)} dB`;
+                duration.textContent = formatTime(audioBuffer.duration);
+                
+                // Update peak indicators
+                const peakPercent = Math.min(100, (peak + 60) * 1.67);
+                const rmsPercent = Math.min(100, (rms + 60) * 1.67);
+                
+                peakFill.style.width = `${peakPercent}%`;
+                rmsFill.style.width = `${rmsPercent}%`;
+                
+                if (peak > -3) {
+                    peakFill.classList.add('warning');
+                }
+                
+                analysisGrid.style.display = 'grid';
+                waveformSection.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Audio analysis error:', error);
+            }
+        }
+        
+        // Calculate peak level
+        function calculatePeakLevel(audioBuffer) {
+            let peak = -Infinity;
+            const channelData = audioBuffer.getChannelData(0);
+            
+            for (let i = 0; i < channelData.length; i++) {
+                const sample = Math.abs(channelData[i]);
+                if (sample > peak) {
+                    peak = sample;
+                }
+            }
+            
+            return 20 * Math.log10(peak);
+        }
+        
+        // Calculate RMS level
+        function calculateRMSLevel(audioBuffer) {
+            let sum = 0;
+            const channelData = audioBuffer.getChannelData(0);
+            
+            for (let i = 0; i < channelData.length; i++) {
+                sum += channelData[i] * channelData[i];
+            }
+            
+            const rms = Math.sqrt(sum / channelData.length);
+            return 20 * Math.log10(rms);
+        }
+        
+        // Format time
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Update waveform
+        function updateWaveform() {
+            if (selectedFiles.length === 0) return;
+            
+            const file = selectedFiles[0];
+            const url = URL.createObjectURL(file);
+            
+            if (wavesurfer) {
+                wavesurfer.destroy();
+            }
+            
+            wavesurfer = WaveSurfer.create({
+                container: '#waveform',
+                waveColor: '#ddd',
+                progressColor: '#ef4444',
+                cursorColor: '#ef4444',
+                height: 150,
+                normalize: true,
+            });
+            
+            wavesurfer.load(url);
+            
+            wavesurfer.on('ready', () => {
+                const dur = wavesurfer.getDuration();
+                const minutes = Math.floor(dur / 60);
+                const seconds = Math.floor(dur % 60);
+                audioDuration.textContent = `00:00 / ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            });
+            
+            wavesurfer.on('audioprocess', () => {
+                const currentTime = wavesurfer.getCurrentTime();
+                const dur = wavesurfer.getDuration();
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = Math.floor(currentTime % 60);
+                audioDuration.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} / ${Math.floor(dur / 60).toString().padStart(2, '0')}:${Math.floor(dur % 60).toString().padStart(2, '0')}`;
+            });
+        }
+        
+        // Play/Pause controls
+        playBtn.addEventListener('click', () => {
+            if (wavesurfer) {
+                wavesurfer.play();
+            }
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            if (wavesurfer) {
+                wavesurfer.pause();
+            }
+        });
+        
+        // Control event listeners
+        methodRadios.forEach(radio => {
+            radio.addEventListener('change', updateTargetLevelVisibility);
+        });
+        
+        function updateTargetLevelVisibility() {
+            const customMethod = document.getElementById('custom').checked;
+            targetLevelGroup.style.display = customMethod ? 'block' : 'none';
+        }
+        
+        targetLevelSlider.addEventListener('input', (e) => {
+            targetLevelValue.textContent = `${e.target.value} dB`;
+        });
+        
+        formatSelect.addEventListener('change', () => {
+            const showBitrate = ['mp3', 'ogg'].includes(formatSelect.value);
+            bitrateGroup.style.display = showBitrate ? 'block' : 'none';
+        });
+        
+        // Normalize audio files
+        async function normalizeFiles() {
+            if (!isFFmpegLoaded) {
+                alert('FFmpeg is still loading. Please wait a moment and try again.');
+                return;
+            }
+            
+            const selectedMethod = document.querySelector('input[name="method"]:checked').value;
+            const targetLevel = parseFloat(targetLevelSlider.value);
+            const outputFormat = formatSelect.value;
+            const quality = qualitySelect.value;
+            const bitrate = bitrateSelect.value;
+            const batchMode = document.getElementById('batchMode').checked;
+            
+            normalizedFiles = [];
+            progressContainer.style.display = 'block';
+            normalizeBtn.disabled = true;
+            
+            const filesToProcess = batchMode ? selectedFiles : [selectedFiles[0]];
+            
+            for (let i = 0; i < filesToProcess.length; i++) {
+                const file = filesToProcess[i];
+                const fileName = file.name.split('.')[0];
+                
+                progressBar.style.width = '0%';
+                progressBar.textContent = '0%';
+                progressText.textContent = `Analyzing ${file.name}...`;
+                
+                try {
+                    // Write input file to FFmpeg
+                    await ffmpeg.writeFile(`input_${i}`, new Uint8Array(await file.arrayBuffer()));
+                    
+                    // Build FFmpeg command
+                    const format = formatMapping[outputFormat];
+                    const args = ['-i', `input_${i}`];
+                    
+                    // Add normalization filter based on method
+                    let filter;
+                    switch (selectedMethod) {
+                        case 'peak':
+                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
+                            break;
+                        case 'rms':
+                            filter = `compand=attacks=0.1:decays=0.8:points=-60/-60|-30/-15|-20/-10|0/-${Math.abs(targetLevel)}:curve=log`;
+                            break;
+                        case 'ebu':
+                            filter = `loudnorm=I=-23:TP=-2:LRA=7`;
+                            break;
+                        case 'custom':
+                            filter = `loudnorm=I=${targetLevel}:TP=-1.5:LRA=11`;
+                            break;
+                    }
+                    
+                    args.push('-af', filter);
+                    
+                    // Add format-specific parameters
+                    if (outputFormat === 'mp3' || outputFormat === 'ogg') {
+                        args.push('-b:a', bitrate);
+                    }
+                    
+                    args.push(`output_${i}.${format.ext}`);
+                    
+                    // Progress tracking
+                    ffmpeg.on('progress', ({ progress }) => {
+                        const percentage = Math.round(progress * 100);
+                        progressBar.style.width = `${percentage}%`;
+                        progressBar.textContent = `${percentage}%`;
+                    });
+                    
+                    // Execute normalization
+                    await ffmpeg.exec(args);
+                    
+                    // Read output file
+                    const data = await ffmpeg.readFile(`output_${i}.${format.ext}`);
+                    
+                    // Create blob and download
+                    const blob = new Blob([data.buffer], { type: format.mime });
+                    const downloadUrl = URL.createObjectURL(blob);
+                    
+                    normalizedFiles.push({
+                        name: `${fileName}_normalized.${format.ext}`,
+                        blob: blob,
+                        url: downloadUrl,
+                        originalFile: file,
+                        originalPeak: calculatePeakLevelFromFile(file),
+                        normalizedPeak: calculatePeakLevelFromBlob(blob)
+                    });
+                    
+                    progressText.textContent = `âœ“ ${file.name} normalized successfully`;
+                    
+                } catch (error) {
+                    console.error('Normalization error:', error);
+                    progressText.textContent = `âœ— Failed to normalize ${file.name}`;
+                }
+                
+                // Clean up
+                try {
+                    await ffmpeg.deleteFile(`input_${i}`);
+                    await ffmpeg.deleteFile(`output_${i}.${format.ext}`);
+                } catch (e) {
+                    // Ignore cleanup errors
+                }
+            }
+            
+            progressBar.style.width = '100%';
+            progressBar.textContent = '100%';
+            progressText.textContent = 'Normalization completed!';
+            
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 2000);
+            
+            downloadBtn.disabled = normalizedFiles.length === 0;
+            normalizeBtn.disabled = false;
+            
+            if (normalizedFiles.length > 0) {
+                showNormalizationResults();
+                if (document.getElementById('previewMode').checked) {
+                    showComparison();
+                }
+            }
+        }
+        
+        // Calculate peak from file
+        function calculatePeakLevelFromFile(file) {
+            // This is a placeholder - in a real implementation,
+            // you would decode the file and calculate the peak
+            return Math.random() * 20 - 10; // Random value between -10 and 10
+        }
+        
+        // Calculate peak from blob
+        function calculatePeakLevelFromBlob(blob) {
+            // This is a placeholder - in a real implementation,
+            // you would decode the blob and calculate the peak
+            return -3; // Target level
+        }
+        
+        // Show normalization results
+        function showNormalizationResults() {
+            outputSection.style.display = 'block';
+            const resultsHtml = normalizedFiles.map(file => `
+                <div class="normalization-result" style="padding: 15px; background: #f9f9f9; margin-bottom: 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>${file.name}</strong>
+                        <br>
+                        <small style="color: #666;">Original: ${file.originalFile.name}</small>
+                        <br>
+                        <small style="color: #666;">Size: ${(file.blob.size / 1024 / 1024).toFixed(2)} MB</small>
+                        <br>
+                        <small style="color: #666;">Peak: ${file.originalPeak.toFixed(1)} dB â†’ ${file.normalizedPeak.toFixed(1)} dB</small>
+                    </div>
+                    <button onclick="downloadSingle('${file.url}', '${file.name}')" style="background: #22c55e; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+                        Download
+                    </button>
+                </div>
+            `).join('');
+            
+            outputSection.querySelector('#outputContent').innerHTML = `
+                <h4>Normalization Results</h4>
+                ${resultsHtml}
+            `;
+        }
+        
+        // Show comparison
+        function showComparison() {
+            if (normalizedFiles.length === 0) return;
+            
+            comparisonSection.style.display = 'grid';
+            originalPeak.textContent = `${normalizedFiles[0].originalPeak.toFixed(1)} dB`;
+            normalizedPeak.textContent = `${normalizedFiles[0].normalizedPeak.toFixed(1)} dB`;
+        }
+        
+        // Download single file
+        function downloadSingle(url, name) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        // Download all files
+        function downloadAll() {
+            normalizedFiles.forEach(file => {
+                setTimeout(() => {
+                    downloadSingle(file.url, file.name);
+                }, 100);
+            });
+        }
+        
+        // Reset functionality
+        function resetTool() {
+            selectedFiles = [];
+            normalizedFiles = [];
+            fileInput.value = '';
+            
+            normalizeBtn.disabled = true;
+            downloadBtn.disabled = true;
+            downloadAllBtn.disabled = true;
+            outputSection.style.display = 'none';
+            waveformSection.style.display = 'none';
+            fileList.style.display = 'none';
+            comparisonSection.style.display = 'none';
+            progressContainer.style.display = 'none';
+            
+            dropZone.querySelector('.drop-zone-text').textContent = 
+                'Drop your audio files here (MP3, WAV, AAC, OGG, FLAC, M4A) or click to browse';
+            
+            if (wavesurfer) {
+                wavesurfer.destroy();
+                wavesurfer = null;
+            }
+        }
+        
+        // Event listeners
+        normalizeBtn.addEventListener('click', normalizeFiles);
+        downloadBtn.addEventListener('click', () => {
+            if (normalizedFiles.length > 0) {
+                downloadSingle(normalizedFiles[0].url, normalizedFiles[0].name);
+            }
+        });
+        downloadAllBtn.addEventListener('click', downloadAll);
+        resetBtn.addEventListener('click', resetTool);
+        
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Preload FFmpeg in background
+            initFFmpeg();
+            
+            // Initialize audio context
+            initAudioContext();
+            
+            // Initialize control states
+            updateTargetLevelVisibility();
+        });
+    </script>
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
+

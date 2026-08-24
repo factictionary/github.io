@@ -1,1473 +1,1473 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factictionary - Your Ultimate Guide to Tech, Wealth & Modern Living</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description"
-        content="Factictionary is your ultimate resource for navigating 2026. Discover deep insights into AI, personal finance, remote work, and modern lifestyle.">
-    <meta name="keywords"
-        content="tech guides 2026, personal finance, career productivity, digital lifestyle, Factictionary, satirical news">
-    <meta name="author" content="Factictionary Team">
-
-    <link rel="canonical" href="https://factictionary.github.io">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
-
-    <style>
-        /* ─── Satirical News Section Styles ────────────────────────────── */
-        .news-section {
-            background: #0a0a12;
-            padding: 60px 0 80px;
-            border-top: 3px solid var(--color-primary-500);
-            border-bottom: 3px solid var(--color-primary-500);
-        }
-
-        .news-section .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .news-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .news-header .satire-badge {
-            display: inline-block;
-            background: #e94560;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 4px 16px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-        }
-
-        .news-header h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-
-        .news-header h2 span {
-            color: #e94560;
-        }
-
-        .news-header p {
-            color: #888;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* ─── News Carousel ────────────────────────────────────────────── */
-        .news-carousel-wrapper {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-            background: #1a1a2e;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .news-carousel-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
-        }
-
-        .news-slide {
-            flex: 0 0 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            min-height: 400px;
-            background: #1a1a2e;
-        }
-
-        .news-slide-image {
-            position: relative;
-            overflow: hidden;
-            background: #0a0a12;
-            min-height: 300px;
-        }
-
-        .news-slide-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .news-slide-image .image-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            font-size: 64px;
-            color: #444;
-            background: #12121f;
-        }
-
-        .news-slide-content {
-            padding: 32px 36px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .news-slide-content .badge {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            background: #e94560;
-            color: #fff;
-            margin-bottom: 12px;
-            align-self: flex-start;
-        }
-
-        .news-slide-content .badge.breaking {
-            background: #ff4444;
-            animation: pulse-badge 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse-badge {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        .news-slide-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.3;
-            margin-bottom: 10px;
-        }
-
-        .news-slide-content h3 a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .news-slide-content h3 a:hover {
-            color: #e94560;
-        }
-
-        .news-slide-content .summary {
-            color: #b0b0c8;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-
-        .news-slide-content .meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 16px;
-            font-size: 12px;
-            color: #6a6a8a;
-        }
-
-        .news-slide-content .meta .tag {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 12px;
-            background: #2a2a4a;
-            color: #b0b0c8;
-            font-size: 10px;
-        }
-
-        .news-slide-content .read-more {
-            margin-top: 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #e94560;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: gap 0.2s;
-        }
-
-        .news-slide-content .read-more:hover {
-            gap: 12px;
-        }
-
-        /* ─── Carousel Controls ────────────────────────────────────────── */
-        .carousel-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            padding: 20px 24px;
-            background: #12121f;
-            border-top: 1px solid #2a2a4a;
-        }
-
-        .carousel-controls button {
-            background: none;
-            border: none;
-            color: #888;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 20px;
-        }
-
-        .carousel-controls button:hover {
-            color: #fff;
-            background: #2a2a4a;
-        }
-
-        .carousel-controls button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .carousel-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .carousel-dots .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #2a2a4a;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            padding: 0;
-        }
-
-        .carousel-dots .dot.active {
-            background: #e94560;
-            transform: scale(1.3);
-        }
-
-        .carousel-dots .dot:hover {
-            background: #6a6a8a;
-        }
-
-        .carousel-counter {
-            color: #6a6a8a;
-            font-size: 13px;
-            min-width: 50px;
-            text-align: center;
-        }
-
-        /* App download strip */
-        .download-strip {
-            margin-top: 36px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .download-label {
-            font-size: 11px;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 14px;
-        }
-
-        .store-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .store-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            padding: 10px 18px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 13px;
-            font-weight: 500;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            cursor: pointer;
-        }
-
-        .store-btn:hover {
-            background: rgba(255, 255, 255, 0.13);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .store-btn svg {
-            opacity: 0.9;
-            flex-shrink: 0;
-        }
-
-        /* ─── Disclaimer Section ────────────────────────────────────────── */
-        .disclaimer-section {
-            background: #f8f5f0;
-            padding: 40px 0;
-            border-top: 1px solid #e0d8d0;
-            border-bottom: 1px solid #e0d8d0;
-        }
-
-        .disclaimer-section .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .disclaimer-section .disclaimer-box {
-            background: #fff;
-            border-radius: 12px;
-            padding: 32px 40px;
-            border-left: 4px solid #e94560;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .disclaimer-section .disclaimer-box h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .disclaimer-section .disclaimer-box h4 .icon {
-            font-size: 20px;
-        }
-
-        .disclaimer-section .disclaimer-box p {
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 8px;
-        }
-
-        .disclaimer-section .disclaimer-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .disclaimer-section .disclaimer-box ul {
-            margin: 8px 0 12px 20px;
-            color: #555;
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        .disclaimer-section .disclaimer-box strong {
-            color: #1a1a2e;
-        }
-
-        /* ─── Responsive ────────────────────────────────────────────────── */
-        @media (max-width: 992px) {
-            .news-slide {
-                grid-template-columns: 1fr;
-            }
-
-            .news-slide-image {
-                min-height: 200px;
-                max-height: 280px;
-            }
-
-            .news-slide-content {
-                padding: 24px 28px;
-            }
-
-            .news-header h2 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .news-section {
-                padding: 40px 0 60px;
-            }
-
-            .news-slide-content {
-                padding: 18px 20px;
-            }
-
-            .news-slide-content h3 {
-                font-size: 1.2rem;
-            }
-
-            .news-slide-content .summary {
-                font-size: 0.85rem;
-            }
-
-            .news-header h2 {
-                font-size: 1.6rem;
-            }
-
-            .carousel-controls {
-                flex-wrap: wrap;
-                gap: 10px;
-                padding: 14px 16px;
-            }
-
-            .disclaimer-section .disclaimer-box {
-                padding: 20px 24px;
-            }
-
-            .disclaimer-section .disclaimer-box ul {
-                padding-left: 16px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .news-slide-content .meta {
-                font-size: 10px;
-                gap: 4px 10px;
-            }
-
-            .carousel-controls button {
-                font-size: 16px;
-                padding: 6px 8px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/deals/today/" class="nav-link">Deals</a></li>
-                <li><a href="/tools/" class="nav-link">Tools</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/deals/today/" class="nav-link">Deals</a></li>
-            <li><a href="/tools/" class="nav-link">Tools</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-        </ul>
-    </div>
-
-    <main id="main">
-        <!-- Hero Section - High Demand Web Utilities -->
-        <section class="hero" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; padding: 70px 20px 80px;">
-            <div class="container text-center" style="max-width: 900px; margin: 0 auto;">
-                <div class="privacy-shield-bar" style="background: rgba(16, 185, 129, 0.15); color: #34D399; border-color: rgba(52, 211, 153, 0.3);">
-                    <span class="pulse-dot"></span>
-                    <span>100% Client-Side Privacy Shield: 0 Bytes Uploaded to Server</span>
-                </div>
-
-                <h1 class="hero-title" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; color: #FFFFFF; font-weight: 800; margin-top: 15px;">
-                    High-Demand <span style="background: linear-gradient(135deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Web Utilities</span>
-                </h1>
-                <p class="hero-subtitle" style="margin-top: 20px; color: #94A3B8; font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6;">
-                    Ultra-fast browser tools for PDF, Image, Video, Audio, Developer & Text processing. Zero file uploads, 100% on-device privacy guarantee.
-                </p>
-
-                <!-- Hero Search Bar with Live Suggestions -->
-                <div class="hero-search-wrapper">
-                    <span class="hero-search-icon">🔍</span>
-                    <input type="text" id="hero-live-search" class="hero-search-input" placeholder="Search 50+ high-demand utilities (e.g. PDF merger, bg remover, video compressor)..." aria-label="Search utilities">
-                    
-                    <div id="hero-search-dropdown" class="search-results-dropdown">
-                        <a href="/tools/ats_resume_matcher.html" class="search-result-item" data-title="ATS Resume & CV Matcher" data-keywords="ats resume cv score job description keyword match">
-                            <span class="search-result-title">📄 ATS Resume & CV Matcher</span>
-                            <span class="search-result-cat">Career Tool</span>
-                        </a>
-                        <a href="/tools/invoice_generator.html" class="search-result-item" data-title="Instant Invoice & Receipt Pro" data-keywords="invoice receipt bill pdf freelancer generator">
-                            <span class="search-result-title">🧾 Instant Invoice & Receipt Pro</span>
-                            <span class="search-result-cat">Business Tool</span>
-                        </a>
-                        <a href="/tools/screen_recorder.html" class="search-result-item" data-title="Screen & Webcam Recorder" data-keywords="screen record webcam video tab no watermark">
-                            <span class="search-result-title">📹 Screen & Webcam Recorder</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/qr_generator.html" class="search-result-item" data-title="Custom Stylized QR Studio" data-keywords="qr code generator wifi vcard png custom">
-                            <span class="search-result-title">🎨 Custom Stylized QR Studio</span>
-                            <span class="search-result-cat">Design Tool</span>
-                        </a>
-                        <a href="/tools/svg_converter.html" class="search-result-item" data-title="SVG to PNG / WebP Converter" data-keywords="svg to png convert jpg webp vector">
-                            <span class="search-result-title">🎨 SVG to PNG / WebP Converter</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/text_to_speech.html" class="search-result-item" data-title="Text-to-Speech Voice Reader" data-keywords="text to speech tts voice reader read aloud">
-                            <span class="search-result-title">🗣️ Text-to-Speech Voice Reader</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/markdown_editor.html" class="search-result-item" data-title="Markdown Live Studio" data-keywords="markdown live editor md to html preview">
-                            <span class="search-result-title">📝 Markdown Live Studio</span>
-                            <span class="search-result-cat">Dev Tool</span>
-                        </a>
-                        <a href="/tools/pdf_merger.html" class="search-result-item" data-title="PDF Merger & Combiner" data-keywords="pdf combine join merge">
-                            <span class="search-result-title">📄 PDF Merger & Combiner</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_compressor.html" class="search-result-item" data-title="PDF Compressor" data-keywords="pdf shrink size email reduce">
-                            <span class="search-result-title">📉 PDF Compressor</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_ocr.html" class="search-result-item" data-title="PDF OCR Text Extractor" data-keywords="pdf ocr extract text scanned image">
-                            <span class="search-result-title">🔍 PDF OCR Text Extractor</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_splitter.html" class="search-result-item" data-title="PDF Splitter & Page Extractor" data-keywords="pdf split extract pages cut range">
-                            <span class="search-result-title">✂️ PDF Splitter & Page Extractor</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_rotator.html" class="search-result-item" data-title="PDF Page Rotator" data-keywords="pdf rotate page orientation turn">
-                            <span class="search-result-title">🔄 PDF Page Rotator</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_to_image.html" class="search-result-item" data-title="PDF to Image Converter" data-keywords="pdf to image png jpg convert rendering">
-                            <span class="search-result-title">🖼️ PDF to Image Converter</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_watermark.html" class="search-result-item" data-title="PDF Watermark Tool" data-keywords="pdf watermark text stamp protect">
-                            <span class="search-result-title">🏷️ PDF Watermark Tool</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_password.html" class="search-result-item" data-title="PDF Password Protect / Remove" data-keywords="pdf password lock unlock encrypt decrypt">
-                            <span class="search-result-title">🔒 PDF Password Protect / Remove</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_metadata.html" class="search-result-item" data-title="PDF Metadata Editor" data-keywords="pdf metadata title author tags info">
-                            <span class="search-result-title">📋 PDF Metadata Editor</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_bookmark.html" class="search-result-item" data-title="PDF Bookmark Manager" data-keywords="pdf bookmark toc outline chapter">
-                            <span class="search-result-title">🔖 PDF Bookmark Manager</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/pdf_analyzer.html" class="search-result-item" data-title="PDF Document Analyzer" data-keywords="pdf analyze inspect fonts structural audit">
-                            <span class="search-result-title">📊 PDF Document Analyzer</span>
-                            <span class="search-result-cat">PDF Tool</span>
-                        </a>
-                        <a href="/tools/image_background_remover.html" class="search-result-item" data-title="Image Background Remover" data-keywords="bg remove photo transparent background eraser">
-                            <span class="search-result-title">🖼️ Image Background Remover</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_compressor.html" class="search-result-item" data-title="Instant Image Compressor" data-keywords="image shrink reduce kb webp compress">
-                            <span class="search-result-title">⚡ Instant Image Compressor</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_converter.html" class="search-result-item" data-title="Image Format Converter" data-keywords="image format convert png jpg webp bmp">
-                            <span class="search-result-title">🔄 Image Format Converter</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_resizer.html" class="search-result-item" data-title="Image Resizer & Cropper" data-keywords="image resize crop width height dimension">
-                            <span class="search-result-title">📐 Image Resizer & Cropper</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_cropper.html" class="search-result-item" data-title="Image Crop & Frame Studio" data-keywords="image crop ratio instagram thumbnail">
-                            <span class="search-result-title">✂️ Image Crop & Frame Studio</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_enhancer.html" class="search-result-item" data-title="Image Enhancer & Sharpener" data-keywords="image enhance sharpen lighting photo fix">
-                            <span class="search-result-title">✨ Image Enhancer & Sharpener</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_filters.html" class="search-result-item" data-title="Image Filter & Effects Studio" data-keywords="image filter effects sepia vintage blur">
-                            <span class="search-result-title">🎨 Image Filter & Effects Studio</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_hdr.html" class="search-result-item" data-title="HDR Photo Effect Generator" data-keywords="hdr photo dynamic range tone map filter">
-                            <span class="search-result-title">🌅 HDR Photo Effect Generator</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_color_converter.html" class="search-result-item" data-title="Image Color Space Converter" data-keywords="image color space rgb cmyk hsl Convert">
-                            <span class="search-result-title">🎨 Image Color Space Converter</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_stitcher.html" class="search-result-item" data-title="Image Combiner & Stitcher" data-keywords="image stitch combine grid collage side by side">
-                            <span class="search-result-title">🧩 Image Combiner & Stitcher</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_to_pdf.html" class="search-result-item" data-title="Image to PDF Converter" data-keywords="image to pdf photo pdf compile convert">
-                            <span class="search-result-title">📄 Image to PDF Converter</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/image_watermark.html" class="search-result-item" data-title="Image Watermark Protection" data-keywords="image watermark logo copyright text photo">
-                            <span class="search-result-title">🏷️ Image Watermark Protection</span>
-                            <span class="search-result-cat">Image Tool</span>
-                        </a>
-                        <a href="/tools/video_trimmer.html" class="search-result-item" data-title="Video Trimmer & Cutter" data-keywords="video trim clip cut edit preview">
-                            <span class="search-result-title">✂️ Video Trimmer & Cutter</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_compressor.html" class="search-result-item" data-title="Video Compressor" data-keywords="video compress shrink bitrate reduce mb">
-                            <span class="search-result-title">📉 Video Compressor</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_converter.html" class="search-result-item" data-title="Video Format Converter" data-keywords="video convert format mp4 webm avi mov">
-                            <span class="search-result-title">🔄 Video Format Converter</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_to_gif.html" class="search-result-item" data-title="Video to Animated GIF Maker" data-keywords="video to gif animated gif maker clip">
-                            <span class="search-result-title">🎞️ Video to Animated GIF Maker</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_audio_extractor.html" class="search-result-item" data-title="Video Audio Extractor" data-keywords="video audio extract mp3 sound sound track">
-                            <span class="search-result-title">🔊 Video Audio Extractor</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_resizer.html" class="search-result-item" data-title="Video Resizer & Aspect Crop" data-keywords="video resize aspect crop reels shorts 9:16">
-                            <span class="search-result-title">📐 Video Resizer & Aspect Crop</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_rotation.html" class="search-result-item" data-title="Video Rotator & Flip Tool" data-keywords="video rotate flip orientation sideways">
-                            <span class="search-result-title">🔄 Video Rotator & Flip Tool</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_speed.html" class="search-result-item" data-title="Video Speed & Slow-Mo Studio" data-keywords="video speed slow motion fast forward tempo">
-                            <span class="search-result-title">⏩ Video Speed & Slow-Mo Studio</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_looper.html" class="search-result-item" data-title="Video Loop Creator" data-keywords="video loop repeat gif story background">
-                            <span class="search-result-title">🔁 Video Loop Creator</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_filter.html" class="search-result-item" data-title="Video Filter & Color Studio" data-keywords="video filter fx color brightness contrast">
-                            <span class="search-result-title">🎨 Video Filter & Color Studio</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_subtitle.html" class="search-result-item" data-title="Video Subtitle Generator" data-keywords="video subtitle captions srt vtt burn subtitles">
-                            <span class="search-result-title">💬 Video Subtitle Generator</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_enhancer.html" class="search-result-item" data-title="Video Quality Enhancer" data-keywords="video enhance quality sharpen clarity fix">
-                            <span class="search-result-title">✨ Video Quality Enhancer</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_preview.html" class="search-result-item" data-title="Video Thumbnail & Frame Grabber" data-keywords="video frame snapshot grabber thumbnail screenshot">
-                            <span class="search-result-title">🖼️ Video Thumbnail & Frame Grabber</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_watermark.html" class="search-result-item" data-title="Video Watermark Protection" data-keywords="video watermark overlay logo text copyright">
-                            <span class="search-result-title">🏷️ Video Watermark Protection</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/video_merger.html" class="search-result-item" data-title="Video Joiner & Merger" data-keywords="video merge join combine sequence clips">
-                            <span class="search-result-title">🎞️ Video Joiner & Merger</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/audio_converter.html" class="search-result-item" data-title="Audio Format Converter" data-keywords="audio convert mp3 wav ogg m4a format">
-                            <span class="search-result-title">🎵 Audio Format Converter</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_trimmer.html" class="search-result-item" data-title="Audio Trimmer & Cutter" data-keywords="audio trim cut ringtone wav mp3 cutter">
-                            <span class="search-result-title">✂️ Audio Trimmer & Cutter</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_mixer.html" class="search-result-item" data-title="Audio Track Mixer Studio" data-keywords="audio mix multi track sound overlay balance">
-                            <span class="search-result-title">🎛️ Audio Track Mixer Studio</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_editor.html" class="search-result-item" data-title="Audio Waveform Editor" data-keywords="audio edit waveform gain fade ringtone">
-                            <span class="search-result-title">🎶 Audio Waveform Editor</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_effects.html" class="search-result-item" data-title="Audio FX & Equalizer" data-keywords="audio eq equalizer bass boost reverb fx sound">
-                            <span class="search-result-title">🎚️ Audio FX & Equalizer</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_normalizer.html" class="search-result-item" data-title="Audio Volume Normalizer" data-keywords="audio normalize volume peak gain loud sound">
-                            <span class="search-result-title">🔊 Audio Volume Normalizer</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_speed_changer.html" class="search-result-item" data-title="Audio Speed & Pitch Changer" data-keywords="audio speed pitch tempo fast slow music">
-                            <span class="search-result-title">⚡ Audio Speed & Pitch Changer</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/audio_analyzer.html" class="search-result-item" data-title="Audio Spectrum Analyzer" data-keywords="audio spectrum analyzer visualizer fft frequency">
-                            <span class="search-result-title">📊 Audio Spectrum Analyzer</span>
-                            <span class="search-result-cat">Audio Tool</span>
-                        </a>
-                        <a href="/tools/frame_extractor.html" class="search-result-item" data-title="GIF & Video Frame Extractor" data-keywords="gif frame extractor zip video split images">
-                            <span class="search-result-title">🎞️ GIF & Video Frame Extractor</span>
-                            <span class="search-result-cat">Video Tool</span>
-                        </a>
-                        <a href="/tools/batch_processor.html" class="search-result-item" data-title="Batch File Processor" data-keywords="batch process rename convert multiple files">
-                            <span class="search-result-title">📦 Batch File Processor</span>
-                            <span class="search-result-cat">Utility Tool</span>
-                        </a>
-                        <a href="/tools/json_formatter.html" class="search-result-item" data-title="JSON Formatter & Validator" data-keywords="json format validate prettify minify inspect">
-                            <span class="search-result-title">💻 JSON Formatter & Validator</span>
-                            <span class="search-result-cat">Dev Tool</span>
-                        </a>
-                        <a href="/tools/base64_encoder.html" class="search-result-item" data-title="Base64 Encoder / Decoder" data-keywords="base64 encode decode binary string text">
-                            <span class="search-result-title">🔒 Base64 Encoder / Decoder</span>
-                            <span class="search-result-cat">Dev Tool</span>
-                        </a>
-                        <a href="/tools/url_encoder.html" class="search-result-item" data-title="URL Encoder / Decoder" data-keywords="url encode decode percent uri query link">
-                            <span class="search-result-title">🔗 URL Encoder / Decoder</span>
-                            <span class="search-result-cat">Dev Tool</span>
-                        </a>
-                        <a href="/tools/hash_generator.html" class="search-result-item" data-title="Hash Generator (MD5 / SHA-256)" data-keywords="hash sha256 md5 sha512 crypto checksum">
-                            <span class="search-result-title">🔑 Hash Generator (MD5 / SHA-256)</span>
-                            <span class="search-result-cat">Dev Tool</span>
-                        </a>
-                        <a href="/tools/case_converter.html" class="search-result-item" data-title="Text Case Converter" data-keywords="text case convert camelcase snakecase uppercase">
-                            <span class="search-result-title">🔤 Text Case Converter</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/text_diff.html" class="search-result-item" data-title="Text Diff & Comparison Tool" data-keywords="text diff compare changes side by side code">
-                            <span class="search-result-title">🔄 Text Diff & Comparison Tool</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/word_counter.html" class="search-result-item" data-title="Word & Character Counter" data-keywords="word counter character count reading time stats">
-                            <span class="search-result-title">📊 Word & Character Counter</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/remove_spaces.html" class="search-result-item" data-title="Space & Line Cleaner" data-keywords="remove spaces whitespace clean empty lines tabs">
-                            <span class="search-result-title">🧹 Space & Line Cleaner</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/reverse_text.html" class="search-result-item" data-title="Text Flipper & Reverser" data-keywords="reverse text flip mirror backwards words">
-                            <span class="search-result-title">🔄 Text Flipper & Reverser</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/text_formatter.html" class="search-result-item" data-title="Text Cleaner & Formatter" data-keywords="text clean format indent strip html tags">
-                            <span class="search-result-title">📝 Text Cleaner & Formatter</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/text_analyzer.html" class="search-result-item" data-title="Text & Sentiment Analyzer" data-keywords="text analyze readability keyword density frequency">
-                            <span class="search-result-title">🧠 Text & Sentiment Analyzer</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/lorem_ipsum.html" class="search-result-item" data-title="Lorem Ipsum Generator" data-keywords="lorem ipsum generator dummy text placeholder">
-                            <span class="search-result-title">📜 Lorem Ipsum Generator</span>
-                            <span class="search-result-cat">Text Tool</span>
-                        </a>
-                        <a href="/tools/brain_teasers.html" class="search-result-item" data-title="Brain Teasers & Logic Puzzles" data-keywords="brain teasers logic puzzles riddles focus game">
-                            <span class="search-result-title">🧩 Brain Teasers & Logic Puzzles</span>
-                            <span class="search-result-cat">Games</span>
-                        </a>
-                        <a href="/tools/memory_games.html" class="search-result-item" data-title="Memory Matrix & Focus Game" data-keywords="memory game focus pattern matrix cognitive train">
-                            <span class="search-result-title">🎮 Memory Matrix & Focus Game</span>
-                            <span class="search-result-cat">Games</span>
-                        </a>
-                        <a href="/tools/word_games.html" class="search-result-item" data-title="Wordle & Vocab Challenge" data-keywords="wordle word game puzzle vocab daily challenge">
-                            <span class="search-result-title">🔤 Wordle & Vocab Challenge</span>
-                            <span class="search-result-cat">Games</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px;">
-                    <a href="/tools/" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 14px 32px; background: linear-gradient(135deg, #0066FF, #0052CC);">Explore All 50+ Tools →</a>
-                    <button onclick="openDonationModal()" class="btn btn-secondary btn-lg" style="border-radius: 50px; padding: 14px 28px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">☕ Support Us</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- High-Demand Utilities Showcase Grid -->
-        <section class="section" style="padding: 70px 0; background: var(--color-neutral-50);">
-            <div class="container">
-                <div class="text-center mb-lg">
-                    <span style="color: var(--color-primary-600); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Popular Essentials</span>
-                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 6px;">Featured High-Demand Utilities</h2>
-                    <p class="lead-text" style="max-width: 600px; margin: 0 auto; color: var(--color-neutral-700);">Most popular browser-based web utilities used daily by millions worldwide.</p>
-                </div>
-
-                <div class="grid grid-3" style="gap: 24px;">
-                    <!-- PDF Utilities Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">📄</span>
-                            <span class="value-badge batch">Batch Mode</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">PDF Utility Suite</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            Merge multiple PDFs, compress file sizes, extract text via OCR, protect/unprotect passwords, and convert images to PDF instantly.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">Merge</span>
-                            <span class="feature-tag">Compress</span>
-                            <span class="feature-tag">OCR Text</span>
-                            <span class="feature-tag">Watermark</span>
-                        </div>
-                        <a href="/tools/pdf_merger.html" class="btn-tool-card">Launch PDF Tools →</a>
-                    </div>
-
-                    <!-- Image Utilities Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">🖼️</span>
-                            <span class="value-badge pro-preset">Smart Presets</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Image Converter & Enhancer</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            Remove image backgrounds, convert to WebP/AVIF/PNG, resize with aspect locking, apply HDR filters, and crop for social media.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">BG Removal</span>
-                            <span class="feature-tag">Compress</span>
-                            <span class="feature-tag">WebP / AVIF</span>
-                            <span class="feature-tag">Resize</span>
-                        </div>
-                        <a href="/tools/image_background_remover.html" class="btn-tool-card">Launch Image Tools →</a>
-                    </div>
-
-                    <!-- Video Utilities Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">🎬</span>
-                            <span class="value-badge offline">FFmpeg Wasm</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Video & GIF Studio</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            Trim & cut videos, compress high-res clips for email/Discord, convert video to animated GIF, and extract MP3 audio.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">Trim & Cut</span>
-                            <span class="feature-tag">Compress</span>
-                            <span class="feature-tag">Video to GIF</span>
-                            <span class="feature-tag">Extract Audio</span>
-                        </div>
-                        <a href="/tools/video_trimmer.html" class="btn-tool-card">Launch Video Tools →</a>
-                    </div>
-
-                    <!-- Audio Utilities Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">🎵</span>
-                            <span class="value-badge offline">Web Audio</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Audio Editor & Mixer</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            Trim audio tracks, normalize volume, convert between MP3/WAV/OGG, change playback speed, and apply acoustic EQ filters.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">Converter</span>
-                            <span class="feature-tag">Normalizer</span>
-                            <span class="feature-tag">Trimmer</span>
-                            <span class="feature-tag">Equalizer</span>
-                        </div>
-                        <a href="/tools/audio_converter.html" class="btn-tool-card">Launch Audio Tools →</a>
-                    </div>
-
-                    <!-- Developer Utilities Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">⚡</span>
-                            <span class="value-badge batch">Dev Toolkit</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Developer & Text Utilities</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            JSON formatting & tree validation, Base64 encoder/decoder, SHA256/MD5 hash generator, text diff comparer, and word counter.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">JSON Prettify</span>
-                            <span class="feature-tag">Base64</span>
-                            <span class="feature-tag">Hash Generator</span>
-                            <span class="feature-tag">Text Diff</span>
-                        </div>
-                        <a href="/tools/json_formatter.html" class="btn-tool-card">Launch Dev Tools →</a>
-                    </div>
-
-                    <!-- Games & Productivity Card -->
-                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                            <span style="font-size: 2.2rem;">🎮</span>
-                            <span class="value-badge offline">Brain Exercises</span>
-                        </div>
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Brain Training & Games</h3>
-                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
-                            Enhance cognitive focus with memory challenges, word puzzles, brain teasers, and rapid reaction games.
-                        </p>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
-                            <span class="feature-tag">Memory</span>
-                            <span class="feature-tag">Word Games</span>
-                            <span class="feature-tag">Teasers</span>
-                            <span class="feature-tag">Focus</span>
-                        </div>
-                        <a href="/tools/memory_games.html" class="btn-tool-card">Play Brain Games →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Community Support & Donation Banner -->
-        <section class="section" style="padding: 40px 20px; background: #FFFFFF;">
-            <div class="container" style="max-width: 960px;">
-                <div class="donation-banner-card">
-                    <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Community</span>
-                    <h3>Support Privacy-First Web Utilities</h3>
-                    <p>Factictionary is hosted on GitHub Pages and runs completely client-side in your browser. We never monetize or sell user data. If these tools saved you time or money, consider supporting our project!</p>
-                    
-                    <div class="donation-btn-group">
-                        <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                            💳 Support via PayPal
-                        </a>
-                        <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                            💖 GitHub Sponsors
-                        </a>
-                        <button onclick="openDonationModal()" class="btn-donate-crypto">
-                            🪙 Crypto / UPI Donation
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Donation Modal Popup -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Ethereum / USDT (ERC-20) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">UPI / Direct Payment ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ════════════════════════════════════════════════════════════════ -->
-        <!-- SATIRICAL NEWS SECTION                                           -->
-        <!-- ════════════════════════════════════════════════════════════════ -->
-        <section class="news-section" aria-label="Satirical News">
-            <div class="container">
-                <div class="news-header">
-                    <span class="satire-badge">🎭 Satire</span>
-                    <h2>Spoof<span>Daily</span></h2>
-                    <p>Your daily dose of satirical news — because the world needs more laughter.</p>
-                </div>
-
-                <div class="news-carousel-wrapper" id="newsCarousel">
-                    <div class="news-carousel-track" id="newsTrack">
-                        <!-- Slides will be dynamically inserted here -->
-                    </div>
-
-                    <div class="carousel-controls">
-                        <button id="prevBtn" aria-label="Previous news">‹</button>
-                        <div class="carousel-dots" id="newsDots"></div>
-                        <span class="carousel-counter" id="newsCounter">1 / 1</span>
-                        <button id="nextBtn" aria-label="Next news">›</button>
-                        <button id="autoPlayBtn" aria-label="Toggle auto-play" style="font-size:14px;">▶</button>
-                    </div>
-                </div>
-
-                <!-- View All Link -->
-                <div style="text-align: center; margin-top: 24px;">
-                    <a href="/spoof/"
-                        style="color: #e94560; text-decoration: none; font-weight: 600; font-size: 0.95rem;">
-                        View All Satirical News →
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
-                <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Articles</a></li>
-                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
-                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Latest Posts</a></li>
-                        <li><a href="/spoof/" style="color: #666; text-decoration: none;">Satirical News</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
-                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
-                        <li><a href="mailto:factictionary@gmail.com"
-                                style="color: #666; text-decoration: none;">Email</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
-                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
-                        <li><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
-                <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved. | <a
-                        href="/sitemap.xml" style="color: #666;">Sitemap</a></p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Toggle Script -->
-    <script>
-        (function () {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileMenuBackdrop = document.querySelector('.mobile-menu-backdrop');
-            const body = document.body;
-
-            function toggleMenu() {
-                menuToggle.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-                mobileMenuBackdrop.classList.toggle('active');
-                body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-            }
-
-            menuToggle.addEventListener('click', toggleMenu);
-            mobileMenuBackdrop.addEventListener('click', toggleMenu);
-
-            const mobileMenuLinks = mobileMenu.querySelectorAll('.nav-link');
-            mobileMenuLinks.forEach(link => {
-                link.addEventListener('click', toggleMenu);
-            });
-
-            window.addEventListener('resize', function () {
-                if (window.innerWidth >= 768 && mobileMenu.classList.contains('active')) {
-                    toggleMenu();
-                }
-            });
-        })();
-    </script>
-
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <!-- NEWS CAROUSEL SCRIPT                                            -->
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <script>
-        (function () {
-            'use strict';
-
-            // ─── CONFIG ──────────────────────────────────────────────────
-            const CONFIG = {
-                factsBasePath: '/spoof/data/facts/',  // Updated path
-                dataIndexPath: '/spoof/data/index.json',  // Updated path
-                autoPlayInterval: 6000,
-                preloadCount: 2,
-            };
-
-            // ─── STATE ──────────────────────────────────────────────────
-            let state = {
-                filenames: [],
-                currentIndex: 0,
-                totalItems: 0,
-                isAutoPlaying: true,
-                autoPlayTimer: null,
-                loadedItems: {},
-                isTransitioning: false,
-            };
-
-            // ─── DOM REFS ──────────────────────────────────────────────
-            const track = document.getElementById('newsTrack');
-            const dotsContainer = document.getElementById('newsDots');
-            const counterEl = document.getElementById('newsCounter');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const autoPlayBtn = document.getElementById('autoPlayBtn');
-
-            // ─── UTILITY ──────────────────────────────────────────────
-            function escapeHtml(text) {
-                if (!text) return '';
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            function formatBody(text) {
-                if (!text) return '';
-                return text.split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
-            }
-
-            function getImageUrl(item) {
-                return item.imageUrl || '';
-            }
-
-            function slugify(text) {
-                if (!text) return 'untitled';
-                return text.toLowerCase()
-                    .replace(/[^\w\s-]/g, '')
-                    .replace(/[\s-]+/g, '-')
-                    .replace(/-+/g, '-')
-                    .trim('-')
-                    .substring(0, 100);
-            }
-
-            // ─── LOAD INDEX ────────────────────────────────────────────
-            async function loadIndex() {
-                try {
-                    const response = await fetch(CONFIG.dataIndexPath);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
-                    state.filenames = Array.isArray(data) ? data : data.items || [];
-                    state.totalItems = state.filenames.length;
-                    return state.filenames;
-                } catch (error) {
-                    console.error('[NewsCarousel] Failed to load index:', error);
-                    return [];
-                }
-            }
-
-            // ─── LOAD FACT ─────────────────────────────────────────────
-            async function loadFact(filename) {
-                if (state.loadedItems[filename]) {
-                    return state.loadedItems[filename];
-                }
-                try {
-                    // filename is now like "2026-06-04_001.json"
-                    const response = await fetch(`${CONFIG.factsBasePath}${filename}`);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
-                    state.loadedItems[filename] = data;
-                    return data;
-                } catch (error) {
-                    console.error(`[NewsCarousel] Failed to load ${filename}:`, error);
-                    return null;
-                }
-            }
-
-            // ─── RENDER SLIDE ──────────────────────────────────────────
-            // ─── RENDER SLIDE ──────────────────────────────────────────
-            function renderSlide(fact, index) {
-                const slide = document.createElement('div');
-                slide.className = 'news-slide';
-                slide.dataset.index = index;
-
-                const headline = fact.headline || 'Untitled';
-                const summary = fact.summary || '';
-                const imageUrl = getImageUrl(fact);
-                const isBreaking = fact.isBreaking || false;
-                const tags = fact.tags || [];
-                const publishedAt = fact.publishedAt || '';
-                const readTime = fact.readTimeSeconds || 0;
-                const slug = slugify(headline);
-                const articleUrl = `/spoof/facts/${slug}.html`;  // Updated path
-
-                slide.innerHTML = `
-        <div class="news-slide-image">
-            ${imageUrl ? `
-                <img src="${imageUrl}" alt="${escapeHtml(headline)}" loading="lazy" 
-                     onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📰</div>'"
-                />
-            ` : `
-                <div class="image-placeholder">📰</div>
-            `}
-        </div>
-        <div class="news-slide-content">
-            ${isBreaking ? `<span class="badge breaking">🔴 Breaking</span>` : `<span class="badge">🎭 Satire</span>`}
-            <h3><a href="${articleUrl}">${escapeHtml(headline)}</a></h3>
-            ${summary ? `<div class="summary">${escapeHtml(summary)}</div>` : ''}
-            <div class="meta">
-                ${publishedAt ? `<span>📅 ${escapeHtml(publishedAt)}</span>` : ''}
-                ${readTime ? `<span>⏱️ ${readTime}s read</span>` : ''}
-                ${tags.length ? tags.slice(0, 3).map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('') : ''}
-                ${isBreaking ? `<span class="tag" style="background:#ff4444;color:#fff;">Breaking</span>` : ''}
-            </div>
-            <a href="${articleUrl}" class="read-more">Read Full Story →</a>
-            <div class="download-strip">
-                <div class="download-label">Get the app</div>
-                    <div class="store-buttons">
-                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily" class="store-btn" aria-label="Google Play">
-                        <svg width="18" height="20" viewBox="0 0 24 27" fill="currentColor">
-                            <path d="M1.5 0L14 12.5 1.5 25C0.6 24.5 0 23.6 0 22.5V2.5C0 1.4.6.5 1.5 0z"/>
-                            <path d="M17.5 9L21.5 11.1 17.5 13.2 14 9.7z" opacity=".85"/>
-                            <path d="M1.5 0l12.5 12.5-3.5 3.5z" opacity=".7"/>
-                            <path d="M1.5 25l12.5-12.5 3.5 3.5z" opacity=".7"/>
-                        </svg>
-                        Google Play
-                        </a>
-                    </div>
-                </div>
-            </div>
-    `;
-
-                return slide;
-            }
-
-            function createSkeletonSlide(index) {
-                const slide = document.createElement('div');
-                slide.className = 'news-slide';
-                slide.dataset.index = index;
-                slide.dataset.loading = 'true';
-                slide.innerHTML = `
-                    <div class="news-slide-image" style="background:#12121f;display:flex;align-items:center;justify-content:center;">
-                        <div style="font-size:32px;color:#444;">📰</div>
-                    </div>
-                    <div class="news-slide-content">
-                        <span class="badge" style="background:#2a2a4a;color:#2a2a4a;width:80px;">Loading</span>
-                        <h3 style="background:#2a2a4a;color:#2a2a4a;height:28px;width:80%;border-radius:4px;margin-bottom:10px;">&nbsp;</h3>
-                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:95%;border-radius:4px;margin-bottom:6px;">&nbsp;</div>
-                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:70%;border-radius:4px;margin-bottom:12px;">&nbsp;</div>
-                        <div style="display:flex;gap:8px;">
-                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        </div>
-                    </div>
-                `;
-                return slide;
-            }
-
-            // ─── CAROUSEL LOGIC ────────────────────────────────────────
-            function goTo(index, animate = true) {
-                if (state.isTransitioning) return;
-                if (index < 0) index = state.totalItems - 1;
-                if (index >= state.totalItems) index = 0;
-                if (index === state.currentIndex && state.totalItems > 1) return;
-
-                state.isTransitioning = true;
-                state.currentIndex = index;
-
-                updateCarousel(animate);
-                updateControls();
-                updateDots();
-                updateCounter();
-                ensureSlide(index);
-
-                resetAutoPlayTimer();
-
-                setTimeout(() => {
-                    state.isTransitioning = false;
-                }, 550);
-            }
-
-            function updateCarousel(animate = true) {
-                const offset = -state.currentIndex * 100;
-                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-                track.style.transform = `translateX(${offset}%)`;
-            }
-
-            function updateControls() {
-                prevBtn.disabled = state.totalItems <= 1;
-                nextBtn.disabled = state.totalItems <= 1;
-            }
-
-            function updateCounter() {
-                counterEl.textContent = `${state.currentIndex + 1} / ${state.totalItems}`;
-            }
-
-            function updateDots() {
-                const dots = dotsContainer.querySelectorAll('.dot');
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === state.currentIndex);
-                });
-            }
-
-            function ensureSlide(index) {
-                const existing = track.querySelector(`.news-slide[data-index="${index}"]`);
-                if (existing) return;
-
-                const filename = state.filenames[index];
-                if (!filename) return;
-
-                const skeleton = createSkeletonSlide(index);
-                track.appendChild(skeleton);
-
-                loadFact(filename).then(fact => {
-                    if (!fact) return;
-                    const slide = track.querySelector(`.news-slide[data-index="${index}"]`);
-                    if (slide) {
-                        const newSlide = renderSlide(fact, index);
-                        slide.replaceWith(newSlide);
-                    }
-                }).catch(() => { });
-            }
-
-            // ─── AUTO-PLAY ─────────────────────────────────────────────
-            function toggleAutoPlay() {
-                if (state.isAutoPlaying) {
-                    stopAutoPlay();
-                } else {
-                    startAutoPlay();
-                }
-            }
-
-            function startAutoPlay() {
-                if (state.totalItems <= 1) return;
-                state.isAutoPlaying = true;
-                autoPlayBtn.textContent = '⏸';
-                resetAutoPlayTimer();
-            }
-
-            function stopAutoPlay() {
-                state.isAutoPlaying = false;
-                autoPlayBtn.textContent = '▶';
-                if (state.autoPlayTimer) {
-                    clearTimeout(state.autoPlayTimer);
-                    state.autoPlayTimer = null;
-                }
-            }
-
-            function resetAutoPlayTimer() {
-                if (state.autoPlayTimer) {
-                    clearTimeout(state.autoPlayTimer);
-                    state.autoPlayTimer = null;
-                }
-                if (state.isAutoPlaying && state.totalItems > 1) {
-                    state.autoPlayTimer = setTimeout(() => {
-                        goTo(state.currentIndex + 1);
-                    }, CONFIG.autoPlayInterval);
-                }
-            }
-
-            // ─── BUILD INITIAL SLIDES ──────────────────────────────────
-            function buildInitialSlides() {
-                track.innerHTML = '';
-                const initialCount = Math.min(3, state.totalItems);
-
-                for (let i = 0; i < initialCount; i++) {
-                    const filename = state.filenames[i];
-                    if (!filename) continue;
-                    const skeleton = createSkeletonSlide(i);
-                    track.appendChild(skeleton);
-                    loadFact(filename).then(fact => {
-                        if (!fact) return;
-                        const slide = track.querySelector(`.news-slide[data-index="${i}"]`);
-                        if (slide) {
-                            const newSlide = renderSlide(fact, i);
-                            slide.replaceWith(newSlide);
-                        }
-                    }).catch(() => { });
-                }
-
-                // Build dots
-                dotsContainer.innerHTML = '';
-                for (let i = 0; i < state.totalItems; i++) {
-                    const dot = document.createElement('button');
-                    dot.className = 'dot' + (i === 0 ? ' active' : '');
-                    dot.dataset.index = i;
-                    dot.setAttribute('aria-label', `Go to news ${i + 1}`);
-                    dot.addEventListener('click', () => goTo(i));
-                    dotsContainer.appendChild(dot);
-                }
-
-                updateControls();
-                updateCounter();
-            }
-
-            // ─── KEYBOARD SUPPORT ──────────────────────────────────────
-            function handleKeydown(e) {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    goTo(state.currentIndex + 1);
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    goTo(state.currentIndex - 1);
-                }
-            }
-
-            // ─── INIT ──────────────────────────────────────────────────
-            async function init() {
-                const filenames = await loadIndex();
-                if (!filenames || filenames.length === 0) {
-                    track.innerHTML = `
-                        <div class="news-slide" style="grid-template-columns:1fr;min-height:200px;text-align:center;padding:40px;color:#888;">
-                            <div style="grid-column:1;">📭 No satirical news available at the moment. Check back later!</div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                buildInitialSlides();
-
-                // Event Listeners
-                prevBtn.addEventListener('click', () => goTo(state.currentIndex - 1));
-                nextBtn.addEventListener('click', () => goTo(state.currentIndex + 1));
-                autoPlayBtn.addEventListener('click', toggleAutoPlay);
-                document.addEventListener('keydown', handleKeydown);
-
-                // Pause on hover
-                const wrapper = document.querySelector('.news-carousel-wrapper');
-                wrapper.addEventListener('mouseenter', () => {
-                    if (state.autoPlayTimer) {
-                        clearTimeout(state.autoPlayTimer);
-                        state.autoPlayTimer = null;
-                    }
-                });
-                wrapper.addEventListener('mouseleave', resetAutoPlayTimer);
-
-                // Start auto-play
-                if (state.totalItems > 1) {
-                    startAutoPlay();
-                }
-            }
-
-            // ─── START ──────────────────────────────────────────────────
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factictionary - Your Ultimate Guide to Tech, Wealth & Modern Living</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Factictionary is your ultimate resource for navigating 2026. Discover deep insights into AI, personal finance, remote work, and modern lifestyle.">
+    <meta name="keywords"
+        content="tech guides 2026, personal finance, career productivity, digital lifestyle, Factictionary, satirical news">
+    <meta name="author" content="Factictionary Team">
+
+    <link rel="canonical" href="https://factictionary.github.io">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        /* ─── Satirical News Section Styles ────────────────────────────── */
+        .news-section {
+            background: #0a0a12;
+            padding: 60px 0 80px;
+            border-top: 3px solid var(--color-primary-500);
+            border-bottom: 3px solid var(--color-primary-500);
+        }
+
+        .news-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .news-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .news-header .satire-badge {
+            display: inline-block;
+            background: #e94560;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 16px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .news-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .news-header h2 span {
+            color: #e94560;
+        }
+
+        .news-header p {
+            color: #888;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ─── News Carousel ────────────────────────────────────────────── */
+        .news-carousel-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #1a1a2e;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .news-carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+        }
+
+        .news-slide {
+            flex: 0 0 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            min-height: 400px;
+            background: #1a1a2e;
+        }
+
+        .news-slide-image {
+            position: relative;
+            overflow: hidden;
+            background: #0a0a12;
+            min-height: 300px;
+        }
+
+        .news-slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .news-slide-image .image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 64px;
+            color: #444;
+            background: #12121f;
+        }
+
+        .news-slide-content {
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .news-slide-content .badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            background: #e94560;
+            color: #fff;
+            margin-bottom: 12px;
+            align-self: flex-start;
+        }
+
+        .news-slide-content .badge.breaking {
+            background: #ff4444;
+            animation: pulse-badge 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .news-slide-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+
+        .news-slide-content h3 a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .news-slide-content h3 a:hover {
+            color: #e94560;
+        }
+
+        .news-slide-content .summary {
+            color: #b0b0c8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .news-slide-content .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: 12px;
+            color: #6a6a8a;
+        }
+
+        .news-slide-content .meta .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: #2a2a4a;
+            color: #b0b0c8;
+            font-size: 10px;
+        }
+
+        .news-slide-content .read-more {
+            margin-top: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #e94560;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: gap 0.2s;
+        }
+
+        .news-slide-content .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ─── Carousel Controls ────────────────────────────────────────── */
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: #12121f;
+            border-top: 1px solid #2a2a4a;
+        }
+
+        .carousel-controls button {
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 20px;
+        }
+
+        .carousel-controls button:hover {
+            color: #fff;
+            background: #2a2a4a;
+        }
+
+        .carousel-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2a2a4a;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+        }
+
+        .carousel-dots .dot.active {
+            background: #e94560;
+            transform: scale(1.3);
+        }
+
+        .carousel-dots .dot:hover {
+            background: #6a6a8a;
+        }
+
+        .carousel-counter {
+            color: #6a6a8a;
+            font-size: 13px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* App download strip */
+        .download-strip {
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .download-label {
+            font-size: 11px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 14px;
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 18px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            cursor: pointer;
+        }
+
+        .store-btn:hover {
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .store-btn svg {
+            opacity: 0.9;
+            flex-shrink: 0;
+        }
+
+        /* ─── Disclaimer Section ────────────────────────────────────────── */
+        .disclaimer-section {
+            background: #f8f5f0;
+            padding: 40px 0;
+            border-top: 1px solid #e0d8d0;
+            border-bottom: 1px solid #e0d8d0;
+        }
+
+        .disclaimer-section .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .disclaimer-section .disclaimer-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px 40px;
+            border-left: 4px solid #e94560;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .disclaimer-section .disclaimer-box h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .disclaimer-section .disclaimer-box h4 .icon {
+            font-size: 20px;
+        }
+
+        .disclaimer-section .disclaimer-box p {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer-section .disclaimer-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .disclaimer-section .disclaimer-box ul {
+            margin: 8px 0 12px 20px;
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .disclaimer-section .disclaimer-box strong {
+            color: #1a1a2e;
+        }
+
+        /* ─── Responsive ────────────────────────────────────────────────── */
+        @media (max-width: 992px) {
+            .news-slide {
+                grid-template-columns: 1fr;
+            }
+
+            .news-slide-image {
+                min-height: 200px;
+                max-height: 280px;
+            }
+
+            .news-slide-content {
+                padding: 24px 28px;
+            }
+
+            .news-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .news-section {
+                padding: 40px 0 60px;
+            }
+
+            .news-slide-content {
+                padding: 18px 20px;
+            }
+
+            .news-slide-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .news-slide-content .summary {
+                font-size: 0.85rem;
+            }
+
+            .news-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .carousel-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 14px 16px;
+            }
+
+            .disclaimer-section .disclaimer-box {
+                padding: 20px 24px;
+            }
+
+            .disclaimer-section .disclaimer-box ul {
+                padding-left: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .news-slide-content .meta {
+                font-size: 10px;
+                gap: 4px 10px;
+            }
+
+            .carousel-controls button {
+                font-size: 16px;
+                padding: 6px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/deals/today/" class="nav-link">Deals</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/deals/today/" class="nav-link">Deals</a></li>
+            <li><a href="/tools/" class="nav-link">Tools</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <main id="main">
+        <!-- Hero Section - High Demand Web Utilities -->
+        <section class="hero" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; padding: 70px 20px 80px;">
+            <div class="container text-center" style="max-width: 900px; margin: 0 auto;">
+                <div class="privacy-shield-bar" style="background: rgba(16, 185, 129, 0.15); color: #34D399; border-color: rgba(52, 211, 153, 0.3);">
+                    <span class="pulse-dot"></span>
+                    <span>100% Client-Side Privacy Shield: 0 Bytes Uploaded to Server</span>
+                </div>
+
+                <h1 class="hero-title" style="font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.15; color: #FFFFFF; font-weight: 800; margin-top: 15px;">
+                    High-Demand <span style="background: linear-gradient(135deg, #38BDF8, #818CF8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Web Utilities</span>
+                </h1>
+                <p class="hero-subtitle" style="margin-top: 20px; color: #94A3B8; font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.6;">
+                    Ultra-fast browser tools for PDF, Image, Video, Audio, Developer & Text processing. Zero file uploads, 100% on-device privacy guarantee.
+                </p>
+
+                <!-- Hero Search Bar with Live Suggestions -->
+                <div class="hero-search-wrapper">
+                    <span class="hero-search-icon">🔍</span>
+                    <input type="text" id="hero-live-search" class="hero-search-input" placeholder="Search 50+ high-demand utilities (e.g. PDF merger, bg remover, video compressor)..." aria-label="Search utilities">
+                    
+                    <div id="hero-search-dropdown" class="search-results-dropdown">
+                        <a href="/tools/ats_resume_matcher.html" class="search-result-item" data-title="ATS Resume & CV Matcher" data-keywords="ats resume cv score job description keyword match">
+                            <span class="search-result-title">📄 ATS Resume & CV Matcher</span>
+                            <span class="search-result-cat">Career Tool</span>
+                        </a>
+                        <a href="/tools/invoice_generator.html" class="search-result-item" data-title="Instant Invoice & Receipt Pro" data-keywords="invoice receipt bill pdf freelancer generator">
+                            <span class="search-result-title">🧾 Instant Invoice & Receipt Pro</span>
+                            <span class="search-result-cat">Business Tool</span>
+                        </a>
+                        <a href="/tools/screen_recorder.html" class="search-result-item" data-title="Screen & Webcam Recorder" data-keywords="screen record webcam video tab no watermark">
+                            <span class="search-result-title">📹 Screen & Webcam Recorder</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/qr_generator.html" class="search-result-item" data-title="Custom Stylized QR Studio" data-keywords="qr code generator wifi vcard png custom">
+                            <span class="search-result-title">🎨 Custom Stylized QR Studio</span>
+                            <span class="search-result-cat">Design Tool</span>
+                        </a>
+                        <a href="/tools/svg_converter.html" class="search-result-item" data-title="SVG to PNG / WebP Converter" data-keywords="svg to png convert jpg webp vector">
+                            <span class="search-result-title">🎨 SVG to PNG / WebP Converter</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/text_to_speech.html" class="search-result-item" data-title="Text-to-Speech Voice Reader" data-keywords="text to speech tts voice reader read aloud">
+                            <span class="search-result-title">🗣️ Text-to-Speech Voice Reader</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/markdown_editor.html" class="search-result-item" data-title="Markdown Live Studio" data-keywords="markdown live editor md to html preview">
+                            <span class="search-result-title">📝 Markdown Live Studio</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/pdf_merger.html" class="search-result-item" data-title="PDF Merger & Combiner" data-keywords="pdf combine join merge">
+                            <span class="search-result-title">📄 PDF Merger & Combiner</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_compressor.html" class="search-result-item" data-title="PDF Compressor" data-keywords="pdf shrink size email reduce">
+                            <span class="search-result-title">📉 PDF Compressor</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_ocr.html" class="search-result-item" data-title="PDF OCR Text Extractor" data-keywords="pdf ocr extract text scanned image">
+                            <span class="search-result-title">🔍 PDF OCR Text Extractor</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_splitter.html" class="search-result-item" data-title="PDF Splitter & Page Extractor" data-keywords="pdf split extract pages cut range">
+                            <span class="search-result-title">✂ ️ PDF Splitter & Page Extractor</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_rotator.html" class="search-result-item" data-title="PDF Page Rotator" data-keywords="pdf rotate page orientation turn">
+                            <span class="search-result-title">🔄 PDF Page Rotator</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_to_image.html" class="search-result-item" data-title="PDF to Image Converter" data-keywords="pdf to image png jpg convert rendering">
+                            <span class="search-result-title">🖼️ PDF to Image Converter</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_watermark.html" class="search-result-item" data-title="PDF Watermark Tool" data-keywords="pdf watermark text stamp protect">
+                            <span class="search-result-title">🏷️ PDF Watermark Tool</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_password.html" class="search-result-item" data-title="PDF Password Protect / Remove" data-keywords="pdf password lock unlock encrypt decrypt">
+                            <span class="search-result-title">🔒 PDF Password Protect / Remove</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_metadata.html" class="search-result-item" data-title="PDF Metadata Editor" data-keywords="pdf metadata title author tags info">
+                            <span class="search-result-title">📋 PDF Metadata Editor</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_bookmark.html" class="search-result-item" data-title="PDF Bookmark Manager" data-keywords="pdf bookmark toc outline chapter">
+                            <span class="search-result-title">🔖 PDF Bookmark Manager</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/pdf_analyzer.html" class="search-result-item" data-title="PDF Document Analyzer" data-keywords="pdf analyze inspect fonts structural audit">
+                            <span class="search-result-title">📊 PDF Document Analyzer</span>
+                            <span class="search-result-cat">PDF Tool</span>
+                        </a>
+                        <a href="/tools/image_background_remover.html" class="search-result-item" data-title="Image Background Remover" data-keywords="bg remove photo transparent background eraser">
+                            <span class="search-result-title">🖼️ Image Background Remover</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_compressor.html" class="search-result-item" data-title="Instant Image Compressor" data-keywords="image shrink reduce kb webp compress">
+                            <span class="search-result-title">⚡ Instant Image Compressor</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_converter.html" class="search-result-item" data-title="Image Format Converter" data-keywords="image format convert png jpg webp bmp">
+                            <span class="search-result-title">🔄 Image Format Converter</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_resizer.html" class="search-result-item" data-title="Image Resizer & Cropper" data-keywords="image resize crop width height dimension">
+                            <span class="search-result-title">📐 Image Resizer & Cropper</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_cropper.html" class="search-result-item" data-title="Image Crop & Frame Studio" data-keywords="image crop ratio instagram thumbnail">
+                            <span class="search-result-title">✂ ️ Image Crop & Frame Studio</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_enhancer.html" class="search-result-item" data-title="Image Enhancer & Sharpener" data-keywords="image enhance sharpen lighting photo fix">
+                            <span class="search-result-title">✨ Image Enhancer & Sharpener</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_filters.html" class="search-result-item" data-title="Image Filter & Effects Studio" data-keywords="image filter effects sepia vintage blur">
+                            <span class="search-result-title">🎨 Image Filter & Effects Studio</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_hdr.html" class="search-result-item" data-title="HDR Photo Effect Generator" data-keywords="hdr photo dynamic range tone map filter">
+                            <span class="search-result-title">🌅 HDR Photo Effect Generator</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_color_converter.html" class="search-result-item" data-title="Image Color Space Converter" data-keywords="image color space rgb cmyk hsl Convert">
+                            <span class="search-result-title">🎨 Image Color Space Converter</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_stitcher.html" class="search-result-item" data-title="Image Combiner & Stitcher" data-keywords="image stitch combine grid collage side by side">
+                            <span class="search-result-title">🧩 Image Combiner & Stitcher</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_to_pdf.html" class="search-result-item" data-title="Image to PDF Converter" data-keywords="image to pdf photo pdf compile convert">
+                            <span class="search-result-title">📄 Image to PDF Converter</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/image_watermark.html" class="search-result-item" data-title="Image Watermark Protection" data-keywords="image watermark logo copyright text photo">
+                            <span class="search-result-title">🏷️ Image Watermark Protection</span>
+                            <span class="search-result-cat">Image Tool</span>
+                        </a>
+                        <a href="/tools/video_trimmer.html" class="search-result-item" data-title="Video Trimmer & Cutter" data-keywords="video trim clip cut edit preview">
+                            <span class="search-result-title">✂ ️ Video Trimmer & Cutter</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_compressor.html" class="search-result-item" data-title="Video Compressor" data-keywords="video compress shrink bitrate reduce mb">
+                            <span class="search-result-title">📉 Video Compressor</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_converter.html" class="search-result-item" data-title="Video Format Converter" data-keywords="video convert format mp4 webm avi mov">
+                            <span class="search-result-title">🔄 Video Format Converter</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_to_gif.html" class="search-result-item" data-title="Video to Animated GIF Maker" data-keywords="video to gif animated gif maker clip">
+                            <span class="search-result-title">🎞️ Video to Animated GIF Maker</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_audio_extractor.html" class="search-result-item" data-title="Video Audio Extractor" data-keywords="video audio extract mp3 sound sound track">
+                            <span class="search-result-title">🔊 Video Audio Extractor</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_resizer.html" class="search-result-item" data-title="Video Resizer & Aspect Crop" data-keywords="video resize aspect crop reels shorts 9:16">
+                            <span class="search-result-title">📐 Video Resizer & Aspect Crop</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_rotation.html" class="search-result-item" data-title="Video Rotator & Flip Tool" data-keywords="video rotate flip orientation sideways">
+                            <span class="search-result-title">🔄 Video Rotator & Flip Tool</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_speed.html" class="search-result-item" data-title="Video Speed & Slow-Mo Studio" data-keywords="video speed slow motion fast forward tempo">
+                            <span class="search-result-title">⏩ Video Speed & Slow-Mo Studio</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_looper.html" class="search-result-item" data-title="Video Loop Creator" data-keywords="video loop repeat gif story background">
+                            <span class="search-result-title">🔁 Video Loop Creator</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_filter.html" class="search-result-item" data-title="Video Filter & Color Studio" data-keywords="video filter fx color brightness contrast">
+                            <span class="search-result-title">🎨 Video Filter & Color Studio</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_subtitle.html" class="search-result-item" data-title="Video Subtitle Generator" data-keywords="video subtitle captions srt vtt burn subtitles">
+                            <span class="search-result-title">💬 Video Subtitle Generator</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_enhancer.html" class="search-result-item" data-title="Video Quality Enhancer" data-keywords="video enhance quality sharpen clarity fix">
+                            <span class="search-result-title">✨ Video Quality Enhancer</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_preview.html" class="search-result-item" data-title="Video Thumbnail & Frame Grabber" data-keywords="video frame snapshot grabber thumbnail screenshot">
+                            <span class="search-result-title">🖼️ Video Thumbnail & Frame Grabber</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_watermark.html" class="search-result-item" data-title="Video Watermark Protection" data-keywords="video watermark overlay logo text copyright">
+                            <span class="search-result-title">🏷️ Video Watermark Protection</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/video_merger.html" class="search-result-item" data-title="Video Joiner & Merger" data-keywords="video merge join combine sequence clips">
+                            <span class="search-result-title">🎞️ Video Joiner & Merger</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/audio_converter.html" class="search-result-item" data-title="Audio Format Converter" data-keywords="audio convert mp3 wav ogg m4a format">
+                            <span class="search-result-title">🎵 Audio Format Converter</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_trimmer.html" class="search-result-item" data-title="Audio Trimmer & Cutter" data-keywords="audio trim cut ringtone wav mp3 cutter">
+                            <span class="search-result-title">✂ ️ Audio Trimmer & Cutter</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_mixer.html" class="search-result-item" data-title="Audio Track Mixer Studio" data-keywords="audio mix multi track sound overlay balance">
+                            <span class="search-result-title">🎛️ Audio Track Mixer Studio</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_editor.html" class="search-result-item" data-title="Audio Waveform Editor" data-keywords="audio edit waveform gain fade ringtone">
+                            <span class="search-result-title">🎶 Audio Waveform Editor</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_effects.html" class="search-result-item" data-title="Audio FX & Equalizer" data-keywords="audio eq equalizer bass boost reverb fx sound">
+                            <span class="search-result-title">🎚️ Audio FX & Equalizer</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_normalizer.html" class="search-result-item" data-title="Audio Volume Normalizer" data-keywords="audio normalize volume peak gain loud sound">
+                            <span class="search-result-title">🔊 Audio Volume Normalizer</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_speed_changer.html" class="search-result-item" data-title="Audio Speed & Pitch Changer" data-keywords="audio speed pitch tempo fast slow music">
+                            <span class="search-result-title">⚡ Audio Speed & Pitch Changer</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/audio_analyzer.html" class="search-result-item" data-title="Audio Spectrum Analyzer" data-keywords="audio spectrum analyzer visualizer fft frequency">
+                            <span class="search-result-title">📊 Audio Spectrum Analyzer</span>
+                            <span class="search-result-cat">Audio Tool</span>
+                        </a>
+                        <a href="/tools/frame_extractor.html" class="search-result-item" data-title="GIF & Video Frame Extractor" data-keywords="gif frame extractor zip video split images">
+                            <span class="search-result-title">🎞️ GIF & Video Frame Extractor</span>
+                            <span class="search-result-cat">Video Tool</span>
+                        </a>
+                        <a href="/tools/batch_processor.html" class="search-result-item" data-title="Batch File Processor" data-keywords="batch process rename convert multiple files">
+                            <span class="search-result-title">📦 Batch File Processor</span>
+                            <span class="search-result-cat">Utility Tool</span>
+                        </a>
+                        <a href="/tools/json_formatter.html" class="search-result-item" data-title="JSON Formatter & Validator" data-keywords="json format validate prettify minify inspect">
+                            <span class="search-result-title">💻 JSON Formatter & Validator</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/base64_encoder.html" class="search-result-item" data-title="Base64 Encoder / Decoder" data-keywords="base64 encode decode binary string text">
+                            <span class="search-result-title">🔒 Base64 Encoder / Decoder</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/url_encoder.html" class="search-result-item" data-title="URL Encoder / Decoder" data-keywords="url encode decode percent uri query link">
+                            <span class="search-result-title">🔗 URL Encoder / Decoder</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/hash_generator.html" class="search-result-item" data-title="Hash Generator (MD5 / SHA-256)" data-keywords="hash sha256 md5 sha512 crypto checksum">
+                            <span class="search-result-title">🔑 Hash Generator (MD5 / SHA-256)</span>
+                            <span class="search-result-cat">Dev Tool</span>
+                        </a>
+                        <a href="/tools/case_converter.html" class="search-result-item" data-title="Text Case Converter" data-keywords="text case convert camelcase snakecase uppercase">
+                            <span class="search-result-title">🔤 Text Case Converter</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/text_diff.html" class="search-result-item" data-title="Text Diff & Comparison Tool" data-keywords="text diff compare changes side by side code">
+                            <span class="search-result-title">🔄 Text Diff & Comparison Tool</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/word_counter.html" class="search-result-item" data-title="Word & Character Counter" data-keywords="word counter character count reading time stats">
+                            <span class="search-result-title">📊 Word & Character Counter</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/remove_spaces.html" class="search-result-item" data-title="Space & Line Cleaner" data-keywords="remove spaces whitespace clean empty lines tabs">
+                            <span class="search-result-title">🧹 Space & Line Cleaner</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/reverse_text.html" class="search-result-item" data-title="Text Flipper & Reverser" data-keywords="reverse text flip mirror backwards words">
+                            <span class="search-result-title">🔄 Text Flipper & Reverser</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/text_formatter.html" class="search-result-item" data-title="Text Cleaner & Formatter" data-keywords="text clean format indent strip html tags">
+                            <span class="search-result-title">📝 Text Cleaner & Formatter</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/text_analyzer.html" class="search-result-item" data-title="Text & Sentiment Analyzer" data-keywords="text analyze readability keyword density frequency">
+                            <span class="search-result-title">🧠 Text & Sentiment Analyzer</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/lorem_ipsum.html" class="search-result-item" data-title="Lorem Ipsum Generator" data-keywords="lorem ipsum generator dummy text placeholder">
+                            <span class="search-result-title">📜 Lorem Ipsum Generator</span>
+                            <span class="search-result-cat">Text Tool</span>
+                        </a>
+                        <a href="/tools/brain_teasers.html" class="search-result-item" data-title="Brain Teasers & Logic Puzzles" data-keywords="brain teasers logic puzzles riddles focus game">
+                            <span class="search-result-title">🧩 Brain Teasers & Logic Puzzles</span>
+                            <span class="search-result-cat">Games</span>
+                        </a>
+                        <a href="/tools/memory_games.html" class="search-result-item" data-title="Memory Matrix & Focus Game" data-keywords="memory game focus pattern matrix cognitive train">
+                            <span class="search-result-title">🎮 Memory Matrix & Focus Game</span>
+                            <span class="search-result-cat">Games</span>
+                        </a>
+                        <a href="/tools/word_games.html" class="search-result-item" data-title="Wordle & Vocab Challenge" data-keywords="wordle word game puzzle vocab daily challenge">
+                            <span class="search-result-title">🔤 Wordle & Vocab Challenge</span>
+                            <span class="search-result-cat">Games</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 25px;">
+                    <a href="/tools/" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 14px 32px; background: linear-gradient(135deg, #0066FF, #0052CC);">Explore All 50+ Tools →</a>
+                    <button onclick="openDonationModal()" class="btn btn-secondary btn-lg" style="border-radius: 50px; padding: 14px 28px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">☕ Support Us</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- High-Demand Utilities Showcase Grid -->
+        <section class="section" style="padding: 70px 0; background: var(--color-neutral-50);">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <span style="color: var(--color-primary-600); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Popular Essentials</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 6px;">Featured High-Demand Utilities</h2>
+                    <p class="lead-text" style="max-width: 600px; margin: 0 auto; color: var(--color-neutral-700);">Most popular browser-based web utilities used daily by millions worldwide.</p>
+                </div>
+
+                <div class="grid grid-3" style="gap: 24px;">
+                    <!-- PDF Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">📄</span>
+                            <span class="value-badge batch">Batch Mode</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">PDF Utility Suite</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Merge multiple PDFs, compress file sizes, extract text via OCR, protect/unprotect passwords, and convert images to PDF instantly.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Merge</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">OCR Text</span>
+                            <span class="feature-tag">Watermark</span>
+                        </div>
+                        <a href="/tools/pdf_merger.html" class="btn-tool-card">Launch PDF Tools →</a>
+                    </div>
+
+                    <!-- Image Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🖼️</span>
+                            <span class="value-badge pro-preset">Smart Presets</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Image Converter & Enhancer</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Remove image backgrounds, convert to WebP/AVIF/PNG, resize with aspect locking, apply HDR filters, and crop for social media.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">BG Removal</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">WebP / AVIF</span>
+                            <span class="feature-tag">Resize</span>
+                        </div>
+                        <a href="/tools/image_background_remover.html" class="btn-tool-card">Launch Image Tools →</a>
+                    </div>
+
+                    <!-- Video Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎬</span>
+                            <span class="value-badge offline">FFmpeg Wasm</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Video & GIF Studio</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Trim & cut videos, compress high-res clips for email/Discord, convert video to animated GIF, and extract MP3 audio.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Trim & Cut</span>
+                            <span class="feature-tag">Compress</span>
+                            <span class="feature-tag">Video to GIF</span>
+                            <span class="feature-tag">Extract Audio</span>
+                        </div>
+                        <a href="/tools/video_trimmer.html" class="btn-tool-card">Launch Video Tools →</a>
+                    </div>
+
+                    <!-- Audio Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎵</span>
+                            <span class="value-badge offline">Web Audio</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Audio Editor & Mixer</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Trim audio tracks, normalize volume, convert between MP3/WAV/OGG, change playback speed, and apply acoustic EQ filters.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Converter</span>
+                            <span class="feature-tag">Normalizer</span>
+                            <span class="feature-tag">Trimmer</span>
+                            <span class="feature-tag">Equalizer</span>
+                        </div>
+                        <a href="/tools/audio_converter.html" class="btn-tool-card">Launch Audio Tools →</a>
+                    </div>
+
+                    <!-- Developer Utilities Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">⚡</span>
+                            <span class="value-badge batch">Dev Toolkit</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Developer & Text Utilities</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            JSON formatting & tree validation, Base64 encoder/decoder, SHA256/MD5 hash generator, text diff comparer, and word counter.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">JSON Prettify</span>
+                            <span class="feature-tag">Base64</span>
+                            <span class="feature-tag">Hash Generator</span>
+                            <span class="feature-tag">Text Diff</span>
+                        </div>
+                        <a href="/tools/json_formatter.html" class="btn-tool-card">Launch Dev Tools →</a>
+                    </div>
+
+                    <!-- Games & Productivity Card -->
+                    <div class="tool-card" style="background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--color-neutral-200); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <span style="font-size: 2.2rem;">🎮</span>
+                            <span class="value-badge offline">Brain Exercises</span>
+                        </div>
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">Brain Training & Games</h3>
+                        <p style="color: var(--color-neutral-700); font-size: 0.95rem; line-height: 1.5; flex: 1; margin-bottom: 20px;">
+                            Enhance cognitive focus with memory challenges, word puzzles, brain teasers, and rapid reaction games.
+                        </p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;">
+                            <span class="feature-tag">Memory</span>
+                            <span class="feature-tag">Word Games</span>
+                            <span class="feature-tag">Teasers</span>
+                            <span class="feature-tag">Focus</span>
+                        </div>
+                        <a href="/tools/memory_games.html" class="btn-tool-card">Play Brain Games →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Support & Donation Banner -->
+        <section class="section" style="padding: 40px 20px; background: #FFFFFF;">
+            <div class="container" style="max-width: 960px;">
+                <div class="donation-banner-card">
+                    <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Community</span>
+                    <h3>Support Privacy-First Web Utilities</h3>
+                    <p>Factictionary is hosted on GitHub Pages and runs completely client-side in your browser. We never monetize or sell user data. If these tools saved you time or money, consider supporting our project!</p>
+                    
+                    <div class="donation-btn-group">
+                        <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                            💳 Support via PayPal
+                        </a>
+                        <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                            💖 GitHub Sponsors
+                        </a>
+                        <button onclick="openDonationModal()" class="btn-donate-crypto">
+                            🪙 Crypto / UPI Donation
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Donation Modal Popup -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">Ethereum / USDT (ERC-20) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem; color: var(--color-neutral-900);">UPI / Direct Payment ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <!-- SATIRICAL NEWS SECTION                                           -->
+        <!-- ════════════════════════════════════════════════════════════════ -->
+        <section class="news-section" aria-label="Satirical News">
+            <div class="container">
+                <div class="news-header">
+                    <span class="satire-badge">🎭 Satire</span>
+                    <h2>Spoof<span>Daily</span></h2>
+                    <p>Your daily dose of satirical news — because the world needs more laughter.</p>
+                </div>
+
+                <div class="news-carousel-wrapper" id="newsCarousel">
+                    <div class="news-carousel-track" id="newsTrack">
+                        <!-- Slides will be dynamically inserted here -->
+                    </div>
+
+                    <div class="carousel-controls">
+                        <button id="prevBtn" aria-label="Previous news">‹</button>
+                        <div class="carousel-dots" id="newsDots"></div>
+                        <span class="carousel-counter" id="newsCounter">1 / 1</span>
+                        <button id="nextBtn" aria-label="Next news">›</button>
+                        <button id="autoPlayBtn" aria-label="Toggle auto-play" style="font-size:14px;">▶ </button>
+                    </div>
+                </div>
+
+                <!-- View All Link -->
+                <div style="text-align: center; margin-top: 24px;">
+                    <a href="/spoof/"
+                        style="color: #e94560; text-decoration: none; font-weight: 600; font-size: 0.95rem;">
+                        View All Satirical News →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Articles</a></li>
+                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
+                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Latest Posts</a></li>
+                        <li><a href="/spoof/" style="color: #666; text-decoration: none;">Satirical News</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
+                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
+                        <li><a href="mailto:factictionary@gmail.com"
+                                style="color: #666; text-decoration: none;">Email</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
+                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
+                        <li><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
+                <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved. | <a
+                        href="/sitemap.xml" style="color: #666;">Sitemap</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        (function () {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuBackdrop = document.querySelector('.mobile-menu-backdrop');
+            const body = document.body;
+
+            function toggleMenu() {
+                menuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                mobileMenuBackdrop.classList.toggle('active');
+                body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+            mobileMenuBackdrop.addEventListener('click', toggleMenu);
+
+            const mobileMenuLinks = mobileMenu.querySelectorAll('.nav-link');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        })();
+    </script>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!-- NEWS CAROUSEL SCRIPT                                            -->
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <script>
+        (function () {
+            'use strict';
+
+            // ─── CONFIG ──────────────────────────────────────────────────
+            const CONFIG = {
+                factsBasePath: '/spoof/data/facts/',  // Updated path
+                dataIndexPath: '/spoof/data/index.json',  // Updated path
+                autoPlayInterval: 6000,
+                preloadCount: 2,
+            };
+
+            // ─── STATE ──────────────────────────────────────────────────
+            let state = {
+                filenames: [],
+                currentIndex: 0,
+                totalItems: 0,
+                isAutoPlaying: true,
+                autoPlayTimer: null,
+                loadedItems: {},
+                isTransitioning: false,
+            };
+
+            // ─── DOM REFS ──────────────────────────────────────────────
+            const track = document.getElementById('newsTrack');
+            const dotsContainer = document.getElementById('newsDots');
+            const counterEl = document.getElementById('newsCounter');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const autoPlayBtn = document.getElementById('autoPlayBtn');
+
+            // ─── UTILITY ──────────────────────────────────────────────
+            function escapeHtml(text) {
+                if (!text) return '';
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function formatBody(text) {
+                if (!text) return '';
+                return text.split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
+            }
+
+            function getImageUrl(item) {
+                return item.imageUrl || '';
+            }
+
+            function slugify(text) {
+                if (!text) return 'untitled';
+                return text.toLowerCase()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/[\s-]+/g, '-')
+                    .replace(/-+/g, '-')
+                    .trim('-')
+                    .substring(0, 100);
+            }
+
+            // ─── LOAD INDEX ────────────────────────────────────────────
+            async function loadIndex() {
+                try {
+                    const response = await fetch(CONFIG.dataIndexPath);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.json();
+                    state.filenames = Array.isArray(data) ? data : data.items || [];
+                    state.totalItems = state.filenames.length;
+                    return state.filenames;
+                } catch (error) {
+                    console.error('[NewsCarousel] Failed to load index:', error);
+                    return [];
+                }
+            }
+
+            // ─── LOAD FACT ─────────────────────────────────────────────
+            async function loadFact(filename) {
+                if (state.loadedItems[filename]) {
+                    return state.loadedItems[filename];
+                }
+                try {
+                    // filename is now like "2026-06-04_001.json"
+                    const response = await fetch(`${CONFIG.factsBasePath}${filename}`);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.json();
+                    state.loadedItems[filename] = data;
+                    return data;
+                } catch (error) {
+                    console.error(`[NewsCarousel] Failed to load ${filename}:`, error);
+                    return null;
+                }
+            }
+
+            // ─── RENDER SLIDE ──────────────────────────────────────────
+            // ─── RENDER SLIDE ──────────────────────────────────────────
+            function renderSlide(fact, index) {
+                const slide = document.createElement('div');
+                slide.className = 'news-slide';
+                slide.dataset.index = index;
+
+                const headline = fact.headline || 'Untitled';
+                const summary = fact.summary || '';
+                const imageUrl = getImageUrl(fact);
+                const isBreaking = fact.isBreaking || false;
+                const tags = fact.tags || [];
+                const publishedAt = fact.publishedAt || '';
+                const readTime = fact.readTimeSeconds || 0;
+                const slug = slugify(headline);
+                const articleUrl = `/spoof/facts/${slug}.html`;  // Updated path
+
+                slide.innerHTML = `
+        <div class="news-slide-image">
+            ${imageUrl ? `
+                <img src="${imageUrl}" alt="${escapeHtml(headline)}" loading="lazy" 
+                     onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📰</div>'"
+                />
+            ` : `
+                <div class="image-placeholder">📰</div>
+            `}
+        </div>
+        <div class="news-slide-content">
+            ${isBreaking ? `<span class="badge breaking">🔴 Breaking</span>` : `<span class="badge">🎭 Satire</span>`}
+            <h3><a href="${articleUrl}">${escapeHtml(headline)}</a></h3>
+            ${summary ? `<div class="summary">${escapeHtml(summary)}</div>` : ''}
+            <div class="meta">
+                ${publishedAt ? `<span>📅 ${escapeHtml(publishedAt)}</span>` : ''}
+                ${readTime ? `<span>⏱️ ${readTime}s read</span>` : ''}
+                ${tags.length ? tags.slice(0, 3).map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('') : ''}
+                ${isBreaking ? `<span class="tag" style="background:#ff4444;color:#fff;">Breaking</span>` : ''}
+            </div>
+            <a href="${articleUrl}" class="read-more">Read Full Story →</a>
+            <div class="download-strip">
+                <div class="download-label">Get the app</div>
+                    <div class="store-buttons">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily" class="store-btn" aria-label="Google Play">
+                        <svg width="18" height="20" viewBox="0 0 24 27" fill="currentColor">
+                            <path d="M1.5 0L14 12.5 1.5 25C0.6 24.5 0 23.6 0 22.5V2.5C0 1.4.6.5 1.5 0z"/>
+                            <path d="M17.5 9L21.5 11.1 17.5 13.2 14 9.7z" opacity=".85"/>
+                            <path d="M1.5 0l12.5 12.5-3.5 3.5z" opacity=".7"/>
+                            <path d="M1.5 25l12.5-12.5 3.5 3.5z" opacity=".7"/>
+                        </svg>
+                        Google Play
+                        </a>
+                    </div>
+                </div>
+            </div>
+    `;
+
+                return slide;
+            }
+
+            function createSkeletonSlide(index) {
+                const slide = document.createElement('div');
+                slide.className = 'news-slide';
+                slide.dataset.index = index;
+                slide.dataset.loading = 'true';
+                slide.innerHTML = `
+                    <div class="news-slide-image" style="background:#12121f;display:flex;align-items:center;justify-content:center;">
+                        <div style="font-size:32px;color:#444;">📰</div>
+                    </div>
+                    <div class="news-slide-content">
+                        <span class="badge" style="background:#2a2a4a;color:#2a2a4a;width:80px;">Loading</span>
+                        <h3 style="background:#2a2a4a;color:#2a2a4a;height:28px;width:80%;border-radius:4px;margin-bottom:10px;">&nbsp;</h3>
+                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:95%;border-radius:4px;margin-bottom:6px;">&nbsp;</div>
+                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:70%;border-radius:4px;margin-bottom:12px;">&nbsp;</div>
+                        <div style="display:flex;gap:8px;">
+                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                    </div>
+                `;
+                return slide;
+            }
+
+            // ─── CAROUSEL LOGIC ────────────────────────────────────────
+            function goTo(index, animate = true) {
+                if (state.isTransitioning) return;
+                if (index < 0) index = state.totalItems - 1;
+                if (index >= state.totalItems) index = 0;
+                if (index === state.currentIndex && state.totalItems > 1) return;
+
+                state.isTransitioning = true;
+                state.currentIndex = index;
+
+                updateCarousel(animate);
+                updateControls();
+                updateDots();
+                updateCounter();
+                ensureSlide(index);
+
+                resetAutoPlayTimer();
+
+                setTimeout(() => {
+                    state.isTransitioning = false;
+                }, 550);
+            }
+
+            function updateCarousel(animate = true) {
+                const offset = -state.currentIndex * 100;
+                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+                track.style.transform = `translateX(${offset}%)`;
+            }
+
+            function updateControls() {
+                prevBtn.disabled = state.totalItems <= 1;
+                nextBtn.disabled = state.totalItems <= 1;
+            }
+
+            function updateCounter() {
+                counterEl.textContent = `${state.currentIndex + 1} / ${state.totalItems}`;
+            }
+
+            function updateDots() {
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === state.currentIndex);
+                });
+            }
+
+            function ensureSlide(index) {
+                const existing = track.querySelector(`.news-slide[data-index="${index}"]`);
+                if (existing) return;
+
+                const filename = state.filenames[index];
+                if (!filename) return;
+
+                const skeleton = createSkeletonSlide(index);
+                track.appendChild(skeleton);
+
+                loadFact(filename).then(fact => {
+                    if (!fact) return;
+                    const slide = track.querySelector(`.news-slide[data-index="${index}"]`);
+                    if (slide) {
+                        const newSlide = renderSlide(fact, index);
+                        slide.replaceWith(newSlide);
+                    }
+                }).catch(() => { });
+            }
+
+            // ─── AUTO-PLAY ─────────────────────────────────────────────
+            function toggleAutoPlay() {
+                if (state.isAutoPlaying) {
+                    stopAutoPlay();
+                } else {
+                    startAutoPlay();
+                }
+            }
+
+            function startAutoPlay() {
+                if (state.totalItems <= 1) return;
+                state.isAutoPlaying = true;
+                autoPlayBtn.textContent = '⏸';
+                resetAutoPlayTimer();
+            }
+
+            function stopAutoPlay() {
+                state.isAutoPlaying = false;
+                autoPlayBtn.textContent = '▶ ';
+                if (state.autoPlayTimer) {
+                    clearTimeout(state.autoPlayTimer);
+                    state.autoPlayTimer = null;
+                }
+            }
+
+            function resetAutoPlayTimer() {
+                if (state.autoPlayTimer) {
+                    clearTimeout(state.autoPlayTimer);
+                    state.autoPlayTimer = null;
+                }
+                if (state.isAutoPlaying && state.totalItems > 1) {
+                    state.autoPlayTimer = setTimeout(() => {
+                        goTo(state.currentIndex + 1);
+                    }, CONFIG.autoPlayInterval);
+                }
+            }
+
+            // ─── BUILD INITIAL SLIDES ──────────────────────────────────
+            function buildInitialSlides() {
+                track.innerHTML = '';
+                const initialCount = Math.min(3, state.totalItems);
+
+                for (let i = 0; i < initialCount; i++) {
+                    const filename = state.filenames[i];
+                    if (!filename) continue;
+                    const skeleton = createSkeletonSlide(i);
+                    track.appendChild(skeleton);
+                    loadFact(filename).then(fact => {
+                        if (!fact) return;
+                        const slide = track.querySelector(`.news-slide[data-index="${i}"]`);
+                        if (slide) {
+                            const newSlide = renderSlide(fact, i);
+                            slide.replaceWith(newSlide);
+                        }
+                    }).catch(() => { });
+                }
+
+                // Build dots
+                dotsContainer.innerHTML = '';
+                for (let i = 0; i < state.totalItems; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = 'dot' + (i === 0 ? ' active' : '');
+                    dot.dataset.index = i;
+                    dot.setAttribute('aria-label', `Go to news ${i + 1}`);
+                    dot.addEventListener('click', () => goTo(i));
+                    dotsContainer.appendChild(dot);
+                }
+
+                updateControls();
+                updateCounter();
+            }
+
+            // ─── KEYBOARD SUPPORT ──────────────────────────────────────
+            function handleKeydown(e) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    goTo(state.currentIndex + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    goTo(state.currentIndex - 1);
+                }
+            }
+
+            // ─── INIT ──────────────────────────────────────────────────
+            async function init() {
+                const filenames = await loadIndex();
+                if (!filenames || filenames.length === 0) {
+                    track.innerHTML = `
+                        <div class="news-slide" style="grid-template-columns:1fr;min-height:200px;text-align:center;padding:40px;color:#888;">
+                            <div style="grid-column:1;">📭 No satirical news available at the moment. Check back later!</div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                buildInitialSlides();
+
+                // Event Listeners
+                prevBtn.addEventListener('click', () => goTo(state.currentIndex - 1));
+                nextBtn.addEventListener('click', () => goTo(state.currentIndex + 1));
+                autoPlayBtn.addEventListener('click', toggleAutoPlay);
+                document.addEventListener('keydown', handleKeydown);
+
+                // Pause on hover
+                const wrapper = document.querySelector('.news-carousel-wrapper');
+                wrapper.addEventListener('mouseenter', () => {
+                    if (state.autoPlayTimer) {
+                        clearTimeout(state.autoPlayTimer);
+                        state.autoPlayTimer = null;
+                    }
+                });
+                wrapper.addEventListener('mouseleave', resetAutoPlayTimer);
+
+                // Start auto-play
+                if (state.totalItems > 1) {
+                    startAutoPlay();
+                }
+            }
+
+            // ─── START ──────────────────────────────────────────────────
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
+    </script>
+</body>
+
 </html>
