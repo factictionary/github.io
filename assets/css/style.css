@@ -933,6 +933,13 @@ select:focus {
   border: 1px solid var(--color-neutral-200);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .tool-card::before {
@@ -957,15 +964,22 @@ select:focus {
   align-items: flex-start;
   margin-bottom: var(--spacing-md);
   gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
-.tool-card-title {
+.tool-card-title,
+.card-title,
+.tool-title {
   font-size: var(--font-size-subtitle);
   font-weight: var(--font-weight-semibold);
   color: var(--color-neutral-900);
-  margin: 0;
+  margin: 0 0 8px 0;
   line-height: var(--line-height-snug);
-  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .tool-category {
@@ -979,11 +993,17 @@ select:focus {
   flex-shrink: 0;
 }
 
-.tool-card-description {
+.tool-card-description,
+.card-excerpt,
+.tool-desc {
   color: var(--color-neutral-700);
   line-height: var(--line-height-relaxed);
   margin-bottom: var(--spacing-md);
   font-size: var(--font-size-body);
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  flex: 1;
 }
 
 .tool-card-features {
