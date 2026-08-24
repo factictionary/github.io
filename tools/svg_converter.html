@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG to PNG / JPG / WebP Converter Studio | Factictionary</title>
+    
+    <meta name="description" content="Convert SVG vector files or raw SVG code to high-resolution PNG, JPG, or WebP images online. Custom scale sizing, 100% free & client-side privacy.">
+    <meta name="keywords" content="svg to png, convert svg to jpg, svg to webp, vector converter, High DPI svg export">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.github.io/tools/svg_converter.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        .svg-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--color-neutral-200);
+            margin-bottom: 40px;
+        }
+
+        .svg-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .svg-grid { grid-template-columns: 1fr; }
+        }
+
+        .svg-input {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--color-neutral-200);
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .svg-preview-box {
+            background: #F8FAFC;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        #canvasPreview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1000px;">
+        <div class="text-center">
+            <div class="privacy-shield-bar">
+                <span class="pulse-dot"></span>
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+            </div>
+
+            <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;">SVG to PNG / WebP <span style="color: var(--color-primary-500);">Converter</span></h1>
+            <p class="lead-text" style="max-width: 650px; margin: 12px auto 30px; color: var(--color-neutral-700);">
+                Convert SVG files or raw SVG code into high-resolution raster images with custom resolution scaling.
+            </p>
+        </div>
+
+        <div class="svg-card">
+            <div class="svg-grid">
+                <div>
+                    <label style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; display: block;">1. Upload SVG File or Paste SVG Code</label>
+                    <input type="file" id="svgFile" accept=".svg" class="svg-input" style="margin-bottom: 10px;">
+                    <textarea id="svgCode" class="svg-input" style="height: 160px;" placeholder="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>...</svg>" oninput="renderSVG()"></textarea>
+
+                    <div style="margin-top: 16px; display: flex; gap: 12px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.8rem; font-weight: 600;">Export Format:</label>
+                            <select id="exportFormat" class="svg-input" style="font-family: inherit;">
+                                <option value="image/png">PNG (.png)</option>
+                                <option value="image/jpeg">JPG (.jpg)</option>
+                                <option value="image/webp">WebP (.webp)</option>
+                            </select>
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 0.8rem; font-weight: 600;">Scale Multiplier:</label>
+                            <select id="scaleFactor" class="svg-input" style="font-family: inherit;" onchange="renderSVG()">
+                                <option value="1">1x Original Size</option>
+                                <option value="2">2x HD Resolution</option>
+                                <option value="4" selected>4x Ultra HD</option>
+                                <option value="8">8x Print Quality</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="svg-preview-box">
+                    <canvas id="canvasPreview"></canvas>
+                    <button onclick="downloadConvertedImage()" class="btn btn-primary" style="margin-top: 20px; border-radius: 50px; padding: 12px 28px; font-weight: 700;">
+                        ⬇️ Download Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free & Open Utility</span>
+            <h3>Enjoying Free Vector Tools?</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more free privacy tools by supporting us!</p>
+            
+            <div class="donation-btn-group">
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+                    💖 GitHub Sponsors
+                </a>
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+                    🪙 Crypto / UPI Donation
+                </button>
+            </div>
+        </div>
+
+        <!-- Crypto Modal -->
+        <div id="donation-modal" class="modal-backdrop">
+            <div class="modal-content">
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+                    <div class="crypto-wallet-box">
+                        <span>https://paypal.me/mgarg1102</span>
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+                    <div class="crypto-wallet-box">
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+                    <div class="crypto-wallet-box">
+                        <span>factictionary@upi</span>
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        const defaultSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#0066FF"/><path d="M35 50L45 60L65 40" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+        document.getElementById('svgCode').value = defaultSVG;
+
+        document.getElementById('svgFile').addEventListener('change', async e => {
+            const file = e.target.files[0];
+            if (file) {
+                const text = await file.text();
+                document.getElementById('svgCode').value = text;
+                renderSVG();
+            }
+        });
+
+        function renderSVG() {
+            const svgCode = document.getElementById('svgCode').value;
+            const scale = parseFloat(document.getElementById('scaleFactor').value) || 1;
+            const canvas = document.getElementById('canvasPreview');
+            const ctx = canvas.getContext('2d');
+
+            const blob = new Blob([svgCode], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+
+            img.onload = () => {
+                const width = (img.width || 300) * scale;
+                const height = (img.height || 300) * scale;
+
+                canvas.width = width;
+                canvas.height = height;
+
+                ctx.clearRect(0, 0, width, height);
+                ctx.drawImage(img, 0, 0, width, height);
+                URL.revokeObjectURL(url);
+            };
+
+            img.src = url;
+        }
+
+        function downloadConvertedImage() {
+            const canvas = document.getElementById('canvasPreview');
+            const format = document.getElementById('exportFormat').value;
+            const ext = format.split('/')[1];
+
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL(format, 0.95);
+            a.download = `Factictionary_Converted.${ext}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSVG();
+        });
+    </script>
+</body>
+</html>
