@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factictionary Android Apps & Games Portfolio | Official Google Play Showcase</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore Factictionary's official Google Play Store Android portfolio: Quizziest, 4 Color Card Game, Puzzle Mania, CrossSearch, Tambola Host, MindBites, and more. 100% free & privacy-first.">
+    <meta name="keywords" content="Factictionary apps, Google Play developer Factictionary, Quizziest, 4 Color Card Game, Puzzle Mania, CrossSearch, Tambola Host, MindBites, ShortsFX, SpoofDaily, free android games">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://factictionary.github.io/games/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <style>
+        /* ─── Games & Portfolio Funnel Custom Styles ─────────────────────── */
+        :root {
+            --funnel-accent: #0066FF;
+            --funnel-accent-hover: #0052CC;
+            --funnel-purple: #8B5CF6;
+            --funnel-green: #10B981;
+            --funnel-dark: #0F172A;
+            --funnel-card-bg: #FFFFFF;
+        }
+
+        .portfolio-hero {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 40%, #1E1B4B 100%);
+            color: #FFFFFF;
+            padding: 85px 20px 95px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to top, var(--color-page-bg), transparent);
+        }
+
+        .developer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 102, 255, 0.18);
+            color: #60A5FA;
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 22px;
+        }
+
+        .portfolio-hero-title {
+            font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .portfolio-hero-title .highlight {
+            background: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .portfolio-hero-subtitle {
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            color: #94A3B8;
+            max-width: 760px;
+            margin: 0 auto 36px;
+            line-height: 1.65;
+        }
+
+        .portfolio-hero-ctas {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .hero-playstore-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #0066FF 0%, #0044B3 100%);
+            color: #FFFFFF;
+            padding: 16px 32px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 12px 30px rgba(0, 102, 255, 0.4);
+            transition: all 0.25s ease;
+        }
+
+        .hero-playstore-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 36px rgba(0, 102, 255, 0.55);
+            background: linear-gradient(135deg, #1A75FF 0%, #0052CC 100%);
+        }
+
+        .hero-secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 16px 28px;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+        }
+
+        .hero-secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* ─── Funnel Stats Bar ───────────────────────────────────────────── */
+        .portfolio-stats-strip {
+            background: #1E293B;
+            border-bottom: 1px solid #334155;
+            padding: 24px 20px;
+        }
+
+        .stats-strip-container {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 2.1rem;
+            font-weight: 900;
+            color: #38BDF8;
+        }
+
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-top: 4px;
+        }
+
+        /* ─── Search & Filter Bar ────────────────────────────────────────── */
+        .portfolio-filter-container {
+            max-width: 1240px;
+            margin: 40px auto 25px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .portfolio-search-box {
+            position: relative;
+            max-width: 640px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .portfolio-search-input {
+            width: 100%;
+            padding: 16px 20px 16px 52px;
+            border-radius: 18px;
+            border: 2px solid #E2E8F0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            background: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .portfolio-search-input:focus {
+            border-color: #0066FF;
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.15);
+        }
+
+        .portfolio-search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: #94A3B8;
+        }
+
+        .filter-buttons-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-pill-btn {
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 1px solid #E2E8F0;
+            background: #FFFFFF;
+            color: #475569;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-pill-btn:hover {
+            background: #F8FAFC;
+            border-color: #CBD5E1;
+            color: #0F172A;
+        }
+
+        .filter-pill-btn.active {
+            background: #0066FF;
+            color: #FFFFFF;
+            border-color: #0066FF;
+            box-shadow: 0 4px 14px rgba(0, 102, 255, 0.35);
+        }
+
+        /* ─── App Cards Grid (Funnel Portfolio Cards) ─────────────────────── */
+        .portfolio-grid-container {
+            max-width: 1240px;
+            margin: 0 auto 70px;
+            padding: 0 20px;
+        }
+
+        .grid-header-row {
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 16px;
+        }
+
+        .grid-title-text {
+            font-size: 1.65rem;
+            font-weight: 900;
+            color: #0F172A;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid-count-tag {
+            background: #EFF6FF;
+            color: #0066FF;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .portfolio-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+        }
+
+        .app-funnel-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 22px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .app-funnel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09);
+            border-color: #CBD5E1;
+        }
+
+        .app-card-top-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .app-icon-badge {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .app-title-group h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0F172A;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .app-badge-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-wrap: wrap;
+        }
+
+        .star-rating {
+            color: #F59E0B;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #FEF3C7;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .category-pill {
+            background: #F1F5F9;
+            color: #475569;
+            padding: 2px 9px;
+            border-radius: 6px;
+        }
+
+        .app-description {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.55;
+            margin-bottom: 18px;
+            flex-grow: 1;
+        }
+
+        .app-features-bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+            font-size: 0.85rem;
+            color: #64748B;
+        }
+
+        .app-features-bullet-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .app-features-bullet-list li span.check-icon {
+            color: #10B981;
+            font-weight: 800;
+        }
+
+        .app-action-buttons-group {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-install-playstore {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #0066FF;
+            color: #FFFFFF;
+            padding: 13px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 102, 255, 0.25);
+        }
+
+        .btn-install-playstore:hover {
+            background: #0052CC;
+            box-shadow: 0 6px 18px rgba(0, 102, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-qr-scan {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #F1F5F9;
+            color: #334155;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.2rem;
+        }
+
+        .btn-qr-scan:hover {
+            background: #E2E8F0;
+            color: #0F172A;
+        }
+
+        /* ─── Browser Mini Games Card Styling ──────────────────────────── */
+        .btn-play-browser {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #8B5CF6;
+            color: #FFFFFF;
+            padding: 13px 20px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.25);
+        }
+
+        .btn-play-browser:hover {
+            background: #7C3AED;
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ─── QR Code Scan Modal ───────────────────────────────────────── */
+        .qr-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .qr-modal-content {
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 36px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .qr-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            background: #F1F5F9;
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #64748B;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .qr-modal-close:hover {
+            background: #E2E8F0;
+            color: #0F172A;
+        }
+
+        .qr-code-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            margin: 18px auto;
+            padding: 10px;
+            border: 2px solid #E2E8F0;
+            background: #FFFFFF;
+        }
+
+        /* ─── Bottom Developer Conversion Banner ───────────────────────── */
+        .developer-funnel-banner {
+            background: linear-gradient(135deg, #0066FF 0%, #0044B3 60%, #1E1B4B 100%);
+            border-radius: 26px;
+            padding: 50px 40px;
+            color: #FFFFFF;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 32px;
+            align-items: center;
+            margin: 70px auto 60px;
+            box-shadow: 0 20px 50px rgba(0, 102, 255, 0.25);
+        }
+
+        .funnel-banner-text h2 {
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .funnel-banner-text p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 620px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .developer-funnel-banner {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 36px 24px;
+            }
+
+            .funnel-banner-text p {
+                margin: 0 auto;
+            }
+
+            .portfolio-cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/deals/today/" class="nav-link">Deals</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/games/" class="nav-link active">Games & Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/deals/today/" class="nav-link">Deals</a></li>
+            <li><a href="/tools/" class="nav-link">Tools</a></li>
+            <li><a href="/games/" class="nav-link active">Games & Apps</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main">
+        <!-- Hero Section -->
+        <section class="portfolio-hero">
+            <div class="container">
+                <div class="developer-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                    </svg>
+                    Factictionary Official Android Portfolio
+                </div>
+
+                <h1 class="portfolio-hero-title">
+                    Consolidated <span class="highlight">Google Play Portfolio</span> & Games Hub
+                </h1>
+
+                <p class="portfolio-hero-subtitle">
+                    Discover Factictionary's full suite of top-rated Android applications and in-browser games. Built for high performance, zero data tracking, and maximum entertainment.
+                </p>
+
+                <div class="portfolio-hero-ctas">
+                    <a href="https://play.google.com/store/apps/developer?id=Factictionary" target="_blank" rel="noopener" class="hero-playstore-btn">
+                        Explore Full Google Play Developer Store ➔
+                    </a>
+                    <a href="#apps-catalog" class="hero-secondary-btn">
+                        👇 Browse All 10+ Apps & Games
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section class="portfolio-stats-strip">
+            <div class="stats-strip-container">
+                <div class="stat-cell">
+                    <div class="stat-val">10+</div>
+                    <div class="stat-lbl">Published Apps & Games</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-val">4.8 ★</div>
+                    <div class="stat-lbl">Average Google Play Rating</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-val">100k+</div>
+                    <div class="stat-lbl">Global Installs & Players</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-val">100%</div>
+                    <div class="stat-lbl">Privacy Shield Guaranteed</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Category Filters -->
+        <div class="portfolio-filter-container" id="apps-catalog">
+            <div class="portfolio-search-box">
+                <span class="portfolio-search-icon">🔍</span>
+                <input type="text" id="portfolioSearch" class="portfolio-search-input" placeholder="Search Google Play apps, games, trivia, card games, or utilities...">
+            </div>
+
+            <div class="filter-buttons-row">
+                <button class="filter-pill-btn active" data-filter="all">All Portfolio (10+)</button>
+                <button class="filter-pill-btn" data-filter="cards">🃏 Card & Party Games</button>
+                <button class="filter-pill-btn" data-filter="puzzle">🧩 Brain & Puzzles</button>
+                <button class="filter-pill-btn" data-filter="trivia">🔤 Word & Trivia</button>
+                <button class="filter-pill-btn" data-filter="utility">🛠️ Utilities & Media</button>
+                <button class="filter-pill-btn" data-filter="browser">🌐 In-Browser Games</button>
+            </div>
+        </div>
+
+        <!-- Apps & Games Portfolio Grid -->
+        <section class="portfolio-grid-container">
+            <div class="grid-header-row">
+                <h2 class="grid-title-text">
+                    <span>Google Play Applications & Games</span>
+                </h2>
+                <span class="grid-count-tag" id="appCountTag">Showing 10+ Apps</span>
+            </div>
+
+            <div class="portfolio-cards-grid" id="portfolioGrid">
+
+                <!-- App 1: 4 Color Card Game -->
+                <div class="app-funnel-card" data-category="cards googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #EF4444, #DC2626); color: white;">
+                            🃏
+                        </div>
+                        <div class="app-title-group">
+                            <h3>4 Color Card Game: Crazy 8s</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Card Game</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Classic 4-color matching card game inspired by Uno and Crazy Eights. Play solo against smart AI bots or create custom rooms with friends.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Offline AI bots & multiplayer online rooms</li>
+                        <li><span class="check-icon">✓</span> Customizable house rules & wild card combos</li>
+                        <li><span class="check-icon">✓</span> Fast-paced, fluid animations & audio effects</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.uno_card_game" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('4 Color Card Game', 'https://play.google.com/store/apps/details?id=in.factictionary.uno_card_game')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 2: Quizziest -->
+                <div class="app-funnel-card" data-category="trivia googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white;">
+                            ⚡
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Quizziest - Trivia & Quiz Games</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.9</span>
+                                <span class="category-pill">Trivia / Quiz</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Thousands of fun, fact-checked trivia questions across Science, Technology, Pop Culture, History, and General Knowledge.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Daily trivia challenges & streak bonuses</li>
+                        <li><span class="check-icon">✓</span> Multiple choice, speed timer & survival modes</li>
+                        <li><span class="check-icon">✓</span> Head-to-head trivia battles with friends</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.quizziest" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('Quizziest Trivia', 'https://play.google.com/store/apps/details?id=in.factictionary.quizziest')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 3: Puzzle Mania -->
+                <div class="app-funnel-card" data-category="puzzle googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #10B981, #059669); color: white;">
+                            🧩
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Puzzle Mania: WaterSort & Sudoku</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Puzzle Suite</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        All-in-one puzzle collection combining Liquid Water Sorting, classic Sudoku grids, Block Puzzle, and Line Connect in one offline app.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> 2,000+ Brain-relaxing puzzle levels</li>
+                        <li><span class="check-icon">✓</span> 100% Offline play with zero internet needed</li>
+                        <li><span class="check-icon">✓</span> Undo moves, hints & customizable themes</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.puzzle_mania_offline" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('Puzzle Mania', 'https://play.google.com/store/apps/details?id=in.factictionary.puzzle_mania_offline')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 4: CrossSearch -->
+                <div class="app-funnel-card" data-category="trivia googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #0066FF, #0044B3); color: white;">
+                            🔤
+                        </div>
+                        <div class="app-title-group">
+                            <h3>CrossSearch: CrossWord Search</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Word Puzzle</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Hybrid word puzzle merging classic crossword clues with hidden letter search grids. Expand your English vocabulary daily.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Crossword clues paired with word search grids</li>
+                        <li><span class="check-icon">✓</span> Built-in dictionary definitions & word origins</li>
+                        <li><span class="check-icon">✓</span> Relaxing background music & clean UI</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.crosssearch" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('CrossSearch', 'https://play.google.com/store/apps/details?id=in.factictionary.crosssearch')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 5: Tambola & Housie Host -->
+                <div class="app-funnel-card" data-category="cards googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #F59E0B, #D97706); color: white;">
+                            🎟️
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Tambola & Housie Host</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Party / Board</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Automated caller and ticket validator for hosting Tambola / Housie / Bingo family party games effortlessly.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Multi-language automatic voice caller</li>
+                        <li><span class="check-icon">✓</span> Instant ticket validation & QR code check</li>
+                        <li><span class="check-icon">✓</span> Custom board speeds & call history log</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.tambola_housie_host" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('Tambola Housie Host', 'https://play.google.com/store/apps/details?id=in.factictionary.tambola_housie_host')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 6: MindBites -->
+                <div class="app-funnel-card" data-category="utility googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #06B6D4, #0891B2); color: white;">
+                            💡
+                        </div>
+                        <div class="app-title-group">
+                            <h3>MindBites: Swipe. Learn. Repeat.</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.9</span>
+                                <span class="category-pill">Micro-Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Bite-sized knowledge summaries, daily infographics, and fascinating facts delivered in a fast, swipeable card feed.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> 60-second visual learning cards</li>
+                        <li><span class="check-icon">✓</span> Topics covering Science, Tech, Finance & Health</li>
+                        <li><span class="check-icon">✓</span> Bookmark favorite bites & offline read</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.mind_bites" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('MindBites', 'https://play.google.com/store/apps/details?id=in.factictionary.mind_bites')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 7: ShortsFX -->
+                <div class="app-funnel-card" data-category="utility googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #EC4899, #BE185D); color: white;">
+                            🎬
+                        </div>
+                        <div class="app-title-group">
+                            <h3>ShortsFX: Video Effects Tool</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.7</span>
+                                <span class="category-pill">Video Utility</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Fast mobile video editing app with trendy transitions, filters, and FX presets for creating viral Reels and Shorts.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> One-tap video filters & aesthetic FX</li>
+                        <li><span class="check-icon">✓</span> Fast HD export with zero watermarks</li>
+                        <li><span class="check-icon">✓</span> Audio extractor & speed ramp tools</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.shortsfx" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('ShortsFX Video Effects', 'https://play.google.com/store/apps/details?id=in.factictionary.shortsfx')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 8: SpoofDaily -->
+                <div class="app-funnel-card" data-category="utility googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #E94560, #C12740); color: white;">
+                            🗞️
+                        </div>
+                        <div class="app-title-group">
+                            <h3>SpoofDaily: Satire & Fake News</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Satire / Humor</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Hilarious satirical news updates, funny daily headlines, and parody stories designed to brighten your day.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Daily hilarious satirical articles & memes</li>
+                        <li><span class="check-icon">✓</span> Shareable spoof headlines for social media</li>
+                        <li><span class="check-icon">✓</span> Custom notification humor alerts</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('SpoofDaily', 'https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- App 9: Chalkly -->
+                <div class="app-funnel-card" data-category="utility googleplay">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #64748B, #334155); color: white;">
+                            🎨
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Chalkly: Digital Board & Sketch</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Productivity</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Clean digital chalkboard and drawing canvas for quick notes, math tutoring, diagrams, and artistic sketching.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Smooth vector drawing engine & chalk textures</li>
+                        <li><span class="check-icon">✓</span> Export to PNG or high-res PDF</li>
+                        <li><span class="check-icon">✓</span> Grid, lined, and dark board templates</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" class="btn-install-playstore">
+                            Get on Google Play ➔
+                        </a>
+                        <button class="btn-qr-scan" onclick="openQrModal('Chalkly Digital Board', 'https://play.google.com/store/apps/details?id=in.factictionary.chalkly')" title="Scan QR Code to Download">
+                            📱
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Browser Mini Game 1 -->
+                <div class="app-funnel-card" data-category="browser puzzle">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9); color: white;">
+                            🧠
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Memory Match Matrix</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.9</span>
+                                <span class="category-pill">Web Game</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Instant browser memory card match game! Test sequence recall, grid focus, and card flipping speed.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Zero download — runs 100% in browser</li>
+                        <li><span class="check-icon">✓</span> 100% Client-side privacy shield</li>
+                        <li><span class="check-icon">✓</span> Multiple card grid sizes</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="/tools/memory_games.html" class="btn-play-browser">
+                            Play Free in Browser ➔
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Browser Mini Game 2 -->
+                <div class="app-funnel-card" data-category="browser trivia">
+                    <div class="app-card-top-row">
+                        <div class="app-icon-badge" style="background: linear-gradient(135deg, #14B8A6, #0F766E); color: white;">
+                            📝
+                        </div>
+                        <div class="app-title-group">
+                            <h3>Word Scramble Quest</h3>
+                            <div class="app-badge-meta">
+                                <span class="star-rating">★ 4.8</span>
+                                <span class="category-pill">Web Game</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="app-description">
+                        Solve jumbled letter anagrams, find hidden vocabulary words, and beat the browser timer.
+                    </p>
+                    <ul class="app-features-bullet-list">
+                        <li><span class="check-icon">✓</span> Instant browser gameplay</li>
+                        <li><span class="check-icon">✓</span> Unlimited word generation rounds</li>
+                        <li><span class="check-icon">✓</span> Track your speed score</li>
+                    </ul>
+                    <div class="app-action-buttons-group">
+                        <a href="/tools/word_games.html" class="btn-play-browser">
+                            Play Free in Browser ➔
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Developer Portfolio Funnel Banner -->
+        <div class="portfolio-grid-container">
+            <div class="developer-funnel-banner">
+                <div class="funnel-banner-text">
+                    <h2>Explore All Factictionary Apps on Google Play</h2>
+                    <p>
+                        Discover our full range of published Android mobile apps and games on the official Google Play Store. Enjoy fast performance, regular updates, and strict privacy protections.
+                    </p>
+                </div>
+                <div>
+                    <a href="https://play.google.com/store/apps/developer?id=Factictionary" target="_blank" rel="noopener" class="hero-playstore-btn" style="background: #FFFFFF; color: #0066FF;">
+                        Open Google Play Portfolio ➔
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Modal -->
+        <div class="qr-modal-overlay" id="qrModal">
+            <div class="qr-modal-content">
+                <button class="qr-modal-close" onclick="closeQrModal()">&times;</button>
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #0F172A;" id="qrAppName">App Name</h3>
+                <p style="font-size: 0.88rem; color: #64748B; margin-top: 4px;">Scan with your phone's camera to open directly on Google Play</p>
+                <img src="" alt="QR Code" class="qr-code-img" id="qrImg">
+                <div style="margin-top: 10px;">
+                    <a href="" id="qrAppBtn" target="_blank" rel="noopener" class="btn-install-playstore" style="width: 100%;">
+                        Open Direct Link ➔
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="../assets/logo.png" alt="Factictionary Logo" width="32" height="32">
+                        <span>Factictionary</span>
+                    </div>
+                    <p>100% Client-Side Web Tools & Games. Your data never leaves your browser.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="/games/">Games & Android Apps</a></li>
+                        <li><a href="/tools/index.html#cat-image">Image Tools</a></li>
+                        <li><a href="/tools/index.html#cat-pdf">PDF Utilities</a></li>
+                        <li><a href="/tools/index.html#cat-video">Video Tools</a></li>
+                        <li><a href="/tools/index.html#cat-audio">Audio Tools</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal & Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Service</a></li>
+                        <li><a href="/about.html">About Us</a></li>
+                        <li><a href="https://play.google.com/store/apps/developer?id=Factictionary" target="_blank" rel="noopener">Google Play Store</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Factictionary. All rights reserved. Built with privacy in mind.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS for Filtering, Search & QR Code Modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('portfolioSearch');
+            const filterBtns = document.querySelectorAll('.filter-pill-btn');
+            const appCards = document.querySelectorAll('.app-funnel-card');
+            const countTag = document.getElementById('appCountTag');
+
+            let activeFilter = 'all';
+
+            function applyFilters() {
+                const q = searchInput.value.toLowerCase().trim();
+                let count = 0;
+
+                appCards.forEach(card => {
+                    const cats = card.dataset.category || '';
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const desc = card.querySelector('.app-description').textContent.toLowerCase();
+
+                    const matchesCat = (activeFilter === 'all') || cats.includes(activeFilter);
+                    const matchesQ = !q || title.includes(q) || desc.includes(q);
+
+                    if (matchesCat && matchesQ) {
+                        card.style.display = 'flex';
+                        count++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                countTag.textContent = `Showing ${count} Apps & Games`;
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeFilter = btn.dataset.filter;
+                    applyFilters();
+                });
+            });
+
+            searchInput.addEventListener('input', applyFilters);
+
+            // Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileBackdrop = document.querySelector('.mobile-menu-backdrop');
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                    if (mobileBackdrop) mobileBackdrop.classList.toggle('active');
+                });
+            }
+            if (mobileBackdrop) {
+                mobileBackdrop.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    mobileBackdrop.classList.remove('active');
+                });
+            }
+        });
+
+        function openQrModal(appName, appUrl) {
+            const modal = document.getElementById('qrModal');
+            const nameEl = document.getElementById('qrAppName');
+            const imgEl = document.getElementById('qrImg');
+            const btnEl = document.getElementById('qrAppBtn');
+
+            nameEl.textContent = appName;
+            btnEl.href = appUrl;
+            imgEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(appUrl);
+
+            modal.style.display = 'flex';
+        }
+
+        function closeQrModal() {
+            const modal = document.getElementById('qrModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('qrModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

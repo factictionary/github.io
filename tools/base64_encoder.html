@@ -1,328 +1,658 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder & Decoder | Factictionary</title>
-    <meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 strings securely. 100% privacy-protected, client-side processing.">
-    <meta name="keywords" content="base64 encoder, base64 decoder, base64 converter, encode base64, decode base64">
-    <meta name="author" content="Factictionary Team">
-    <link rel="canonical" href="https://factictionary.github.io/tools/base64_encoder.html">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <style>
-        :root {
-            --primary: #0066FF;
-            --secondary: #667eea;
-            --success: #10b981;
-            --error: #ef4444;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --radius: 12px;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
-        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
-        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
-        .nav-link:hover, .nav-link.active { color: var(--primary); }
-        main { min-height: calc(100vh - 70px - 200px); padding: 40px 0; }
-        .tool-header { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 40px 0; margin-bottom: 40px; }
-        .tool-header-content { text-align: center; }
-        .tool-icon { font-size: 3rem; margin-bottom: 16px; }
-        .tool-title { font-size: 2.5rem; margin-bottom: 16px; font-weight: 700; }
-        .tool-subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .privacy-badge { display: inline-block; background: rgba(255, 255, 255, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 20px; }
-        .tool-features { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
-        .feature-tag { background: rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
-        .tool-workspace { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 40px; }
-        .input-section, .output-section { margin-bottom: 30px; }
-        .input-label { display: block; font-weight: 600; margin-bottom: 12px; color: var(--dark); }
-        .text-input-area, .text-output-area { width: 100%; min-height: 200px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); font-family: 'Monaco', 'Courier New', monospace; font-size: 0.95rem; resize: vertical; transition: border-color 0.3s; }
-        .text-input-area:focus, .text-output-area:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1); }
-        .text-output-area { background: #f8fafc; cursor: text; }
-        .input-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-        .btn { padding: 10px 20px; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #0052cc; transform: translateY(-2px); box-shadow: var(--shadow); }
-        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
-        .btn-secondary:hover { background: white; border-color: var(--primary); }
-        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-section h4 { font-weight: 600; margin-bottom: 16px; color: var(--dark); }
-        .footer-section ul { list-style: none; }
-        .footer-section a { color: var(--gray); text-decoration: none; transition: color 0.3s; display: block; margin-bottom: 8px; }
-        .footer-section a:hover { color: var(--primary); }
-        .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; text-align: center; color: var(--gray); font-size: 0.9rem; }
-        .hidden { display: none !important; }
-        .char-count { font-size: 0.85rem; color: var(--gray); }
-        .status-message { font-size: 0.875rem; font-weight: 500; margin-top: 8px; }
-        .status-message.success { color: var(--success); }
-        .status-message.error { color: var(--error); }
-        @media (max-width: 768px) {
-            .nav-links { gap: 1rem; font-size: 0.9rem; }
-            .tool-title { font-size: 1.8rem; }
-            .tool-workspace { padding: 20px; }
-            .input-actions { flex-direction: column; }
-            .btn { width: 100%; }
-        }
-    </style>
-</head>
-<body>
-            <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-        </ul>
-    </div><main id="main">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-            </div>
-        <header class="tool-header">
-            <div class="container">
-                <div class="tool-header-content">
-                    <div class="tool-icon">🔐</div>
-                    <h1 class="tool-title">Base64 Encoder & Decoder</h1>
-                    <p class="tool-subtitle">Convert text to Base64 encoding and decode Base64 strings securely. All processing happens in your browser.</p>
-                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
-                    <div class="tool-features">
-                        <span class="feature-tag">Text to Base64</span>
-                        <span class="feature-tag">Base64 to Text</span>
-                        <span class="feature-tag">Client-Side Processing</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <section class="tool-workspace">
-            <div class="container">
-                <div class="input-section">
-                    <label class="input-label">Input Text</label>
-                    <textarea id="textInput" class="text-input-area" placeholder="Enter text to encode or Base64 string to decode..."></textarea>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-                        <span class="char-count"><span id="charCount">0</span> characters</span>
-                    </div>
-                    <div class="input-actions">
-                        <button class="btn btn-secondary" onclick="loadSample()">📄 Load Sample</button>
-                        <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear</button>
-                        <button class="btn btn-primary" onclick="encodeBase64()">⬆ ️ Encode</button>
-                        <button class="btn btn-primary" onclick="decodeBase64()">⬇️ Decode</button>
-                    </div>
-                </div>
-
-                <div class="output-section hidden" id="outputSection">
-                    <label class="input-label">Output</label>
-                    <textarea id="textOutput" class="text-output-area" readonly></textarea>
-                    <div class="input-actions">
-                        <button class="btn btn-primary" onclick="copyOutput()">📋 Copy</button>
-                        <button class="btn btn-secondary" onclick="downloadOutput()">⬇️ Download</button>
-                    </div>
-                    <div class="status-message" id="statusMessage"></div>
-                </div>
-            </div>
-        </section>
-            <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
-            <h3>Support Privacy-First Web Utilities</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-            <footer class="footer" style="margin-top: 60px;">
-        <div class="container text-center">
-            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
-
-    <script>
-        const textInput = document.getElementById('textInput');
-        const charCount = document.getElementById('charCount');
-
-        textInput.addEventListener('input', function() {
-            charCount.textContent = this.value.length;
-        });
-
-        function loadSample() {
-            document.getElementById('textInput').value = 'Hello, World! This is a Base64 encoding example.';
-            encodeBase64();
-        }
-
-        function clearAll() {
-            document.getElementById('textInput').value = '';
-            document.getElementById('textOutput').value = '';
-            document.getElementById('outputSection').classList.add('hidden');
-            charCount.textContent = '0';
-        }
-
-        function encodeBase64() {
-            const text = document.getElementById('textInput').value;
-            if (!text.trim()) {
-                showStatus('Please enter text to encode', 'error');
-                return;
-            }
-            try {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(text);
-                let binaryString = '';
-                for (let i = 0; i < data.length; i++) {
-                    binaryString += String.fromCharCode(data[i]);
-                }
-                const encoded = btoa(binaryString);
-                showOutput(encoded);
-                showStatus('✓ Encoded successfully', 'success');
-            } catch (error) {
-                showStatus('Error: ' + error.message, 'error');
-            }
-        }
-
-        function decodeBase64() {
-            const text = document.getElementById('textInput').value.trim();
-            if (!text) {
-                showStatus('Please enter Base64 string to decode', 'error');
-                return;
-            }
-            try {
-                const binaryString = atob(text);
-                const data = new Uint8Array(binaryString.length);
-                for (let i = 0; i < binaryString.length; i++) {
-                    data[i] = binaryString.charCodeAt(i);
-                }
-                const decoder = new TextDecoder();
-                const decoded = decoder.decode(data);
-                showOutput(decoded);
-                showStatus('✓ Decoded successfully', 'success');
-            } catch (error) {
-                showStatus('Invalid Base64 string', 'error');
-            }
-        }
-
-        function showOutput(text) {
-            document.getElementById('textOutput').value = text;
-            document.getElementById('outputSection').classList.remove('hidden');
-            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showStatus(message, type) {
-            const statusEl = document.getElementById('statusMessage');
-            statusEl.textContent = message;
-            statusEl.className = 'status-message ' + type;
-            setTimeout(() => { statusEl.textContent = ''; }, 3000);
-        }
-
-        function copyOutput() {
-            const output = document.getElementById('textOutput');
-            navigator.clipboard.writeText(output.value).then(() => {
-                showStatus('✓ Copied to clipboard', 'success');
-            }).catch(() => {
-                showStatus('Failed to copy', 'error');
-            });
-        }
-
-        function downloadOutput() {
-            const output = document.getElementById('textOutput').value;
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(output));
-            element.setAttribute('download', 'output.txt');
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        }
-    </script>
-</body>
-</html>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Base64 Encoder & Decoder | Factictionary</title>
+
+    <meta name="description" content="Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 strings securely. 100% privacy-protected, client-side processing.">
+
+    <meta name="keywords" content="base64 encoder, base64 decoder, base64 converter, encode base64, decode base64">
+
+    <meta name="author" content="Factictionary Team">
+
+    <link rel="canonical" href="https://factictionary.github.io/tools/base64_encoder.html">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+
+        :root {
+
+            --primary: #0066FF;
+
+            --secondary: #667eea;
+
+            --success: #10b981;
+
+            --error: #ef4444;
+
+            --dark: #1e293b;
+
+            --light: #f8fafc;
+
+            --gray: #64748b;
+
+            --border: #e2e8f0;
+
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+            --radius: 12px;
+
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+
+        .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        main { min-height: calc(100vh - 70px - 200px); padding: 40px 0; }
+
+        .tool-header { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 40px 0; margin-bottom: 40px; }
+
+        .tool-header-content { text-align: center; }
+
+        .tool-icon { font-size: 3rem; margin-bottom: 16px; }
+
+        .tool-title { font-size: 2.5rem; margin-bottom: 16px; font-weight: 700; }
+
+        .tool-subtitle { font-size: 1.1rem; opacity: 0.95; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        .privacy-badge { display: inline-block; background: rgba(255, 255, 255, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; margin-bottom: 20px; }
+
+        .tool-features { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+
+        .feature-tag { background: rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; }
+
+        .tool-workspace { background: white; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 40px; }
+
+        .input-section, .output-section { margin-bottom: 30px; }
+
+        .input-label { display: block; font-weight: 600; margin-bottom: 12px; color: var(--dark); }
+
+        .text-input-area, .text-output-area { width: 100%; min-height: 200px; padding: 16px; border: 2px solid var(--border); border-radius: var(--radius); font-family: 'Monaco', 'Courier New', monospace; font-size: 0.95rem; resize: vertical; transition: border-color 0.3s; }
+
+        .text-input-area:focus, .text-output-area:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1); }
+
+        .text-output-area { background: #f8fafc; cursor: text; }
+
+        .input-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+
+        .btn { padding: 10px 20px; border: none; border-radius: var(--radius); font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+
+        .btn-primary { background: var(--primary); color: white; }
+
+        .btn-primary:hover { background: #0052cc; transform: translateY(-2px); box-shadow: var(--shadow); }
+
+        .btn-secondary { background: var(--light); color: var(--dark); border: 1px solid var(--border); }
+
+        .btn-secondary:hover { background: white; border-color: var(--primary); }
+
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; margin-top: 60px; }
+
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+
+        .footer-section h4 { font-weight: 600; margin-bottom: 16px; color: var(--dark); }
+
+        .footer-section ul { list-style: none; }
+
+        .footer-section a { color: var(--gray); text-decoration: none; transition: color 0.3s; display: block; margin-bottom: 8px; }
+
+        .footer-section a:hover { color: var(--primary); }
+
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; text-align: center; color: var(--gray); font-size: 0.9rem; }
+
+        .hidden { display: none !important; }
+
+        .char-count { font-size: 0.85rem; color: var(--gray); }
+
+        .status-message { font-size: 0.875rem; font-weight: 500; margin-top: 8px; }
+
+        .status-message.success { color: var(--success); }
+
+        .status-message.error { color: var(--error); }
+
+        @media (max-width: 768px) {
+
+            .nav-links { gap: 1rem; font-size: 0.9rem; }
+
+            .tool-title { font-size: 1.8rem; }
+
+            .tool-workspace { padding: 20px; }
+
+            .input-actions { flex-direction: column; }
+
+            .btn { width: 100%; }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+            <nav class="navbar" role="navigation">
+
+        <div class="nav-container">
+
+            <a href="/" class="logo">Factictionary</a>
+
+            <ul class="nav-links">
+
+                <li><a href="/" class="nav-link">Home</a></li>
+
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+                <li><a href="/about.html" class="nav-link">About</a></li>
+
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+            </ul>
+
+            <button class="menu-toggle" aria-label="Toggle menu">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- Mobile Menu Drawer -->
+
+    <div class="mobile-menu-backdrop"></div>
+
+    <div class="mobile-menu">
+
+        <ul class="nav-links">
+
+            <li><a href="/" class="nav-link">Home</a></li>
+
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+            <li><a href="/about.html" class="nav-link">About</a></li>
+
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+        </ul>
+
+    </div><main id="main">
+
+            <div class="privacy-shield-bar">
+
+                <span class="pulse-dot"></span>
+
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+
+            </div>
+
+        <header class="tool-header">
+
+            <div class="container">
+
+                <div class="tool-header-content">
+
+                    <div class="tool-icon">🔐</div>
+
+                    <h1 class="tool-title">Base64 Encoder & Decoder</h1>
+
+                    <p class="tool-subtitle">Convert text to Base64 encoding and decode Base64 strings securely. All processing happens in your browser.</p>
+
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+
+                    <div class="tool-features">
+
+                        <span class="feature-tag">Text to Base64</span>
+
+                        <span class="feature-tag">Base64 to Text</span>
+
+                        <span class="feature-tag">Client-Side Processing</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <section class="tool-workspace">
+
+            <div class="container">
+
+                <div class="input-section">
+
+                    <label class="input-label">Input Text</label>
+
+                    <textarea id="textInput" class="text-input-area" placeholder="Enter text to encode or Base64 string to decode..."></textarea>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+
+                        <span class="char-count"><span id="charCount">0</span> characters</span>
+
+                    </div>
+
+                    <div class="input-actions">
+
+                        <button class="btn btn-secondary" onclick="loadSample()">📄 Load Sample</button>
+
+                        <button class="btn btn-secondary" onclick="clearAll()">🗑️ Clear</button>
+
+                        <button class="btn btn-primary" onclick="encodeBase64()">⬆ ️ Encode</button>
+
+                        <button class="btn btn-primary" onclick="decodeBase64()">⬇️ Decode</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="output-section hidden" id="outputSection">
+
+                    <label class="input-label">Output</label>
+
+                    <textarea id="textOutput" class="text-output-area" readonly></textarea>
+
+                    <div class="input-actions">
+
+                        <button class="btn btn-primary" onclick="copyOutput()">📋 Copy</button>
+
+                        <button class="btn btn-secondary" onclick="downloadOutput()">⬇️ Download</button>
+
+                    </div>
+
+                    <div class="status-message" id="statusMessage"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+            <!-- Donation Banner -->
+
+        <div class="donation-banner-card">
+
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+
+            <h3>Support Privacy-First Web Utilities</h3>
+
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
+
+            
+
+            <div class="donation-btn-group">
+
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+
+                    💳 Support via PayPal
+
+                </a>
+
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+
+                    💖 GitHub Sponsors
+
+                </a>
+
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+
+                    🪙 Crypto / UPI Donation
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Crypto Modal -->
+
+        <div id="donation-modal" class="modal-backdrop">
+
+            <div class="modal-content">
+
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+
+                
+
+                <div style="margin-bottom: 16px;">
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+
+                    <div class="crypto-wallet-box">
+
+                        <span>https://paypal.me/mgarg1102</span>
+
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div style="margin-bottom: 16px;">
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+
+                    <div class="crypto-wallet-box">
+
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div style="margin-bottom: 16px;">
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+
+                    <div class="crypto-wallet-box">
+
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div style="margin-bottom: 20px;">
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+
+                    <div class="crypto-wallet-box">
+
+                        <span>factictionary@upi</span>
+
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+            <footer class="footer" style="margin-top: 60px;">
+
+        <div class="container text-center">
+
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="/assets/js/main.js"></script>
+
+
+
+    <script>
+
+        const textInput = document.getElementById('textInput');
+
+        const charCount = document.getElementById('charCount');
+
+
+
+        textInput.addEventListener('input', function() {
+
+            charCount.textContent = this.value.length;
+
+        });
+
+
+
+        function loadSample() {
+
+            document.getElementById('textInput').value = 'Hello, World! This is a Base64 encoding example.';
+
+            encodeBase64();
+
+        }
+
+
+
+        function clearAll() {
+
+            document.getElementById('textInput').value = '';
+
+            document.getElementById('textOutput').value = '';
+
+            document.getElementById('outputSection').classList.add('hidden');
+
+            charCount.textContent = '0';
+
+        }
+
+
+
+        function encodeBase64() {
+
+            const text = document.getElementById('textInput').value;
+
+            if (!text.trim()) {
+
+                showStatus('Please enter text to encode', 'error');
+
+                return;
+
+            }
+
+            try {
+
+                const encoder = new TextEncoder();
+
+                const data = encoder.encode(text);
+
+                let binaryString = '';
+
+                for (let i = 0; i < data.length; i++) {
+
+                    binaryString += String.fromCharCode(data[i]);
+
+                }
+
+                const encoded = btoa(binaryString);
+
+                showOutput(encoded);
+
+                showStatus('✓ Encoded successfully', 'success');
+
+            } catch (error) {
+
+                showStatus('Error: ' + error.message, 'error');
+
+            }
+
+        }
+
+
+
+        function decodeBase64() {
+
+            const text = document.getElementById('textInput').value.trim();
+
+            if (!text) {
+
+                showStatus('Please enter Base64 string to decode', 'error');
+
+                return;
+
+            }
+
+            try {
+
+                const binaryString = atob(text);
+
+                const data = new Uint8Array(binaryString.length);
+
+                for (let i = 0; i < binaryString.length; i++) {
+
+                    data[i] = binaryString.charCodeAt(i);
+
+                }
+
+                const decoder = new TextDecoder();
+
+                const decoded = decoder.decode(data);
+
+                showOutput(decoded);
+
+                showStatus('✓ Decoded successfully', 'success');
+
+            } catch (error) {
+
+                showStatus('Invalid Base64 string', 'error');
+
+            }
+
+        }
+
+
+
+        function showOutput(text) {
+
+            document.getElementById('textOutput').value = text;
+
+            document.getElementById('outputSection').classList.remove('hidden');
+
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+
+        }
+
+
+
+        function showStatus(message, type) {
+
+            const statusEl = document.getElementById('statusMessage');
+
+            statusEl.textContent = message;
+
+            statusEl.className = 'status-message ' + type;
+
+            setTimeout(() => { statusEl.textContent = ''; }, 3000);
+
+        }
+
+
+
+        function copyOutput() {
+
+            const output = document.getElementById('textOutput');
+
+            navigator.clipboard.writeText(output.value).then(() => {
+
+                showStatus('✓ Copied to clipboard', 'success');
+
+            }).catch(() => {
+
+                showStatus('Failed to copy', 'error');
+
+            });
+
+        }
+
+
+
+        function downloadOutput() {
+
+            const output = document.getElementById('textOutput').value;
+
+            const element = document.createElement('a');
+
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(output));
+
+            element.setAttribute('download', 'output.txt');
+
+            element.style.display = 'none';
+
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+

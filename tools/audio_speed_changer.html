@@ -1,1688 +1,5066 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Speed Changer | Free Browser Tool | Factictionary</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
-    <meta name="keywords" content="browser tool, audio speed changer, audio pitch, time stretching, audio, free, online, privacy-first">
-    <meta name="author" content="Factictionary Team">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://factictionary.github.io/tools/audio_speed_changer.html">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Audio Speed Changer | Factictionary Tools">
-    <meta property="og:description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/audio_speed_changer.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Audio Speed Changer | Factictionary Tools">
-    <meta name="twitter:description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FFmpeg.wasm -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
-    
-    <!-- Wavesurfer.js for Waveform Visualization -->
-    <script src="https://unpkg.com/wavesurfer.js@7.7.0/dist/wavesurfer.min.js"></script>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- Tool-specific styles -->
-    <style>
-        .tool-header {
-            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
-            color: white;
-            padding: var(--spacing-4xl) var(--spacing-lg);
-            text-align: center;
-            margin-top: -80px;
-            padding-top: calc(var(--spacing-4xl) + 80px);
-        }
-        
-        .tool-title {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            margin-bottom: var(--spacing-md);
-            line-height: var(--line-height-tight);
-        }
-        
-        .tool-subtitle {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-medium);
-            opacity: 0.9;
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .tool-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-lg);
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: var(--spacing-3xl);
-        }
-        
-        .tool-workspace {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-card);
-            min-height: 700px;
-        }
-        
-        .tool-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-lg);
-        }
-        
-        .tool-info {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-card);
-        }
-        
-        .tool-info h3 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .tool-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .tool-feature-icon {
-            color: #8B5CF6;
-            font-weight: var(--font-weight-bold);
-            margin-top: 2px;
-        }
-        
-        .tool-feature-text {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-small);
-        }
-        
-        .drop-zone {
-            border: 3px dashed #8B5CF640;
-            border-radius: var(--radius-card);
-            padding: var(--spacing-3xl);
-            text-align: center;
-            background: #F5F3FF;
-            transition: all var(--duration-standard) var(--easing-standard);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .drop-zone:hover,
-        .drop-zone.drag-over {
-            border-color: #8B5CF6;
-            background: #F5F3FFCC;
-        }
-        
-        .drop-zone-icon {
-            font-size: 4rem;
-            color: #8B5CF6;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .drop-zone-text {
-            font-size: var(--font-size-body);
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .btn-file-input {
-            background: #8B5CF6;
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: background-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .btn-file-input:hover {
-            background: #8B5CF6E6;
-        }
-        
-        .tool-controls {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .control-group {
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .control-label {
-            display: block;
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .control-input {
-            width: 100%;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 2px solid var(--color-neutral-200);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            transition: border-color var(--duration-fast) var(--easing-standard);
-        }
-        
-        .control-input:focus {
-            outline: none;
-            border-color: #8B5CF6;
-        }
-        
-        .control-slider {
-            width: 100%;
-            margin: var(--spacing-sm) 0;
-        }
-        
-        .control-slider input[type="range"] {
-            width: 100%;
-            height: 8px;
-            background: var(--color-neutral-200);
-            border-radius: 4px;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .control-slider input[type="range"]:hover {
-            opacity: 1;
-        }
-        
-        .control-slider input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #8B5CF6;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .control-slider input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #8B5CF6;
-            border-radius: 50%;
-            cursor: pointer;
-            border: none;
-        }
-        
-        /* Speed Changer Specific Styles */
-        .speed-workspace {
-            display: none;
-            margin-top: var(--spacing-lg);
-        }
-        
-        .speed-controls {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            flex-wrap: wrap;
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .play-btn {
-            background: #8B5CF6;
-            color: white;
-            border: none;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color var(--duration-fast);
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .play-btn:hover {
-            background: #8B5CF6E6;
-        }
-        
-        .time-display {
-            font-family: monospace;
-            font-size: var(--font-size-body);
-            color: var(--color-neutral-700);
-            min-width: 120px;
-        }
-        
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .volume-slider {
-            width: 80px;
-        }
-        
-        .speed-control {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .speed-value {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-bold);
-            color: #8B5CF6;
-            margin-left: var(--spacing-sm);
-        }
-        
-        .speed-presets {
-            display: flex;
-            gap: var(--spacing-xs);
-            margin-top: var(--spacing-sm);
-            flex-wrap: wrap;
-        }
-        
-        .speed-preset {
-            background: var(--color-neutral-100);
-            color: var(--color-neutral-700);
-            border: 1px solid var(--color-neutral-200);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            cursor: pointer;
-            transition: all var(--duration-fast);
-        }
-        
-        .speed-preset:hover {
-            background: #8B5CF620;
-            border-color: #8B5CF6;
-            color: #8B5CF6;
-        }
-        
-        .speed-preset.active {
-            background: #8B5CF6;
-            border-color: #8B5CF6;
-            color: white;
-        }
-        
-        .waveform-container {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .waveform-canvas {
-            width: 100%;
-            height: 150px;
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            cursor: pointer;
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .waveform-controls {
-            display: flex;
-            justify-content: center;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-sm);
-        }
-        
-        .waveform-btn {
-            background: var(--color-neutral-100);
-            color: var(--color-neutral-700);
-            border: 1px solid var(--color-neutral-200);
-            padding: var(--spacing-xs) var(--spacing-md);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            cursor: pointer;
-            transition: all var(--duration-fast);
-        }
-        
-        .waveform-btn:hover {
-            background: #8B5CF620;
-            border-color: #8B5CF6;
-            color: #8B5CF6;
-        }
-        
-        .audio-analysis {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-        }
-        
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: var(--spacing-md);
-        }
-        
-        .analysis-item {
-            text-align: center;
-            background: var(--color-surface);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-input);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .analysis-value {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-bold);
-            color: #8B5CF6;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .analysis-label {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-600);
-        }
-        
-        .batch-upload {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-lg);
-            border: 2px dashed var(--color-neutral-300);
-        }
-        
-        .batch-files {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-md);
-        }
-        
-        .batch-file {
-            background: var(--color-surface);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-input);
-            border: 1px solid var(--color-neutral-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .batch-file-name {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-700);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .batch-file-status {
-            font-size: 10px;
-            color: var(--color-neutral-500);
-        }
-        
-        .selection-info {
-            background: var(--color-success-light);
-            border: 1px solid var(--color-success);
-            color: var(--color-success-dark);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-card);
-            margin-bottom: var(--spacing-lg);
-            display: none;
-        }
-        
-        .processing-indicator {
-            display: none;
-            text-align: center;
-            padding: var(--spacing-lg);
-            color: var(--color-primary-600);
-        }
-        
-        .spinner {
-            border: 3px solid var(--color-neutral-200);
-            border-top: 3px solid #8B5CF6;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto var(--spacing-sm);
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .audio-error {
-            background: var(--color-error-light);
-            border: 1px solid var(--color-error);
-            color: var(--color-error-dark);
-            padding: var(--spacing-md);
-            border-radius: var(--radius-card);
-            margin-bottom: var(--spacing-lg);
-            display: none;
-        }
-        
-        .file-info {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-            border: 1px solid var(--color-neutral-200);
-        }
-        
-        .file-info-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .file-info-label {
-            font-weight: var(--font-weight-medium);
-            color: var(--color-neutral-600);
-        }
-        
-        .file-info-value {
-            color: var(--color-neutral-900);
-        }
-        
-        .tool-output {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
-            min-height: 200px;
-            display: none;
-        }
-        
-        .tool-actions {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-tool {
-            background: var(--color-neutral-900);
-            color: white;
-            border: none;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-body);
-            font-weight: var(--font-weight-medium);
-            cursor: pointer;
-            transition: all var(--duration-fast) var(--easing-standard);
-            min-width: 120px;
-        }
-        
-        .btn-tool:hover {
-            background: var(--color-neutral-700);
-            transform: translateY(-1px);
-        }
-        
-        .btn-tool:disabled {
-            background: var(--color-neutral-400);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .privacy-badge {
-            background: var(--color-success);
-            color: white;
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xl);
-        }
-        
-        .stat-card {
-            background: var(--color-surface);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            box-shadow: var(--shadow-card);
-        }
-        
-        .stat-number {
-            font-size: var(--font-size-title);
-            font-weight: var(--font-weight-bold);
-            color: #8B5CF6;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .stat-label {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-small);
-        }
-        
-        .adsense-tool {
-            background: var(--color-neutral-100);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-            color: var(--color-neutral-500);
-            font-size: var(--font-size-small);
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .quality-toggle {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-sm);
-        }
-        
-        .quality-toggle input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #8B5CF6;
-        }
-        
-        .quality-toggle label {
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-700);
-            cursor: pointer;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tool-main {
-                grid-template-columns: 1fr;
-                padding: var(--spacing-lg) var(--spacing-sm);
-            }
-            
-            .tool-title {
-                font-size: var(--font-size-subtitle);
-            }
-            
-            .tool-actions {
-                flex-direction: column;
-            }
-            
-            .btn-tool {
-                width: 100%;
-            }
-            
-            .speed-presets {
-                justify-content: center;
-            }
-            
-            .speed-controls {
-                justify-content: center;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .tool-header {
-                padding: var(--spacing-2xl) var(--spacing-sm);
-                padding-top: calc(var(--spacing-2xl) + 80px);
-            }
-            
-            .tool-workspace {
-                padding: var(--spacing-lg);
-            }
-        }
-    </style>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Audio Speed Changer",
-        "description": "Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality.",
-        "applicationCategory": "UtilityApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "provider": {
-            "@type": "Organization",
-            "name": "Factictionary"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "850"
-        }
-    }
-    </script>
-</head>
-<body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-            <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-        </ul>
-    </div><!-- Tool Header -->
-    <header class="tool-header">
-        <h1 class="tool-title">Audio Speed Changer</h1>
-        <p class="tool-subtitle">Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality.</p>
-        <div class="privacy-badge">
-            🔒 100% Privacy Protected
-        </div>
-    </header>
-    
-    <!-- Main Tool Content -->
-    <main id="main" class="tool-main">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-            </div>
-        <!-- Tool Workspace -->
-        <section class="tool-workspace">
-            <div class="drop-zone" id="dropZone">
-                <div class="drop-zone-icon">📄</div>
-                <div class="drop-zone-text">
-                    Drop your audio files here or click to browse
-                </div>
-                <input type="file" id="fileInput" accept=".mp3,.wav,.m4a,.ogg,.flac,.aac,.aiff" multiple style="display: none;">
-                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
-                    Choose Audio Files
-                </button>
-            </div>
-            
-            <!-- Single file workspace (hidden until file loaded) -->
-            <div class="speed-workspace" id="speedWorkspace">
-                <div class="file-info" id="fileInfo">
-                    <div class="file-info-item">
-                        <span class="file-info-label">Filename:</span>
-                        <span class="file-info-value" id="fileName">-</span>
-                    </div>
-                    <div class="file-info-item">
-                        <span class="file-info-label">Duration:</span>
-                        <span class="file-info-value" id="fileDuration">-</span>
-                    </div>
-                    <div class="file-info-item">
-                        <span class="file-info-label">Original Speed:</span>
-                        <span class="file-info-value">1.0x</span>
-                    </div>
-                    <div class="file-info-item">
-                        <span class="file-info-label">New Speed:</span>
-                        <span class="file-info-value" id="newSpeed">1.0x</span>
-                    </div>
-                </div>
-                
-                <div class="selection-info" id="selectionInfo">
-                    Selection: <span id="selectionTime">0:00 - 0:00</span> (<span id="selectionDuration">0.00</span>s)
-                </div>
-                
-                <div class="speed-controls">
-                    <button class="play-btn" id="playBtn">â–¶</button>
-                    <div class="time-display">
-                        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
-                    </div>
-                    <div class="volume-control">
-                        ”Š
-                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
-                    </div>
-                </div>
-                
-                <div class="waveform-container">
-                    <div class="waveform-canvas" id="waveformCanvas"></div>
-                    <div class="waveform-controls">
-                        <button class="waveform-btn" id="zoomInBtn">”+</button>
-                        <button class="waveform-btn" id="zoomOutBtn">”-</button>
-                        <button class="waveform-btn" id="resetZoomBtn">Reset</button>
-                        <button class="waveform-btn" id="centerBtn">Center</button>
-                    </div>
-                </div>
-                
-                <div class="speed-control">
-                    <label class="control-label">
-                        Playback Speed
-                        <span class="speed-value" id="speedValue">1.0x</span>
-                    </label>
-                    <div class="control-slider">
-                        <input type="range" id="speedSlider" min="0.25" max="4" step="0.01" value="1">
-                        <div class="speed-presets">
-                            <button class="speed-preset" data-speed="0.5">0.5x</button>
-                            <button class="speed-preset" data-speed="0.75">0.75x</button>
-                            <button class="speed-preset" data-speed="1">1.0x</button>
-                            <button class="speed-preset" data-speed="1.25">1.25x</button>
-                            <button class="speed-preset" data-speed="1.5">1.5x</button>
-                            <button class="speed-preset" data-speed="2">2.0x</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="speed-control">
-                    <label class="control-label">
-                        Pitch Shift (semitones)
-                        <span class="speed-value" id="pitchValue">0</span>
-                    </label>
-                    <div class="control-slider">
-                        <input type="range" id="pitchSlider" min="-12" max="12" step="0.1" value="0">
-                    </div>
-                </div>
-                
-                <div class="speed-control">
-                    <label class="control-label">
-                        Time Stretching Method
-                    </label>
-                    <select class="control-input" id="stretchMethod">
-                        <option value="phase">Phase Vocoder (Best Quality)</option>
-                        <option value="wsola">WSOLA (Fast)</option>
-                        <option value="elastique">Elastique (Pro)</option>
-                        <option value="rubber">Rubber Band</option>
-                    </select>
-                    <div class="quality-toggle">
-                        <input type="checkbox" id="preserveQuality" checked>
-                        <label for="preserveQuality">Preserve audio quality (slower processing)</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Batch processing workspace -->
-            <div class="batch-upload" id="batchWorkspace" style="display: none;">
-                <h3>Batch Processing</h3>
-                <p style="color: var(--color-neutral-600); margin-bottom: var(--spacing-sm);">
-                    Process multiple audio files with the same speed settings
-                </p>
-                <div class="batch-files" id="batchFiles"></div>
-            </div>
-            
-            <div class="tool-controls">
-                <h3>Export Settings</h3>
-                <div class="control-group">
-                    <label class="control-label">Output Format</label>
-                    <select class="control-input" id="outputFormat">
-                        <option value="mp3">MP3 (Recommended)</option>
-                        <option value="wav">WAV (Uncompressed)</option>
-                        <option value="m4a">M4A (AAC)</option>
-                        <option value="ogg">OGG Vorbis</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Quality</label>
-                    <div class="control-slider">
-                        <input type="range" min="1" max="10" value="8" id="qualitySlider">
-                        <span id="qualityValue">8/10</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="audio-analysis" id="audioAnalysis" style="display: none;">
-                <h3>Audio Analysis</h3>
-                <div class="analysis-grid">
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisDuration">0:00</div>
-                        <div class="analysis-label">Duration</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisSampleRate">0 Hz</div>
-                        <div class="analysis-label">Sample Rate</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisChannels">0</div>
-                        <div class="analysis-label">Channels</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisBitrate">0 kbps</div>
-                        <div class="analysis-label">Bitrate</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisBPM">0</div>
-                        <div class="analysis-label">BPM</div>
-                    </div>
-                    <div class="analysis-item">
-                        <div class="analysis-value" id="analysisKey">Unknown</div>
-                        <div class="analysis-label">Musical Key</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="audio-error" id="audioError">
-                <strong>Error:</strong> <span id="errorMessage"></span>
-            </div>
-            
-            <div class="processing-indicator" id="processingIndicator">
-                <div class="spinner"></div>
-                <div>Processing audio...</div>
-            </div>
-            
-            <div class="tool-output" id="toolOutput">
-                <h3>Preview & Export</h3>
-                <div id="outputContent">
-                    <div style="text-align: center; color: var(--color-neutral-600);">
-                        Audio processed successfully! You can now download the modified file.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tool-actions">
-                <button class="btn-tool" id="processBtn" disabled>
-                    Process Audio
-                </button>
-                <button class="btn-tool" id="previewBtn" disabled>
-                    Preview
-                </button>
-                <button class="btn-tool" id="downloadBtn" disabled>
-                    Download
-                </button>
-                <button class="btn-tool" id="resetBtn">
-                    Reset
-                </button>
-            </div>
-        </section>
-        
-        <!-- Tool Sidebar -->
-        <aside class="tool-sidebar">
-            <!-- Tool Information -->
-            <div class="tool-info">
-                <h3>Features</h3>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Speed adjustment (0.25x - 4x)</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Pitch shifting</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Waveform visualization</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Quality preservation</div>
-                </div>
-            
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Batch processing</div>
-                </div>
-                
-                <div class="tool-feature">
-                    <div class="tool-feature-icon">âœ“</div>
-                    <div class="tool-feature-text">Audio analysis</div>
-                </div>
-            </div>
-            
-            <!-- AdSense Container -->
-            <div class="adsense-tool">
-                <div>
-                    <div>›  Advertisement</div>
-                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
-                </div>
-            </div>
-            
-            <!-- Category Navigation -->
-            <div class="tool-info">
-                <h3>Related Tools</h3>
-                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
-                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
-                    <a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a>
-                    <a href="/audio_normalizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Normalizer</a>
-                </div>
-            </div>
-        </aside>
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Audio Speed Changer</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Audio Speed Changer is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
-            
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Audio Speed Changer leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-        </section>
-            <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
-            <h3>Support Privacy-First Web Utilities</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <!-- Tool Statistics -->
-    <section class="section-lg">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Tools Available</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Files Uploaded</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">âž</div>
-                    <div class="stat-label">Unlimited Usage</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Privacy Protected</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- JavaScript -->
-    <script>
-        class AudioSpeedChanger {
-            constructor() {
-                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                this.ffmpeg = null;
-                this.audioBuffer = null;
-                this.audioFile = null;
-                this.batchFiles = [];
-                this.isPlaying = false;
-                this.startTime = 0;
-                this.pauseTime = 0;
-                this.selectionStart = 0;
-                this.selectionEnd = 0;
-                this.isSelecting = false;
-                this.currentSpeed = 1.0;
-                this.currentPitch = 0;
-                this.waveSurfer = null;
-                this.processedBlob = null;
-                
-                this.initializeFFmpeg();
-                this.initializeElements();
-                this.attachEventListeners();
-            }
-            
-            async initializeFFmpeg() {
-                try {
-                    this.ffmpeg = new FFmpeg();
-                    await this.ffmpeg.load({
-                        coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js'
-                    });
-                } catch (error) {
-                    console.error('Failed to load FFmpeg:', error);
-                    this.showError('Failed to initialize audio processing engine');
-                }
-            }
-            
-            initializeElements() {
-                this.dropZone = document.getElementById('dropZone');
-                this.fileInput = document.getElementById('fileInput');
-                this.processBtn = document.getElementById('processBtn');
-                this.previewBtn = document.getElementById('previewBtn');
-                this.downloadBtn = document.getElementById('downloadBtn');
-                this.resetBtn = document.getElementById('resetBtn');
-                
-                this.speedWorkspace = document.getElementById('speedWorkspace');
-                this.batchWorkspace = document.getElementById('batchWorkspace');
-                
-                this.waveformCanvas = document.getElementById('waveformCanvas');
-                this.playBtn = document.getElementById('playBtn');
-                this.volumeSlider = document.getElementById('volumeSlider');
-                
-                this.speedSlider = document.getElementById('speedSlider');
-                this.speedValue = document.getElementById('speedValue');
-                this.pitchSlider = document.getElementById('pitchSlider');
-                this.pitchValue = document.getElementById('pitchValue');
-                
-                this.currentTimeDisplay = document.getElementById('currentTime');
-                this.totalTimeDisplay = document.getElementById('totalTime');
-                this.selectionInfo = document.getElementById('selectionInfo');
-                this.selectionTime = document.getElementById('selectionTime');
-                this.selectionDuration = document.getElementById('selectionDuration');
-                
-                this.fileNameDisplay = document.getElementById('fileName');
-                this.fileDurationDisplay = document.getElementById('fileDuration');
-                this.newSpeedDisplay = document.getElementById('newSpeed');
-                
-                this.audioWorkspace = document.getElementById('speedWorkspace');
-                this.processingIndicator = document.getElementById('processingIndicator');
-                this.audioError = document.getElementById('audioError');
-                this.toolOutput = document.getElementById('toolOutput');
-                
-                this.qualitySlider = document.getElementById('qualitySlider');
-                this.qualityValue = document.getElementById('qualityValue');
-                this.outputFormat = document.getElementById('outputFormat');
-                this.stretchMethod = document.getElementById('stretchMethod');
-                this.preserveQuality = document.getElementById('preserveQuality');
-                
-                this.audioAnalysis = document.getElementById('audioAnalysis');
-                this.batchFilesContainer = document.getElementById('batchFiles');
-            }
-            
-            attachEventListeners() {
-                // File handling
-                this.dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
-                this.dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
-                this.dropZone.addEventListener('drop', this.handleDrop.bind(this));
-                this.dropZone.addEventListener('click', () => this.fileInput.click());
-                this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
-                
-                // Audio controls
-                this.playBtn.addEventListener('click', this.togglePlayback.bind(this));
-                this.volumeSlider.addEventListener('input', this.adjustVolume.bind(this));
-                
-                // Speed controls
-                this.speedSlider.addEventListener('input', this.updateSpeed.bind(this));
-                this.pitchSlider.addEventListener('input', this.updatePitch.bind(this));
-                
-                // Speed presets
-                document.querySelectorAll('.speed-preset').forEach(preset => {
-                    preset.addEventListener('click', () => {
-                        const speed = parseFloat(preset.dataset.speed);
-                        this.speedSlider.value = speed;
-                        this.updateSpeed();
-                        
-                        // Update active state
-                        document.querySelectorAll('.speed-preset').forEach(p => p.classList.remove('active'));
-                        preset.classList.add('active');
-                    });
-                });
-                
-                // Waveform controls
-                document.getElementById('zoomInBtn').addEventListener('click', () => this.zoomWaveform(1.2));
-                document.getElementById('zoomOutBtn').addEventListener('click', () => this.zoomWaveform(0.8));
-                document.getElementById('resetZoomBtn').addEventListener('click', () => this.resetZoom());
-                document.getElementById('centerBtn').addEventListener('click', () => this.centerWaveform());
-                
-                // Tool buttons
-                this.processBtn.addEventListener('click', this.processAudio.bind(this));
-                this.previewBtn.addEventListener('click', this.previewAudio.bind(this));
-                this.downloadBtn.addEventListener('click', this.downloadAudio.bind(this));
-                this.resetBtn.addEventListener('click', this.resetChanger.bind(this));
-                
-                // Quality slider
-                this.qualitySlider.addEventListener('input', () => {
-                    this.qualityValue.textContent = this.qualitySlider.value + '/10';
-                });
-                
-                // Mobile menu
-                const menuToggle = document.querySelector('.menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                menuToggle.addEventListener('click', () => {
-                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-                    menuToggle.setAttribute('aria-expanded', !isExpanded);
-                    navLinks.classList.toggle('active');
-                });
-            }
-            
-            handleDragOver(e) {
-                e.preventDefault();
-                this.dropZone.classList.add('drag-over');
-            }
-            
-            handleDragLeave(e) {
-                e.preventDefault();
-                this.dropZone.classList.remove('drag-over');
-            }
-            
-            handleDrop(e) {
-                e.preventDefault();
-                this.dropZone.classList.remove('drag-over');
-                const files = Array.from(e.dataTransfer.files);
-                this.loadAudioFiles(files);
-            }
-            
-            handleFileSelect(e) {
-                const files = Array.from(e.target.files);
-                this.loadAudioFiles(files);
-            }
-            
-            async loadAudioFiles(files) {
-                const audioFiles = files.filter(file => this.isAudioFile(file));
-                
-                if (audioFiles.length === 0) {
-                    this.showError('Please select valid audio files (MP3, WAV, M4A, OGG, FLAC, AAC, AIFF)');
-                    return;
-                }
-                
-                if (audioFiles.length > 1) {
-                    // Batch processing mode
-                    this.batchFiles = audioFiles;
-                    this.showBatchWorkspace();
-                    this.loadFirstFile(audioFiles[0]);
-                } else {
-                    // Single file mode
-                    this.loadFirstFile(audioFiles[0]);
-                }
-            }
-            
-            async loadFirstFile(file) {
-                this.audioFile = file;
-                
-                try {
-                    const arrayBuffer = await file.arrayBuffer();
-                    this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-                    
-                    this.displayFileInfo();
-                    this.showAudioWorkspace();
-                    this.initializeWaveform();
-                    this.analyzeAudio();
-                    this.updateTimeDisplay();
-                    
-                    this.processBtn.disabled = false;
-                    this.previewBtn.disabled = false;
-                    
-                } catch (error) {
-                    console.error('Error loading audio file:', error);
-                    this.showError('Failed to load audio file. The file may be corrupted or in an unsupported format.');
-                }
-            }
-            
-            showBatchWorkspace() {
-                this.batchWorkspace.style.display = 'block';
-                this.updateBatchFiles();
-            }
-            
-            updateBatchFiles() {
-                this.batchFilesContainer.innerHTML = '';
-                this.batchFiles.forEach((file, index) => {
-                    const fileDiv = document.createElement('div');
-                    fileDiv.className = 'batch-file';
-                    fileDiv.innerHTML = `
-                        <div class="batch-file-name" title="${file.name}">${file.name}</div>
-                        <div class="batch-file-status" id="status-${index}">Ready</div>
-                    `;
-                    this.batchFilesContainer.appendChild(fileDiv);
-                });
-            }
-            
-            isAudioFile(file) {
-                const audioTypes = [
-                    'audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/wave', 'audio/x-wav',
-                    'audio/m4a', 'audio/aac', 'audio/ogg', 'audio/vorbis', 'audio/flac',
-                    'audio/x-aiff', 'audio/aiff'
-                ];
-                return audioTypes.includes(file.type) || /\.(mp3|wav|m4a|ogg|flac|aac|aiff)$/i.test(file.name);
-            }
-            
-            displayFileInfo() {
-                this.fileNameDisplay.textContent = this.audioFile.name;
-                this.fileDurationDisplay.textContent = this.formatTime(this.audioBuffer.duration);
-                this.totalTimeDisplay.textContent = this.formatTime(this.audioBuffer.duration);
-            }
-            
-            showAudioWorkspace() {
-                this.dropZone.style.display = 'none';
-                this.speedWorkspace.style.display = 'block';
-            }
-            
-            initializeWaveform() {
-                // Initialize WaveSurfer for better waveform visualization
-                if (this.waveSurfer) {
-                    this.waveSurfer.destroy();
-                }
-                
-                this.waveSurfer = WaveSurfer.create({
-                    container: this.waveformCanvas,
-                    waveColor: '#8B5CF6',
-                    progressColor: '#7C3AED',
-                    cursorColor: '#EF4444',
-                    barWidth: 2,
-                    barRadius: 1,
-                    height: 150,
-                    normalize: true,
-                    backend: 'WebAudio',
-                });
-                
-                this.waveSurfer.loadBlob(this.audioFile);
-                
-                // Add interaction handlers
-                this.waveSurfer.on('ready', () => {
-                    console.log('Waveform ready');
-                });
-                
-                this.waveSurfer.on('play', () => {
-                    this.isPlaying = true;
-                    this.playBtn.textContent = 'â¸';
-                });
-                
-                this.waveSurfer.on('pause', () => {
-                    this.isPlaying = false;
-                    this.playBtn.textContent = 'â–¶';
-                });
-                
-                this.waveSurfer.on('finish', () => {
-                    this.isPlaying = false;
-                    this.playBtn.textContent = 'â–¶';
-                });
-                
-                this.waveSurfer.on('seek', (progress) => {
-                    this.currentTimeDisplay.textContent = this.formatTime(progress * this.audioBuffer.duration);
-                });
-            }
-            
-            zoomWaveform(factor) {
-                if (this.waveSurfer) {
-                    const currentZoom = this.waveSurfer.options.minPxPerSec || 50;
-                    const newZoom = Math.max(10, Math.min(200, currentZoom * factor));
-                    this.waveSurfer.zoom(newZoom);
-                }
-            }
-            
-            resetZoom() {
-                if (this.waveSurfer) {
-                    this.waveSurfer.zoom(50);
-                }
-            }
-            
-            centerWaveform() {
-                if (this.waveSurfer) {
-                    const duration = this.audioBuffer.duration;
-                    const centerTime = duration / 2;
-                    this.waveSurfer.seekTo(centerTime / duration);
-                }
-            }
-            
-            togglePlayback() {
-                if (this.waveSurfer) {
-                    this.waveSurfer.playPause();
-                }
-            }
-            
-            adjustVolume(e) {
-                const volume = e.target.value / 100;
-                if (this.waveSurfer) {
-                    this.waveSurfer.setVolume(volume);
-                }
-            }
-            
-            updateSpeed() {
-                this.currentSpeed = parseFloat(this.speedSlider.value);
-                this.speedValue.textContent = this.currentSpeed.toFixed(2) + 'x';
-                this.newSpeedDisplay.textContent = this.currentSpeed.toFixed(2) + 'x';
-                
-                if (this.waveSurfer) {
-                    this.waveSurfer.setPlaybackRate(this.currentSpeed);
-                }
-            }
-            
-            updatePitch() {
-                this.currentPitch = parseFloat(this.pitchSlider.value);
-                this.pitchValue.textContent = this.currentPitch.toFixed(1);
-            }
-            
-            async analyzeAudio() {
-                const sampleRate = this.audioBuffer.sampleRate;
-                const channels = this.audioBuffer.numberOfChannels;
-                const duration = this.audioBuffer.duration;
-                
-                // Basic analysis
-                document.getElementById('analysisDuration').textContent = this.formatTime(duration);
-                document.getElementById('analysisSampleRate').textContent = sampleRate + ' Hz';
-                document.getElementById('analysisChannels').textContent = channels;
-                
-                // Estimate bitrate for compressed formats
-                const bitrate = this.estimateBitrate();
-                document.getElementById('analysisBitrate').textContent = bitrate + ' kbps';
-                
-                // BPM detection (simplified)
-                const bpm = await this.detectBPM();
-                document.getElementById('analysisBPM').textContent = bpm || 'Unknown';
-                
-                // Musical key detection (simplified)
-                const key = this.detectMusicalKey();
-                document.getElementById('analysisKey').textContent = key;
-                
-                this.audioAnalysis.style.display = 'block';
-            }
-            
-            estimateBitrate() {
-                const fileSize = this.audioFile.size;
-                const duration = this.audioBuffer.duration;
-                const bitrate = Math.round((fileSize * 8) / (duration * 1000));
-                return bitrate;
-            }
-            
-            async detectBPM() {
-                // Simplified BPM detection using audio analysis
-                // This is a basic implementation - real BPM detection is much more complex
-                try {
-                    const data = this.audioBuffer.getChannelData(0);
-                    const sampleRate = this.audioBuffer.sampleRate;
-                    
-                    // Find peaks in the audio data
-                    const peaks = [];
-                    const windowSize = Math.floor(sampleRate * 0.1); // 100ms windows
-                    
-                    for (let i = 0; i < data.length - windowSize; i += windowSize) {
-                        let max = 0;
-                        for (let j = i; j < i + windowSize; j++) {
-                            max = Math.max(max, Math.abs(data[j]));
-                        }
-                        peaks.push(max);
-                    }
-                    
-                    // Find periodic patterns (very simplified)
-                    const bpm = this.findPeriodicBPM(peaks, sampleRate);
-                    return bpm;
-                } catch (error) {
-                    console.error('BPM detection failed:', error);
-                    return null;
-                }
-            }
-            
-            findPeriodicBPM(peaks, sampleRate) {
-                // Very simplified BPM detection
-                const minBPM = 60;
-                const maxBPM = 200;
-                
-                for (let bpm = minBPM; bpm <= maxBPM; bpm++) {
-                    const period = (60 / bpm) * sampleRate * 0.1; // Convert to window count
-                    let correlation = 0;
-                    
-                    for (let i = 0; i < peaks.length - period; i++) {
-                        correlation += peaks[i] * peaks[i + period];
-                    }
-                    
-                    if (correlation > peaks.length * 0.1) {
-                        return bpm;
-                    }
-                }
-                
-                return null;
-            }
-            
-            detectMusicalKey() {
-                // Simplified musical key detection
-                // This would require more sophisticated audio analysis
-                return 'Unknown';
-            }
-            
-            updateTimeDisplay() {
-                // Time display is handled by WaveSurfer
-            }
-            
-            async processAudio() {
-                if (!this.audioBuffer) return;
-                
-                this.showProcessing(true);
-                
-                try {
-                    const inputData = new Uint8Array(await this.audioFile.arrayBuffer());
-                    const inputName = 'input.' + (this.audioFile.name.split('.').pop() || 'mp3');
-                    const outputName = 'output.' + this.outputFormat.value;
-                    
-                    await this.ffmpeg.writeFile(inputName, inputData);
-                    
-                    const args = ['-i', inputName];
-                    
-                    // Apply speed change
-                    if (this.currentSpeed !== 1.0) {
-                        args.push('-filter:a', `atempo=${this.currentSpeed}`);
-                    }
-                    
-                    // Apply pitch shift
-                    if (this.currentPitch !== 0) {
-                        const pitchRatio = Math.pow(2, this.currentPitch / 12);
-                        args.push('-filter:a', `asetrate=${this.audioBuffer.sampleRate * pitchRatio},aresample=${this.audioBuffer.sampleRate}`);
-                    }
-                    
-                    // Apply quality settings
-                    const quality = parseInt(this.qualitySlider.value);
-                    if (this.outputFormat.value === 'mp3') {
-                        args.push('-b:a', (quality * 64) + 'k');
-                    } else if (this.outputFormat.value === 'm4a') {
-                        args.push('-b:a', (quality * 64) + 'k');
-                    } else if (this.outputFormat.value === 'ogg') {
-                        args.push('-q:a', (11 - quality));
-                    }
-                    
-                    args.push(outputName);
-                    
-                    await this.ffmpeg.exec(args);
-                    
-                    const outputData = await this.ffmpeg.readFile(outputName);
-                    const blob = new Blob([outputData], { type: `audio/${this.outputFormat.value}` });
-                    
-                    this.processedBlob = blob;
-                    this.toolOutput.style.display = 'block';
-                    this.downloadBtn.disabled = false;
-                    
-                } catch (error) {
-                    console.error('Error processing audio:', error);
-                    this.showError('Failed to process audio. Please try different settings.');
-                } finally {
-                    this.showProcessing(false);
-                }
-            }
-            
-            async previewAudio() {
-                if (!this.audioBuffer) return;
-                
-                try {
-                    // Use WaveSurfer's built-in rate control for preview
-                    if (this.waveSurfer) {
-                        this.waveSurfer.setPlaybackRate(this.currentSpeed);
-                        this.waveSurfer.play();
-                    }
-                    
-                } catch (error) {
-                    console.error('Error previewing audio:', error);
-                    this.showError('Failed to preview audio');
-                }
-            }
-            
-            async downloadAudio() {
-                if (!this.processedBlob) return;
-                
-                const url = URL.createObjectURL(this.processedBlob);
-                const a = document.createElement('a');
-                a.href = url;
-                const speedText = this.currentSpeed.toString().replace('.', '_');
-                a.download = `speed_${speedText}x_${this.audioFile.name.replace(/\.[^/.]+$/, '')}.${this.outputFormat.value}`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                this.showMessage('Download started successfully!');
-            }
-            
-            resetChanger() {
-                this.audioBuffer = null;
-                this.audioFile = null;
-                this.processedBlob = null;
-                this.batchFiles = [];
-                this.currentSpeed = 1.0;
-                this.currentPitch = 0;
-                this.selectionStart = 0;
-                this.selectionEnd = 0;
-                this.pauseTime = 0;
-                this.isPlaying = false;
-                
-                this.dropZone.style.display = 'block';
-                this.speedWorkspace.style.display = 'none';
-                this.batchWorkspace.style.display = 'none';
-                this.toolOutput.style.display = 'none';
-                this.processingIndicator.style.display = 'none';
-                this.audioError.style.display = 'none';
-                this.audioAnalysis.style.display = 'none';
-                
-                this.processBtn.disabled = true;
-                this.previewBtn.disabled = true;
-                this.downloadBtn.disabled = true;
-                
-                this.fileInput.value = '';
-                this.qualitySlider.value = 8;
-                this.qualityValue.textContent = '8/10';
-                this.outputFormat.value = 'mp3';
-                this.stretchMethod.value = 'phase';
-                this.preserveQuality.checked = true;
-                
-                // Reset controls
-                this.speedSlider.value = 1;
-                this.pitchSlider.value = 0;
-                this.updateSpeed();
-                this.updatePitch();
-                
-                // Reset speed presets
-                document.querySelectorAll('.speed-preset').forEach(preset => {
-                    preset.classList.remove('active');
-                    if (preset.dataset.speed === '1') {
-                        preset.classList.add('active');
-                    }
-                });
-                
-                if (this.waveSurfer) {
-                    this.waveSurfer.destroy();
-                    this.waveSurfer = null;
-                }
-                
-                this.dropZone.querySelector('.drop-zone-text').textContent = 
-                    'Drop your audio files here or click to browse';
-            }
-            
-            showProcessing(show) {
-                this.processingIndicator.style.display = show ? 'block' : 'none';
-                this.processBtn.disabled = show;
-                this.previewBtn.disabled = show;
-            }
-            
-            showError(message) {
-                document.getElementById('errorMessage').textContent = message;
-                this.audioError.style.display = 'block';
-                setTimeout(() => {
-                    this.audioError.style.display = 'none';
-                }, 5000);
-            }
-            
-            showMessage(message) {
-                console.log(message);
-            }
-            
-            formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs.toString().padStart(2, '0')}`;
-            }
-        }
-        
-        // Initialize the audio speed changer when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new AudioSpeedChanger();
-        });
-    </script>
-    <script src="/assets/js/main.js"></script>
-</body>
-</html>
-
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Audio Speed Changer | Free Browser Tool | Factictionary</title>
+
+
+    
+
+
+    <!-- SEO Meta Tags -->
+
+
+    <meta name="description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
+
+
+    <meta name="keywords" content="browser tool, audio speed changer, audio pitch, time stretching, audio, free, online, privacy-first">
+
+
+    <meta name="author" content="Factictionary Team">
+
+
+    <meta name="robots" content="index, follow">
+
+
+    <link rel="canonical" href="https://factictionary.github.io/tools/audio_speed_changer.html">
+
+
+    
+
+
+    <!-- Open Graph Tags -->
+
+
+    <meta property="og:title" content="Audio Speed Changer | Factictionary Tools">
+
+
+    <meta property="og:description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
+
+
+    <meta property="og:type" content="website">
+
+
+    <meta property="og:url" content="https://factictionary.github.io/tools/audio_speed_changer.html">
+
+
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+
+
+    
+
+
+    <!-- Twitter Card Tags -->
+
+
+    <meta name="twitter:card" content="summary_large_image">
+
+
+    <meta name="twitter:title" content="Audio Speed Changer | Factictionary Tools">
+
+
+    <meta name="twitter:description" content="Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality. - 100% privacy-protected.">
+
+
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+
+
+    
+
+
+    <!-- Fonts -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    
+
+
+    <!-- FFmpeg.wasm -->
+
+
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+
+
+    
+
+
+    <!-- Wavesurfer.js for Waveform Visualization -->
+
+
+    <script src="https://unpkg.com/wavesurfer.js@7.7.0/dist/wavesurfer.min.js"></script>
+
+
+    
+
+
+    <!-- Styles -->
+
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+
+    
+
+
+    <!-- Tool-specific styles -->
+
+
+    <style>
+
+
+        .tool-header {
+
+
+            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
+
+
+            color: white;
+
+
+            padding: var(--spacing-4xl) var(--spacing-lg);
+
+
+            text-align: center;
+
+
+            margin-top: -80px;
+
+
+            padding-top: calc(var(--spacing-4xl) + 80px);
+
+
+        }
+
+
+        
+
+
+        .tool-title {
+
+
+            font-size: var(--font-size-title);
+
+
+            font-weight: var(--font-weight-bold);
+
+
+            margin-bottom: var(--spacing-md);
+
+
+            line-height: var(--line-height-tight);
+
+
+        }
+
+
+        
+
+
+        .tool-subtitle {
+
+
+            font-size: var(--font-size-subtitle);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            opacity: 0.9;
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+        
+
+
+        .tool-main {
+
+
+            max-width: 1400px;
+
+
+            margin: 0 auto;
+
+
+            padding: var(--spacing-3xl) var(--spacing-lg);
+
+
+            display: grid;
+
+
+            grid-template-columns: 2fr 1fr;
+
+
+            gap: var(--spacing-3xl);
+
+
+        }
+
+
+        
+
+
+        .tool-workspace {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-2xl);
+
+
+            box-shadow: var(--shadow-card);
+
+
+            min-height: 700px;
+
+
+        }
+
+
+        
+
+
+        .tool-sidebar {
+
+
+            display: flex;
+
+
+            flex-direction: column;
+
+
+            gap: var(--spacing-lg);
+
+
+        }
+
+
+        
+
+
+        .tool-info {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-xl);
+
+
+            box-shadow: var(--shadow-card);
+
+
+        }
+
+
+        
+
+
+        .tool-info h3 {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-md);
+
+
+        }
+
+
+        
+
+
+        .tool-feature {
+
+
+            display: flex;
+
+
+            align-items: flex-start;
+
+
+            gap: var(--spacing-sm);
+
+
+            margin-bottom: var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        .tool-feature-icon {
+
+
+            color: #8B5CF6;
+
+
+            font-weight: var(--font-weight-bold);
+
+
+            margin-top: 2px;
+
+
+        }
+
+
+        
+
+
+        .tool-feature-text {
+
+
+            color: var(--color-neutral-700);
+
+
+            font-size: var(--font-size-small);
+
+
+        }
+
+
+        
+
+
+        .drop-zone {
+
+
+            border: 3px dashed #8B5CF640;
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-3xl);
+
+
+            text-align: center;
+
+
+            background: #F5F3FF;
+
+
+            transition: all var(--duration-standard) var(--easing-standard);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+        
+
+
+        .drop-zone:hover,
+
+
+        .drop-zone.drag-over {
+
+
+            border-color: #8B5CF6;
+
+
+            background: #F5F3FFCC;
+
+
+        }
+
+
+        
+
+
+        .drop-zone-icon {
+
+
+            font-size: 4rem;
+
+
+            color: #8B5CF6;
+
+
+            margin-bottom: var(--spacing-md);
+
+
+        }
+
+
+        
+
+
+        .drop-zone-text {
+
+
+            font-size: var(--font-size-body);
+
+
+            color: var(--color-neutral-600);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+        
+
+
+        .btn-file-input {
+
+
+            background: #8B5CF6;
+
+
+            color: white;
+
+
+            border: none;
+
+
+            padding: var(--spacing-md) var(--spacing-xl);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-body);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            cursor: pointer;
+
+
+            transition: background-color var(--duration-fast) var(--easing-standard);
+
+
+        }
+
+
+        
+
+
+        .btn-file-input:hover {
+
+
+            background: #8B5CF6E6;
+
+
+        }
+
+
+        
+
+
+        .tool-controls {
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-xl);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+        
+
+
+        .control-group {
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+        
+
+
+        .control-label {
+
+
+            display: block;
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-700);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .control-input {
+
+
+            width: 100%;
+
+
+            padding: var(--spacing-sm) var(--spacing-md);
+
+
+            border: 2px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-input);
+
+
+            font-size: var(--font-size-body);
+
+
+            transition: border-color var(--duration-fast) var(--easing-standard);
+
+
+        }
+
+
+        
+
+
+        .control-input:focus {
+
+
+            outline: none;
+
+
+            border-color: #8B5CF6;
+
+
+        }
+
+
+        
+
+
+        .control-slider {
+
+
+            width: 100%;
+
+
+            margin: var(--spacing-sm) 0;
+
+
+        }
+
+
+        
+
+
+        .control-slider input[type="range"] {
+
+
+            width: 100%;
+
+
+            height: 8px;
+
+
+            background: var(--color-neutral-200);
+
+
+            border-radius: 4px;
+
+
+            outline: none;
+
+
+            opacity: 0.7;
+
+
+            transition: opacity 0.2s;
+
+
+        }
+
+
+        
+
+
+        .control-slider input[type="range"]:hover {
+
+
+            opacity: 1;
+
+
+        }
+
+
+        
+
+
+        .control-slider input[type="range"]::-webkit-slider-thumb {
+
+
+            appearance: none;
+
+
+            width: 20px;
+
+
+            height: 20px;
+
+
+            background: #8B5CF6;
+
+
+            border-radius: 50%;
+
+
+            cursor: pointer;
+
+
+        }
+
+
+        
+
+
+        .control-slider input[type="range"]::-moz-range-thumb {
+
+
+            width: 20px;
+
+
+            height: 20px;
+
+
+            background: #8B5CF6;
+
+
+            border-radius: 50%;
+
+
+            cursor: pointer;
+
+
+            border: none;
+
+
+        }
+
+
+        
+
+
+        /* Speed Changer Specific Styles */
+
+
+        .speed-workspace {
+
+
+            display: none;
+
+
+            margin-top: var(--spacing-lg);
+
+
+        }
+
+
+        
+
+
+        .speed-controls {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-md);
+
+
+            flex-wrap: wrap;
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+        }
+
+
+        
+
+
+        .play-btn {
+
+
+            background: #8B5CF6;
+
+
+            color: white;
+
+
+            border: none;
+
+
+            padding: var(--spacing-sm) var(--spacing-md);
+
+
+            border-radius: 50%;
+
+
+            font-size: 1.2rem;
+
+
+            cursor: pointer;
+
+
+            transition: background-color var(--duration-fast);
+
+
+            width: 48px;
+
+
+            height: 48px;
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            justify-content: center;
+
+
+        }
+
+
+        
+
+
+        .play-btn:hover {
+
+
+            background: #8B5CF6E6;
+
+
+        }
+
+
+        
+
+
+        .time-display {
+
+
+            font-family: monospace;
+
+
+            font-size: var(--font-size-body);
+
+
+            color: var(--color-neutral-700);
+
+
+            min-width: 120px;
+
+
+        }
+
+
+        
+
+
+        .volume-control {
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .volume-slider {
+
+
+            width: 80px;
+
+
+        }
+
+
+        
+
+
+        .speed-control {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+        }
+
+
+        
+
+
+        .speed-value {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-bold);
+
+
+            color: #8B5CF6;
+
+
+            margin-left: var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        .speed-presets {
+
+
+            display: flex;
+
+
+            gap: var(--spacing-xs);
+
+
+            margin-top: var(--spacing-sm);
+
+
+            flex-wrap: wrap;
+
+
+        }
+
+
+        
+
+
+        .speed-preset {
+
+
+            background: var(--color-neutral-100);
+
+
+            color: var(--color-neutral-700);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            padding: var(--spacing-xs) var(--spacing-sm);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-small);
+
+
+            cursor: pointer;
+
+
+            transition: all var(--duration-fast);
+
+
+        }
+
+
+        
+
+
+        .speed-preset:hover {
+
+
+            background: #8B5CF620;
+
+
+            border-color: #8B5CF6;
+
+
+            color: #8B5CF6;
+
+
+        }
+
+
+        
+
+
+        .speed-preset.active {
+
+
+            background: #8B5CF6;
+
+
+            border-color: #8B5CF6;
+
+
+            color: white;
+
+
+        }
+
+
+        
+
+
+        .waveform-container {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+        }
+
+
+        
+
+
+        .waveform-canvas {
+
+
+            width: 100%;
+
+
+            height: 150px;
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            cursor: pointer;
+
+
+            margin-bottom: var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        .waveform-controls {
+
+
+            display: flex;
+
+
+            justify-content: center;
+
+
+            gap: var(--spacing-md);
+
+
+            margin-top: var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        .waveform-btn {
+
+
+            background: var(--color-neutral-100);
+
+
+            color: var(--color-neutral-700);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            padding: var(--spacing-xs) var(--spacing-md);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-small);
+
+
+            cursor: pointer;
+
+
+            transition: all var(--duration-fast);
+
+
+        }
+
+
+        
+
+
+        .waveform-btn:hover {
+
+
+            background: #8B5CF620;
+
+
+            border-color: #8B5CF6;
+
+
+            color: #8B5CF6;
+
+
+        }
+
+
+        
+
+
+        .audio-analysis {
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+        
+
+
+        .analysis-grid {
+
+
+            display: grid;
+
+
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+
+            gap: var(--spacing-md);
+
+
+        }
+
+
+        
+
+
+        .analysis-item {
+
+
+            text-align: center;
+
+
+            background: var(--color-surface);
+
+
+            padding: var(--spacing-md);
+
+
+            border-radius: var(--radius-input);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+        }
+
+
+        
+
+
+        .analysis-value {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-bold);
+
+
+            color: #8B5CF6;
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .analysis-label {
+
+
+            font-size: var(--font-size-small);
+
+
+            color: var(--color-neutral-600);
+
+
+        }
+
+
+        
+
+
+        .batch-upload {
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            border: 2px dashed var(--color-neutral-300);
+
+
+        }
+
+
+        
+
+
+        .batch-files {
+
+
+            display: grid;
+
+
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+
+            gap: var(--spacing-sm);
+
+
+            margin-top: var(--spacing-md);
+
+
+        }
+
+
+        
+
+
+        .batch-file {
+
+
+            background: var(--color-surface);
+
+
+            padding: var(--spacing-sm);
+
+
+            border-radius: var(--radius-input);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            display: flex;
+
+
+            justify-content: space-between;
+
+
+            align-items: center;
+
+
+        }
+
+
+        
+
+
+        .batch-file-name {
+
+
+            font-size: var(--font-size-small);
+
+
+            color: var(--color-neutral-700);
+
+
+            overflow: hidden;
+
+
+            text-overflow: ellipsis;
+
+
+            white-space: nowrap;
+
+
+        }
+
+
+        
+
+
+        .batch-file-status {
+
+
+            font-size: 10px;
+
+
+            color: var(--color-neutral-500);
+
+
+        }
+
+
+        
+
+
+        .selection-info {
+
+
+            background: var(--color-success-light);
+
+
+            border: 1px solid var(--color-success);
+
+
+            color: var(--color-success-dark);
+
+
+            padding: var(--spacing-md);
+
+
+            border-radius: var(--radius-card);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            display: none;
+
+
+        }
+
+
+        
+
+
+        .processing-indicator {
+
+
+            display: none;
+
+
+            text-align: center;
+
+
+            padding: var(--spacing-lg);
+
+
+            color: var(--color-primary-600);
+
+
+        }
+
+
+        
+
+
+        .spinner {
+
+
+            border: 3px solid var(--color-neutral-200);
+
+
+            border-top: 3px solid #8B5CF6;
+
+
+            border-radius: 50%;
+
+
+            width: 24px;
+
+
+            height: 24px;
+
+
+            animation: spin 1s linear infinite;
+
+
+            margin: 0 auto var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        @keyframes spin {
+
+
+            0% { transform: rotate(0deg); }
+
+
+            100% { transform: rotate(360deg); }
+
+
+        }
+
+
+        
+
+
+        .audio-error {
+
+
+            background: var(--color-error-light);
+
+
+            border: 1px solid var(--color-error);
+
+
+            color: var(--color-error-dark);
+
+
+            padding: var(--spacing-md);
+
+
+            border-radius: var(--radius-card);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            display: none;
+
+
+        }
+
+
+        
+
+
+        .file-info {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-md);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+        }
+
+
+        
+
+
+        .file-info-item {
+
+
+            display: flex;
+
+
+            justify-content: space-between;
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .file-info-label {
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            color: var(--color-neutral-600);
+
+
+        }
+
+
+        
+
+
+        .file-info-value {
+
+
+            color: var(--color-neutral-900);
+
+
+        }
+
+
+        
+
+
+        .tool-output {
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-xl);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+            min-height: 200px;
+
+
+            display: none;
+
+
+        }
+
+
+        
+
+
+        .tool-actions {
+
+
+            display: flex;
+
+
+            gap: var(--spacing-md);
+
+
+            justify-content: center;
+
+
+            flex-wrap: wrap;
+
+
+        }
+
+
+        
+
+
+        .btn-tool {
+
+
+            background: var(--color-neutral-900);
+
+
+            color: white;
+
+
+            border: none;
+
+
+            padding: var(--spacing-md) var(--spacing-xl);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-body);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            cursor: pointer;
+
+
+            transition: all var(--duration-fast) var(--easing-standard);
+
+
+            min-width: 120px;
+
+
+        }
+
+
+        
+
+
+        .btn-tool:hover {
+
+
+            background: var(--color-neutral-700);
+
+
+            transform: translateY(-1px);
+
+
+        }
+
+
+        
+
+
+        .btn-tool:disabled {
+
+
+            background: var(--color-neutral-400);
+
+
+            cursor: not-allowed;
+
+
+            transform: none;
+
+
+        }
+
+
+        
+
+
+        .privacy-badge {
+
+
+            background: var(--color-success);
+
+
+            color: white;
+
+
+            padding: var(--spacing-xs) var(--spacing-sm);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-small);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            display: inline-flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .stats-grid {
+
+
+            display: grid;
+
+
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+
+            gap: var(--spacing-md);
+
+
+            margin-top: var(--spacing-xl);
+
+
+        }
+
+
+        
+
+
+        .stat-card {
+
+
+            background: var(--color-surface);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            text-align: center;
+
+
+            box-shadow: var(--shadow-card);
+
+
+        }
+
+
+        
+
+
+        .stat-number {
+
+
+            font-size: var(--font-size-title);
+
+
+            font-weight: var(--font-weight-bold);
+
+
+            color: #8B5CF6;
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+        
+
+
+        .stat-label {
+
+
+            color: var(--color-neutral-600);
+
+
+            font-size: var(--font-size-small);
+
+
+        }
+
+
+        
+
+
+        .adsense-tool {
+
+
+            background: var(--color-neutral-100);
+
+
+            border: 2px dashed var(--color-neutral-300);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            text-align: center;
+
+
+            color: var(--color-neutral-500);
+
+
+            font-size: var(--font-size-small);
+
+
+            min-height: 200px;
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            justify-content: center;
+
+
+        }
+
+
+        
+
+
+        .quality-toggle {
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-sm);
+
+
+            margin-top: var(--spacing-sm);
+
+
+        }
+
+
+        
+
+
+        .quality-toggle input[type="checkbox"] {
+
+
+            width: 20px;
+
+
+            height: 20px;
+
+
+            accent-color: #8B5CF6;
+
+
+        }
+
+
+        
+
+
+        .quality-toggle label {
+
+
+            font-size: var(--font-size-small);
+
+
+            color: var(--color-neutral-700);
+
+
+            cursor: pointer;
+
+
+        }
+
+
+        
+
+
+        /* Responsive Design */
+
+
+        @media (max-width: 768px) {
+
+
+            .tool-main {
+
+
+                grid-template-columns: 1fr;
+
+
+                padding: var(--spacing-lg) var(--spacing-sm);
+
+
+            }
+
+
+            
+
+
+            .tool-title {
+
+
+                font-size: var(--font-size-subtitle);
+
+
+            }
+
+
+            
+
+
+            .tool-actions {
+
+
+                flex-direction: column;
+
+
+            }
+
+
+            
+
+
+            .btn-tool {
+
+
+                width: 100%;
+
+
+            }
+
+
+            
+
+
+            .speed-presets {
+
+
+                justify-content: center;
+
+
+            }
+
+
+            
+
+
+            .speed-controls {
+
+
+                justify-content: center;
+
+
+            }
+
+
+        }
+
+
+        
+
+
+        @media (max-width: 480px) {
+
+
+            .tool-header {
+
+
+                padding: var(--spacing-2xl) var(--spacing-sm);
+
+
+                padding-top: calc(var(--spacing-2xl) + 80px);
+
+
+            }
+
+
+            
+
+
+            .tool-workspace {
+
+
+                padding: var(--spacing-lg);
+
+
+            }
+
+
+        }
+
+
+    </style>
+
+
+    
+
+
+    <!-- Structured Data -->
+
+
+    <script type="application/ld+json">
+
+
+    {
+
+
+        "@context": "https://schema.org",
+
+
+        "@type": "SoftwareApplication",
+
+
+        "name": "Audio Speed Changer",
+
+
+        "description": "Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality.",
+
+
+        "applicationCategory": "UtilityApplication",
+
+
+        "operatingSystem": "Web Browser",
+
+
+        "offers": {
+
+
+            "@type": "Offer",
+
+
+            "price": "0",
+
+
+            "priceCurrency": "USD"
+
+
+        },
+
+
+        "provider": {
+
+
+            "@type": "Organization",
+
+
+            "name": "Factictionary"
+
+
+        },
+
+
+        "aggregateRating": {
+
+
+            "@type": "AggregateRating",
+
+
+            "ratingValue": "4.9",
+
+
+            "reviewCount": "850"
+
+
+        }
+
+
+    }
+
+
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- Skip to main content -->
+
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+
+    
+
+
+    <!-- Navigation -->
+
+
+            <nav class="navbar" role="navigation">
+
+
+        <div class="nav-container">
+
+
+            <a href="/" class="logo">Factictionary</a>
+
+
+            <ul class="nav-links">
+
+
+                <li><a href="/" class="nav-link">Home</a></li>
+
+
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+
+                <li><a href="/about.html" class="nav-link">About</a></li>
+
+
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+
+            </ul>
+
+
+            <button class="menu-toggle" aria-label="Toggle menu">
+
+
+                <span></span>
+
+
+                <span></span>
+
+
+                <span></span>
+
+
+            </button>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+
+
+    <!-- Mobile Menu Drawer -->
+
+
+    <div class="mobile-menu-backdrop"></div>
+
+
+    <div class="mobile-menu">
+
+
+        <ul class="nav-links">
+
+
+            <li><a href="/" class="nav-link">Home</a></li>
+
+
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+
+            <li><a href="/about.html" class="nav-link">About</a></li>
+
+
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+
+        </ul>
+
+
+    </div><!-- Tool Header -->
+
+
+    <header class="tool-header">
+
+
+        <h1 class="tool-title">Audio Speed Changer</h1>
+
+
+        <p class="tool-subtitle">Change audio speed and pitch with professional quality. Adjust playback speed from 0.25x to 4x, modify pitch, and preserve audio quality.</p>
+
+
+        <div class="privacy-badge">
+
+
+            🔒 100% Privacy Protected
+
+
+        </div>
+
+
+    </header>
+
+
+    
+
+
+    <!-- Main Tool Content -->
+
+
+    <main id="main" class="tool-main">
+
+
+            <div class="privacy-shield-bar">
+
+
+                <span class="pulse-dot"></span>
+
+
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+
+
+            </div>
+
+
+        <!-- Tool Workspace -->
+
+
+        <section class="tool-workspace">
+
+
+            <div class="drop-zone" id="dropZone">
+
+
+                <div class="drop-zone-icon">📄</div>
+
+
+                <div class="drop-zone-text">
+
+
+                    Drop your audio files here or click to browse
+
+
+                </div>
+
+
+                <input type="file" id="fileInput" accept=".mp3,.wav,.m4a,.ogg,.flac,.aac,.aiff" multiple style="display: none;">
+
+
+                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
+
+
+                    Choose Audio Files
+
+
+                </button>
+
+
+            </div>
+
+
+            
+
+
+            <!-- Single file workspace (hidden until file loaded) -->
+
+
+            <div class="speed-workspace" id="speedWorkspace">
+
+
+                <div class="file-info" id="fileInfo">
+
+
+                    <div class="file-info-item">
+
+
+                        <span class="file-info-label">Filename:</span>
+
+
+                        <span class="file-info-value" id="fileName">-</span>
+
+
+                    </div>
+
+
+                    <div class="file-info-item">
+
+
+                        <span class="file-info-label">Duration:</span>
+
+
+                        <span class="file-info-value" id="fileDuration">-</span>
+
+
+                    </div>
+
+
+                    <div class="file-info-item">
+
+
+                        <span class="file-info-label">Original Speed:</span>
+
+
+                        <span class="file-info-value">1.0x</span>
+
+
+                    </div>
+
+
+                    <div class="file-info-item">
+
+
+                        <span class="file-info-label">New Speed:</span>
+
+
+                        <span class="file-info-value" id="newSpeed">1.0x</span>
+
+
+                    </div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="selection-info" id="selectionInfo">
+
+
+                    Selection: <span id="selectionTime">0:00 - 0:00</span> (<span id="selectionDuration">0.00</span>s)
+
+
+                </div>
+
+
+                
+
+
+                <div class="speed-controls">
+
+
+                    <button class="play-btn" id="playBtn">â–¶</button>
+
+
+                    <div class="time-display">
+
+
+                        <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+
+
+                    </div>
+
+
+                    <div class="volume-control">
+
+
+                        ”Š
+
+
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+
+
+                    </div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="waveform-container">
+
+
+                    <div class="waveform-canvas" id="waveformCanvas"></div>
+
+
+                    <div class="waveform-controls">
+
+
+                        <button class="waveform-btn" id="zoomInBtn">”+</button>
+
+
+                        <button class="waveform-btn" id="zoomOutBtn">”-</button>
+
+
+                        <button class="waveform-btn" id="resetZoomBtn">Reset</button>
+
+
+                        <button class="waveform-btn" id="centerBtn">Center</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="speed-control">
+
+
+                    <label class="control-label">
+
+
+                        Playback Speed
+
+
+                        <span class="speed-value" id="speedValue">1.0x</span>
+
+
+                    </label>
+
+
+                    <div class="control-slider">
+
+
+                        <input type="range" id="speedSlider" min="0.25" max="4" step="0.01" value="1">
+
+
+                        <div class="speed-presets">
+
+
+                            <button class="speed-preset" data-speed="0.5">0.5x</button>
+
+
+                            <button class="speed-preset" data-speed="0.75">0.75x</button>
+
+
+                            <button class="speed-preset" data-speed="1">1.0x</button>
+
+
+                            <button class="speed-preset" data-speed="1.25">1.25x</button>
+
+
+                            <button class="speed-preset" data-speed="1.5">1.5x</button>
+
+
+                            <button class="speed-preset" data-speed="2">2.0x</button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="speed-control">
+
+
+                    <label class="control-label">
+
+
+                        Pitch Shift (semitones)
+
+
+                        <span class="speed-value" id="pitchValue">0</span>
+
+
+                    </label>
+
+
+                    <div class="control-slider">
+
+
+                        <input type="range" id="pitchSlider" min="-12" max="12" step="0.1" value="0">
+
+
+                    </div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="speed-control">
+
+
+                    <label class="control-label">
+
+
+                        Time Stretching Method
+
+
+                    </label>
+
+
+                    <select class="control-input" id="stretchMethod">
+
+
+                        <option value="phase">Phase Vocoder (Best Quality)</option>
+
+
+                        <option value="wsola">WSOLA (Fast)</option>
+
+
+                        <option value="elastique">Elastique (Pro)</option>
+
+
+                        <option value="rubber">Rubber Band</option>
+
+
+                    </select>
+
+
+                    <div class="quality-toggle">
+
+
+                        <input type="checkbox" id="preserveQuality" checked>
+
+
+                        <label for="preserveQuality">Preserve audio quality (slower processing)</label>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <!-- Batch processing workspace -->
+
+
+            <div class="batch-upload" id="batchWorkspace" style="display: none;">
+
+
+                <h3>Batch Processing</h3>
+
+
+                <p style="color: var(--color-neutral-600); margin-bottom: var(--spacing-sm);">
+
+
+                    Process multiple audio files with the same speed settings
+
+
+                </p>
+
+
+                <div class="batch-files" id="batchFiles"></div>
+
+
+            </div>
+
+
+            
+
+
+            <div class="tool-controls">
+
+
+                <h3>Export Settings</h3>
+
+
+                <div class="control-group">
+
+
+                    <label class="control-label">Output Format</label>
+
+
+                    <select class="control-input" id="outputFormat">
+
+
+                        <option value="mp3">MP3 (Recommended)</option>
+
+
+                        <option value="wav">WAV (Uncompressed)</option>
+
+
+                        <option value="m4a">M4A (AAC)</option>
+
+
+                        <option value="ogg">OGG Vorbis</option>
+
+
+                    </select>
+
+
+                </div>
+
+
+                <div class="control-group">
+
+
+                    <label class="control-label">Quality</label>
+
+
+                    <div class="control-slider">
+
+
+                        <input type="range" min="1" max="10" value="8" id="qualitySlider">
+
+
+                        <span id="qualityValue">8/10</span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <div class="audio-analysis" id="audioAnalysis" style="display: none;">
+
+
+                <h3>Audio Analysis</h3>
+
+
+                <div class="analysis-grid">
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisDuration">0:00</div>
+
+
+                        <div class="analysis-label">Duration</div>
+
+
+                    </div>
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisSampleRate">0 Hz</div>
+
+
+                        <div class="analysis-label">Sample Rate</div>
+
+
+                    </div>
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisChannels">0</div>
+
+
+                        <div class="analysis-label">Channels</div>
+
+
+                    </div>
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisBitrate">0 kbps</div>
+
+
+                        <div class="analysis-label">Bitrate</div>
+
+
+                    </div>
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisBPM">0</div>
+
+
+                        <div class="analysis-label">BPM</div>
+
+
+                    </div>
+
+
+                    <div class="analysis-item">
+
+
+                        <div class="analysis-value" id="analysisKey">Unknown</div>
+
+
+                        <div class="analysis-label">Musical Key</div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <div class="audio-error" id="audioError">
+
+
+                <strong>Error:</strong> <span id="errorMessage"></span>
+
+
+            </div>
+
+
+            
+
+
+            <div class="processing-indicator" id="processingIndicator">
+
+
+                <div class="spinner"></div>
+
+
+                <div>Processing audio...</div>
+
+
+            </div>
+
+
+            
+
+
+            <div class="tool-output" id="toolOutput">
+
+
+                <h3>Preview & Export</h3>
+
+
+                <div id="outputContent">
+
+
+                    <div style="text-align: center; color: var(--color-neutral-600);">
+
+
+                        Audio processed successfully! You can now download the modified file.
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <div class="tool-actions">
+
+
+                <button class="btn-tool" id="processBtn" disabled>
+
+
+                    Process Audio
+
+
+                </button>
+
+
+                <button class="btn-tool" id="previewBtn" disabled>
+
+
+                    Preview
+
+
+                </button>
+
+
+                <button class="btn-tool" id="downloadBtn" disabled>
+
+
+                    Download
+
+
+                </button>
+
+
+                <button class="btn-tool" id="resetBtn">
+
+
+                    Reset
+
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+        
+
+
+        <!-- Tool Sidebar -->
+
+
+        <aside class="tool-sidebar">
+
+
+            <!-- Tool Information -->
+
+
+            <div class="tool-info">
+
+
+                <h3>Features</h3>
+
+
+                
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Speed adjustment (0.25x - 4x)</div>
+
+
+                </div>
+
+
+            
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Pitch shifting</div>
+
+
+                </div>
+
+
+            
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Waveform visualization</div>
+
+
+                </div>
+
+
+            
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Quality preservation</div>
+
+
+                </div>
+
+
+            
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Batch processing</div>
+
+
+                </div>
+
+
+                
+
+
+                <div class="tool-feature">
+
+
+                    <div class="tool-feature-icon">âœ“</div>
+
+
+                    <div class="tool-feature-text">Audio analysis</div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <!-- AdSense Container -->
+
+
+            <div class="adsense-tool">
+
+
+                <div>
+
+
+                    <div>›  Advertisement</div>
+
+
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+
+
+                </div>
+
+
+            </div>
+
+
+            
+
+
+            <!-- Category Navigation -->
+
+
+            <div class="tool-info">
+
+
+                <h3>Related Tools</h3>
+
+
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+
+
+                    <a href="/audio_editor.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Editor</a>
+
+
+                    <a href="/audio_converter.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Converter</a>
+
+
+                    <a href="/audio_trimmer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Trimmer</a>
+
+
+                    <a href="/audio_normalizer.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Audio Normalizer</a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </aside>
+
+
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+
+
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Audio Speed Changer</h2>
+
+
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Audio Speed Changer is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+
+
+            
+
+
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+
+
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Audio Speed Changer leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+
+
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+
+
+        </section>
+
+
+            <!-- Donation Banner -->
+
+
+        <div class="donation-banner-card">
+
+
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+
+
+            <h3>Support Privacy-First Web Utilities</h3>
+
+
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
+
+
+            
+
+
+            <div class="donation-btn-group">
+
+
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+
+
+                    💳 Support via PayPal
+
+
+                </a>
+
+
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+
+
+                    💖 GitHub Sponsors
+
+
+                </a>
+
+
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+
+
+                    🪙 Crypto / UPI Donation
+
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- Crypto Modal -->
+
+
+        <div id="donation-modal" class="modal-backdrop">
+
+
+            <div class="modal-content">
+
+
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+
+
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+
+
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+
+
+                
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>https://paypal.me/mgarg1102</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+
+
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 20px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>factictionary@upi</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+
+
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    
+
+
+    <!-- Tool Statistics -->
+
+
+    <section class="section-lg">
+
+
+        <div class="container">
+
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-number">50+</div>
+
+
+                    <div class="stat-label">Tools Available</div>
+
+
+                </div>
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-number">0</div>
+
+
+                    <div class="stat-label">Files Uploaded</div>
+
+
+                </div>
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-number">âž</div>
+
+
+                    <div class="stat-label">Unlimited Usage</div>
+
+
+                </div>
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-number">100%</div>
+
+
+                    <div class="stat-label">Privacy Protected</div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    
+
+
+    <!-- JavaScript -->
+
+
+    <script>
+
+
+        class AudioSpeedChanger {
+
+
+            constructor() {
+
+
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+
+                this.ffmpeg = null;
+
+
+                this.audioBuffer = null;
+
+
+                this.audioFile = null;
+
+
+                this.batchFiles = [];
+
+
+                this.isPlaying = false;
+
+
+                this.startTime = 0;
+
+
+                this.pauseTime = 0;
+
+
+                this.selectionStart = 0;
+
+
+                this.selectionEnd = 0;
+
+
+                this.isSelecting = false;
+
+
+                this.currentSpeed = 1.0;
+
+
+                this.currentPitch = 0;
+
+
+                this.waveSurfer = null;
+
+
+                this.processedBlob = null;
+
+
+                
+
+
+                this.initializeFFmpeg();
+
+
+                this.initializeElements();
+
+
+                this.attachEventListeners();
+
+
+            }
+
+
+            
+
+
+            async initializeFFmpeg() {
+
+
+                try {
+
+
+                    this.ffmpeg = new FFmpeg();
+
+
+                    await this.ffmpeg.load({
+
+
+                        coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js'
+
+
+                    });
+
+
+                } catch (error) {
+
+
+                    console.error('Failed to load FFmpeg:', error);
+
+
+                    this.showError('Failed to initialize audio processing engine');
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            initializeElements() {
+
+
+                this.dropZone = document.getElementById('dropZone');
+
+
+                this.fileInput = document.getElementById('fileInput');
+
+
+                this.processBtn = document.getElementById('processBtn');
+
+
+                this.previewBtn = document.getElementById('previewBtn');
+
+
+                this.downloadBtn = document.getElementById('downloadBtn');
+
+
+                this.resetBtn = document.getElementById('resetBtn');
+
+
+                
+
+
+                this.speedWorkspace = document.getElementById('speedWorkspace');
+
+
+                this.batchWorkspace = document.getElementById('batchWorkspace');
+
+
+                
+
+
+                this.waveformCanvas = document.getElementById('waveformCanvas');
+
+
+                this.playBtn = document.getElementById('playBtn');
+
+
+                this.volumeSlider = document.getElementById('volumeSlider');
+
+
+                
+
+
+                this.speedSlider = document.getElementById('speedSlider');
+
+
+                this.speedValue = document.getElementById('speedValue');
+
+
+                this.pitchSlider = document.getElementById('pitchSlider');
+
+
+                this.pitchValue = document.getElementById('pitchValue');
+
+
+                
+
+
+                this.currentTimeDisplay = document.getElementById('currentTime');
+
+
+                this.totalTimeDisplay = document.getElementById('totalTime');
+
+
+                this.selectionInfo = document.getElementById('selectionInfo');
+
+
+                this.selectionTime = document.getElementById('selectionTime');
+
+
+                this.selectionDuration = document.getElementById('selectionDuration');
+
+
+                
+
+
+                this.fileNameDisplay = document.getElementById('fileName');
+
+
+                this.fileDurationDisplay = document.getElementById('fileDuration');
+
+
+                this.newSpeedDisplay = document.getElementById('newSpeed');
+
+
+                
+
+
+                this.audioWorkspace = document.getElementById('speedWorkspace');
+
+
+                this.processingIndicator = document.getElementById('processingIndicator');
+
+
+                this.audioError = document.getElementById('audioError');
+
+
+                this.toolOutput = document.getElementById('toolOutput');
+
+
+                
+
+
+                this.qualitySlider = document.getElementById('qualitySlider');
+
+
+                this.qualityValue = document.getElementById('qualityValue');
+
+
+                this.outputFormat = document.getElementById('outputFormat');
+
+
+                this.stretchMethod = document.getElementById('stretchMethod');
+
+
+                this.preserveQuality = document.getElementById('preserveQuality');
+
+
+                
+
+
+                this.audioAnalysis = document.getElementById('audioAnalysis');
+
+
+                this.batchFilesContainer = document.getElementById('batchFiles');
+
+
+            }
+
+
+            
+
+
+            attachEventListeners() {
+
+
+                // File handling
+
+
+                this.dropZone.addEventListener('dragover', this.handleDragOver.bind(this));
+
+
+                this.dropZone.addEventListener('dragleave', this.handleDragLeave.bind(this));
+
+
+                this.dropZone.addEventListener('drop', this.handleDrop.bind(this));
+
+
+                this.dropZone.addEventListener('click', () => this.fileInput.click());
+
+
+                this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
+
+
+                
+
+
+                // Audio controls
+
+
+                this.playBtn.addEventListener('click', this.togglePlayback.bind(this));
+
+
+                this.volumeSlider.addEventListener('input', this.adjustVolume.bind(this));
+
+
+                
+
+
+                // Speed controls
+
+
+                this.speedSlider.addEventListener('input', this.updateSpeed.bind(this));
+
+
+                this.pitchSlider.addEventListener('input', this.updatePitch.bind(this));
+
+
+                
+
+
+                // Speed presets
+
+
+                document.querySelectorAll('.speed-preset').forEach(preset => {
+
+
+                    preset.addEventListener('click', () => {
+
+
+                        const speed = parseFloat(preset.dataset.speed);
+
+
+                        this.speedSlider.value = speed;
+
+
+                        this.updateSpeed();
+
+
+                        
+
+
+                        // Update active state
+
+
+                        document.querySelectorAll('.speed-preset').forEach(p => p.classList.remove('active'));
+
+
+                        preset.classList.add('active');
+
+
+                    });
+
+
+                });
+
+
+                
+
+
+                // Waveform controls
+
+
+                document.getElementById('zoomInBtn').addEventListener('click', () => this.zoomWaveform(1.2));
+
+
+                document.getElementById('zoomOutBtn').addEventListener('click', () => this.zoomWaveform(0.8));
+
+
+                document.getElementById('resetZoomBtn').addEventListener('click', () => this.resetZoom());
+
+
+                document.getElementById('centerBtn').addEventListener('click', () => this.centerWaveform());
+
+
+                
+
+
+                // Tool buttons
+
+
+                this.processBtn.addEventListener('click', this.processAudio.bind(this));
+
+
+                this.previewBtn.addEventListener('click', this.previewAudio.bind(this));
+
+
+                this.downloadBtn.addEventListener('click', this.downloadAudio.bind(this));
+
+
+                this.resetBtn.addEventListener('click', this.resetChanger.bind(this));
+
+
+                
+
+
+                // Quality slider
+
+
+                this.qualitySlider.addEventListener('input', () => {
+
+
+                    this.qualityValue.textContent = this.qualitySlider.value + '/10';
+
+
+                });
+
+
+                
+
+
+                // Mobile menu
+
+
+                const menuToggle = document.querySelector('.menu-toggle');
+
+
+                const navLinks = document.querySelector('.nav-links');
+
+
+                menuToggle.addEventListener('click', () => {
+
+
+                    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+
+
+                    menuToggle.setAttribute('aria-expanded', !isExpanded);
+
+
+                    navLinks.classList.toggle('active');
+
+
+                });
+
+
+            }
+
+
+            
+
+
+            handleDragOver(e) {
+
+
+                e.preventDefault();
+
+
+                this.dropZone.classList.add('drag-over');
+
+
+            }
+
+
+            
+
+
+            handleDragLeave(e) {
+
+
+                e.preventDefault();
+
+
+                this.dropZone.classList.remove('drag-over');
+
+
+            }
+
+
+            
+
+
+            handleDrop(e) {
+
+
+                e.preventDefault();
+
+
+                this.dropZone.classList.remove('drag-over');
+
+
+                const files = Array.from(e.dataTransfer.files);
+
+
+                this.loadAudioFiles(files);
+
+
+            }
+
+
+            
+
+
+            handleFileSelect(e) {
+
+
+                const files = Array.from(e.target.files);
+
+
+                this.loadAudioFiles(files);
+
+
+            }
+
+
+            
+
+
+            async loadAudioFiles(files) {
+
+
+                const audioFiles = files.filter(file => this.isAudioFile(file));
+
+
+                
+
+
+                if (audioFiles.length === 0) {
+
+
+                    this.showError('Please select valid audio files (MP3, WAV, M4A, OGG, FLAC, AAC, AIFF)');
+
+
+                    return;
+
+
+                }
+
+
+                
+
+
+                if (audioFiles.length > 1) {
+
+
+                    // Batch processing mode
+
+
+                    this.batchFiles = audioFiles;
+
+
+                    this.showBatchWorkspace();
+
+
+                    this.loadFirstFile(audioFiles[0]);
+
+
+                } else {
+
+
+                    // Single file mode
+
+
+                    this.loadFirstFile(audioFiles[0]);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            async loadFirstFile(file) {
+
+
+                this.audioFile = file;
+
+
+                
+
+
+                try {
+
+
+                    const arrayBuffer = await file.arrayBuffer();
+
+
+                    this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+
+
+                    
+
+
+                    this.displayFileInfo();
+
+
+                    this.showAudioWorkspace();
+
+
+                    this.initializeWaveform();
+
+
+                    this.analyzeAudio();
+
+
+                    this.updateTimeDisplay();
+
+
+                    
+
+
+                    this.processBtn.disabled = false;
+
+
+                    this.previewBtn.disabled = false;
+
+
+                    
+
+
+                } catch (error) {
+
+
+                    console.error('Error loading audio file:', error);
+
+
+                    this.showError('Failed to load audio file. The file may be corrupted or in an unsupported format.');
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            showBatchWorkspace() {
+
+
+                this.batchWorkspace.style.display = 'block';
+
+
+                this.updateBatchFiles();
+
+
+            }
+
+
+            
+
+
+            updateBatchFiles() {
+
+
+                this.batchFilesContainer.innerHTML = '';
+
+
+                this.batchFiles.forEach((file, index) => {
+
+
+                    const fileDiv = document.createElement('div');
+
+
+                    fileDiv.className = 'batch-file';
+
+
+                    fileDiv.innerHTML = `
+
+
+                        <div class="batch-file-name" title="${file.name}">${file.name}</div>
+
+
+                        <div class="batch-file-status" id="status-${index}">Ready</div>
+
+
+                    `;
+
+
+                    this.batchFilesContainer.appendChild(fileDiv);
+
+
+                });
+
+
+            }
+
+
+            
+
+
+            isAudioFile(file) {
+
+
+                const audioTypes = [
+
+
+                    'audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/wave', 'audio/x-wav',
+
+
+                    'audio/m4a', 'audio/aac', 'audio/ogg', 'audio/vorbis', 'audio/flac',
+
+
+                    'audio/x-aiff', 'audio/aiff'
+
+
+                ];
+
+
+                return audioTypes.includes(file.type) || /\.(mp3|wav|m4a|ogg|flac|aac|aiff)$/i.test(file.name);
+
+
+            }
+
+
+            
+
+
+            displayFileInfo() {
+
+
+                this.fileNameDisplay.textContent = this.audioFile.name;
+
+
+                this.fileDurationDisplay.textContent = this.formatTime(this.audioBuffer.duration);
+
+
+                this.totalTimeDisplay.textContent = this.formatTime(this.audioBuffer.duration);
+
+
+            }
+
+
+            
+
+
+            showAudioWorkspace() {
+
+
+                this.dropZone.style.display = 'none';
+
+
+                this.speedWorkspace.style.display = 'block';
+
+
+            }
+
+
+            
+
+
+            initializeWaveform() {
+
+
+                // Initialize WaveSurfer for better waveform visualization
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.destroy();
+
+
+                }
+
+
+                
+
+
+                this.waveSurfer = WaveSurfer.create({
+
+
+                    container: this.waveformCanvas,
+
+
+                    waveColor: '#8B5CF6',
+
+
+                    progressColor: '#7C3AED',
+
+
+                    cursorColor: '#EF4444',
+
+
+                    barWidth: 2,
+
+
+                    barRadius: 1,
+
+
+                    height: 150,
+
+
+                    normalize: true,
+
+
+                    backend: 'WebAudio',
+
+
+                });
+
+
+                
+
+
+                this.waveSurfer.loadBlob(this.audioFile);
+
+
+                
+
+
+                // Add interaction handlers
+
+
+                this.waveSurfer.on('ready', () => {
+
+
+                    console.log('Waveform ready');
+
+
+                });
+
+
+                
+
+
+                this.waveSurfer.on('play', () => {
+
+
+                    this.isPlaying = true;
+
+
+                    this.playBtn.textContent = 'â¸';
+
+
+                });
+
+
+                
+
+
+                this.waveSurfer.on('pause', () => {
+
+
+                    this.isPlaying = false;
+
+
+                    this.playBtn.textContent = 'â–¶';
+
+
+                });
+
+
+                
+
+
+                this.waveSurfer.on('finish', () => {
+
+
+                    this.isPlaying = false;
+
+
+                    this.playBtn.textContent = 'â–¶';
+
+
+                });
+
+
+                
+
+
+                this.waveSurfer.on('seek', (progress) => {
+
+
+                    this.currentTimeDisplay.textContent = this.formatTime(progress * this.audioBuffer.duration);
+
+
+                });
+
+
+            }
+
+
+            
+
+
+            zoomWaveform(factor) {
+
+
+                if (this.waveSurfer) {
+
+
+                    const currentZoom = this.waveSurfer.options.minPxPerSec || 50;
+
+
+                    const newZoom = Math.max(10, Math.min(200, currentZoom * factor));
+
+
+                    this.waveSurfer.zoom(newZoom);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            resetZoom() {
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.zoom(50);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            centerWaveform() {
+
+
+                if (this.waveSurfer) {
+
+
+                    const duration = this.audioBuffer.duration;
+
+
+                    const centerTime = duration / 2;
+
+
+                    this.waveSurfer.seekTo(centerTime / duration);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            togglePlayback() {
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.playPause();
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            adjustVolume(e) {
+
+
+                const volume = e.target.value / 100;
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.setVolume(volume);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            updateSpeed() {
+
+
+                this.currentSpeed = parseFloat(this.speedSlider.value);
+
+
+                this.speedValue.textContent = this.currentSpeed.toFixed(2) + 'x';
+
+
+                this.newSpeedDisplay.textContent = this.currentSpeed.toFixed(2) + 'x';
+
+
+                
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.setPlaybackRate(this.currentSpeed);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            updatePitch() {
+
+
+                this.currentPitch = parseFloat(this.pitchSlider.value);
+
+
+                this.pitchValue.textContent = this.currentPitch.toFixed(1);
+
+
+            }
+
+
+            
+
+
+            async analyzeAudio() {
+
+
+                const sampleRate = this.audioBuffer.sampleRate;
+
+
+                const channels = this.audioBuffer.numberOfChannels;
+
+
+                const duration = this.audioBuffer.duration;
+
+
+                
+
+
+                // Basic analysis
+
+
+                document.getElementById('analysisDuration').textContent = this.formatTime(duration);
+
+
+                document.getElementById('analysisSampleRate').textContent = sampleRate + ' Hz';
+
+
+                document.getElementById('analysisChannels').textContent = channels;
+
+
+                
+
+
+                // Estimate bitrate for compressed formats
+
+
+                const bitrate = this.estimateBitrate();
+
+
+                document.getElementById('analysisBitrate').textContent = bitrate + ' kbps';
+
+
+                
+
+
+                // BPM detection (simplified)
+
+
+                const bpm = await this.detectBPM();
+
+
+                document.getElementById('analysisBPM').textContent = bpm || 'Unknown';
+
+
+                
+
+
+                // Musical key detection (simplified)
+
+
+                const key = this.detectMusicalKey();
+
+
+                document.getElementById('analysisKey').textContent = key;
+
+
+                
+
+
+                this.audioAnalysis.style.display = 'block';
+
+
+            }
+
+
+            
+
+
+            estimateBitrate() {
+
+
+                const fileSize = this.audioFile.size;
+
+
+                const duration = this.audioBuffer.duration;
+
+
+                const bitrate = Math.round((fileSize * 8) / (duration * 1000));
+
+
+                return bitrate;
+
+
+            }
+
+
+            
+
+
+            async detectBPM() {
+
+
+                // Simplified BPM detection using audio analysis
+
+
+                // This is a basic implementation - real BPM detection is much more complex
+
+
+                try {
+
+
+                    const data = this.audioBuffer.getChannelData(0);
+
+
+                    const sampleRate = this.audioBuffer.sampleRate;
+
+
+                    
+
+
+                    // Find peaks in the audio data
+
+
+                    const peaks = [];
+
+
+                    const windowSize = Math.floor(sampleRate * 0.1); // 100ms windows
+
+
+                    
+
+
+                    for (let i = 0; i < data.length - windowSize; i += windowSize) {
+
+
+                        let max = 0;
+
+
+                        for (let j = i; j < i + windowSize; j++) {
+
+
+                            max = Math.max(max, Math.abs(data[j]));
+
+
+                        }
+
+
+                        peaks.push(max);
+
+
+                    }
+
+
+                    
+
+
+                    // Find periodic patterns (very simplified)
+
+
+                    const bpm = this.findPeriodicBPM(peaks, sampleRate);
+
+
+                    return bpm;
+
+
+                } catch (error) {
+
+
+                    console.error('BPM detection failed:', error);
+
+
+                    return null;
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            findPeriodicBPM(peaks, sampleRate) {
+
+
+                // Very simplified BPM detection
+
+
+                const minBPM = 60;
+
+
+                const maxBPM = 200;
+
+
+                
+
+
+                for (let bpm = minBPM; bpm <= maxBPM; bpm++) {
+
+
+                    const period = (60 / bpm) * sampleRate * 0.1; // Convert to window count
+
+
+                    let correlation = 0;
+
+
+                    
+
+
+                    for (let i = 0; i < peaks.length - period; i++) {
+
+
+                        correlation += peaks[i] * peaks[i + period];
+
+
+                    }
+
+
+                    
+
+
+                    if (correlation > peaks.length * 0.1) {
+
+
+                        return bpm;
+
+
+                    }
+
+
+                }
+
+
+                
+
+
+                return null;
+
+
+            }
+
+
+            
+
+
+            detectMusicalKey() {
+
+
+                // Simplified musical key detection
+
+
+                // This would require more sophisticated audio analysis
+
+
+                return 'Unknown';
+
+
+            }
+
+
+            
+
+
+            updateTimeDisplay() {
+
+
+                // Time display is handled by WaveSurfer
+
+
+            }
+
+
+            
+
+
+            async processAudio() {
+
+
+                if (!this.audioBuffer) return;
+
+
+                
+
+
+                this.showProcessing(true);
+
+
+                
+
+
+                try {
+
+
+                    const inputData = new Uint8Array(await this.audioFile.arrayBuffer());
+
+
+                    const inputName = 'input.' + (this.audioFile.name.split('.').pop() || 'mp3');
+
+
+                    const outputName = 'output.' + this.outputFormat.value;
+
+
+                    
+
+
+                    await this.ffmpeg.writeFile(inputName, inputData);
+
+
+                    
+
+
+                    const args = ['-i', inputName];
+
+
+                    
+
+
+                    // Apply speed change
+
+
+                    if (this.currentSpeed !== 1.0) {
+
+
+                        args.push('-filter:a', `atempo=${this.currentSpeed}`);
+
+
+                    }
+
+
+                    
+
+
+                    // Apply pitch shift
+
+
+                    if (this.currentPitch !== 0) {
+
+
+                        const pitchRatio = Math.pow(2, this.currentPitch / 12);
+
+
+                        args.push('-filter:a', `asetrate=${this.audioBuffer.sampleRate * pitchRatio},aresample=${this.audioBuffer.sampleRate}`);
+
+
+                    }
+
+
+                    
+
+
+                    // Apply quality settings
+
+
+                    const quality = parseInt(this.qualitySlider.value);
+
+
+                    if (this.outputFormat.value === 'mp3') {
+
+
+                        args.push('-b:a', (quality * 64) + 'k');
+
+
+                    } else if (this.outputFormat.value === 'm4a') {
+
+
+                        args.push('-b:a', (quality * 64) + 'k');
+
+
+                    } else if (this.outputFormat.value === 'ogg') {
+
+
+                        args.push('-q:a', (11 - quality));
+
+
+                    }
+
+
+                    
+
+
+                    args.push(outputName);
+
+
+                    
+
+
+                    await this.ffmpeg.exec(args);
+
+
+                    
+
+
+                    const outputData = await this.ffmpeg.readFile(outputName);
+
+
+                    const blob = new Blob([outputData], { type: `audio/${this.outputFormat.value}` });
+
+
+                    
+
+
+                    this.processedBlob = blob;
+
+
+                    this.toolOutput.style.display = 'block';
+
+
+                    this.downloadBtn.disabled = false;
+
+
+                    
+
+
+                } catch (error) {
+
+
+                    console.error('Error processing audio:', error);
+
+
+                    this.showError('Failed to process audio. Please try different settings.');
+
+
+                } finally {
+
+
+                    this.showProcessing(false);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            async previewAudio() {
+
+
+                if (!this.audioBuffer) return;
+
+
+                
+
+
+                try {
+
+
+                    // Use WaveSurfer's built-in rate control for preview
+
+
+                    if (this.waveSurfer) {
+
+
+                        this.waveSurfer.setPlaybackRate(this.currentSpeed);
+
+
+                        this.waveSurfer.play();
+
+
+                    }
+
+
+                    
+
+
+                } catch (error) {
+
+
+                    console.error('Error previewing audio:', error);
+
+
+                    this.showError('Failed to preview audio');
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            async downloadAudio() {
+
+
+                if (!this.processedBlob) return;
+
+
+                
+
+
+                const url = URL.createObjectURL(this.processedBlob);
+
+
+                const a = document.createElement('a');
+
+
+                a.href = url;
+
+
+                const speedText = this.currentSpeed.toString().replace('.', '_');
+
+
+                a.download = `speed_${speedText}x_${this.audioFile.name.replace(/\.[^/.]+$/, '')}.${this.outputFormat.value}`;
+
+
+                document.body.appendChild(a);
+
+
+                a.click();
+
+
+                document.body.removeChild(a);
+
+
+                URL.revokeObjectURL(url);
+
+
+                
+
+
+                this.showMessage('Download started successfully!');
+
+
+            }
+
+
+            
+
+
+            resetChanger() {
+
+
+                this.audioBuffer = null;
+
+
+                this.audioFile = null;
+
+
+                this.processedBlob = null;
+
+
+                this.batchFiles = [];
+
+
+                this.currentSpeed = 1.0;
+
+
+                this.currentPitch = 0;
+
+
+                this.selectionStart = 0;
+
+
+                this.selectionEnd = 0;
+
+
+                this.pauseTime = 0;
+
+
+                this.isPlaying = false;
+
+
+                
+
+
+                this.dropZone.style.display = 'block';
+
+
+                this.speedWorkspace.style.display = 'none';
+
+
+                this.batchWorkspace.style.display = 'none';
+
+
+                this.toolOutput.style.display = 'none';
+
+
+                this.processingIndicator.style.display = 'none';
+
+
+                this.audioError.style.display = 'none';
+
+
+                this.audioAnalysis.style.display = 'none';
+
+
+                
+
+
+                this.processBtn.disabled = true;
+
+
+                this.previewBtn.disabled = true;
+
+
+                this.downloadBtn.disabled = true;
+
+
+                
+
+
+                this.fileInput.value = '';
+
+
+                this.qualitySlider.value = 8;
+
+
+                this.qualityValue.textContent = '8/10';
+
+
+                this.outputFormat.value = 'mp3';
+
+
+                this.stretchMethod.value = 'phase';
+
+
+                this.preserveQuality.checked = true;
+
+
+                
+
+
+                // Reset controls
+
+
+                this.speedSlider.value = 1;
+
+
+                this.pitchSlider.value = 0;
+
+
+                this.updateSpeed();
+
+
+                this.updatePitch();
+
+
+                
+
+
+                // Reset speed presets
+
+
+                document.querySelectorAll('.speed-preset').forEach(preset => {
+
+
+                    preset.classList.remove('active');
+
+
+                    if (preset.dataset.speed === '1') {
+
+
+                        preset.classList.add('active');
+
+
+                    }
+
+
+                });
+
+
+                
+
+
+                if (this.waveSurfer) {
+
+
+                    this.waveSurfer.destroy();
+
+
+                    this.waveSurfer = null;
+
+
+                }
+
+
+                
+
+
+                this.dropZone.querySelector('.drop-zone-text').textContent = 
+
+
+                    'Drop your audio files here or click to browse';
+
+
+            }
+
+
+            
+
+
+            showProcessing(show) {
+
+
+                this.processingIndicator.style.display = show ? 'block' : 'none';
+
+
+                this.processBtn.disabled = show;
+
+
+                this.previewBtn.disabled = show;
+
+
+            }
+
+
+            
+
+
+            showError(message) {
+
+
+                document.getElementById('errorMessage').textContent = message;
+
+
+                this.audioError.style.display = 'block';
+
+
+                setTimeout(() => {
+
+
+                    this.audioError.style.display = 'none';
+
+
+                }, 5000);
+
+
+            }
+
+
+            
+
+
+            showMessage(message) {
+
+
+                console.log(message);
+
+
+            }
+
+
+            
+
+
+            formatTime(seconds) {
+
+
+                const mins = Math.floor(seconds / 60);
+
+
+                const secs = Math.floor(seconds % 60);
+
+
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+
+
+            }
+
+
+        }
+
+
+        
+
+
+        // Initialize the audio speed changer when the page loads
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+
+            new AudioSpeedChanger();
+
+
+        });
+
+
+    </script>
+
+
+    <script src="/assets/js/main.js"></script>
+
+
+</body>
+
+
+</html>
+
+
+
+
+

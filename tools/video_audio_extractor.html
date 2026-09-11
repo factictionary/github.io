@@ -1,1568 +1,4706 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Audio Extractor | Extract Audio from Video Online | Factictionary</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Free online video audio extractor. Extract audio from video files in MP3, WAV, FLAC, AAC, OGG formats. High-quality audio extraction with customizable bitrate and sample rate. 100% privacy-protected, works in your browser.">
-    <meta name="keywords" content="video audio extractor, extract audio from video, video to mp3, audio extraction, video converter, online audio converter, extract audio online, video audio converter">
-    <meta name="author" content="Factictionary Team">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="Video Audio Extractor | Extract Audio from Video Online | Factictionary">
-    <meta property="og:description" content="Extract high-quality audio from video files in multiple formats. Free online tool with customizable settings and real-time preview.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factictionary.github.io/tools/video_audio_extractor.html">
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Video Audio Extractor | Factictionary">
-    <meta name="twitter:description" content="Extract audio from video files in multiple formats. Free and privacy-protected.">
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://factictionary.github.io/tools/video_audio_extractor.html">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    
-    <!-- FFmpeg.wasm -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
-    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Factictionary Video Audio Extractor",
-        "description": "Free online tool to extract audio from video files in multiple formats (MP3, WAV, FLAC, AAC, OGG) with customizable quality settings.",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "provider": {
-            "@type": "Organization",
-            "name": "Factictionary"
-        }
-    }
-    </script>
-</head>
-<body>
-    <!-- Skip to main content -->
-    <a href="#main" class="skip-link">Skip to main content</a>
-    
-    <!-- Navigation -->
-            <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
-                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="mobile-menu-backdrop"></div>
-    <div class="mobile-menu">
-        <ul class="nav-links">
-            <li><a href="/" class="nav-link">Home</a></li>
-            <li><a href="/blog/" class="nav-link">Articles</a></li>
-            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-            <li><a href="/about.html" class="nav-link">About</a></li>
-            <li><a href="/contact.html" class="nav-link">Contact</a></li>
-            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-        </ul>
-    </div><!-- Main Content -->
-    <main id="main">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-            </div>
-        <!-- AdSense Container -->
-        <div class="ad-container top-ad">
-            <!-- AdSense code will be inserted here -->
-        </div>
-
-        <!-- Tool Header -->
-        <header class="tool-header" style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);">
-            <div class="container">
-                <div class="tool-header-content">
-                    <h3 class="tool-title">🎬µ Video Audio Extractor</h3>
-                    <p class="tool-subtitle">Extract high-quality audio from video files. Support for MP3, WAV, FLAC, AAC, OGG formats with customizable bitrate and sample rate settings. Perfect for creating music playlists, extracting soundtracks, and audio analysis.</p>
-                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
-                    <div class="tool-features">
-                        <span class="feature-tag">Multiple Formats</span>
-                        <span class="feature-tag">High Quality</span>
-                        <span class="feature-tag">Real-time Preview</span>
-                        <span class="feature-tag">Custom Settings</span>
-                        <span class="feature-tag">Waveform Display</span>
-                        <span class="feature-tag">Fast Processing</span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- Tool Workspace -->
-        <section class="tool-workspace">
-            <div class="container">
-                <!-- File Upload Section -->
-                <div class="input-section">
-                    <label class="input-label">Video File Upload</label>
-                    <div class="upload-area" id="uploadArea">
-                        <div class="upload-content">
-                            <div class="upload-icon">📹</div>
-                            <h3>Drop your video file here</h3>
-                            <p>or click to browse files</p>
-                            <div class="upload-formats">
-                                <span class="format-tag">MP4</span>
-                                <span class="format-tag">AVI</span>
-                                <span class="format-tag">MOV</span>
-                                <span class="format-tag">WMV</span>
-                                <span class="format-tag">FLV</span>
-                                <span class="format-tag">MKV</span>
-                            </div>
-                        </div>
-                        <input type="file" id="videoFile" accept="video/*" class="file-input">
-                    </div>
-                    <div id="fileInfo" class="file-info" style="display: none;">
-                        <div class="file-details">
-                            <span class="file-name" id="fileName"></span>
-                            <span class="file-size" id="fileSize"></span>
-                            <button class="btn-remove" onclick="removeFile()">âœ•</button>
-                        </div>
-                    </div>
-                    <div class="input-help">
-                        Upload a video file to extract audio. Maximum file size: 500MB. Processing happens entirely in your browser.
-                    </div>
-                </div>
-
-                <!-- Audio Settings Section -->
-                <div class="settings-section">
-                    <h3 class="section-title">Audio Settings</h3>
-                    <div class="settings-grid">
-                        <div class="setting-group">
-                            <label for="audioFormat" class="setting-label">Output Format</label>
-                            <select id="audioFormat" class="setting-select">
-                                <option value="mp3">MP3 (Most Compatible)</option>
-                                <option value="wav">WAV (Uncompressed)</option>
-                                <option value="flac">FLAC (Lossless)</option>
-                                <option value="aac">AAC (High Quality)</option>
-                                <option value="ogg">OGG (Open Source)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="setting-group">
-                            <label for="audioQuality" class="setting-label">Quality</label>
-                            <select id="audioQuality" class="setting-select">
-                                <option value="high">High (320 kbps)</option>
-                                <option value="medium" selected>Medium (192 kbps)</option>
-                                <option value="low">Low (128 kbps)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="setting-group">
-                            <label for="bitrate" class="setting-label">Bitrate</label>
-                            <select id="bitrate" class="setting-select">
-                                <option value="320">320 kbps</option>
-                                <option value="256">256 kbps</option>
-                                <option value="192" selected>192 kbps</option>
-                                <option value="160">160 kbps</option>
-                                <option value="128">128 kbps</option>
-                                <option value="96">96 kbps</option>
-                            </select>
-                        </div>
-                        
-                        <div class="setting-group">
-                            <label for="sampleRate" class="setting-label">Sample Rate</label>
-                            <select id="sampleRate" class="setting-select">
-                                <option value="48000">48 kHz</option>
-                                <option value="44100" selected>44.1 kHz</option>
-                                <option value="32000">32 kHz</option>
-                                <option value="22050">22.05 kHz</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Processing Section -->
-                <div class="processing-section" id="processingSection" style="display: none;">
-                    <h3 class="section-title">Processing</h3>
-                    <div class="processing-content">
-                        <div class="progress-container">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <div class="progress-text" id="progressText">Preparing...</div>
-                        </div>
-                        <div class="processing-status" id="processingStatus">Initializing extraction...</div>
-                    </div>
-                </div>
-
-                <!-- Audio Preview Section -->
-                <div class="preview-section" id="previewSection" style="display: none;">
-                    <h3 class="section-title">Audio Preview</h3>
-                    <div class="preview-content">
-                        <div class="audio-player">
-                            <audio id="audioPlayer" controls style="width: 100%; margin-bottom: 20px;">
-                                Your browser does not support the audio element.
-                            </audio>
-                            <div class="audio-controls">
-                                <button class="btn btn-secondary" onclick="playAudio()">â–¶ Play</button>
-                                <button class="btn btn-secondary" onclick="pauseAudio()">â¸ Pause</button>
-                                <button class="btn btn-secondary" onclick="stopAudio()">â¹ Stop</button>
-                            </div>
-                        </div>
-                        
-                        <!-- Waveform Visualization -->
-                        <div class="waveform-container">
-                            <canvas id="waveformCanvas" width="800" height="200"></canvas>
-                            <div class="waveform-info">
-                                <span class="waveform-duration" id="audioDuration">00:00</span>
-                                <span class="waveform-format" id="audioFormatInfo">MP3 • 192 kbps • 44.1 kHz</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Download Section -->
-                <div class="download-section" id="downloadSection" style="display: none;">
-                    <h3 class="section-title">Download Audio</h3>
-                    <div class="download-content">
-                        <div class="download-card">
-                            <div class="download-icon">🎬µ</div>
-                            <div class="download-info">
-                                <h4 id="downloadFileName">extracted_audio.mp3</h4>
-                                <p class="download-details" id="downloadFileDetails">192 kbps • 44.1 kHz • 3:45</p>
-                                <p class="download-size" id="downloadFileSize">Size: 2.8 MB</p>
-                            </div>
-                            <button class="btn btn-primary btn-download" onclick="downloadAudio()">
-                                ⬇ Download Audio
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="action-buttons" id="actionButtons">
-                    <button class="btn btn-primary" id="extractBtn" onclick="extractAudio()" disabled>
-                        🎬µ Extract Audio
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetTool()">”„ Reset</button>
-                </div>
-
-                <!-- Error Messages -->
-                <div class="error-section" id="errorSection" style="display: none;">
-                    <div class="error-card">
-                        <div class="error-icon">â</div>
-                        <div class="error-content">
-                            <h4>Extraction Failed</h4>
-                            <p id="errorMessage">An error occurred during audio extraction. Please try again.</p>
-                        </div>
-                        <button class="btn btn-secondary" onclick="hideError()">Try Again</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- AdSense Container -->
-        <div class="ad-container bottom-ad">
-            <!-- AdSense code will be inserted here -->
-        </div>
-
-        <!-- Privacy Notice -->
-        <section class="privacy-notice">
-            <div class="container">
-                <div class="privacy-card">
-                    <div class="privacy-icon">🔒</div>
-                    <div class="privacy-content">
-                        <h3>Privacy Protected</h3>
-                        <p>Your video files are processed entirely in your browser using WebAssembly technology. No files are uploaded to our servers, ensuring complete privacy and security of your media content.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Related Tools -->
-        <section class="related-tools">
-            <div class="container">
-                <h3 class="related-title">More Video & Audio Tools</h3>
-                <div class="related-grid">
-                    <a href="audio_converter.html" class="related-card">
-                        <div class="related-icon">”„</div>
-                        <div class="related-content">
-                            <h4>Audio Converter</h4>
-                            <p>Convert between different audio formats with customizable quality settings</p>
-                        </div>
-                    </a>
-                    <a href="video_compressor.html" class="related-card">
-                        <div class="related-icon">📹</div>
-                        <div class="related-content">
-                            <h4>Video Compressor</h4>
-                            <p>Compress video files to reduce size while maintaining quality</p>
-                        </div>
-                    </a>
-                    <a href="audio_merger.html" class="related-card">
-                        <div class="related-icon">🎬­</div>
-                        <div class="related-content">
-                            <h4>Audio Merger</h4>
-                            <p>Merge multiple audio files into a single track</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Video Audio Extractor</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Video Audio Extractor is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
-            
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Audio Extractor leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-        </section>
-            <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
-            <h3>Support Privacy-First Web Utilities</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-            <footer class="footer" style="margin-top: 60px;">
-        <div class="container text-center">
-            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
-
-    <!-- JavaScript -->
-    <script>
-        // Global variables
-        let selectedFile = null;
-        let extractedAudioBlob = null;
-        let audioContext = null;
-        let ffmpeg = null;
-        let ffmpegLoaded = false;
-        let ffmpegLoading = false;
-        let currentExtractionController = null;
-
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeFileUpload();
-            initializeSettings();
-            initializeAudioContext();
-        });
-
-        // File upload functionality
-        function initializeFileUpload() {
-            const uploadArea = document.getElementById('uploadArea');
-            const fileInput = document.getElementById('videoFile');
-            const extractBtn = document.getElementById('extractBtn');
-
-            // Drag and drop functionality
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.classList.add('dragover');
-            });
-
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.classList.remove('dragover');
-            });
-
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.classList.remove('dragover');
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    handleFileSelection(files[0]);
-                }
-            });
-
-            // File input change
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    handleFileSelection(e.target.files[0]);
-                }
-            });
-
-            // Enable/disable extract button based on file selection
-            function updateExtractButton() {
-                extractBtn.disabled = !selectedFile;
-            }
-        }
-
-        function handleFileSelection(file) {
-            // Validate file type
-            if (!file.type.startsWith('video/')) {
-                showError('Please select a valid video file.');
-                return;
-            }
-
-            // Validate file size (500MB limit)
-            const maxSize = 500 * 1024 * 1024; // 500MB
-            if (file.size > maxSize) {
-                showError('File size must be less than 500MB.');
-                return;
-            }
-
-            selectedFile = file;
-            displayFileInfo(file);
-            document.getElementById('extractBtn').disabled = false;
-        }
-
-        function displayFileInfo(file) {
-            const fileInfo = document.getElementById('fileInfo');
-            const fileName = document.getElementById('fileName');
-            const fileSize = document.getElementById('fileSize');
-
-            fileName.textContent = file.name;
-            fileSize.textContent = formatFileSize(file.size);
-            fileInfo.style.display = 'block';
-
-            // Hide upload area
-            document.getElementById('uploadArea').style.display = 'none';
-        }
-
-        function removeFile() {
-            // Cancel any ongoing extraction
-            if (currentExtractionController) {
-                currentExtractionController.abort();
-            }
-            
-            selectedFile = null;
-            document.getElementById('fileInfo').style.display = 'none';
-            document.getElementById('uploadArea').style.display = 'block';
-            document.getElementById('extractBtn').disabled = true;
-            resetExtraction();
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        // Settings initialization
-        function initializeSettings() {
-            const formatSelect = document.getElementById('audioFormat');
-            const qualitySelect = document.getElementById('audioQuality');
-            const bitrateSelect = document.getElementById('bitrate');
-            const sampleRateSelect = document.getElementById('sampleRate');
-
-            // Update bitrate options based on format
-            formatSelect.addEventListener('change', updateBitrateOptions);
-            
-            // Update quality options based on format
-            qualitySelect.addEventListener('change', updateBitrateFromQuality);
-            
-            // Auto-update bitrate from quality
-            bitrateSelect.addEventListener('change', updateQualityFromBitrate);
-        }
-
-        function updateBitrateOptions() {
-            const format = document.getElementById('audioFormat').value;
-            const bitrateSelect = document.getElementById('bitrate');
-            const qualitySelect = document.getElementById('audioQuality');
-            
-            // Default bitrates for different formats
-            const formatBitrates = {
-                mp3: [320, 256, 192, 160, 128, 96],
-                wav: [1411, 1056, 705],
-                flac: [1000, 800, 600],
-                aac: [320, 256, 192, 128, 96],
-                ogg: [320, 256, 192, 128, 96]
-            };
-
-            const bitrates = formatBitrates[format] || [192, 160, 128, 96];
-            
-            // Update bitrate select
-            bitrateSelect.innerHTML = bitrates.map(bitrate => 
-                `<option value="${bitrate}">${bitrate} kbps</option>`
-            ).join('');
-            
-            // Set default quality
-            qualitySelect.value = 'medium';
-            bitrateSelect.value = '192';
-        }
-
-        function updateBitrateFromQuality() {
-            const quality = document.getElementById('audioQuality').value;
-            const format = document.getElementById('audioFormat').value;
-            const bitrateSelect = document.getElementById('bitrate');
-            
-            const qualityBitrates = {
-                high: format === 'wav' ? 1411 : format === 'flac' ? 1000 : 320,
-                medium: format === 'wav' ? 1056 : format === 'flac' ? 800 : 192,
-                low: format === 'wav' ? 705 : format === 'flac' ? 600 : 128
-            };
-            
-            const targetBitrate = qualityBitrates[quality];
-            
-            // Check if the bitrate exists in the options
-            const options = Array.from(bitrateSelect.options).map(opt => parseInt(opt.value));
-            if (options.includes(targetBitrate)) {
-                bitrateSelect.value = targetBitrate;
-            }
-        }
-
-        function updateQualityFromBitrate() {
-            const bitrate = parseInt(document.getElementById('bitrate').value);
-            const format = document.getElementById('audioFormat').value;
-            const qualitySelect = document.getElementById('audioQuality');
-            
-            // Determine quality based on bitrate
-            let quality = 'medium';
-            if (format === 'wav') {
-                quality = bitrate >= 1000 ? 'high' : bitrate >= 800 ? 'medium' : 'low';
-            } else if (format === 'flac') {
-                quality = bitrate >= 900 ? 'high' : bitrate >= 700 ? 'medium' : 'low';
-            } else {
-                quality = bitrate >= 256 ? 'high' : bitrate >= 192 ? 'medium' : 'low';
-            }
-            
-            qualitySelect.value = quality;
-        }
-
-        // Audio context initialization
-        function initializeAudioContext() {
-            try {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            } catch (e) {
-                console.error('Web Audio API not supported:', e);
-            }
-        }
-
-        // FFmpeg.wasm integration
-        async function loadFFmpeg() {
-            if (ffmpegLoaded || ffmpegLoading) {
-                while (ffmpegLoading && !ffmpegLoaded) {
-                    await new Promise(resolve => setTimeout(resolve, 100));
-                }
-                return;
-            }
-            
-            ffmpegLoading = true;
-            
-            try {
-                updateProgress(10, 'Loading FFmpeg.wasm...');
-                
-                // Initialize FFmpeg
-                const { FFmpeg } = window.FFmpegWASM;
-                ffmpeg = new FFmpeg();
-                
-                // Set up logging
-                ffmpeg.on('log', ({ message }) => {
-                    console.log('FFmpeg:', message);
-                });
-                
-                ffmpeg.on('progress', (progress) => {
-                    const percent = Math.round(progress.progress * 100);
-                    updateProgress(percent, 'Processing video...');
-                });
-                
-                // Load FFmpeg
-                await ffmpeg.load({
-                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
-                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
-                });
-                
-                ffmpegLoaded = true;
-                ffmpegLoading = false;
-                updateProgress(20, 'FFmpeg loaded successfully');
-                console.log('FFmpeg.wasm loaded successfully');
-            } catch (error) {
-                ffmpegLoading = false;
-                console.error('Failed to load FFmpeg.wasm:', error);
-                throw new Error('Failed to load FFmpeg.wasm: ' + error.message);
-            }
-        }
-
-        // Main extraction function
-        async function extractAudio() {
-            if (!selectedFile) {
-                showError('Please select a video file first.');
-                return;
-            }
-
-            try {
-                showProcessing();
-                updateProgress(5, 'Initializing extraction...');
-                
-                await loadFFmpeg();
-                
-                const format = document.getElementById('audioFormat').value;
-                const bitrate = document.getElementById('bitrate').value;
-                const sampleRate = document.getElementById('sampleRate').value;
-                
-                updateProgress(25, 'Analyzing video file...');
-                
-                // Create abort controller for this extraction
-                currentExtractionController = new AbortController();
-                
-                // Perform actual FFmpeg extraction
-                await performExtraction(format, bitrate, sampleRate, currentExtractionController.signal);
-                
-                updateProgress(100, 'Extraction complete!');
-                
-                // Show results
-                setTimeout(() => {
-                    showPreview();
-                    showDownload();
-                }, 500);
-                
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('Extraction was cancelled');
-                    return;
-                }
-                console.error('Extraction error:', error);
-                showError('Failed to extract audio: ' + error.message);
-            } finally {
-                hideProcessing();
-                currentExtractionController = null;
-            }
-        }
-
-        // Perform actual FFmpeg extraction
-        async function performExtraction(format, bitrate, sampleRate, signal) {
-            const inputFileName = 'input.' + selectedFile.name.split('.').pop();
-            const outputFileName = 'output.' + format;
-            
-            // Check if operation was cancelled
-            if (signal.aborted) {
-                throw new Error('Aborted');
-            }
-            
-            // Write input file to FFmpeg
-            updateProgress(30, 'Preparing video file...');
-            await ffmpeg.writeFile(inputFileName, await selectedFile.arrayBuffer());
-            
-            if (signal.aborted) {
-                throw new Error('Aborted');
-            }
-            
-            // Build FFmpeg command based on format and settings
-            const ffmpegArgs = buildFFmpegCommand(inputFileName, outputFileName, format, bitrate, sampleRate);
-            
-            updateProgress(40, 'Extracting audio track...');
-            
-            // Run FFmpeg
-            await ffmpeg.exec(ffmpegArgs);
-            
-            if (signal.aborted) {
-                throw new Error('Aborted');
-            }
-            
-            updateProgress(80, 'Finalizing audio file...');
-            
-            // Read the output file
-            const outputData = await ffmpeg.readFile(outputFileName);
-            
-            // Create blob from output data
-            const mimeType = getMimeType(format);
-            extractedAudioBlob = new Blob([outputData], { type: mimeType });
-            
-            // Clean up files
-            try {
-                await ffmpeg.deleteFile(inputFileName);
-                await ffmpeg.deleteFile(outputFileName);
-            } catch (cleanupError) {
-                console.warn('Failed to cleanup temporary files:', cleanupError);
-            }
-        }
-        
-        // Build FFmpeg command based on format and settings
-        function buildFFmpegCommand(input, output, format, bitrate, sampleRate) {
-            const args = [
-                '-i', input,
-                '-vn', // No video
-                '-acodec', getCodec(format),
-                '-ar', sampleRate, // Sample rate
-                '-b:a', bitrate + 'k', // Bitrate
-            ];
-            
-            // Add format-specific parameters
-            switch (format) {
-                case 'mp3':
-                    args.push('-f', 'mp3');
-                    break;
-                case 'wav':
-                    // WAV doesn't use bitrate, adjust parameters
-                    args.splice(-1, 1); // Remove bitrate
-                    args.push('-f', 'wav');
-                    break;
-                case 'flac':
-                    args.push('-f', 'flac');
-                    break;
-                case 'aac':
-                    args.push('-f', 'adts');
-                    break;
-                case 'ogg':
-                    args.push('-f', 'ogg');
-                    break;
-            }
-            
-            args.push(output);
-            return args;
-        }
-        
-        // Get codec for format
-        function getCodec(format) {
-            const codecs = {
-                mp3: 'libmp3lame',
-                wav: 'pcm_s16le',
-                flac: 'flac',
-                aac: 'aac',
-                ogg: 'libvorbis'
-            };
-            return codecs[format] || 'libmp3lame';
-        }
-        
-        // Get MIME type for format
-        function getMimeType(format) {
-            const mimeTypes = {
-                mp3: 'audio/mpeg',
-                wav: 'audio/wav',
-                flac: 'audio/flac',
-                aac: 'audio/aac',
-                ogg: 'audio/ogg'
-            };
-            return mimeTypes[format] || 'audio/mpeg';
-        }
-
-        // Progress management
-        function showProcessing() {
-            document.getElementById('processingSection').style.display = 'block';
-            updateProgress(0, 'Initializing...');
-        }
-
-        function hideProcessing() {
-            document.getElementById('processingSection').style.display = 'none';
-        }
-
-        function updateProgress(percent, message) {
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            const processingStatus = document.getElementById('processingStatus');
-            
-            progressFill.style.width = percent + '%';
-            progressText.textContent = `${percent}%`;
-            processingStatus.textContent = message;
-        }
-
-        // Preview and download
-        function showPreview() {
-            const previewSection = document.getElementById('previewSection');
-            const audioPlayer = document.getElementById('audioPlayer');
-            const audioDuration = document.getElementById('audioDuration');
-            const audioFormatInfo = document.getElementById('audioFormatInfo');
-            
-            // Create audio URL from blob
-            const audioUrl = URL.createObjectURL(extractedAudioBlob);
-            audioPlayer.src = audioUrl;
-            
-            // Update format info
-            const format = document.getElementById('audioFormat').value.toUpperCase();
-            const bitrate = document.getElementById('bitrate').value;
-            const sampleRate = (document.getElementById('sampleRate').value / 1000).toFixed(1);
-            
-            audioFormatInfo.textContent = `${format} • ${bitrate} kbps • ${sampleRate} kHz`;
-            
-            // Try to get actual duration from audio element
-            const audio = document.getElementById('audioPlayer');
-            if (audio.duration && !isNaN(audio.duration)) {
-                audioDuration.textContent = formatDuration(audio.duration);
-            } else {
-                audioDuration.textContent = '00:00';
-            }
-            
-            // Draw waveform (placeholder)
-            drawWaveform();
-            
-            previewSection.style.display = 'block';
-        }
-
-        function showDownload() {
-            const downloadSection = document.getElementById('downloadSection');
-            const downloadFileName = document.getElementById('downloadFileName');
-            const downloadFileDetails = document.getElementById('downloadFileDetails');
-            const downloadFileSize = document.getElementById('downloadFileSize');
-            
-            const format = document.getElementById('audioFormat').value;
-            const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
-            const newFileName = `${originalName}_extracted.${format}`;
-            
-            downloadFileName.textContent = newFileName;
-            downloadFileDetails.textContent = `${document.getElementById('bitrate').value} kbps • ${(document.getElementById('sampleRate').value / 1000).toFixed(1)} kHz • 3:45`;
-            downloadFileSize.textContent = `Size: ${formatFileSize(extractedAudioBlob.size)}`;
-            
-            downloadSection.style.display = 'block';
-        }
-
-        function drawWaveform() {
-            const canvas = document.getElementById('waveformCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const audio = document.getElementById('audioPlayer');
-            
-            // If audio is loaded and has duration, try to generate a real waveform
-            if (audio.src && audio.duration && !isNaN(audio.duration)) {
-                generateRealWaveform(audio, canvas, ctx);
-            } else {
-                // Draw mock waveform for loading state
-                drawMockWaveform(canvas, ctx);
-            }
-        }
-        
-        function drawMockWaveform(canvas, ctx) {
-            const width = canvas.width;
-            const height = canvas.height;
-            const centerY = height / 2;
-            
-            ctx.strokeStyle = '#8B5CF6';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            
-            for (let x = 0; x < width; x++) {
-                const amplitude = Math.sin(x * 0.02) * 0.3 + Math.sin(x * 0.05) * 0.1;
-                const y = centerY + amplitude * (height * 0.4);
-                
-                if (x === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            
-            ctx.stroke();
-        }
-        
-        function generateRealWaveform(audio, canvas, ctx) {
-            // This is a simplified waveform generation
-            // For a full implementation, you'd need to decode the audio data
-            // and generate actual waveform samples
-            
-            const width = canvas.width;
-            const height = canvas.height;
-            const centerY = height / 2;
-            
-            ctx.strokeStyle = '#8B5CF6';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            
-            // Generate a more realistic waveform pattern
-            for (let x = 0; x < width; x++) {
-                const progress = x / width;
-                const time = progress * audio.duration;
-                
-                // Simulate audio amplitude based on time (this is a simplified version)
-                let amplitude = 0;
-                for (let freq = 1; freq <= 5; freq++) {
-                    amplitude += Math.sin((time * freq * Math.PI) / (audio.duration / 4)) * (0.2 / freq);
-                }
-                
-                // Add some randomness for realism
-                amplitude += (Math.random() - 0.5) * 0.1;
-                amplitude = Math.max(-1, Math.min(1, amplitude));
-                
-                const y = centerY + amplitude * (height * 0.4);
-                
-                if (x === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            }
-            
-            ctx.stroke();
-        }
-
-        // Audio controls
-        function playAudio() {
-            const audio = document.getElementById('audioPlayer');
-            audio.play();
-        }
-
-        function pauseAudio() {
-            const audio = document.getElementById('audioPlayer');
-            audio.pause();
-        }
-
-        function stopAudio() {
-            const audio = document.getElementById('audioPlayer');
-            audio.pause();
-            audio.currentTime = 0;
-        }
-
-        function downloadAudio() {
-            if (!extractedAudioBlob) {
-                showError('No audio file to download.');
-                return;
-            }
-
-            const format = document.getElementById('audioFormat').value;
-            const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
-            const fileName = `${originalName}_extracted.${format}`;
-            
-            const url = URL.createObjectURL(extractedAudioBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('🎬µ Audio file downloaded successfully!');
-        }
-
-        // Utility functions
-        function resetTool() {
-            // Cancel any ongoing extraction
-            if (currentExtractionController) {
-                currentExtractionController.abort();
-            }
-            
-            removeFile();
-            resetExtraction();
-            document.getElementById('actionButtons').style.display = 'flex';
-        }
-
-        function resetExtraction() {
-            hideProcessing();
-            document.getElementById('previewSection').style.display = 'none';
-            document.getElementById('downloadSection').style.display = 'none';
-            hideError();
-            
-            // Reset progress
-            updateProgress(0, 'Ready to extract...');
-        }
-
-        function showError(message) {
-            const errorSection = document.getElementById('errorSection');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            errorMessage.textContent = message;
-            errorSection.style.display = 'block';
-        }
-
-        function hideError() {
-            document.getElementById('errorSection').style.display = 'none';
-        }
-
-        function formatDuration(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        function showNotification(message) {
-            // Create and show a temporary notification
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--color-success);
-                color: white;
-                padding: 12px 20px;
-                border-radius: var(--radius-button);
-                font-weight: 500;
-                z-index: 10000;
-                animation: slideIn 0.3s ease-out;
-                max-width: 300px;
-                word-wrap: break-word;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-in';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        document.body.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // Mobile menu functionality
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuToggle.addEventListener('click', () => {
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
-        });
-
-        // Add CSS animations for notifications
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideOut {
-                from {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-
-    <style>
-        /* Tool-specific styles */
-        .upload-area {
-            background: var(--color-surface);
-            border: 2px dashed var(--color-neutral-300);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-3xl);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--duration-standard) var(--easing-standard);
-            position: relative;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .upload-area:hover {
-            border-color: var(--color-primary-500);
-            background: var(--color-primary-50);
-        }
-
-        .upload-area.dragover {
-            border-color: var(--color-primary-500);
-            background: var(--color-primary-100);
-        }
-
-        .file-input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .upload-content {
-            pointer-events: none;
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .upload-content h3 {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-700);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .upload-content p {
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-md);
-        }
-
-        .upload-formats {
-            display: flex;
-            justify-content: center;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-        }
-
-        .format-tag {
-            background: var(--color-neutral-100);
-            color: var(--color-neutral-700);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-button);
-            font-size: var(--font-size-small);
-            font-weight: var(--font-weight-medium);
-        }
-
-        .file-info {
-            background: var(--color-neutral-50);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-button);
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .file-details {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .file-name {
-            font-weight: var(--font-weight-medium);
-            color: var(--color-neutral-900);
-        }
-
-        .file-size {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-small);
-        }
-
-        .btn-remove {
-            background: var(--color-error);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-left: var(--spacing-sm);
-        }
-
-        .settings-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--spacing-lg);
-        }
-
-        .setting-group {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-
-        .setting-label {
-            font-weight: var(--font-weight-medium);
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-body);
-        }
-
-        .setting-select {
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid var(--color-neutral-300);
-            border-radius: var(--radius-input);
-            font-size: var(--font-size-body);
-            background: var(--color-surface);
-            color: var(--color-neutral-900);
-            transition: border-color var(--duration-fast);
-        }
-
-        .setting-select:focus {
-            outline: none;
-            border-color: var(--color-primary-500);
-            box-shadow: 0 0 0 3px var(--color-primary-100);
-        }
-
-        .processing-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .progress-container {
-            margin-bottom: var(--spacing-md);
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: var(--color-neutral-200);
-            border-radius: var(--radius-button);
-            overflow: hidden;
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
-            transition: width var(--duration-standard);
-            border-radius: var(--radius-button);
-        }
-
-        .progress-text {
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .processing-status {
-            color: var(--color-neutral-600);
-            font-size: var(--font-size-body);
-        }
-
-        .preview-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .audio-player {
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .audio-controls {
-            display: flex;
-            gap: var(--spacing-sm);
-            justify-content: center;
-        }
-
-        .waveform-container {
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-align: center;
-        }
-
-        #waveformCanvas {
-            width: 100%;
-            max-width: 800px;
-            border-radius: var(--radius-input);
-            background: var(--color-surface);
-        }
-
-        .waveform-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: var(--spacing-md);
-            font-size: var(--font-size-small);
-            color: var(--color-neutral-600);
-        }
-
-        .download-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .download-card {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-lg);
-            padding: var(--spacing-lg);
-            background: var(--color-neutral-50);
-            border-radius: var(--radius-card);
-        }
-
-        .download-icon {
-            font-size: 3rem;
-            flex-shrink: 0;
-        }
-
-        .download-info {
-            flex: 1;
-        }
-
-        .download-info h4 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .download-details {
-            color: var(--color-neutral-600);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .download-size {
-            color: var(--color-neutral-700);
-            font-weight: var(--font-weight-medium);
-        }
-
-        .btn-download {
-            white-space: nowrap;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: var(--spacing-md);
-            justify-content: center;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .error-section {
-            background: var(--color-surface);
-            border: 1px solid var(--color-error);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .error-card {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            padding: var(--spacing-lg);
-            background: var(--color-error-light);
-            border-radius: var(--radius-card);
-        }
-
-        .error-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-
-        .error-content {
-            flex: 1;
-        }
-
-        .error-content h4 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-error);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .error-content p {
-            color: var(--color-neutral-700);
-        }
-
-        .privacy-notice {
-            padding: var(--spacing-2xl) 0;
-            background: var(--color-neutral-50);
-        }
-
-        .privacy-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-xl);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-lg);
-        }
-
-        .privacy-icon {
-            font-size: 3rem;
-            flex-shrink: 0;
-        }
-
-        .privacy-content h3 {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-sm);
-        }
-
-        .privacy-content p {
-            color: var(--color-neutral-700);
-            margin: 0;
-        }
-
-        .related-tools {
-            padding: var(--spacing-3xl) 0;
-            background: var(--color-neutral-50);
-        }
-
-        .related-title {
-            font-size: var(--font-size-subtitle);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xl);
-            text-align: center;
-        }
-
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
-        }
-
-        .related-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-neutral-200);
-            border-radius: var(--radius-card);
-            padding: var(--spacing-lg);
-            text-decoration: none;
-            transition: all var(--duration-standard) var(--easing-standard);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-        }
-
-        .related-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-card-hover);
-            border-color: var(--color-primary-100);
-        }
-
-        .related-icon {
-            font-size: 2em;
-            flex-shrink: 0;
-        }
-
-        .related-content h4 {
-            font-size: var(--font-size-body-large);
-            font-weight: var(--font-weight-semibold);
-            color: var(--color-neutral-900);
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .related-content p {
-            color: var(--color-neutral-700);
-            font-size: var(--font-size-body);
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            .settings-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .download-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .error-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .privacy-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .waveform-info {
-                flex-direction: column;
-                gap: var(--spacing-xs);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .upload-formats {
-                justify-content: center;
-            }
-            
-            .audio-controls {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
-</body>
-</html>
-
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+
+
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Video Audio Extractor | Extract Audio from Video Online | Factictionary</title>
+
+
+    
+
+
+    <!-- SEO Meta Tags -->
+
+
+    <meta name="description" content="Free online video audio extractor. Extract audio from video files in MP3, WAV, FLAC, AAC, OGG formats. High-quality audio extraction with customizable bitrate and sample rate. 100% privacy-protected, works in your browser.">
+
+
+    <meta name="keywords" content="video audio extractor, extract audio from video, video to mp3, audio extraction, video converter, online audio converter, extract audio online, video audio converter">
+
+
+    <meta name="author" content="Factictionary Team">
+
+
+    <meta name="robots" content="index, follow">
+
+
+    
+
+
+    <!-- Open Graph Tags -->
+
+
+    <meta property="og:title" content="Video Audio Extractor | Extract Audio from Video Online | Factictionary">
+
+
+    <meta property="og:description" content="Extract high-quality audio from video files in multiple formats. Free online tool with customizable settings and real-time preview.">
+
+
+    <meta property="og:type" content="website">
+
+
+    <meta property="og:url" content="https://factictionary.github.io/tools/video_audio_extractor.html">
+
+
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+
+
+    
+
+
+    <!-- Twitter Card Tags -->
+
+
+    <meta name="twitter:card" content="summary_large_image">
+
+
+    <meta name="twitter:title" content="Video Audio Extractor | Factictionary">
+
+
+    <meta name="twitter:description" content="Extract audio from video files in multiple formats. Free and privacy-protected.">
+
+
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_educational_platform_hero_illustration.jpg">
+
+
+    
+
+
+    <!-- Canonical URL -->
+
+
+    <link rel="canonical" href="https://factictionary.github.io/tools/video_audio_extractor.html">
+
+
+    
+
+
+    <!-- Favicon -->
+
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+
+    
+
+
+    <!-- Fonts -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+    
+
+
+    <!-- Styles -->
+
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+
+    
+
+
+    <!-- FFmpeg.wasm -->
+
+
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+
+
+    <script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+
+    
+
+
+    <!-- Structured Data -->
+
+
+    <script type="application/ld+json">
+
+
+    {
+
+
+        "@context": "https://schema.org",
+
+
+        "@type": "SoftwareApplication",
+
+
+        "name": "Factictionary Video Audio Extractor",
+
+
+        "description": "Free online tool to extract audio from video files in multiple formats (MP3, WAV, FLAC, AAC, OGG) with customizable quality settings.",
+
+
+        "applicationCategory": "MultimediaApplication",
+
+
+        "operatingSystem": "Web Browser",
+
+
+        "offers": {
+
+
+            "@type": "Offer",
+
+
+            "price": "0",
+
+
+            "priceCurrency": "USD"
+
+
+        },
+
+
+        "provider": {
+
+
+            "@type": "Organization",
+
+
+            "name": "Factictionary"
+
+
+        }
+
+
+    }
+
+
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- Skip to main content -->
+
+
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+
+    
+
+
+    <!-- Navigation -->
+
+
+            <nav class="navbar" role="navigation">
+
+
+        <div class="nav-container">
+
+
+            <a href="/" class="logo">Factictionary</a>
+
+
+            <ul class="nav-links">
+
+
+                <li><a href="/" class="nav-link">Home</a></li>
+
+
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+
+                <li><a href="/about.html" class="nav-link">About</a></li>
+
+
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+
+            </ul>
+
+
+            <button class="menu-toggle" aria-label="Toggle menu">
+
+
+                <span></span>
+
+
+                <span></span>
+
+
+                <span></span>
+
+
+            </button>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+
+
+    <!-- Mobile Menu Drawer -->
+
+
+    <div class="mobile-menu-backdrop"></div>
+
+
+    <div class="mobile-menu">
+
+
+        <ul class="nav-links">
+
+
+            <li><a href="/" class="nav-link">Home</a></li>
+
+
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+
+
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+
+            <li><a href="/about.html" class="nav-link">About</a></li>
+
+
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+
+        </ul>
+
+
+    </div><!-- Main Content -->
+
+
+    <main id="main">
+
+
+            <div class="privacy-shield-bar">
+
+
+                <span class="pulse-dot"></span>
+
+
+                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
+
+
+            </div>
+
+
+        <!-- AdSense Container -->
+
+
+        <div class="ad-container top-ad">
+
+
+            <!-- AdSense code will be inserted here -->
+
+
+        </div>
+
+
+
+
+
+        <!-- Tool Header -->
+
+
+        <header class="tool-header" style="background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);">
+
+
+            <div class="container">
+
+
+                <div class="tool-header-content">
+
+
+                    <h3 class="tool-title">🎬µ Video Audio Extractor</h3>
+
+
+                    <p class="tool-subtitle">Extract high-quality audio from video files. Support for MP3, WAV, FLAC, AAC, OGG formats with customizable bitrate and sample rate settings. Perfect for creating music playlists, extracting soundtracks, and audio analysis.</p>
+
+
+                    <div class="privacy-badge">🔒 100% Privacy Protected</div>
+
+
+                    <div class="tool-features">
+
+
+                        <span class="feature-tag">Multiple Formats</span>
+
+
+                        <span class="feature-tag">High Quality</span>
+
+
+                        <span class="feature-tag">Real-time Preview</span>
+
+
+                        <span class="feature-tag">Custom Settings</span>
+
+
+                        <span class="feature-tag">Waveform Display</span>
+
+
+                        <span class="feature-tag">Fast Processing</span>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+
+
+        <!-- Tool Workspace -->
+
+
+        <section class="tool-workspace">
+
+
+            <div class="container">
+
+
+                <!-- File Upload Section -->
+
+
+                <div class="input-section">
+
+
+                    <label class="input-label">Video File Upload</label>
+
+
+                    <div class="upload-area" id="uploadArea">
+
+
+                        <div class="upload-content">
+
+
+                            <div class="upload-icon">📹</div>
+
+
+                            <h3>Drop your video file here</h3>
+
+
+                            <p>or click to browse files</p>
+
+
+                            <div class="upload-formats">
+
+
+                                <span class="format-tag">MP4</span>
+
+
+                                <span class="format-tag">AVI</span>
+
+
+                                <span class="format-tag">MOV</span>
+
+
+                                <span class="format-tag">WMV</span>
+
+
+                                <span class="format-tag">FLV</span>
+
+
+                                <span class="format-tag">MKV</span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        <input type="file" id="videoFile" accept="video/*" class="file-input">
+
+
+                    </div>
+
+
+                    <div id="fileInfo" class="file-info" style="display: none;">
+
+
+                        <div class="file-details">
+
+
+                            <span class="file-name" id="fileName"></span>
+
+
+                            <span class="file-size" id="fileSize"></span>
+
+
+                            <button class="btn-remove" onclick="removeFile()">âœ•</button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="input-help">
+
+
+                        Upload a video file to extract audio. Maximum file size: 500MB. Processing happens entirely in your browser.
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <!-- Audio Settings Section -->
+
+
+                <div class="settings-section">
+
+
+                    <h3 class="section-title">Audio Settings</h3>
+
+
+                    <div class="settings-grid">
+
+
+                        <div class="setting-group">
+
+
+                            <label for="audioFormat" class="setting-label">Output Format</label>
+
+
+                            <select id="audioFormat" class="setting-select">
+
+
+                                <option value="mp3">MP3 (Most Compatible)</option>
+
+
+                                <option value="wav">WAV (Uncompressed)</option>
+
+
+                                <option value="flac">FLAC (Lossless)</option>
+
+
+                                <option value="aac">AAC (High Quality)</option>
+
+
+                                <option value="ogg">OGG (Open Source)</option>
+
+
+                            </select>
+
+
+                        </div>
+
+
+                        
+
+
+                        <div class="setting-group">
+
+
+                            <label for="audioQuality" class="setting-label">Quality</label>
+
+
+                            <select id="audioQuality" class="setting-select">
+
+
+                                <option value="high">High (320 kbps)</option>
+
+
+                                <option value="medium" selected>Medium (192 kbps)</option>
+
+
+                                <option value="low">Low (128 kbps)</option>
+
+
+                            </select>
+
+
+                        </div>
+
+
+                        
+
+
+                        <div class="setting-group">
+
+
+                            <label for="bitrate" class="setting-label">Bitrate</label>
+
+
+                            <select id="bitrate" class="setting-select">
+
+
+                                <option value="320">320 kbps</option>
+
+
+                                <option value="256">256 kbps</option>
+
+
+                                <option value="192" selected>192 kbps</option>
+
+
+                                <option value="160">160 kbps</option>
+
+
+                                <option value="128">128 kbps</option>
+
+
+                                <option value="96">96 kbps</option>
+
+
+                            </select>
+
+
+                        </div>
+
+
+                        
+
+
+                        <div class="setting-group">
+
+
+                            <label for="sampleRate" class="setting-label">Sample Rate</label>
+
+
+                            <select id="sampleRate" class="setting-select">
+
+
+                                <option value="48000">48 kHz</option>
+
+
+                                <option value="44100" selected>44.1 kHz</option>
+
+
+                                <option value="32000">32 kHz</option>
+
+
+                                <option value="22050">22.05 kHz</option>
+
+
+                            </select>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <!-- Processing Section -->
+
+
+                <div class="processing-section" id="processingSection" style="display: none;">
+
+
+                    <h3 class="section-title">Processing</h3>
+
+
+                    <div class="processing-content">
+
+
+                        <div class="progress-container">
+
+
+                            <div class="progress-bar">
+
+
+                                <div class="progress-fill" id="progressFill"></div>
+
+
+                            </div>
+
+
+                            <div class="progress-text" id="progressText">Preparing...</div>
+
+
+                        </div>
+
+
+                        <div class="processing-status" id="processingStatus">Initializing extraction...</div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <!-- Audio Preview Section -->
+
+
+                <div class="preview-section" id="previewSection" style="display: none;">
+
+
+                    <h3 class="section-title">Audio Preview</h3>
+
+
+                    <div class="preview-content">
+
+
+                        <div class="audio-player">
+
+
+                            <audio id="audioPlayer" controls style="width: 100%; margin-bottom: 20px;">
+
+
+                                Your browser does not support the audio element.
+
+
+                            </audio>
+
+
+                            <div class="audio-controls">
+
+
+                                <button class="btn btn-secondary" onclick="playAudio()">â–¶ Play</button>
+
+
+                                <button class="btn btn-secondary" onclick="pauseAudio()">â¸ Pause</button>
+
+
+                                <button class="btn btn-secondary" onclick="stopAudio()">â¹ Stop</button>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                        
+
+
+                        <!-- Waveform Visualization -->
+
+
+                        <div class="waveform-container">
+
+
+                            <canvas id="waveformCanvas" width="800" height="200"></canvas>
+
+
+                            <div class="waveform-info">
+
+
+                                <span class="waveform-duration" id="audioDuration">00:00</span>
+
+
+                                <span class="waveform-format" id="audioFormatInfo">MP3 • 192 kbps • 44.1 kHz</span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <!-- Download Section -->
+
+
+                <div class="download-section" id="downloadSection" style="display: none;">
+
+
+                    <h3 class="section-title">Download Audio</h3>
+
+
+                    <div class="download-content">
+
+
+                        <div class="download-card">
+
+
+                            <div class="download-icon">🎬µ</div>
+
+
+                            <div class="download-info">
+
+
+                                <h4 id="downloadFileName">extracted_audio.mp3</h4>
+
+
+                                <p class="download-details" id="downloadFileDetails">192 kbps • 44.1 kHz • 3:45</p>
+
+
+                                <p class="download-size" id="downloadFileSize">Size: 2.8 MB</p>
+
+
+                            </div>
+
+
+                            <button class="btn btn-primary btn-download" onclick="downloadAudio()">
+
+
+                                ⬇ Download Audio
+
+
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <!-- Action Buttons -->
+
+
+                <div class="action-buttons" id="actionButtons">
+
+
+                    <button class="btn btn-primary" id="extractBtn" onclick="extractAudio()" disabled>
+
+
+                        🎬µ Extract Audio
+
+
+                    </button>
+
+
+                    <button class="btn btn-secondary" onclick="resetTool()">”„ Reset</button>
+
+
+                </div>
+
+
+
+
+
+                <!-- Error Messages -->
+
+
+                <div class="error-section" id="errorSection" style="display: none;">
+
+
+                    <div class="error-card">
+
+
+                        <div class="error-icon">â</div>
+
+
+                        <div class="error-content">
+
+
+                            <h4>Extraction Failed</h4>
+
+
+                            <p id="errorMessage">An error occurred during audio extraction. Please try again.</p>
+
+
+                        </div>
+
+
+                        <button class="btn btn-secondary" onclick="hideError()">Try Again</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+
+        <!-- AdSense Container -->
+
+
+        <div class="ad-container bottom-ad">
+
+
+            <!-- AdSense code will be inserted here -->
+
+
+        </div>
+
+
+
+
+
+        <!-- Privacy Notice -->
+
+
+        <section class="privacy-notice">
+
+
+            <div class="container">
+
+
+                <div class="privacy-card">
+
+
+                    <div class="privacy-icon">🔒</div>
+
+
+                    <div class="privacy-content">
+
+
+                        <h3>Privacy Protected</h3>
+
+
+                        <p>Your video files are processed entirely in your browser using WebAssembly technology. No files are uploaded to our servers, ensuring complete privacy and security of your media content.</p>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+
+        <!-- Related Tools -->
+
+
+        <section class="related-tools">
+
+
+            <div class="container">
+
+
+                <h3 class="related-title">More Video & Audio Tools</h3>
+
+
+                <div class="related-grid">
+
+
+                    <a href="audio_converter.html" class="related-card">
+
+
+                        <div class="related-icon">”„</div>
+
+
+                        <div class="related-content">
+
+
+                            <h4>Audio Converter</h4>
+
+
+                            <p>Convert between different audio formats with customizable quality settings</p>
+
+
+                        </div>
+
+
+                    </a>
+
+
+                    <a href="video_compressor.html" class="related-card">
+
+
+                        <div class="related-icon">📹</div>
+
+
+                        <div class="related-content">
+
+
+                            <h4>Video Compressor</h4>
+
+
+                            <p>Compress video files to reduce size while maintaining quality</p>
+
+
+                        </div>
+
+
+                    </a>
+
+
+                    <a href="audio_merger.html" class="related-card">
+
+
+                        <div class="related-icon">🎬­</div>
+
+
+                        <div class="related-content">
+
+
+                            <h4>Audio Merger</h4>
+
+
+                            <p>Merge multiple audio files into a single track</p>
+
+
+                        </div>
+
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+
+
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Video Audio Extractor</h2>
+
+
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Video Audio Extractor is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
+
+
+            
+
+
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
+
+
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Audio Extractor leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+
+
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+
+
+        </section>
+
+
+            <!-- Donation Banner -->
+
+
+        <div class="donation-banner-card">
+
+
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+
+
+            <h3>Support Privacy-First Web Utilities</h3>
+
+
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more privacy-first web utilities by supporting us!</p>
+
+
+            
+
+
+            <div class="donation-btn-group">
+
+
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+
+
+                    💳 Support via PayPal
+
+
+                </a>
+
+
+                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
+
+
+                    💖 GitHub Sponsors
+
+
+                </a>
+
+
+                <button onclick="openDonationModal()" class="btn-donate-crypto">
+
+
+                    🪙 Crypto / UPI Donation
+
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- Crypto Modal -->
+
+
+        <div id="donation-modal" class="modal-backdrop">
+
+
+            <div class="modal-content">
+
+
+                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
+
+
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
+
+
+                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
+
+
+                
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>https://paypal.me/mgarg1102</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>bc1qfactictionarybtcwalletaddress2026</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 16px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
+
+
+                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="margin-bottom: 20px;">
+
+
+                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
+
+
+                    <div class="crypto-wallet-box">
+
+
+                        <span>factictionary@upi</span>
+
+
+                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
+
+
+                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+
+
+
+    <!-- Footer -->
+
+
+            <footer class="footer" style="margin-top: 60px;">
+
+
+        <div class="container text-center">
+
+
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+
+
+        </div>
+
+
+    </footer>
+
+
+
+
+
+    <script src="/assets/js/main.js"></script>
+
+
+
+
+
+    <!-- JavaScript -->
+
+
+    <script>
+
+
+        // Global variables
+
+
+        let selectedFile = null;
+
+
+        let extractedAudioBlob = null;
+
+
+        let audioContext = null;
+
+
+        let ffmpeg = null;
+
+
+        let ffmpegLoaded = false;
+
+
+        let ffmpegLoading = false;
+
+
+        let currentExtractionController = null;
+
+
+
+
+
+        // Initialize the application
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+
+            initializeFileUpload();
+
+
+            initializeSettings();
+
+
+            initializeAudioContext();
+
+
+        });
+
+
+
+
+
+        // File upload functionality
+
+
+        function initializeFileUpload() {
+
+
+            const uploadArea = document.getElementById('uploadArea');
+
+
+            const fileInput = document.getElementById('videoFile');
+
+
+            const extractBtn = document.getElementById('extractBtn');
+
+
+
+
+
+            // Drag and drop functionality
+
+
+            uploadArea.addEventListener('dragover', (e) => {
+
+
+                e.preventDefault();
+
+
+                uploadArea.classList.add('dragover');
+
+
+            });
+
+
+
+
+
+            uploadArea.addEventListener('dragleave', () => {
+
+
+                uploadArea.classList.remove('dragover');
+
+
+            });
+
+
+
+
+
+            uploadArea.addEventListener('drop', (e) => {
+
+
+                e.preventDefault();
+
+
+                uploadArea.classList.remove('dragover');
+
+
+                const files = e.dataTransfer.files;
+
+
+                if (files.length > 0) {
+
+
+                    handleFileSelection(files[0]);
+
+
+                }
+
+
+            });
+
+
+
+
+
+            // File input change
+
+
+            fileInput.addEventListener('change', (e) => {
+
+
+                if (e.target.files.length > 0) {
+
+
+                    handleFileSelection(e.target.files[0]);
+
+
+                }
+
+
+            });
+
+
+
+
+
+            // Enable/disable extract button based on file selection
+
+
+            function updateExtractButton() {
+
+
+                extractBtn.disabled = !selectedFile;
+
+
+            }
+
+
+        }
+
+
+
+
+
+        function handleFileSelection(file) {
+
+
+            // Validate file type
+
+
+            if (!file.type.startsWith('video/')) {
+
+
+                showError('Please select a valid video file.');
+
+
+                return;
+
+
+            }
+
+
+
+
+
+            // Validate file size (500MB limit)
+
+
+            const maxSize = 500 * 1024 * 1024; // 500MB
+
+
+            if (file.size > maxSize) {
+
+
+                showError('File size must be less than 500MB.');
+
+
+                return;
+
+
+            }
+
+
+
+
+
+            selectedFile = file;
+
+
+            displayFileInfo(file);
+
+
+            document.getElementById('extractBtn').disabled = false;
+
+
+        }
+
+
+
+
+
+        function displayFileInfo(file) {
+
+
+            const fileInfo = document.getElementById('fileInfo');
+
+
+            const fileName = document.getElementById('fileName');
+
+
+            const fileSize = document.getElementById('fileSize');
+
+
+
+
+
+            fileName.textContent = file.name;
+
+
+            fileSize.textContent = formatFileSize(file.size);
+
+
+            fileInfo.style.display = 'block';
+
+
+
+
+
+            // Hide upload area
+
+
+            document.getElementById('uploadArea').style.display = 'none';
+
+
+        }
+
+
+
+
+
+        function removeFile() {
+
+
+            // Cancel any ongoing extraction
+
+
+            if (currentExtractionController) {
+
+
+                currentExtractionController.abort();
+
+
+            }
+
+
+            
+
+
+            selectedFile = null;
+
+
+            document.getElementById('fileInfo').style.display = 'none';
+
+
+            document.getElementById('uploadArea').style.display = 'block';
+
+
+            document.getElementById('extractBtn').disabled = true;
+
+
+            resetExtraction();
+
+
+        }
+
+
+
+
+
+        function formatFileSize(bytes) {
+
+
+            if (bytes === 0) return '0 Bytes';
+
+
+            const k = 1024;
+
+
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+
+
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+
+
+        }
+
+
+
+
+
+        // Settings initialization
+
+
+        function initializeSettings() {
+
+
+            const formatSelect = document.getElementById('audioFormat');
+
+
+            const qualitySelect = document.getElementById('audioQuality');
+
+
+            const bitrateSelect = document.getElementById('bitrate');
+
+
+            const sampleRateSelect = document.getElementById('sampleRate');
+
+
+
+
+
+            // Update bitrate options based on format
+
+
+            formatSelect.addEventListener('change', updateBitrateOptions);
+
+
+            
+
+
+            // Update quality options based on format
+
+
+            qualitySelect.addEventListener('change', updateBitrateFromQuality);
+
+
+            
+
+
+            // Auto-update bitrate from quality
+
+
+            bitrateSelect.addEventListener('change', updateQualityFromBitrate);
+
+
+        }
+
+
+
+
+
+        function updateBitrateOptions() {
+
+
+            const format = document.getElementById('audioFormat').value;
+
+
+            const bitrateSelect = document.getElementById('bitrate');
+
+
+            const qualitySelect = document.getElementById('audioQuality');
+
+
+            
+
+
+            // Default bitrates for different formats
+
+
+            const formatBitrates = {
+
+
+                mp3: [320, 256, 192, 160, 128, 96],
+
+
+                wav: [1411, 1056, 705],
+
+
+                flac: [1000, 800, 600],
+
+
+                aac: [320, 256, 192, 128, 96],
+
+
+                ogg: [320, 256, 192, 128, 96]
+
+
+            };
+
+
+
+
+
+            const bitrates = formatBitrates[format] || [192, 160, 128, 96];
+
+
+            
+
+
+            // Update bitrate select
+
+
+            bitrateSelect.innerHTML = bitrates.map(bitrate => 
+
+
+                `<option value="${bitrate}">${bitrate} kbps</option>`
+
+
+            ).join('');
+
+
+            
+
+
+            // Set default quality
+
+
+            qualitySelect.value = 'medium';
+
+
+            bitrateSelect.value = '192';
+
+
+        }
+
+
+
+
+
+        function updateBitrateFromQuality() {
+
+
+            const quality = document.getElementById('audioQuality').value;
+
+
+            const format = document.getElementById('audioFormat').value;
+
+
+            const bitrateSelect = document.getElementById('bitrate');
+
+
+            
+
+
+            const qualityBitrates = {
+
+
+                high: format === 'wav' ? 1411 : format === 'flac' ? 1000 : 320,
+
+
+                medium: format === 'wav' ? 1056 : format === 'flac' ? 800 : 192,
+
+
+                low: format === 'wav' ? 705 : format === 'flac' ? 600 : 128
+
+
+            };
+
+
+            
+
+
+            const targetBitrate = qualityBitrates[quality];
+
+
+            
+
+
+            // Check if the bitrate exists in the options
+
+
+            const options = Array.from(bitrateSelect.options).map(opt => parseInt(opt.value));
+
+
+            if (options.includes(targetBitrate)) {
+
+
+                bitrateSelect.value = targetBitrate;
+
+
+            }
+
+
+        }
+
+
+
+
+
+        function updateQualityFromBitrate() {
+
+
+            const bitrate = parseInt(document.getElementById('bitrate').value);
+
+
+            const format = document.getElementById('audioFormat').value;
+
+
+            const qualitySelect = document.getElementById('audioQuality');
+
+
+            
+
+
+            // Determine quality based on bitrate
+
+
+            let quality = 'medium';
+
+
+            if (format === 'wav') {
+
+
+                quality = bitrate >= 1000 ? 'high' : bitrate >= 800 ? 'medium' : 'low';
+
+
+            } else if (format === 'flac') {
+
+
+                quality = bitrate >= 900 ? 'high' : bitrate >= 700 ? 'medium' : 'low';
+
+
+            } else {
+
+
+                quality = bitrate >= 256 ? 'high' : bitrate >= 192 ? 'medium' : 'low';
+
+
+            }
+
+
+            
+
+
+            qualitySelect.value = quality;
+
+
+        }
+
+
+
+
+
+        // Audio context initialization
+
+
+        function initializeAudioContext() {
+
+
+            try {
+
+
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+
+            } catch (e) {
+
+
+                console.error('Web Audio API not supported:', e);
+
+
+            }
+
+
+        }
+
+
+
+
+
+        // FFmpeg.wasm integration
+
+
+        async function loadFFmpeg() {
+
+
+            if (ffmpegLoaded || ffmpegLoading) {
+
+
+                while (ffmpegLoading && !ffmpegLoaded) {
+
+
+                    await new Promise(resolve => setTimeout(resolve, 100));
+
+
+                }
+
+
+                return;
+
+
+            }
+
+
+            
+
+
+            ffmpegLoading = true;
+
+
+            
+
+
+            try {
+
+
+                updateProgress(10, 'Loading FFmpeg.wasm...');
+
+
+                
+
+
+                // Initialize FFmpeg
+
+
+                const { FFmpeg } = window.FFmpegWASM;
+
+
+                ffmpeg = new FFmpeg();
+
+
+                
+
+
+                // Set up logging
+
+
+                ffmpeg.on('log', ({ message }) => {
+
+
+                    console.log('FFmpeg:', message);
+
+
+                });
+
+
+                
+
+
+                ffmpeg.on('progress', (progress) => {
+
+
+                    const percent = Math.round(progress.progress * 100);
+
+
+                    updateProgress(percent, 'Processing video...');
+
+
+                });
+
+
+                
+
+
+                // Load FFmpeg
+
+
+                await ffmpeg.load({
+
+
+                    coreURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+
+
+                    wasmURL: 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'
+
+
+                });
+
+
+                
+
+
+                ffmpegLoaded = true;
+
+
+                ffmpegLoading = false;
+
+
+                updateProgress(20, 'FFmpeg loaded successfully');
+
+
+                console.log('FFmpeg.wasm loaded successfully');
+
+
+            } catch (error) {
+
+
+                ffmpegLoading = false;
+
+
+                console.error('Failed to load FFmpeg.wasm:', error);
+
+
+                throw new Error('Failed to load FFmpeg.wasm: ' + error.message);
+
+
+            }
+
+
+        }
+
+
+
+
+
+        // Main extraction function
+
+
+        async function extractAudio() {
+
+
+            if (!selectedFile) {
+
+
+                showError('Please select a video file first.');
+
+
+                return;
+
+
+            }
+
+
+
+
+
+            try {
+
+
+                showProcessing();
+
+
+                updateProgress(5, 'Initializing extraction...');
+
+
+                
+
+
+                await loadFFmpeg();
+
+
+                
+
+
+                const format = document.getElementById('audioFormat').value;
+
+
+                const bitrate = document.getElementById('bitrate').value;
+
+
+                const sampleRate = document.getElementById('sampleRate').value;
+
+
+                
+
+
+                updateProgress(25, 'Analyzing video file...');
+
+
+                
+
+
+                // Create abort controller for this extraction
+
+
+                currentExtractionController = new AbortController();
+
+
+                
+
+
+                // Perform actual FFmpeg extraction
+
+
+                await performExtraction(format, bitrate, sampleRate, currentExtractionController.signal);
+
+
+                
+
+
+                updateProgress(100, 'Extraction complete!');
+
+
+                
+
+
+                // Show results
+
+
+                setTimeout(() => {
+
+
+                    showPreview();
+
+
+                    showDownload();
+
+
+                }, 500);
+
+
+                
+
+
+            } catch (error) {
+
+
+                if (error.name === 'AbortError') {
+
+
+                    console.log('Extraction was cancelled');
+
+
+                    return;
+
+
+                }
+
+
+                console.error('Extraction error:', error);
+
+
+                showError('Failed to extract audio: ' + error.message);
+
+
+            } finally {
+
+
+                hideProcessing();
+
+
+                currentExtractionController = null;
+
+
+            }
+
+
+        }
+
+
+
+
+
+        // Perform actual FFmpeg extraction
+
+
+        async function performExtraction(format, bitrate, sampleRate, signal) {
+
+
+            const inputFileName = 'input.' + selectedFile.name.split('.').pop();
+
+
+            const outputFileName = 'output.' + format;
+
+
+            
+
+
+            // Check if operation was cancelled
+
+
+            if (signal.aborted) {
+
+
+                throw new Error('Aborted');
+
+
+            }
+
+
+            
+
+
+            // Write input file to FFmpeg
+
+
+            updateProgress(30, 'Preparing video file...');
+
+
+            await ffmpeg.writeFile(inputFileName, await selectedFile.arrayBuffer());
+
+
+            
+
+
+            if (signal.aborted) {
+
+
+                throw new Error('Aborted');
+
+
+            }
+
+
+            
+
+
+            // Build FFmpeg command based on format and settings
+
+
+            const ffmpegArgs = buildFFmpegCommand(inputFileName, outputFileName, format, bitrate, sampleRate);
+
+
+            
+
+
+            updateProgress(40, 'Extracting audio track...');
+
+
+            
+
+
+            // Run FFmpeg
+
+
+            await ffmpeg.exec(ffmpegArgs);
+
+
+            
+
+
+            if (signal.aborted) {
+
+
+                throw new Error('Aborted');
+
+
+            }
+
+
+            
+
+
+            updateProgress(80, 'Finalizing audio file...');
+
+
+            
+
+
+            // Read the output file
+
+
+            const outputData = await ffmpeg.readFile(outputFileName);
+
+
+            
+
+
+            // Create blob from output data
+
+
+            const mimeType = getMimeType(format);
+
+
+            extractedAudioBlob = new Blob([outputData], { type: mimeType });
+
+
+            
+
+
+            // Clean up files
+
+
+            try {
+
+
+                await ffmpeg.deleteFile(inputFileName);
+
+
+                await ffmpeg.deleteFile(outputFileName);
+
+
+            } catch (cleanupError) {
+
+
+                console.warn('Failed to cleanup temporary files:', cleanupError);
+
+
+            }
+
+
+        }
+
+
+        
+
+
+        // Build FFmpeg command based on format and settings
+
+
+        function buildFFmpegCommand(input, output, format, bitrate, sampleRate) {
+
+
+            const args = [
+
+
+                '-i', input,
+
+
+                '-vn', // No video
+
+
+                '-acodec', getCodec(format),
+
+
+                '-ar', sampleRate, // Sample rate
+
+
+                '-b:a', bitrate + 'k', // Bitrate
+
+
+            ];
+
+
+            
+
+
+            // Add format-specific parameters
+
+
+            switch (format) {
+
+
+                case 'mp3':
+
+
+                    args.push('-f', 'mp3');
+
+
+                    break;
+
+
+                case 'wav':
+
+
+                    // WAV doesn't use bitrate, adjust parameters
+
+
+                    args.splice(-1, 1); // Remove bitrate
+
+
+                    args.push('-f', 'wav');
+
+
+                    break;
+
+
+                case 'flac':
+
+
+                    args.push('-f', 'flac');
+
+
+                    break;
+
+
+                case 'aac':
+
+
+                    args.push('-f', 'adts');
+
+
+                    break;
+
+
+                case 'ogg':
+
+
+                    args.push('-f', 'ogg');
+
+
+                    break;
+
+
+            }
+
+
+            
+
+
+            args.push(output);
+
+
+            return args;
+
+
+        }
+
+
+        
+
+
+        // Get codec for format
+
+
+        function getCodec(format) {
+
+
+            const codecs = {
+
+
+                mp3: 'libmp3lame',
+
+
+                wav: 'pcm_s16le',
+
+
+                flac: 'flac',
+
+
+                aac: 'aac',
+
+
+                ogg: 'libvorbis'
+
+
+            };
+
+
+            return codecs[format] || 'libmp3lame';
+
+
+        }
+
+
+        
+
+
+        // Get MIME type for format
+
+
+        function getMimeType(format) {
+
+
+            const mimeTypes = {
+
+
+                mp3: 'audio/mpeg',
+
+
+                wav: 'audio/wav',
+
+
+                flac: 'audio/flac',
+
+
+                aac: 'audio/aac',
+
+
+                ogg: 'audio/ogg'
+
+
+            };
+
+
+            return mimeTypes[format] || 'audio/mpeg';
+
+
+        }
+
+
+
+
+
+        // Progress management
+
+
+        function showProcessing() {
+
+
+            document.getElementById('processingSection').style.display = 'block';
+
+
+            updateProgress(0, 'Initializing...');
+
+
+        }
+
+
+
+
+
+        function hideProcessing() {
+
+
+            document.getElementById('processingSection').style.display = 'none';
+
+
+        }
+
+
+
+
+
+        function updateProgress(percent, message) {
+
+
+            const progressFill = document.getElementById('progressFill');
+
+
+            const progressText = document.getElementById('progressText');
+
+
+            const processingStatus = document.getElementById('processingStatus');
+
+
+            
+
+
+            progressFill.style.width = percent + '%';
+
+
+            progressText.textContent = `${percent}%`;
+
+
+            processingStatus.textContent = message;
+
+
+        }
+
+
+
+
+
+        // Preview and download
+
+
+        function showPreview() {
+
+
+            const previewSection = document.getElementById('previewSection');
+
+
+            const audioPlayer = document.getElementById('audioPlayer');
+
+
+            const audioDuration = document.getElementById('audioDuration');
+
+
+            const audioFormatInfo = document.getElementById('audioFormatInfo');
+
+
+            
+
+
+            // Create audio URL from blob
+
+
+            const audioUrl = URL.createObjectURL(extractedAudioBlob);
+
+
+            audioPlayer.src = audioUrl;
+
+
+            
+
+
+            // Update format info
+
+
+            const format = document.getElementById('audioFormat').value.toUpperCase();
+
+
+            const bitrate = document.getElementById('bitrate').value;
+
+
+            const sampleRate = (document.getElementById('sampleRate').value / 1000).toFixed(1);
+
+
+            
+
+
+            audioFormatInfo.textContent = `${format} • ${bitrate} kbps • ${sampleRate} kHz`;
+
+
+            
+
+
+            // Try to get actual duration from audio element
+
+
+            const audio = document.getElementById('audioPlayer');
+
+
+            if (audio.duration && !isNaN(audio.duration)) {
+
+
+                audioDuration.textContent = formatDuration(audio.duration);
+
+
+            } else {
+
+
+                audioDuration.textContent = '00:00';
+
+
+            }
+
+
+            
+
+
+            // Draw waveform (placeholder)
+
+
+            drawWaveform();
+
+
+            
+
+
+            previewSection.style.display = 'block';
+
+
+        }
+
+
+
+
+
+        function showDownload() {
+
+
+            const downloadSection = document.getElementById('downloadSection');
+
+
+            const downloadFileName = document.getElementById('downloadFileName');
+
+
+            const downloadFileDetails = document.getElementById('downloadFileDetails');
+
+
+            const downloadFileSize = document.getElementById('downloadFileSize');
+
+
+            
+
+
+            const format = document.getElementById('audioFormat').value;
+
+
+            const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
+
+
+            const newFileName = `${originalName}_extracted.${format}`;
+
+
+            
+
+
+            downloadFileName.textContent = newFileName;
+
+
+            downloadFileDetails.textContent = `${document.getElementById('bitrate').value} kbps • ${(document.getElementById('sampleRate').value / 1000).toFixed(1)} kHz • 3:45`;
+
+
+            downloadFileSize.textContent = `Size: ${formatFileSize(extractedAudioBlob.size)}`;
+
+
+            
+
+
+            downloadSection.style.display = 'block';
+
+
+        }
+
+
+
+
+
+        function drawWaveform() {
+
+
+            const canvas = document.getElementById('waveformCanvas');
+
+
+            const ctx = canvas.getContext('2d');
+
+
+            
+
+
+            // Clear canvas
+
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+            
+
+
+            const audio = document.getElementById('audioPlayer');
+
+
+            
+
+
+            // If audio is loaded and has duration, try to generate a real waveform
+
+
+            if (audio.src && audio.duration && !isNaN(audio.duration)) {
+
+
+                generateRealWaveform(audio, canvas, ctx);
+
+
+            } else {
+
+
+                // Draw mock waveform for loading state
+
+
+                drawMockWaveform(canvas, ctx);
+
+
+            }
+
+
+        }
+
+
+        
+
+
+        function drawMockWaveform(canvas, ctx) {
+
+
+            const width = canvas.width;
+
+
+            const height = canvas.height;
+
+
+            const centerY = height / 2;
+
+
+            
+
+
+            ctx.strokeStyle = '#8B5CF6';
+
+
+            ctx.lineWidth = 2;
+
+
+            ctx.beginPath();
+
+
+            
+
+
+            for (let x = 0; x < width; x++) {
+
+
+                const amplitude = Math.sin(x * 0.02) * 0.3 + Math.sin(x * 0.05) * 0.1;
+
+
+                const y = centerY + amplitude * (height * 0.4);
+
+
+                
+
+
+                if (x === 0) {
+
+
+                    ctx.moveTo(x, y);
+
+
+                } else {
+
+
+                    ctx.lineTo(x, y);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            ctx.stroke();
+
+
+        }
+
+
+        
+
+
+        function generateRealWaveform(audio, canvas, ctx) {
+
+
+            // This is a simplified waveform generation
+
+
+            // For a full implementation, you'd need to decode the audio data
+
+
+            // and generate actual waveform samples
+
+
+            
+
+
+            const width = canvas.width;
+
+
+            const height = canvas.height;
+
+
+            const centerY = height / 2;
+
+
+            
+
+
+            ctx.strokeStyle = '#8B5CF6';
+
+
+            ctx.lineWidth = 1;
+
+
+            ctx.beginPath();
+
+
+            
+
+
+            // Generate a more realistic waveform pattern
+
+
+            for (let x = 0; x < width; x++) {
+
+
+                const progress = x / width;
+
+
+                const time = progress * audio.duration;
+
+
+                
+
+
+                // Simulate audio amplitude based on time (this is a simplified version)
+
+
+                let amplitude = 0;
+
+
+                for (let freq = 1; freq <= 5; freq++) {
+
+
+                    amplitude += Math.sin((time * freq * Math.PI) / (audio.duration / 4)) * (0.2 / freq);
+
+
+                }
+
+
+                
+
+
+                // Add some randomness for realism
+
+
+                amplitude += (Math.random() - 0.5) * 0.1;
+
+
+                amplitude = Math.max(-1, Math.min(1, amplitude));
+
+
+                
+
+
+                const y = centerY + amplitude * (height * 0.4);
+
+
+                
+
+
+                if (x === 0) {
+
+
+                    ctx.moveTo(x, y);
+
+
+                } else {
+
+
+                    ctx.lineTo(x, y);
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            ctx.stroke();
+
+
+        }
+
+
+
+
+
+        // Audio controls
+
+
+        function playAudio() {
+
+
+            const audio = document.getElementById('audioPlayer');
+
+
+            audio.play();
+
+
+        }
+
+
+
+
+
+        function pauseAudio() {
+
+
+            const audio = document.getElementById('audioPlayer');
+
+
+            audio.pause();
+
+
+        }
+
+
+
+
+
+        function stopAudio() {
+
+
+            const audio = document.getElementById('audioPlayer');
+
+
+            audio.pause();
+
+
+            audio.currentTime = 0;
+
+
+        }
+
+
+
+
+
+        function downloadAudio() {
+
+
+            if (!extractedAudioBlob) {
+
+
+                showError('No audio file to download.');
+
+
+                return;
+
+
+            }
+
+
+
+
+
+            const format = document.getElementById('audioFormat').value;
+
+
+            const originalName = selectedFile.name.replace(/\.[^/.]+$/, '');
+
+
+            const fileName = `${originalName}_extracted.${format}`;
+
+
+            
+
+
+            const url = URL.createObjectURL(extractedAudioBlob);
+
+
+            const a = document.createElement('a');
+
+
+            a.href = url;
+
+
+            a.download = fileName;
+
+
+            document.body.appendChild(a);
+
+
+            a.click();
+
+
+            document.body.removeChild(a);
+
+
+            URL.revokeObjectURL(url);
+
+
+            
+
+
+            showNotification('🎬µ Audio file downloaded successfully!');
+
+
+        }
+
+
+
+
+
+        // Utility functions
+
+
+        function resetTool() {
+
+
+            // Cancel any ongoing extraction
+
+
+            if (currentExtractionController) {
+
+
+                currentExtractionController.abort();
+
+
+            }
+
+
+            
+
+
+            removeFile();
+
+
+            resetExtraction();
+
+
+            document.getElementById('actionButtons').style.display = 'flex';
+
+
+        }
+
+
+
+
+
+        function resetExtraction() {
+
+
+            hideProcessing();
+
+
+            document.getElementById('previewSection').style.display = 'none';
+
+
+            document.getElementById('downloadSection').style.display = 'none';
+
+
+            hideError();
+
+
+            
+
+
+            // Reset progress
+
+
+            updateProgress(0, 'Ready to extract...');
+
+
+        }
+
+
+
+
+
+        function showError(message) {
+
+
+            const errorSection = document.getElementById('errorSection');
+
+
+            const errorMessage = document.getElementById('errorMessage');
+
+
+            
+
+
+            errorMessage.textContent = message;
+
+
+            errorSection.style.display = 'block';
+
+
+        }
+
+
+
+
+
+        function hideError() {
+
+
+            document.getElementById('errorSection').style.display = 'none';
+
+
+        }
+
+
+
+
+
+        function formatDuration(seconds) {
+
+
+            const mins = Math.floor(seconds / 60);
+
+
+            const secs = Math.floor(seconds % 60);
+
+
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+
+        }
+
+
+        
+
+
+        function showNotification(message) {
+
+
+            // Create and show a temporary notification
+
+
+            const notification = document.createElement('div');
+
+
+            notification.className = 'notification';
+
+
+            notification.textContent = message;
+
+
+            notification.style.cssText = `
+
+
+                position: fixed;
+
+
+                top: 20px;
+
+
+                right: 20px;
+
+
+                background: var(--color-success);
+
+
+                color: white;
+
+
+                padding: 12px 20px;
+
+
+                border-radius: var(--radius-button);
+
+
+                font-weight: 500;
+
+
+                z-index: 10000;
+
+
+                animation: slideIn 0.3s ease-out;
+
+
+                max-width: 300px;
+
+
+                word-wrap: break-word;
+
+
+            `;
+
+
+            
+
+
+            document.body.appendChild(notification);
+
+
+            
+
+
+            setTimeout(() => {
+
+
+                notification.style.animation = 'slideOut 0.3s ease-in';
+
+
+                setTimeout(() => {
+
+
+                    if (notification.parentNode) {
+
+
+                        document.body.removeChild(notification);
+
+
+                    }
+
+
+                }, 300);
+
+
+            }, 3000);
+
+
+        }
+
+
+
+
+
+        // Mobile menu functionality
+
+
+        const menuToggle = document.querySelector('.menu-toggle');
+
+
+        const navLinks = document.querySelector('.nav-links');
+
+
+        
+
+
+        menuToggle.addEventListener('click', () => {
+
+
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+
+
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+
+
+            navLinks.classList.toggle('active');
+
+
+        });
+
+
+
+
+
+        // Add CSS animations for notifications
+
+
+        const style = document.createElement('style');
+
+
+        style.textContent = `
+
+
+            @keyframes slideIn {
+
+
+                from {
+
+
+                    transform: translateX(100%);
+
+
+                    opacity: 0;
+
+
+                }
+
+
+                to {
+
+
+                    transform: translateX(0);
+
+
+                    opacity: 1;
+
+
+                }
+
+
+            }
+
+
+            
+
+
+            @keyframes slideOut {
+
+
+                from {
+
+
+                    transform: translateX(0);
+
+
+                    opacity: 1;
+
+
+                }
+
+
+                to {
+
+
+                    transform: translateX(100%);
+
+
+                    opacity: 0;
+
+
+                }
+
+
+            }
+
+
+        `;
+
+
+        document.head.appendChild(style);
+
+
+    </script>
+
+
+
+
+
+    <style>
+
+
+        /* Tool-specific styles */
+
+
+        .upload-area {
+
+
+            background: var(--color-surface);
+
+
+            border: 2px dashed var(--color-neutral-300);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-3xl);
+
+
+            text-align: center;
+
+
+            cursor: pointer;
+
+
+            transition: all var(--duration-standard) var(--easing-standard);
+
+
+            position: relative;
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .upload-area:hover {
+
+
+            border-color: var(--color-primary-500);
+
+
+            background: var(--color-primary-50);
+
+
+        }
+
+
+
+
+
+        .upload-area.dragover {
+
+
+            border-color: var(--color-primary-500);
+
+
+            background: var(--color-primary-100);
+
+
+        }
+
+
+
+
+
+        .file-input {
+
+
+            position: absolute;
+
+
+            top: 0;
+
+
+            left: 0;
+
+
+            width: 100%;
+
+
+            height: 100%;
+
+
+            opacity: 0;
+
+
+            cursor: pointer;
+
+
+        }
+
+
+
+
+
+        .upload-content {
+
+
+            pointer-events: none;
+
+
+        }
+
+
+
+
+
+        .upload-icon {
+
+
+            font-size: 3rem;
+
+
+            margin-bottom: var(--spacing-md);
+
+
+        }
+
+
+
+
+
+        .upload-content h3 {
+
+
+            font-size: var(--font-size-subtitle);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-700);
+
+
+            margin-bottom: var(--spacing-sm);
+
+
+        }
+
+
+
+
+
+        .upload-content p {
+
+
+            color: var(--color-neutral-600);
+
+
+            margin-bottom: var(--spacing-md);
+
+
+        }
+
+
+
+
+
+        .upload-formats {
+
+
+            display: flex;
+
+
+            justify-content: center;
+
+
+            gap: var(--spacing-sm);
+
+
+            flex-wrap: wrap;
+
+
+        }
+
+
+
+
+
+        .format-tag {
+
+
+            background: var(--color-neutral-100);
+
+
+            color: var(--color-neutral-700);
+
+
+            padding: var(--spacing-xs) var(--spacing-sm);
+
+
+            border-radius: var(--radius-button);
+
+
+            font-size: var(--font-size-small);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+        }
+
+
+
+
+
+        .file-info {
+
+
+            background: var(--color-neutral-50);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-button);
+
+
+            padding: var(--spacing-md);
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .file-details {
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            justify-content: space-between;
+
+
+        }
+
+
+
+
+
+        .file-name {
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            color: var(--color-neutral-900);
+
+
+        }
+
+
+
+
+
+        .file-size {
+
+
+            color: var(--color-neutral-600);
+
+
+            font-size: var(--font-size-small);
+
+
+        }
+
+
+
+
+
+        .btn-remove {
+
+
+            background: var(--color-error);
+
+
+            color: white;
+
+
+            border: none;
+
+
+            border-radius: 50%;
+
+
+            width: 24px;
+
+
+            height: 24px;
+
+
+            font-size: 12px;
+
+
+            cursor: pointer;
+
+
+            margin-left: var(--spacing-sm);
+
+
+        }
+
+
+
+
+
+        .settings-section {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .settings-grid {
+
+
+            display: grid;
+
+
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+
+            gap: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .setting-group {
+
+
+            display: flex;
+
+
+            flex-direction: column;
+
+
+            gap: var(--spacing-sm);
+
+
+        }
+
+
+
+
+
+        .setting-label {
+
+
+            font-weight: var(--font-weight-medium);
+
+
+            color: var(--color-neutral-700);
+
+
+            font-size: var(--font-size-body);
+
+
+        }
+
+
+
+
+
+        .setting-select {
+
+
+            padding: var(--spacing-sm) var(--spacing-md);
+
+
+            border: 1px solid var(--color-neutral-300);
+
+
+            border-radius: var(--radius-input);
+
+
+            font-size: var(--font-size-body);
+
+
+            background: var(--color-surface);
+
+
+            color: var(--color-neutral-900);
+
+
+            transition: border-color var(--duration-fast);
+
+
+        }
+
+
+
+
+
+        .setting-select:focus {
+
+
+            outline: none;
+
+
+            border-color: var(--color-primary-500);
+
+
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+
+
+        }
+
+
+
+
+
+        .processing-section {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .progress-container {
+
+
+            margin-bottom: var(--spacing-md);
+
+
+        }
+
+
+
+
+
+        .progress-bar {
+
+
+            width: 100%;
+
+
+            height: 8px;
+
+
+            background: var(--color-neutral-200);
+
+
+            border-radius: var(--radius-button);
+
+
+            overflow: hidden;
+
+
+            margin-bottom: var(--spacing-sm);
+
+
+        }
+
+
+
+
+
+        .progress-fill {
+
+
+            height: 100%;
+
+
+            background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+
+
+            transition: width var(--duration-standard);
+
+
+            border-radius: var(--radius-button);
+
+
+        }
+
+
+
+
+
+        .progress-text {
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+
+
+
+        .processing-status {
+
+
+            color: var(--color-neutral-600);
+
+
+            font-size: var(--font-size-body);
+
+
+        }
+
+
+
+
+
+        .preview-section {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .audio-player {
+
+
+            margin-bottom: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .audio-controls {
+
+
+            display: flex;
+
+
+            gap: var(--spacing-sm);
+
+
+            justify-content: center;
+
+
+        }
+
+
+
+
+
+        .waveform-container {
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            text-align: center;
+
+
+        }
+
+
+
+
+
+        #waveformCanvas {
+
+
+            width: 100%;
+
+
+            max-width: 800px;
+
+
+            border-radius: var(--radius-input);
+
+
+            background: var(--color-surface);
+
+
+        }
+
+
+
+
+
+        .waveform-info {
+
+
+            display: flex;
+
+
+            justify-content: space-between;
+
+
+            align-items: center;
+
+
+            margin-top: var(--spacing-md);
+
+
+            font-size: var(--font-size-small);
+
+
+            color: var(--color-neutral-600);
+
+
+        }
+
+
+
+
+
+        .download-section {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .download-card {
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-lg);
+
+
+            padding: var(--spacing-lg);
+
+
+            background: var(--color-neutral-50);
+
+
+            border-radius: var(--radius-card);
+
+
+        }
+
+
+
+
+
+        .download-icon {
+
+
+            font-size: 3rem;
+
+
+            flex-shrink: 0;
+
+
+        }
+
+
+
+
+
+        .download-info {
+
+
+            flex: 1;
+
+
+        }
+
+
+
+
+
+        .download-info h4 {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+
+
+
+        .download-details {
+
+
+            color: var(--color-neutral-600);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+
+
+
+        .download-size {
+
+
+            color: var(--color-neutral-700);
+
+
+            font-weight: var(--font-weight-medium);
+
+
+        }
+
+
+
+
+
+        .btn-download {
+
+
+            white-space: nowrap;
+
+
+        }
+
+
+
+
+
+        .action-buttons {
+
+
+            display: flex;
+
+
+            gap: var(--spacing-md);
+
+
+            justify-content: center;
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .error-section {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-error);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+        }
+
+
+
+
+
+        .error-card {
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-md);
+
+
+            padding: var(--spacing-lg);
+
+
+            background: var(--color-error-light);
+
+
+            border-radius: var(--radius-card);
+
+
+        }
+
+
+
+
+
+        .error-icon {
+
+
+            font-size: 2rem;
+
+
+            flex-shrink: 0;
+
+
+        }
+
+
+
+
+
+        .error-content {
+
+
+            flex: 1;
+
+
+        }
+
+
+
+
+
+        .error-content h4 {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-error);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+
+
+
+        .error-content p {
+
+
+            color: var(--color-neutral-700);
+
+
+        }
+
+
+
+
+
+        .privacy-notice {
+
+
+            padding: var(--spacing-2xl) 0;
+
+
+            background: var(--color-neutral-50);
+
+
+        }
+
+
+
+
+
+        .privacy-card {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-xl);
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .privacy-icon {
+
+
+            font-size: 3rem;
+
+
+            flex-shrink: 0;
+
+
+        }
+
+
+
+
+
+        .privacy-content h3 {
+
+
+            font-size: var(--font-size-subtitle);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-sm);
+
+
+        }
+
+
+
+
+
+        .privacy-content p {
+
+
+            color: var(--color-neutral-700);
+
+
+            margin: 0;
+
+
+        }
+
+
+
+
+
+        .related-tools {
+
+
+            padding: var(--spacing-3xl) 0;
+
+
+            background: var(--color-neutral-50);
+
+
+        }
+
+
+
+
+
+        .related-title {
+
+
+            font-size: var(--font-size-subtitle);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-xl);
+
+
+            text-align: center;
+
+
+        }
+
+
+
+
+
+        .related-grid {
+
+
+            display: grid;
+
+
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+
+            gap: var(--spacing-lg);
+
+
+        }
+
+
+
+
+
+        .related-card {
+
+
+            background: var(--color-surface);
+
+
+            border: 1px solid var(--color-neutral-200);
+
+
+            border-radius: var(--radius-card);
+
+
+            padding: var(--spacing-lg);
+
+
+            text-decoration: none;
+
+
+            transition: all var(--duration-standard) var(--easing-standard);
+
+
+            display: flex;
+
+
+            align-items: center;
+
+
+            gap: var(--spacing-md);
+
+
+        }
+
+
+
+
+
+        .related-card:hover {
+
+
+            transform: translateY(-2px);
+
+
+            box-shadow: var(--shadow-card-hover);
+
+
+            border-color: var(--color-primary-100);
+
+
+        }
+
+
+
+
+
+        .related-icon {
+
+
+            font-size: 2em;
+
+
+            flex-shrink: 0;
+
+
+        }
+
+
+
+
+
+        .related-content h4 {
+
+
+            font-size: var(--font-size-body-large);
+
+
+            font-weight: var(--font-weight-semibold);
+
+
+            color: var(--color-neutral-900);
+
+
+            margin-bottom: var(--spacing-xs);
+
+
+        }
+
+
+
+
+
+        .related-content p {
+
+
+            color: var(--color-neutral-700);
+
+
+            font-size: var(--font-size-body);
+
+
+            margin: 0;
+
+
+        }
+
+
+
+
+
+        @media (max-width: 768px) {
+
+
+            .settings-grid {
+
+
+                grid-template-columns: 1fr;
+
+
+            }
+
+
+            
+
+
+            .action-buttons {
+
+
+                flex-direction: column;
+
+
+                align-items: center;
+
+
+            }
+
+
+            
+
+
+            .download-card {
+
+
+                flex-direction: column;
+
+
+                text-align: center;
+
+
+            }
+
+
+            
+
+
+            .error-card {
+
+
+                flex-direction: column;
+
+
+                text-align: center;
+
+
+            }
+
+
+            
+
+
+            .privacy-card {
+
+
+                flex-direction: column;
+
+
+                text-align: center;
+
+
+            }
+
+
+            
+
+
+            .waveform-info {
+
+
+                flex-direction: column;
+
+
+                gap: var(--spacing-xs);
+
+
+            }
+
+
+        }
+
+
+
+
+
+        @media (max-width: 480px) {
+
+
+            .upload-formats {
+
+
+                justify-content: center;
+
+
+            }
+
+
+            
+
+
+            .audio-controls {
+
+
+                flex-wrap: wrap;
+
+
+            }
+
+
+        }
+
+
+    </style>
+
+
+</body>
+
+
+</html>
+
+
+
+
+
