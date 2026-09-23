@@ -8,7 +8,7 @@
     <meta name="description" content="Generate custom QR codes for WiFi, vCard, WhatsApp, URLs, and Crypto. Customize colors, sizes, and export high-res PNG or SVG vector formats. 100% client-side privacy.">
     <meta name="keywords" content="qr code generator, wifi qr code, vcard qr code, custom qr generator, free qr code maker">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="canonical" href="https://factictionary.github.io/tools/qr_generator.html">
+    <link rel="canonical" href="https://factictionary.in/tools/qr_generator.html">
 
     <!-- Fonts & Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -137,7 +137,7 @@
                     <!-- Type Specific Forms -->
                     <div id="formUrl" style="margin-top: 16px;">
                         <label style="font-size: 0.85rem; font-weight: 600;">Website URL:</label>
-                        <input type="url" id="inputUrl" class="qr-input" value="https://factictionary.github.io" oninput="renderQR()">
+                        <input type="url" id="inputUrl" class="qr-input" value="https://factictionary.in" oninput="renderQR()">
                     </div>
 
                     <div id="formWifi" style="margin-top: 16px; display:none;">
@@ -230,7 +230,7 @@
         function getQRText() {
             const type = document.getElementById('qrType').value;
             if (type === 'url') {
-                return document.getElementById('inputUrl').value || 'https://factictionary.github.io';
+                return document.getElementById('inputUrl').value || 'https://factictionary.in';
             } else if (type === 'wifi') {
                 const ssid = document.getElementById('wifiSsid').value || 'MyWiFi';
                 const pass = document.getElementById('wifiPass').value || '';
