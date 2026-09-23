@@ -777,46 +777,109 @@ if ('PerformanceObserver' in window) {
             });
         }
 
+        // Helper: Generate pre-formatted social post write-up with embedded link
+        window.generateSharePostText = function() {
+            const rawTitle = document.title || 'Factictionary';
+            const cleanTitle = rawTitle.replace(/\s*\|\s*Factictionary/gi, '').replace(/\s*-\s*Factictionary/gi, '').trim();
+            
+            let desc = '';
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && metaDesc.content) {
+                desc = metaDesc.content.trim();
+            } else {
+                const lead = document.querySelector('.lead-text, .hero-subtitle, p');
+                if (lead && lead.textContent) {
+                    desc = lead.textContent.trim();
+                }
+            }
+            if (desc.length > 180) {
+                desc = desc.substring(0, 177) + '...';
+            }
+            if (!desc) {
+                desc = 'Discover free, privacy-first web utilities and insightful guides on Factictionary.';
+            }
+
+            const currentUrl = window.location.href;
+            const lowerUrl = currentUrl.toLowerCase();
+
+            let categoryEmoji = '✨';
+            if (lowerUrl.includes('pdf')) categoryEmoji = '📄';
+            else if (lowerUrl.includes('image') || lowerUrl.includes('hdr') || lowerUrl.includes('svg')) categoryEmoji = '🖼️';
+            else if (lowerUrl.includes('video')) categoryEmoji = '🎥';
+            else if (lowerUrl.includes('audio')) categoryEmoji = '🎵';
+            else if (lowerUrl.includes('kdp')) categoryEmoji = '📘';
+            else if (lowerUrl.includes('text') || lowerUrl.includes('word') || lowerUrl.includes('markdown')) categoryEmoji = '📝';
+            else if (lowerUrl.includes('blog') || lowerUrl.includes('article')) categoryEmoji = '📰';
+            else if (lowerUrl.includes('game')) categoryEmoji = '🎮';
+
+            return `${categoryEmoji} ${cleanTitle}\n\n${desc}\n\n👉 Try it here: ${currentUrl}\n\n#Factictionary #FreeTools #PrivacyFirst`;
+        };
+
+        window.updateShareLinks = function(postText) {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const encodedText = encodeURIComponent(postText || window.generateSharePostText());
+            const pageTitle = encodeURIComponent(document.title);
+
+            const grid = document.getElementById('social-share-grid');
+            if (grid) {
+                grid.innerHTML = `
+                    <a href="https://twitter.com/intent/tweet?text=${encodedText}" target="_blank" rel="noopener" class="social-share-btn twitter">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        <span>𝕏 / Twitter</span>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text=${encodedText}" target="_blank" rel="noopener" class="social-share-btn whatsapp">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" class="social-share-btn facebook">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}" target="_blank" rel="noopener" class="social-share-btn linkedin">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://www.reddit.com/submit?url=${pageUrl}&title=${pageTitle}" target="_blank" rel="noopener" class="social-share-btn reddit">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/></svg>
+                        <span>Reddit</span>
+                    </a>
+                    <a href="https://t.me/share/url?url=${pageUrl}&text=${encodedText}" target="_blank" rel="noopener" class="social-share-btn telegram">
+                        <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.119.098.152.228.166.331.016.114.022.253.003.393z"/></svg>
+                        <span>Telegram</span>
+                    </a>
+                `;
+            }
+        };
+
         // Inject Social Share Modal Dialog
         if (!document.querySelector('#share-tool-modal')) {
             const shareModal = document.createElement('div');
             shareModal.id = 'share-tool-modal';
             shareModal.className = 'tools-drawer-backdrop';
             
-            const pageUrl = encodeURIComponent(window.location.href);
-            const pageTitle = encodeURIComponent(document.title);
+            const initialPostText = window.generateSharePostText();
 
             shareModal.innerHTML = `
                 <div class="share-modal-dialog" onclick="event.stopPropagation()">
                     <button class="tools-drawer-close" onclick="closeShareModal()" style="position:absolute; top:20px; right:20px;">&times;</button>
-                    <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:6px;">🔗 Share This Web Page</h3>
-                    <p style="font-size:13.5px; color:#64748B;">Share this privacy tool directly to social media or download a visual summary screenshot!</p>
+                    <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:4px;">🔗 Share Page &amp; Pre-formatted Post</h3>
+                    <p style="font-size:13.5px; color:#64748B; margin-bottom:16px;">Copy a ready-to-post write-up with embedded link or download a visual image card.</p>
                     
-                    <div class="social-share-grid">
-                        <a href="https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}" target="_blank" rel="noopener" class="social-share-btn twitter">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                            <span>𝕏 / Twitter</span>
-                        </a>
-                        <a href="https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}" target="_blank" rel="noopener" class="social-share-btn whatsapp">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                            <span>WhatsApp</span>
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=${pageUrl}" target="_blank" rel="noopener" class="social-share-btn facebook">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            <span>Facebook</span>
-                        </a>
-                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}" target="_blank" rel="noopener" class="social-share-btn linkedin">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="https://www.reddit.com/submit?url=${pageUrl}&title=${pageTitle}" target="_blank" rel="noopener" class="social-share-btn reddit">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/></svg>
-                            <span>Reddit</span>
-                        </a>
-                        <a href="https://t.me/share/url?url=${pageUrl}&text=${pageTitle}" target="_blank" rel="noopener" class="social-share-btn telegram">
-                            <svg class="social-icon-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.244-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.831-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.141.119.098.152.228.166.331.016.114.022.253.003.393z"/></svg>
-                            <span>Telegram</span>
-                        </a>
+                    <div class="share-post-card">
+                        <div class="share-post-header">
+                            <span class="share-post-title">📝 Pre-formatted Social Post Write-Up</span>
+                            <button onclick="refreshSharePostText()" style="background:none; border:none; color:#0066FF; font-size:12px; font-weight:600; cursor:pointer;" title="Reset write-up">🔄 Reset</button>
+                        </div>
+                        <textarea id="share-post-textarea" class="share-post-textarea" rows="4">${initialPostText}</textarea>
+                        <div class="share-post-actions">
+                            <button class="share-post-copy-btn" onclick="copyPostText(this)">
+                                📋 Copy Post &amp; Embedded Link
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="social-share-grid" id="social-share-grid">
+                        <!-- Populated by updateShareLinks -->
                     </div>
 
                     <label style="font-size:12.5px; font-weight:600; color:#334155;">Direct Web Page Link:</label>
@@ -838,6 +901,15 @@ if ('PerformanceObserver' in window) {
 
             shareModal.addEventListener('click', closeShareModal);
             document.body.appendChild(shareModal);
+
+            const postTextarea = shareModal.querySelector('#share-post-textarea');
+            if (postTextarea) {
+                postTextarea.addEventListener('input', function() {
+                    window.updateShareLinks(this.value);
+                });
+            }
+
+            window.updateShareLinks(initialPostText);
         }
 
         // Global Keydown Handler (Ctrl + K)
@@ -882,9 +954,52 @@ if ('PerformanceObserver' in window) {
         }
     };
 
+    window.refreshSharePostText = function() {
+        const textarea = document.getElementById('share-post-textarea');
+        if (textarea) {
+            const freshText = window.generateSharePostText();
+            textarea.value = freshText;
+            window.updateShareLinks(freshText);
+        }
+    };
+
+    window.copyPostText = function(btnElement) {
+        const textarea = document.getElementById('share-post-textarea');
+        if (textarea) {
+            const textToCopy = textarea.value;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const origText = btnElement.textContent;
+                    btnElement.textContent = 'Copied Post! ✓';
+                    btnElement.style.background = '#10B981';
+                    setTimeout(() => {
+                        btnElement.textContent = origText;
+                        btnElement.style.background = '';
+                    }, 2000);
+                });
+            } else {
+                textarea.select();
+                document.execCommand('copy');
+                const origText = btnElement.textContent;
+                btnElement.textContent = 'Copied Post! ✓';
+                setTimeout(() => { btnElement.textContent = origText; }, 2000);
+            }
+        }
+    };
+
     window.openShareModal = function() {
         const modal = document.getElementById('share-tool-modal');
         if (modal) {
+            const postText = window.generateSharePostText();
+            const textarea = document.getElementById('share-post-textarea');
+            if (textarea) {
+                textarea.value = postText;
+            }
+            const input = document.getElementById('share-link-input');
+            if (input) {
+                input.value = window.location.href;
+            }
+            window.updateShareLinks(postText);
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }

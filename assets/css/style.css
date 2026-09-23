@@ -2376,11 +2376,87 @@ main {
   background: white;
   border-radius: 20px;
   width: 100%;
-  max-width: 540px;
+  max-width: 580px;
   padding: 28px;
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
   border: 1px solid #E2E8F0;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Pre-formatted Post Box */
+.share-post-card {
+  margin-top: 16px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.share-post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.share-post-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.share-post-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1E293B;
+  background: #FFFFFF;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s;
+}
+
+.share-post-textarea:focus {
+  outline: none;
+  border-color: #0066FF;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+}
+
+.share-post-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.share-post-copy-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #0066FF;
+  color: white;
+  border: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-post-copy-btn:hover {
+  background: #0052CC;
+  transform: translateY(-1px);
 }
 
 .social-share-grid {
