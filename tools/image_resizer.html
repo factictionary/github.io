@@ -284,8 +284,12 @@
                     document.getElementById('heightInput').value = originalHeight;
                     document.getElementById('scaleInput').value = 100;
 
+                    const titleEl = uploadArea.querySelector('h3');
+                    if (titleEl) titleEl.textContent = '✅ Selected: ' + file.name + ' (' + originalWidth + '×' + originalHeight + 'px)';
+
                     document.getElementById('controlsSection').classList.remove('hidden');
-                    document.getElementById('previewSection').classList.add('hidden');
+                    document.getElementById('previewSection').classList.remove('hidden');
+                    resizeImage();
                 };
                 img.src = e.target.result;
             };
@@ -332,6 +336,8 @@
             originalImage = null;
             resizedCanvas = null;
             fileInput.value = '';
+            const titleEl = uploadArea.querySelector('h3');
+            if (titleEl) titleEl.textContent = 'Drop image here or click to upload';
             document.getElementById('controlsSection').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
         }

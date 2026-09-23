@@ -229,6 +229,8 @@
                     canvas.width = img.width;
                     canvas.height = img.height;
                     ctx.drawImage(img, 0, 0);
+                    const titleEl = uploadArea.querySelector('h3');
+                    if (titleEl) titleEl.textContent = '✅ Selected: ' + file.name + ' (' + img.width + '×' + img.height + 'px)';
                     document.getElementById('controlsSection').classList.remove('hidden');
                 };
                 img.src = e.target.result;

@@ -231,8 +231,12 @@
                 const img = new Image();
                 img.onload = function() {
                     originalImage = img;
+                    const titleEl = uploadArea.querySelector('h3');
+                    if (titleEl) titleEl.textContent = '✅ Selected: ' + file.name + ' (' + formatFileSize(file.size) + ')';
+
                     document.getElementById('controlsSection').classList.remove('hidden');
-                    document.getElementById('previewSection').classList.add('hidden');
+                    document.getElementById('previewSection').classList.remove('hidden');
+                    convertImage();
                 };
                 img.src = e.target.result;
             };
@@ -245,6 +249,7 @@
                 btn.classList.remove('active');
             });
             document.querySelector(`[data-format="${format}"]`).classList.add('active');
+            if (originalImage) convertImage();
         }
 
         function convertImage() {
@@ -293,6 +298,8 @@
             fileInput.value = '';
             selectedFormat = 'png';
             selectFormat('png');
+            const titleEl = uploadArea.querySelector('h3');
+            if (titleEl) titleEl.textContent = 'Drop image here or click to upload';
             document.getElementById('controlsSection').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
         }

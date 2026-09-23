@@ -246,8 +246,13 @@
                     document.getElementById('originalPreview').src = e.target.result;
                     document.getElementById('originalInfo').textContent = 
                         `${img.width} × ${img.height} px • ${formatFileSize(file.size)}`;
+                    
+                    const titleEl = uploadArea.querySelector('h3');
+                    if (titleEl) titleEl.textContent = '✅ Selected: ' + file.name + ' (' + formatFileSize(file.size) + ')';
+
                     document.getElementById('controlsSection').classList.remove('hidden');
-                    document.getElementById('previewSection').classList.add('hidden');
+                    document.getElementById('previewSection').classList.remove('hidden');
+                    compressImage();
                 };
                 img.src = e.target.result;
             };
@@ -303,6 +308,8 @@
             fileInput.value = '';
             qualitySlider.value = 80;
             qualityValue.textContent = '80';
+            const titleEl = uploadArea.querySelector('h3');
+            if (titleEl) titleEl.textContent = 'Drop image here or click to upload';
             document.getElementById('controlsSection').classList.add('hidden');
             document.getElementById('previewSection').classList.add('hidden');
         }

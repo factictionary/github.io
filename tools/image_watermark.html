@@ -257,6 +257,8 @@
                     originalImage = img;
                     canvas.width = img.width;
                     canvas.height = img.height;
+                    const titleEl = uploadArea.querySelector('h3');
+                    if (titleEl) titleEl.textContent = '✅ Selected: ' + file.name + ' (' + img.width + '×' + img.height + 'px)';
                     document.getElementById('controlsSection').classList.remove('hidden');
                     applyWatermark();
                 };
