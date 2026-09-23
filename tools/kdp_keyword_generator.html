@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP 7-Backend Keywords & HTML Description Formatter | Amazon KDP Tool | Factictionary</title>
+    
+    <meta name="description" content="Optimize Amazon KDP 7 backend search keyword boxes (50-char limit check) and format book descriptions with KDP-allowed HTML tags. 100% free and private.">
+    <meta name="keywords" content="kdp keywords generator, kdp description html generator, amazon kdp 7 backend keywords, amazon book description formatter">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/kdp_keyword_generator.html">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #1E1B4B 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+        }
+
+        .keyword-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .char-counter {
+            font-size: 0.8rem;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: right;
+            color: #64748B;
+        }
+
+        .char-counter.valid { color: #16A34A; }
+        .char-counter.invalid { color: #DC2626; }
+
+        .html-toolbar {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .html-btn {
+            padding: 6px 12px;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .html-btn:hover { background: #E2E8F0; }
+
+        .preview-html-box {
+            background: #FFFFFF;
+            border: 1px solid #CBD5E1;
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 120px;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <header class="tool-header">
+        <h1 class="tool-title">KDP 7-Backend Keywords & HTML Formatter</h1>
+        <p class="tool-subtitle">Format Amazon KDP 7 backend search keyword boxes (50 char limit check) & build clean KDP HTML book descriptions.</p>
+        <div class="privacy-badge">🔒 100% Privacy Protected</div>
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: var(--spacing-md); flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="openShareModal()" style="padding: 8px 16px; font-size: 0.9rem; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;">
+                🔗 Share Page / Screenshot
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="tool-main">
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% Client-Side Processing</span>
+        </div>
+
+        <section class="tool-workspace">
+            <div style="background: white; border: 1px solid var(--color-neutral-200); border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <h3 style="margin-bottom: 8px; color: var(--color-neutral-900); font-weight: 700;">1. KDP 7 Backend Keyword Slots (50 Char Max per Box)</h3>
+                <p style="font-size: 0.88rem; color: #64748B; margin-bottom: 20px;">Do not use commas or repeat words already in your title/subtitle. Amazon KDP automatically combines words into search queries.</p>
+
+                <div id="keywordSlots">
+                    <!-- 7 Slots generated by JS -->
+                </div>
+            </div>
+
+            <div style="background: white; border: 1px solid var(--color-neutral-200); border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <h3 style="margin-bottom: 12px; color: var(--color-neutral-900); font-weight: 700;">2. Amazon KDP HTML Description Generator</h3>
+                <p style="font-size: 0.88rem; color: #64748B; margin-bottom: 16px;">Amazon KDP only supports specific HTML tags in book descriptions (`&lt;h2&gt;`, `&lt;b&gt;`, `&lt;i&gt;`, `&lt;ul&gt;`, `&lt;li&gt;`, `&lt;br&gt;`). Use the toolbar below to format your text safely.</p>
+                
+                <div class="html-toolbar">
+                    <button class="html-btn" onclick="insertTag('h2')">Heading (&lt;h2&gt;)</button>
+                    <button class="html-btn" onclick="insertTag('b')">Bold (&lt;b&gt;)</button>
+                    <button class="html-btn" onclick="insertTag('i')">Italic (&lt;i&gt;)</button>
+                    <button class="html-btn" onclick="insertTag('ul')">Bullet List (&lt;ul&gt;)</button>
+                    <button class="html-btn" onclick="insertTag('br')">Line Break (&lt;br&gt;)</button>
+                </div>
+
+                <textarea id="descInput" class="control-input" style="height: 140px; font-family: monospace;" placeholder="Write or paste your book description here..."></textarea>
+                
+                <div style="margin-top: 14px; text-align: right;">
+                    <button class="btn btn-primary" onclick="copyFormattedHtml()">📋 Copy Formatted KDP HTML</button>
+                </div>
+
+                <h4 style="margin-top: 24px; font-weight: 700; color: var(--color-neutral-800);">Live Amazon Page Description Preview</h4>
+                <div class="preview-html-box" id="htmlPreview">Your description preview will render here...</div>
+            </div>
+        </section>
+
+        <aside class="tool-sidebar">
+            <div class="tool-info">
+                <h3>Related KDP Tools</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="/tools/kdp_cover_generator.html" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; transition: all 0.2s;">📐 KDP Cover & Spine PDF Generator</a>
+                    <a href="/tools/kdp_royalty_calculator.html" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; transition: all 0.2s;">💰 KDP Royalty & Printing Calculator</a>
+                    <a href="/tools/kdp_spine_calculator.html" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0; transition: all 0.2s;">📏 KDP Spine Width Calculator</a>
+                </div>
+            </div>
+
+            <!-- AdSense -->
+            <div class="adsense-tool">
+                <div>
+                    <div>›  Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+        </aside>
+
+                        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | Built with privacy in mind.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slotsContainer = document.getElementById('keywordSlots');
+            const descInput = document.getElementById('descInput');
+            const htmlPreview = document.getElementById('htmlPreview');
+
+            for (let i = 1; i <= 7; i++) {
+                const row = document.createElement('div');
+                row.className = 'keyword-row';
+                row.innerHTML = `
+                    <span style="font-weight: 700; width: 60px; font-size: 0.85rem;">Box ${i}:</span>
+                    <input type="text" class="control-input kw-input" maxlength="60" placeholder="e.g. mystery thriller detective suspense fiction">
+                    <span class="char-counter valid">0 / 50</span>
+                `;
+                slotsContainer.appendChild(row);
+            }
+
+            document.querySelectorAll('.kw-input').forEach(input => {
+                input.addEventListener('input', () => {
+                    const counter = input.nextElementSibling;
+                    const len = input.value.length;
+                    counter.textContent = `${len} / 50`;
+                    if (len > 50) {
+                        counter.className = 'char-counter invalid';
+                    } else {
+                        counter.className = 'char-counter valid';
+                    }
+                });
+            });
+
+            descInput.addEventListener('input', () => {
+                htmlPreview.innerHTML = descInput.value || 'Your description preview will render here...';
+            });
+        });
+
+        function insertTag(tag) {
+            const input = document.getElementById('descInput');
+            const start = input.selectionStart;
+            const end = input.selectionEnd;
+            const text = input.value;
+            const selected = text.substring(start, end);
+
+            let replacement = '';
+            if (tag === 'br') replacement = '<br>';
+            else if (tag === 'ul') replacement = '<ul>\n  <li>' + (selected || 'Item 1') + '</li>\n</ul>';
+            else replacement = `<${tag}>${selected || 'Text'}</${tag}>`;
+
+            input.value = text.substring(0, start) + replacement + text.substring(end);
+            document.getElementById('htmlPreview').innerHTML = input.value;
+        }
+
+        function copyFormattedHtml() {
+            const input = document.getElementById('descInput');
+            navigator.clipboard.writeText(input.value).then(() => {
+                alert('Formatted KDP HTML copied to clipboard!');
+            });
+        }
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

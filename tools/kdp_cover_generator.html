@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP Cover & Spine Generator | Free Paperback Cover PDF Tool | Factictionary</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Create a print-ready KDP paperback cover PDF from your front and back cover images. Spine width and single-line text size are calculated automatically from your page count and trim size. 100% privacy-protected.">
+    <meta name="keywords" content="browser tool, kdp cover generator, kdp spine calculator, paperback cover pdf, amazon kdp, self publishing, book cover template, free, online, privacy-first">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/kdp_cover_generator.html">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="KDP Cover & Spine Generator | Factictionary Tools">
+    <meta property="og:description" content="Upload your front and back cover, add title and author, and get a print-ready full-wrap KDP paperback cover PDF with an automatically sized single-line spine. 100% privacy-protected.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factictionary.github.io/tools/kdp_cover_generator.html">
+    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KDP Cover & Spine Generator | Factictionary Tools">
+    <meta name="twitter:description" content="Create a print-ready KDP paperback cover PDF with an automatically sized spine. 100% privacy-protected.">
+    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- PDF generation library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <!-- Tool-specific styles -->
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #0066FF 0%, #0044CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-tight);
+        }
+
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            font-weight: var(--font-weight-medium);
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-xl);
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: var(--font-size-small);
+            font-weight: 600;
+        }
+
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-3xl);
+        }
+
+        @media (min-width: 992px) {
+            .tool-main {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .privacy-shield-bar {
+            grid-column: 1 / -1;
+            background: #E8F7EF;
+            color: #167D53;
+            border: 1px solid #B8E6D0;
+            border-radius: var(--radius-button);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1BA672;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(27, 166, 114, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0); }
+        }
+
+        .tool-workspace {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--color-neutral-200, #EAEAEA);
+        }
+
+        .form-step-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .step-badge {
+            background: #0066FF;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--color-neutral-900);
+            margin: 0;
+        }
+
+        /* Upload dropzones */
+        .cover-upload-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        @media (min-width: 640px) {
+            .cover-upload-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .drop-zone {
+            border: 2px dashed #0066FF60;
+            border-radius: 10px;
+            padding: 24px 16px;
+            text-align: center;
+            background: #F0F6FF;
+            transition: all 0.2s ease;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: #0066FF;
+            background: #E6F0FF;
+            transform: translateY(-2px);
+        }
+
+        .drop-zone.filled {
+            border-style: solid;
+            border-color: #1BA672;
+            background: #F2FBF7;
+        }
+
+        .drop-zone-icon {
+            margin-bottom: 12px;
+            color: #0066FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-neutral-800);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drop-zone-text {
+            font-size: 13px;
+            color: var(--color-neutral-600);
+        }
+
+        .drop-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .dz-preview-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .drop-zone img.dz-preview {
+            max-width: 100%;
+            max-height: 140px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            object-fit: contain;
+        }
+
+        .dz-filename {
+            font-size: 11px;
+            color: var(--color-neutral-700);
+            word-break: break-all;
+            font-weight: 500;
+            background: rgba(255,255,255,0.8);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Form Controls */
+        .control-group {
+            margin-bottom: 18px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--color-neutral-800);
+            margin-bottom: 6px;
+        }
+
+        .control-input,
+        .control-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            color: var(--color-neutral-900);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .control-input:focus,
+        .control-select:focus {
+            outline: none;
+            border-color: #0066FF;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+        }
+
+        .control-help {
+            font-size: 12px;
+            color: var(--color-neutral-600);
+            margin-top: 4px;
+        }
+
+        .control-row-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (min-width: 640px) {
+            .control-row-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Radio Pills */
+        .radio-pill-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .radio-pill {
+            border: 1px solid #CBD5E1;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 13.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .radio-pill input {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .radio-pill.checked {
+            border-color: #0066FF;
+            background: #E6F0FF;
+            color: #0044CC;
+            font-weight: 600;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            border: 1px solid #CBD5E1;
+            border-radius: 6px;
+            width: 42px;
+            height: 42px;
+            padding: 2px;
+            cursor: pointer;
+            background: white;
+        }
+
+        /* Actions & Buttons */
+        .tool-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn-tool {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-tool.primary {
+            background: #0066FF;
+            color: white;
+            flex: 2;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+        }
+
+        .btn-tool.primary:hover:not(:disabled) {
+            background: #0052CC;
+            box-shadow: 0 6px 16px rgba(0, 102, 255, 0.35);
+        }
+
+        .btn-tool.primary:disabled {
+            background: #94A3B8;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-tool.secondary {
+            background: #F1F5F9;
+            color: #475569;
+            border-color: #CBD5E1;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .btn-tool.secondary:hover {
+            background: #E2E8F0;
+            color: #1E293B;
+        }
+
+        /* Canvas Output */
+        .tool-output {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px dashed #E2E8F0;
+        }
+
+        .tool-output h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-neutral-900);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #canvasHolder {
+            display: flex;
+            justify-content: center;
+            background: #0F172A;
+            padding: 24px;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        #canvasHolder canvas {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            border-radius: 4px;
+        }
+
+        /* Sidebar */
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .tool-info {
+            background: var(--color-surface);
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--color-neutral-200, #EAEAEA);
+        }
+
+        .tool-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-neutral-900);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-top: 12px;
+        }
+
+        .spec-table tr {
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .spec-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .spec-table td {
+            padding: 10px 0;
+        }
+
+        .spec-table td:first-child {
+            color: var(--color-neutral-600);
+            font-weight: 500;
+        }
+
+        .spec-table td:last-child {
+            text-align: right;
+            font-weight: 700;
+            color: var(--color-neutral-900);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .status-line.ok {
+            background: #E8F7EF;
+            color: #116943;
+            border: 1px solid #B8E6D0;
+        }
+
+        .status-line.warn {
+            background: #FFF4E5;
+            color: #9A5B13;
+            border: 1px solid #FFE0B2;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 4px;
+            flex-shrink: 0;
+            background: currentColor;
+        }
+
+        .tool-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .tool-feature-icon {
+            color: #0066FF;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 1px;
+        }
+
+        .tool-feature-text {
+            color: var(--color-neutral-700);
+            font-size: 13.5px;
+            line-height: 1.4;
+        }
+
+        .kdp-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kdp-links-list a {
+            color: #0066FF;
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            background: #F8FAFC;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+        }
+
+        .kdp-links-list a:hover {
+            background: #E6F0FF;
+            border-color: #0066FF40;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <!-- Tool Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">KDP Cover &amp; Spine Generator</h1>
+        <p class="tool-subtitle">Upload your front and back cover images, add your title and author — generate a print-ready full-wrap paperback cover PDF with a single-line spine text.</p>
+        <div class="privacy-badge">
+            🔒 100% Privacy Protected — Client-Side Only
+        </div>
+        <div style="margin-top: 12px;">
+            <button onclick="openShareModal()" class="btn btn-secondary" style="border-radius: 20px; font-size: 13px; font-weight: 600; padding: 6px 16px; display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.9); color: #0044CC;">🔗 Share Page / Screenshot</button>
+        </div>
+    </header>
+
+    <!-- Main Tool Content -->
+    <main id="main" class="tool-main">
+
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% In-Browser Local PDF Generation</span>
+        </div>
+
+        <!-- Tool Workspace -->
+        <section class="tool-workspace">
+
+            <!-- Step 1: Cover Images -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 1</span>
+                    <h2 class="step-title">Upload Cover Artwork</h2>
+                </div>
+                <div class="cover-upload-row">
+                    <div class="drop-zone" id="dzFront">
+                        <input type="file" id="frontFile" accept="image/png,image/jpeg" aria-label="Upload front cover image">
+                        <div class="dz-content">
+                            <div class="drop-zone-icon">
+                                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                            <div class="drop-zone-label">Front Cover Image</div>
+                            <div class="drop-zone-text">Drag &amp; drop PNG/JPG or click to browse</div>
+                        </div>
+                    </div>
+                    <div class="drop-zone" id="dzBack">
+                        <input type="file" id="backFile" accept="image/png,image/jpeg" aria-label="Upload back cover image">
+                        <div class="dz-content">
+                            <div class="drop-zone-icon">
+                                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                            <div class="drop-zone-label">Back Cover Image</div>
+                            <div class="drop-zone-text">Drag &amp; drop PNG/JPG or click to browse</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Book Details -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 2</span>
+                    <h2 class="step-title">Book Specifications</h2>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="title">Book Title</label>
+                    <input type="text" class="control-input" id="title" placeholder="e.g. The Quantum Odyssey" maxlength="120">
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="author">Author Name</label>
+                        <input type="text" class="control-input" id="author" placeholder="e.g. Elena Rostova" maxlength="80">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="pages">Interior Page Count</label>
+                        <input type="number" class="control-input" id="pages" min="24" max="828" value="200" inputmode="numeric">
+                        <div class="control-help">Minimum 24 pages for KDP spine text printing.</div>
+                    </div>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="trim">Trim Size</label>
+                        <select class="control-select" id="trim">
+                            <option value="5x8">5" × 8"</option>
+                            <option value="5.06x7.81">5.06" × 7.81"</option>
+                            <option value="5.25x8">5.25" × 8"</option>
+                            <option value="5.5x8.5" selected>5.5" × 8.5"</option>
+                            <option value="6x9">6" × 9"</option>
+                            <option value="6.14x9.21">6.14" × 9.21"</option>
+                            <option value="6.69x9.61">6.69" × 9.61"</option>
+                            <option value="7x10">7" × 10"</option>
+                            <option value="7.44x9.69">7.44" × 9.69"</option>
+                            <option value="7.5x9.25">7.5" × 9.25"</option>
+                            <option value="8x10">8" × 10"</option>
+                            <option value="8.5x8.5">8.5" × 8.5"</option>
+                            <option value="8.5x11">8.5" × 11"</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="paper">Paper Type</label>
+                        <select class="control-select" id="paper">
+                            <option value="white">White — Standard (0.002252"/page)</option>
+                            <option value="cream">Cream — Standard (0.0025"/page)</option>
+                            <option value="whitepremium">White — Premium Color (0.002252"/page)</option>
+                            <option value="colorstd">Color — Standard (0.002347"/page)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Spine Text Style -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 3</span>
+                    <h2 class="step-title">Spine Styling</h2>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Spine Text Color</label>
+                    <div class="radio-pill-group" id="spineColorRow">
+                        <label class="radio-pill checked"><input type="radio" name="spineColor" value="light" checked> Light Text (White)</label>
+                        <label class="radio-pill"><input type="radio" name="spineColor" value="dark"> Dark Text (Charcoal)</label>
+                        <label class="radio-pill"><input type="radio" name="spineColor" value="custom"> Custom Color</label>
+                    </div>
+                </div>
+                <div class="control-group" id="customColorField" style="display:none;">
+                    <label class="control-label" for="customTextColor">Custom Hex Color</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="colorPicker" value="#FFFFFF">
+                        <input type="text" class="control-input" id="customTextColor" value="#FFFFFF" placeholder="#FFFFFF" style="max-width: 140px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="tool-actions">
+                <button class="btn-tool primary" id="generateBtn" disabled>
+                    Upload both covers to continue
+                </button>
+                <button class="btn-tool secondary" id="resetBtn">
+                    Reset Form
+                </button>
+            </div>
+            <div id="downloadLine" class="control-help" style="text-align:center; margin-top: 12px; font-size: 13.5px;"></div>
+
+            <!-- Live Full Wrap Preview Container -->
+            <div class="tool-output" id="wrapPreview" style="display:none;">
+                <h3>🖼️ Full Wrap Cover Preview</h3>
+                <p style="font-size: 13.5px; color: var(--color-neutral-600); margin-bottom: 16px;">
+                    Below is your generated full-wrap cover (Back + Spine + Front) with calculated spine text aligned on a single vertical line.
+                </p>
+                <div id="canvasHolder"></div>
+                <div style="text-align: center; margin-top: 16px;">
+                    <button class="btn-tool primary" id="downloadPdfBtn" style="max-width: 320px;">
+                        📥 Download Print-Ready PDF
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Tool Sidebar -->
+        <aside class="tool-sidebar">
+
+            <!-- Calculated Specs Card -->
+            <div class="tool-info">
+                <h3>📐 Calculated Dimensions</h3>
+                <div id="spineStatus"></div>
+                <table class="spec-table">
+                    <tr><td>Spine Width</td><td id="specSpine">—</td></tr>
+                    <tr><td>Full Wrap Size</td><td id="specWrap">—</td></tr>
+                    <tr><td>Trim Size</td><td id="specTrim">—</td></tr>
+                    <tr><td>Outer Bleed</td><td>0.125" (all sides)</td></tr>
+                </table>
+            </div>
+
+            <!-- Features Card -->
+            <div class="tool-info">
+                <h3>✨ KDP Cover Features</h3>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Spine width computed using KDP exact paper-thickness coefficients</div>
+                </div>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Single-line rotated spine text (Title &amp; Author centered)</div>
+                </div>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Auto font sizing prevents text overflow on narrow spines</div>
+                </div>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Spine background automatically samples edge color of front cover</div>
+                </div>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">Instant live full-wrap canvas preview in your browser</div>
+                </div>
+                <div class="tool-feature">
+                    <div class="tool-feature-icon">✓</div>
+                    <div class="tool-feature-text">High-resolution print-ready PDF output with zero watermarks</div>
+                </div>
+            </div>
+
+            <!-- AdSense Container -->
+            <div class="adsense-tool">
+                <div>
+                    <div>›  Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+
+            <!-- Category Navigation -->
+            <div class="tool-info">
+                <h3>📘 Related KDP Tools</h3>
+                <div class="kdp-links-list">
+                    <a href="/tools/kdp_royalty_calculator.html">💰 KDP Royalty &amp; Printing Cost Calculator</a>
+                    <a href="/tools/kdp_spine_calculator.html">📏 KDP Spine Width &amp; Dimensions Calculator</a>
+                    <a href="/tools/kdp_keyword_generator.html">🔍 KDP 7-Backend Keywords &amp; Formatter</a>
+                    <a href="/tools/categories/kdp.html">📘 KDP Self-Publishing Tools Category</a>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Documentation -->
+        <section class="tool-documentation container" style="grid-column: 1 / -1; margin-top: 20px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How Spine Width &amp; Layout Are Calculated</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.05rem;">
+                Amazon KDP prints paperback books by wrapping a single continuous printed sheet around the interior pages. The required total wrap width equals <strong>Back Cover Width + Spine Width + Front Cover Width + 0.25" Bleed</strong> (0.125" on left and right outer edges).
+            </p>
+
+            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Single-Line Spine Text Placement</h2>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.05rem;">
+                Per standard publishing guidelines, spine title and author text run vertically down the spine on a single continuous line. For books under 24 pages, KDP recommends leaving the spine blank. For 24+ page books, this tool dynamically scales the font size to fit within the spine's safe print area with a safety buffer.
+            </p>
+
+            <p style="line-height: 1.6; color: #444; font-size: 1.05rem;">
+                All rendering occurs in your web browser using HTML5 Canvas and <code>pdf-lib</code>. Your images are never transmitted to any external server, ensuring complete confidentiality for unreleased manuscript covers.
+            </p>
+        </section>
+
+                        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+    <script>
+    (function(){
+        "use strict";
+
+        const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
+
+        // KDP Paper Multipliers (inches per page)
+        const PAPER_MULTIPLIER = {
+            white: 0.002252,
+            cream: 0.0025,
+            whitepremium: 0.002252,
+            colorstd: 0.002347
+        };
+
+        const TRIM_SIZES = {
+            "5x8": [5, 8],
+            "5.06x7.81": [5.06, 7.81],
+            "5.25x8": [5.25, 8],
+            "5.5x8.5": [5.5, 8.5],
+            "6x9": [6, 9],
+            "6.14x9.21": [6.14, 9.21],
+            "6.69x9.61": [6.69, 9.61],
+            "7x10": [7, 10],
+            "7.44x9.69": [7.44, 9.69],
+            "7.5x9.25": [7.5, 9.25],
+            "8x10": [8, 10],
+            "8.5x8.5": [8.5, 8.5],
+            "8.5x11": [8.5, 11]
+        };
+
+        const BLEED = 0.125;
+        const MIN_SPINE_TEXT_WIDTH = 0.0625;
+        const MIN_PAGES_FOR_SPINE_TEXT = 24;
+
+        const state = {
+            frontImg: null,
+            backImg: null,
+            title: "",
+            author: "",
+            pages: 200,
+            trim: "5.5x8.5",
+            paper: "white",
+            spineColorMode: "light",
+            customColor: "#FFFFFF"
+        };
+
+        const el = id => document.getElementById(id);
+        const dzFront = el('dzFront'), dzBack = el('dzBack');
+        const frontFile = el('frontFile'), backFile = el('backFile');
+        const titleInput = el('title'), authorInput = el('author');
+        const pagesInput = el('pages'), trimSelect = el('trim'), paperSelect = el('paper');
+        const generateBtn = el('generateBtn'), downloadPdfBtn = el('downloadPdfBtn');
+        const resetBtn = el('resetBtn');
+        const downloadLine = el('downloadLine');
+        const spineStatus = el('spineStatus');
+        const specSpine = el('specSpine'), specWrap = el('specWrap'), specTrim = el('specTrim');
+        const customColorField = el('customColorField');
+        const customTextColorInput = el('customTextColor');
+        const colorPicker = el('colorPicker');
+        const wrapPreview = el('wrapPreview');
+        const canvasHolder = el('canvasHolder');
+
+        function computeSpineWidth(pages, paperKey){
+            return Math.max(pages, 0) * PAPER_MULTIPLIER[paperKey];
+        }
+
+        function fmtIn(n){ return n.toFixed(3) + '"'; }
+
+        function readFileAsImage(file){
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => resolve({
+                        dataUrl: e.target.result,
+                        widthPx: img.naturalWidth,
+                        heightPx: img.naturalHeight,
+                        type: file.type
+                    });
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function setupDropzone(dz, input, onFile){
+            dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+            dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+            dz.addEventListener('drop', e => {
+                e.preventDefault(); dz.classList.remove('drag-over');
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    input.files = e.dataTransfer.files;
+                    onFile(e.dataTransfer.files[0]);
+                }
+            });
+            input.addEventListener('click', e => {
+                if (e.target !== input) input.click();
+            });
+            input.addEventListener('change', () => {
+                if (input.files && input.files[0]) onFile(input.files[0]);
+            });
+        }
+
+        function showPreviewInDropzone(dz, dataUrl, filename){
+            dz.classList.add('filled');
+            const content = dz.querySelector('.dz-content');
+            content.innerHTML = `
+                <div class="dz-preview-container">
+                    <img class="dz-preview" src="${dataUrl}" alt="Cover preview">
+                    <div class="dz-filename">${filename}</div>
+                </div>
+            `;
+        }
+
+        setupDropzone(dzFront, frontFile, async (file) => {
+            const data = await readFileAsImage(file);
+            state.frontImg = data;
+            showPreviewInDropzone(dzFront, data.dataUrl, file.name);
+            updateAll();
+        });
+
+        setupDropzone(dzBack, backFile, async (file) => {
+            const data = await readFileAsImage(file);
+            state.backImg = data;
+            showPreviewInDropzone(dzBack, data.dataUrl, file.name);
+            updateAll();
+        });
+
+        titleInput.addEventListener('input', () => { state.title = titleInput.value; updateAll(); });
+        authorInput.addEventListener('input', () => { state.author = authorInput.value; updateAll(); });
+        pagesInput.addEventListener('input', () => {
+            state.pages = Math.max(0, parseInt(pagesInput.value || '0', 10));
+            updateAll();
+        });
+        trimSelect.addEventListener('change', () => { state.trim = trimSelect.value; updateAll(); });
+        paperSelect.addEventListener('change', () => { state.paper = paperSelect.value; updateAll(); });
+
+        document.querySelectorAll('input[name=spineColor]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                document.querySelectorAll('#spineColorRow .radio-pill').forEach(l => l.classList.remove('checked'));
+                radio.closest('.radio-pill').classList.add('checked');
+                state.spineColorMode = radio.value;
+                customColorField.style.display = radio.value === 'custom' ? 'block' : 'none';
+                updateAll();
+            });
+        });
+
+        colorPicker.addEventListener('input', () => {
+            customTextColorInput.value = colorPicker.value.toUpperCase();
+            state.customColor = colorPicker.value;
+            updateAll();
+        });
+
+        customTextColorInput.addEventListener('input', () => {
+            if (/^#([0-9A-F]{6})$/i.test(customTextColorInput.value)) {
+                colorPicker.value = customTextColorInput.value;
+            }
+            state.customColor = customTextColorInput.value;
+            updateAll();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            state.frontImg = null;
+            state.backImg = null;
+            frontFile.value = '';
+            backFile.value = '';
+            [dzFront, dzBack].forEach((dz, i) => {
+                dz.classList.remove('filled');
+                const label = i === 0 ? 'Front Cover Image' : 'Back Cover Image';
+                dz.querySelector('.dz-content').innerHTML = `
+                    <div class="drop-zone-icon">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#0066FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                    </div>
+                    <div class="drop-zone-label">${label}</div>
+                    <div class="drop-zone-text">Drag &amp; drop PNG/JPG or click to browse</div>
+                `;
+            });
+            titleInput.value = '';
+            authorInput.value = '';
+            pagesInput.value = 200;
+            trimSelect.value = '5.5x8.5';
+            paperSelect.value = 'white';
+            state.title = ''; state.author = ''; state.pages = 200; state.trim = '5.5x8.5'; state.paper = 'white';
+            wrapPreview.style.display = 'none';
+            downloadLine.textContent = '';
+            updateAll();
+        });
+
+        function getAverageEdgeColor(dataUrl){
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const c = document.createElement('canvas');
+                    const sampleW = 10, sampleH = Math.min(img.naturalHeight, 200);
+                    c.width = sampleW; c.height = sampleH;
+                    const ctx = c.getContext('2d');
+                    ctx.drawImage(img, 0, 0, sampleW, img.naturalHeight, 0, 0, c.width, c.height);
+                    try {
+                        const data = ctx.getImageData(0, 0, c.width, c.height).data;
+                        let r=0, g=0, b=0, count=0;
+                        for (let i=0; i<data.length; i+=4){ r+=data[i]; g+=data[i+1]; b+=data[i+2]; count++; }
+                        resolve({ r: Math.round(r/count), g: Math.round(g/count), b: Math.round(b/count) });
+                    } catch(e){ resolve(null); }
+                };
+                img.onerror = () => resolve(null);
+                img.src = dataUrl;
+            });
+        }
+
+        function updateAll(){
+            const spineW = computeSpineWidth(state.pages, state.paper);
+            const [tw, th] = TRIM_SIZES[state.trim];
+            const wrapW = tw * 2 + spineW + BLEED * 2;
+            const wrapH = th + BLEED * 2;
+
+            specSpine.textContent = fmtIn(spineW);
+            specWrap.textContent = `${wrapW.toFixed(3)}" × ${wrapH.toFixed(3)}"`;
+            specTrim.textContent = `${tw}" × ${th}" (×2 panels)`;
+
+            spineStatus.innerHTML = '';
+            const belowMinPages = state.pages > 0 && state.pages < MIN_PAGES_FOR_SPINE_TEXT;
+            const tooNarrowForText = spineW < 0.20;
+
+            if (belowMinPages) {
+                spineStatus.innerHTML = `<div class="status-line warn"><span class="status-dot"></span>Under ${MIN_PAGES_FOR_SPINE_TEXT} pages — KDP leaves spine text off for thin books. Spine background color will still be drawn.</div>`;
+            } else if (tooNarrowForText) {
+                spineStatus.innerHTML = `<div class="status-line warn"><span class="status-dot"></span>Spine is thin (${fmtIn(spineW)}). Single-line text will auto-scale to fit within safe margin.</div>`;
+            } else {
+                spineStatus.innerHTML = `<div class="status-line ok"><span class="status-dot"></span>Spine width is optimal for readable single-line title &amp; author text.</div>`;
+            }
+
+            const ready = state.frontImg && state.backImg && state.title.trim() && state.author.trim() && state.pages >= 24;
+            generateBtn.disabled = !ready;
+            generateBtn.textContent = ready
+                ? '✨ Generate Full-Wrap Cover PDF'
+                : (!state.frontImg || !state.backImg)
+                    ? 'Upload both covers to continue'
+                    : (!state.title.trim() || !state.author.trim())
+                        ? 'Add title and author to continue'
+                        : 'Page count must be 24 or more';
+
+            if (state.frontImg && state.backImg) {
+                renderCanvasPreview(wrapW, wrapH, spineW, tw);
+            }
+        }
+
+        async function embedImageSmart(pdfDoc, imgData){
+            const res = await fetch(imgData.dataUrl);
+            const bytes = await res.arrayBuffer();
+            if (imgData.type === 'image/png') return await pdfDoc.embedPng(bytes);
+            return await pdfDoc.embedJpg(bytes);
+        }
+
+        function drawImageCover(page, img, x, y, boxW, boxH){
+            const imgRatio = img.width / img.height;
+            const boxRatio = boxW / boxH;
+            let drawW, drawH;
+            if (imgRatio > boxRatio) { drawH = boxH; drawW = boxH * imgRatio; }
+            else { drawW = boxW; drawH = boxW / imgRatio; }
+            const dx = x - (drawW - boxW) / 2;
+            const dy = y - (drawH - boxH) / 2;
+            page.drawImage(img, { x: dx, y: dy, width: drawW, height: drawH });
+        }
+
+        function getTextColorRGB(){
+            if (state.spineColorMode === 'dark') return rgb(0.12, 0.12, 0.12);
+            if (state.spineColorMode === 'custom' && /^#([0-9a-f]{6})$/i.test(state.customColor)) {
+                const hex = state.customColor.replace('#','');
+                return rgb(
+                    parseInt(hex.substr(0,2),16)/255,
+                    parseInt(hex.substr(2,2),16)/255,
+                    parseInt(hex.substr(4,2),16)/255
+                );
+            }
+            return rgb(1, 1, 1);
+        }
+
+        async function generatePdf(){
+            generateBtn.disabled = true;
+            generateBtn.textContent = 'Building Print-Ready PDF…';
+            downloadLine.textContent = '';
+
+            try {
+                const [tw, th] = TRIM_SIZES[state.trim];
+                const spineWIn = computeSpineWidth(state.pages, state.paper);
+                const includeSpineText = state.pages >= MIN_PAGES_FOR_SPINE_TEXT && spineWIn >= MIN_SPINE_TEXT_WIDTH;
+
+                const bleedIn = BLEED;
+                const wrapWIn = tw * 2 + spineWIn + bleedIn * 2;
+                const wrapHIn = th + bleedIn * 2;
+
+                const toPt = inches => inches * 72;
+
+                const pdfDoc = await PDFDocument.create();
+                const page = pdfDoc.addPage([toPt(wrapWIn), toPt(wrapHIn)]);
+
+                const fontTitle = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+                const fontAuthor = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+                const frontImg = await embedImageSmart(pdfDoc, state.frontImg);
+                const backImg = await embedImageSmart(pdfDoc, state.backImg);
+
+                const backX = 0;
+                const spineX = toPt(bleedIn + tw);
+                const frontX = toPt(bleedIn + tw + spineWIn);
+
+                const panelY = 0;
+                const panelH = toPt(wrapHIn);
+                const backW = toPt(bleedIn + tw);
+                const frontW = toPt(tw + bleedIn);
+                const spineWpt = toPt(spineWIn);
+
+                // Draw Back and Front cover images
+                drawImageCover(page, backImg, backX, panelY, backW, panelH);
+                drawImageCover(page, frontImg, frontX, panelY, frontW, panelH);
+
+                // Sample spine background color from edge of front cover
+                let spineBg = rgb(0.12, 0.12, 0.14);
+                try {
+                    const avgColor = await getAverageEdgeColor(state.frontImg.dataUrl);
+                    if (avgColor) spineBg = rgb(avgColor.r/255, avgColor.g/255, avgColor.b/255);
+                } catch(e) { /* fallback */ }
+
+                // Draw Spine background rectangle
+                page.drawRectangle({ x: spineX, y: panelY, width: spineWpt, height: panelH, color: spineBg });
+
+                // Draw Spine Text on 1 single continuous line (Title upper half, Author lower half)
+                if (includeSpineText) {
+                    const spineTextColor = getTextColorRGB();
+                    const spineCenterX = spineX + spineWpt / 2;
+
+                    const titleText = state.title.trim();
+                    const authorText = state.author.trim();
+                    const lenTitle = Math.max(titleText.length, 1);
+                    const lenAuthor = Math.max(authorText.length, 1);
+                    const totalChars = lenTitle + lenAuthor;
+
+                    // Max font size based on spine width (takes max 58% of spine width for safety buffer)
+                    const maxFontFromWidth = Math.min(spineWpt * 0.58, 22);
+                    const minFont = 6;
+
+                    // Printable spine length (8% top/bottom margin, 5% gap between title & author)
+                    const availableLength = panelH * 0.82;
+                    const gapPt = Math.max(12, panelH * 0.05);
+
+                    // Length allocation proportional to character count
+                    const titleRatio = Math.min(0.72, Math.max(0.45, lenTitle / totalChars));
+                    const maxTitleLenPt = (availableLength - gapPt) * titleRatio;
+                    const maxAuthorLenPt = (availableLength - gapPt) * (1 - titleRatio);
+
+                    let titleFs = maxFontFromWidth;
+                    let titleW = fontTitle.widthOfTextAtSize(titleText, titleFs);
+                    while (titleW > maxTitleLenPt && titleFs > minFont) {
+                        titleFs -= 0.5;
+                        titleW = fontTitle.widthOfTextAtSize(titleText, titleFs);
+                    }
+
+                    let authorFs = Math.min(titleFs * 0.88, maxFontFromWidth);
+                    let authorW = fontAuthor.widthOfTextAtSize(authorText, authorFs);
+                    while (authorW > maxAuthorLenPt && authorFs > minFont) {
+                        authorFs -= 0.5;
+                        authorW = fontAuthor.widthOfTextAtSize(authorText, authorFs);
+                    }
+
+                    // Combined text block length and starting Y in PDF (where Y=0 is bottom of page)
+                    const totalBlockPt = titleW + gapPt + authorW;
+                    const blockTopY = (panelH + totalBlockPt) / 2;
+
+                    // Draw Title (starts at top of block and runs down)
+                    const titleStartY = blockTopY;
+                    const titleDrawX = spineCenterX + (titleFs * 0.35);
+
+                    page.drawText(titleText, {
+                        x: titleDrawX,
+                        y: titleStartY,
+                        size: titleFs,
+                        font: fontTitle,
+                        color: spineTextColor,
+                        rotate: degrees(270)
+                    });
+
+                    // Draw Author (starts after Title + gapPt)
+                    const authorStartY = titleStartY - titleW - gapPt;
+                    const authorDrawX = spineCenterX + (authorFs * 0.35);
+
+                    page.drawText(authorText, {
+                        x: authorDrawX,
+                        y: authorStartY,
+                        size: authorFs,
+                        font: fontAuthor,
+                        color: spineTextColor,
+                        rotate: degrees(270)
+                    });
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+
+                const safeTitle = (state.title || 'kdp-cover').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g,'');
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${safeTitle || 'kdp-cover'}-kdp-full-wrap.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                downloadLine.innerHTML = `✅ <strong>PDF Downloaded successfully!</strong> Wrap dimensions: ${wrapWIn.toFixed(3)}" × ${wrapHIn.toFixed(3)}" (300 DPI ready).`;
+
+            } catch (err) {
+                console.error(err);
+                downloadLine.textContent = '❌ An error occurred generating the PDF. Please ensure both images are valid and try again.';
+            } finally {
+                updateAll();
+            }
+        }
+
+        async function renderCanvasPreview(wrapWIn, wrapHIn, spineWIn, trimWIn){
+            canvasHolder.innerHTML = '';
+            const scale = 110; // Scale factor for preview rendering
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(wrapWIn * scale);
+            canvas.height = Math.round(wrapHIn * scale);
+            const ctx = canvas.getContext('2d');
+
+            const drawPanelImg = (dataUrl, x, w) => {
+                return new Promise(resolve => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const boxRatio = w / canvas.height;
+                        const imgRatio = img.width / img.height;
+                        let dw, dh;
+                        if (imgRatio > boxRatio) { dh = canvas.height; dw = dh * imgRatio; }
+                        else { dw = w; dh = dw / imgRatio; }
+                        const dx = x - (dw - w) / 2;
+                        const dy = 0 - (dh - canvas.height) / 2;
+                        ctx.drawImage(img, dx, dy, dw, dh);
+                        resolve();
+                    };
+                    img.src = dataUrl;
+                });
+            };
+
+            const backW = (BLEED + trimWIn) * scale;
+            const frontW = (trimWIn + BLEED) * scale;
+            const spineXpx = backW;
+            const spineWpx = spineWIn * scale;
+            const frontX = spineXpx + spineWpx;
+
+            await Promise.all([
+                drawPanelImg(state.backImg.dataUrl, 0, backW),
+                drawPanelImg(state.frontImg.dataUrl, frontX, frontW)
+            ]);
+
+            // Sample spine color or use fallback
+            let spineHex = '#1E1B16';
+            try {
+                const avgColor = await getAverageEdgeColor(state.frontImg.dataUrl);
+                if (avgColor) {
+                    spineHex = `rgb(${avgColor.r}, ${avgColor.g}, ${avgColor.b})`;
+                }
+            } catch(e){}
+
+            // Draw Spine Background
+            ctx.fillStyle = spineHex;
+            ctx.fillRect(spineXpx, 0, spineWpx, canvas.height);
+
+            // Draw Spine Text on single line (if eligible)
+            if (state.pages >= MIN_PAGES_FOR_SPINE_TEXT && spineWIn >= MIN_SPINE_TEXT_WIDTH) {
+                let textColorHex = '#FFFFFF';
+                if (state.spineColorMode === 'dark') textColorHex = '#1E1B16';
+                else if (state.spineColorMode === 'custom') textColorHex = state.customColor || '#FFFFFF';
+
+                const spineCenterX = spineXpx + spineWpx / 2;
+                const spineH = canvas.height;
+                const titleText = state.title.trim();
+                const authorText = state.author.trim();
+                const lenTitle = Math.max(titleText.length, 1);
+                const lenAuthor = Math.max(authorText.length, 1);
+                const totalChars = lenTitle + lenAuthor;
+
+                const maxFsFromWidth = Math.min(spineWpx * 0.58, 22 * (scale / 72));
+                const minFs = 8;
+
+                const availableLength = spineH * 0.82;
+                const gapPx = Math.max(16, spineH * 0.05);
+
+                const titleRatio = Math.min(0.72, Math.max(0.45, lenTitle / totalChars));
+                const maxTitleLen = (availableLength - gapPx) * titleRatio;
+                const maxAuthorLen = (availableLength - gapPx) * (1 - titleRatio);
+
+                let titleFs = maxFsFromWidth;
+                ctx.font = `bold ${titleFs}px Inter, Helvetica, sans-serif`;
+                let titleW = ctx.measureText(titleText).width;
+                while (titleW > maxTitleLen && titleFs > minFs) {
+                    titleFs -= 0.5;
+                    ctx.font = `bold ${titleFs}px Inter, Helvetica, sans-serif`;
+                    titleW = ctx.measureText(titleText).width;
+                }
+
+                let authorFs = Math.min(titleFs * 0.88, maxFsFromWidth);
+                ctx.font = `${authorFs}px Inter, Helvetica, sans-serif`;
+                let authorW = ctx.measureText(authorText).width;
+                while (authorW > maxAuthorLen && authorFs > minFs) {
+                    authorFs -= 0.5;
+                    ctx.font = `${authorFs}px Inter, Helvetica, sans-serif`;
+                    authorW = ctx.measureText(authorText).width;
+                }
+
+                const totalBlock = titleW + gapPx + authorW;
+                const blockTopY = (spineH - totalBlock) / 2;
+
+                ctx.fillStyle = textColorHex;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+
+                // Render Title starting at blockTopY
+                if (titleText) {
+                    ctx.save();
+                    ctx.translate(spineCenterX, blockTopY);
+                    ctx.rotate(Math.PI / 2);
+                    ctx.font = `bold ${titleFs}px Inter, Helvetica, sans-serif`;
+                    ctx.fillText(titleText, 0, 0);
+                    ctx.restore();
+                }
+
+                // Render Author starting at blockTopY + titleW + gapPx
+                if (authorText) {
+                    ctx.save();
+                    ctx.translate(spineCenterX, blockTopY + titleW + gapPx);
+                    ctx.rotate(Math.PI / 2);
+                    ctx.font = `${authorFs}px Inter, Helvetica, sans-serif`;
+                    ctx.fillText(authorText, 0, 0);
+                    ctx.restore();
+                }
+            }
+
+            // Subtle panel guideline dividers
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(spineXpx, 0); ctx.lineTo(spineXpx, canvas.height);
+            ctx.moveTo(frontX, 0); ctx.lineTo(frontX, canvas.height);
+            ctx.stroke();
+
+            canvasHolder.appendChild(canvas);
+            wrapPreview.style.display = 'block';
+        }
+
+        generateBtn.addEventListener('click', generatePdf);
+        downloadPdfBtn.addEventListener('click', generatePdf);
+
+        updateAll();
+    })();
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
+            navLinks.classList.toggle('active');
+        });
+    }
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+
+</body>
+</html>

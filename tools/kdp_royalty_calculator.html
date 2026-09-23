@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP Royalty & Printing Cost Calculator | Amazon KDP Tool | Factictionary</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calculate Amazon KDP paperback, hardcover, and eBook printing costs, 60% royalties, expanded distribution profits, and break-even list prices instantly. 100% free and private.">
+    <meta name="keywords" content="kdp royalty calculator, kdp printing cost calculator, amazon kdp calculator, paperback royalty, kindle ebook royalty, self publishing profit, kdp pricing">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/kdp_royalty_calculator.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #0066FF 0%, #0044CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            opacity: 0.92;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-3xl);
+        }
+
+        @media (min-width: 992px) {
+            .tool-main {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .privacy-shield-bar {
+            grid-column: 1 / -1;
+            background: #E8F7EF;
+            color: #167D53;
+            border: 1px solid #B8E6D0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1BA672;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(27, 166, 114, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0); }
+        }
+
+        .tool-workspace {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid #EAEAEA;
+        }
+
+        .form-step-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .step-badge {
+            background: #0066FF;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin: 0;
+        }
+
+        .control-group {
+            margin-bottom: 18px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 6px;
+        }
+
+        .control-input, .control-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            color: #0F172A;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: #0066FF;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+        }
+
+        .control-row-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (min-width: 640px) {
+            .control-row-2 { grid-template-columns: 1fr 1fr; }
+        }
+
+        .stat-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card-highlight {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card-highlight .big-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0066FF;
+            margin-top: 4px;
+        }
+
+        .profit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 13.5px;
+        }
+
+        .profit-table th, .profit-table td {
+            padding: 12px 14px;
+            border: 1px solid #E2E8F0;
+            text-align: center;
+        }
+
+        .profit-table th {
+            background: #F1F5F9;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .profit-table tr:nth-child(even) {
+            background: #F8FAFC;
+        }
+
+        /* Sidebar */
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .tool-info {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid #EAEAEA;
+        }
+
+        .tool-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .kdp-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kdp-links-list a {
+            color: #0066FF;
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            background: #F8FAFC;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+        }
+
+        .kdp-links-list a:hover {
+            background: #E6F0FF;
+            border-color: #0066FF40;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip link -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">KDP Royalty &amp; Printing Cost Calculator</h1>
+        <p class="tool-subtitle">Calculate Amazon KDP printing fees, 60% paperback royalties, Expanded Distribution, and net profits across global marketplaces.</p>
+        <div class="privacy-badge">🔒 100% Privacy Protected</div>
+        <div style="margin-top: 12px;">
+            <button onclick="openShareModal()" class="btn btn-secondary" style="border-radius: 20px; font-size: 13px; font-weight: 600; padding: 6px 16px; background: rgba(255,255,255,0.9); color: #0044CC;">🔗 Share Page / Screenshot</button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main id="main" class="tool-main">
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% Client-Side In-Browser Calculation</span>
+        </div>
+
+        <section class="tool-workspace">
+
+            <!-- Step 1 -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 1</span>
+                    <h2 class="step-title">Book Specifications</h2>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="bookFormat">Format Type</label>
+                        <select id="bookFormat" class="control-select">
+                            <option value="paperback" selected>Paperback (Softcover)</option>
+                            <option value="hardcover">Hardcover (Case Laminate)</option>
+                            <option value="ebook">Kindle eBook</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="marketplace">Amazon Marketplace &amp; Currency</label>
+                        <select id="marketplace" class="control-select">
+                            <option value="USD" selected>Amazon.com (USD $)</option>
+                            <option value="EUR">Amazon.de / Europe (EUR €)</option>
+                            <option value="GBP">Amazon.co.uk (GBP £)</option>
+                            <option value="CAD">Amazon.ca (CAD $)</option>
+                            <option value="AUD">Amazon.com.au (AUD $)</option>
+                            <option value="JPY">Amazon.co.jp (JPY ¥)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="pageCount">Interior Page Count</label>
+                        <input type="number" id="pageCount" class="control-input" min="24" max="828" value="200" inputmode="numeric">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="inkType">Ink &amp; Interior Type</label>
+                        <select id="inkType" class="control-select">
+                            <option value="bw" selected>Black &amp; White Interior</option>
+                            <option value="std_color">Standard Color</option>
+                            <option value="premium_color">Premium Color</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="listPrice">List Price (<span id="currSymbol">$</span>)</label>
+                        <input type="number" id="listPrice" class="control-input" min="0.99" max="250.00" step="0.01" value="14.99">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="royaltyRate">Royalty Distribution Strategy</label>
+                        <select id="royaltyRate" class="control-select">
+                            <option value="60" selected>KDP Standard Distribution (60%)</option>
+                            <option value="40">Expanded Distribution (40%)</option>
+                            <option value="70">Kindle eBook 70% Royalty</option>
+                            <option value="35">Kindle eBook 35% Royalty</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 2</span>
+                    <h2 class="step-title">Earnings &amp; Royalty Breakdown</h2>
+                </div>
+
+                <div class="stat-card-grid">
+                    <div class="stat-card-highlight">
+                        <div style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase;">Estimated Printing Cost</div>
+                        <div class="big-num" id="printCostDisplay">$3.40</div>
+                    </div>
+
+                    <div class="stat-card-highlight" style="background: #F0FDF4; border-color: #BBF7D0;">
+                        <div style="font-size: 12px; font-weight: 700; color: #15803D; text-transform: uppercase;">Net Royalty Per Sale</div>
+                        <div class="big-num" style="color: #16A34A;" id="netRoyaltyDisplay">$5.59</div>
+                    </div>
+                </div>
+
+                <div class="stat-card-grid">
+                    <div class="stat-card-highlight">
+                        <div style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase;">Break-Even Minimum Price</div>
+                        <div class="big-num" style="color: #0F172A;" id="minPriceDisplay">$5.67</div>
+                    </div>
+
+                    <div class="stat-card-highlight">
+                        <div style="font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase;">Profit Margin</div>
+                        <div class="big-num" style="color: #8B5CF6;" id="profitMarginDisplay">37.3%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 3</span>
+                    <h2 class="step-title">Multi-Price Profit Scenario Matrix</h2>
+                </div>
+                <table class="profit-table">
+                    <thead>
+                        <tr>
+                            <th>List Price</th>
+                            <th>Printing Cost</th>
+                            <th>KDP 60% Royalty</th>
+                            <th>Expanded 40% Royalty</th>
+                            <th>Profit Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody">
+                        <!-- Populated dynamically by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- Sidebar -->
+        <aside class="tool-sidebar">
+            <div class="tool-info">
+                <h3>📘 Related KDP Tools</h3>
+                <div class="kdp-links-list">
+                    <a href="/tools/kdp_cover_generator.html">📐 KDP Cover &amp; Spine PDF Generator</a>
+                    <a href="/tools/kdp_spine_calculator.html">📏 KDP Spine Width &amp; Dimensions Calculator</a>
+                    <a href="/tools/kdp_keyword_generator.html">🔍 KDP 7-Backend Keywords &amp; Formatter</a>
+                    <a href="/tools/categories/kdp.html">📘 KDP Self-Publishing Suite Category</a>
+                </div>
+            </div>
+
+            <!-- AdSense -->
+            <div class="adsense-tool">
+                <div>
+                    <div>›  Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+        </aside>
+
+                        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--color-neutral-400);">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        "use strict";
+
+        const CURR_SYMBOLS = { USD: "$", EUR: "€", GBP: "£", CAD: "$", AUD: "$", JPY: "¥" };
+
+        const bookFormat = document.getElementById('bookFormat');
+        const marketplace = document.getElementById('marketplace');
+        const pageCount = document.getElementById('pageCount');
+        const inkType = document.getElementById('inkType');
+        const listPrice = document.getElementById('listPrice');
+        const royaltyRate = document.getElementById('royaltyRate');
+        const currSymbol = document.getElementById('currSymbol');
+
+        const printCostDisplay = document.getElementById('printCostDisplay');
+        const netRoyaltyDisplay = document.getElementById('netRoyaltyDisplay');
+        const minPriceDisplay = document.getElementById('minPriceDisplay');
+        const profitMarginDisplay = document.getElementById('profitMarginDisplay');
+        const comparisonTableBody = document.getElementById('comparisonTableBody');
+
+        function calcKdpRoyalty() {
+            const fmt = bookFormat.value;
+            const currKey = marketplace.value;
+            const sym = CURR_SYMBOLS[currKey] || "$";
+            currSymbol.textContent = sym;
+
+            const pages = Math.max(0, parseInt(pageCount.value || '0', 10));
+            const price = Math.max(0, parseFloat(listPrice.value || '0'));
+            const rate = parseFloat(royaltyRate.value) / 100;
+
+            let printCost = 0;
+            if (fmt === 'paperback') {
+                if (inkType.value === 'bw') {
+                    printCost = pages <= 108 ? 2.30 : 1.00 + (pages * 0.012);
+                } else if (inkType.value === 'std_color') {
+                    printCost = pages <= 108 ? 3.60 : 1.00 + (pages * 0.024);
+                } else {
+                    printCost = pages <= 108 ? 4.50 : 1.00 + (pages * 0.036);
+                }
+            } else if (fmt === 'hardcover') {
+                printCost = 6.80 + (pages * 0.015);
+            } else {
+                printCost = 0; // eBook
+            }
+
+            const minPrice = printCost > 0 ? (printCost / 0.60) : 0.99;
+            const royalty = Math.max(0, (price * rate) - printCost);
+            const margin = price > 0 ? (royalty / price) * 100 : 0;
+
+            printCostDisplay.textContent = sym + printCost.toFixed(2);
+            netRoyaltyDisplay.textContent = sym + royalty.toFixed(2);
+            minPriceDisplay.textContent = sym + minPrice.toFixed(2);
+            profitMarginDisplay.textContent = margin.toFixed(1) + "%";
+
+            // Populate comparison matrix
+            const testPrices = [minPrice, minPrice + 2, minPrice + 5, minPrice + 10, minPrice + 15];
+            let html = '';
+            testPrices.forEach(p => {
+                const r60 = Math.max(0, (p * 0.60) - printCost);
+                const r40 = Math.max(0, (p * 0.40) - printCost);
+                const m = p > 0 ? (r60 / p) * 100 : 0;
+                html += `
+                    <tr>
+                        <td style="font-weight:700;">${sym}${p.toFixed(2)}</td>
+                        <td>${sym}${printCost.toFixed(2)}</td>
+                        <td style="color:#16A34A; font-weight:700;">${sym}${r60.toFixed(2)}</td>
+                        <td style="color:#0284C7;">${sym}${r40.toFixed(2)}</td>
+                        <td style="font-weight:700;">${m.toFixed(1)}%</td>
+                    </tr>
+                `;
+            });
+            comparisonTableBody.innerHTML = html;
+        }
+
+        [bookFormat, marketplace, pageCount, inkType, listPrice, royaltyRate].forEach(el => {
+            el.addEventListener('change', calcKdpRoyalty);
+            el.addEventListener('input', calcKdpRoyalty);
+        });
+
+        calcKdpRoyalty();
+    })();
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

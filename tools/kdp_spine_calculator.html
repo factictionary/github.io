@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP Spine Width & Dimensions Calculator | Amazon KDP Tool | Factictionary</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Calculate exact Amazon KDP paperback & hardcover spine width, full cover wrap dimensions, outer bleed, and spine text safety margins instantly. 100% free & private.">
+    <meta name="keywords" content="kdp spine calculator, kdp spine width, amazon kdp paperback dimensions, spine thickness calculator, book cover template dimensions, hardcover spine">
+    <meta name="author" content="Factictionary Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://factictionary.github.io/tools/kdp_spine_calculator.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        .tool-header {
+            background: linear-gradient(135deg, #0066FF 0%, #0044CC 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+            margin-top: -80px;
+            padding-top: calc(var(--spacing-4xl) + 80px);
+        }
+
+        .tool-title {
+            font-size: var(--font-size-title);
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tool-subtitle {
+            font-size: var(--font-size-subtitle);
+            opacity: 0.92;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        .tool-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-3xl);
+        }
+
+        @media (min-width: 992px) {
+            .tool-main {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .privacy-shield-bar {
+            grid-column: 1 / -1;
+            background: #E8F7EF;
+            color: #167D53;
+            border: 1px solid #B8E6D0;
+            border-radius: 8px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1BA672;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(27, 166, 114, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(27, 166, 114, 0); }
+        }
+
+        .tool-workspace {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid #EAEAEA;
+        }
+
+        .form-step-card {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .step-badge {
+            background: #0066FF;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .step-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin: 0;
+        }
+
+        .control-group {
+            margin-bottom: 18px;
+        }
+
+        .control-label {
+            display: block;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1E293B;
+            margin-bottom: 6px;
+        }
+
+        .control-input, .control-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            color: #0F172A;
+            transition: all 0.2s;
+            box-sizing: border-box;
+        }
+
+        .control-input:focus, .control-select:focus {
+            outline: none;
+            border-color: #0066FF;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+        }
+
+        .control-row-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (min-width: 640px) {
+            .control-row-2 { grid-template-columns: 1fr 1fr; }
+        }
+
+        .spec-badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .spec-card {
+            background: #F0F6FF;
+            border: 1px solid #BAE6FD;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .spec-card .val {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0066FF;
+            margin-top: 4px;
+        }
+
+        .spec-card .lbl {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0284C7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .spine-visual-box {
+            background: #0F172A;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .spine-mockup-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 20px auto 0;
+            max-width: 540px;
+        }
+
+        .mock-cover {
+            background: #1E293B;
+            color: #94A3B8;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 50px 10px;
+            flex: 1;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .mock-spine {
+            background: #0066FF;
+            color: white;
+            border-radius: 4px;
+            padding: 50px 8px;
+            min-width: 44px;
+            font-size: 12.5px;
+            font-weight: 800;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            transition: all 0.3s;
+        }
+
+        /* Sidebar */
+        .tool-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .tool-info {
+            background: white;
+            border-radius: var(--radius-card);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid #EAEAEA;
+        }
+
+        .tool-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .kdp-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .kdp-links-list a {
+            color: #0066FF;
+            text-decoration: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            background: #F8FAFC;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid #E2E8F0;
+        }
+
+        .kdp-links-list a:hover {
+            background: #E6F0FF;
+            border-color: #0066FF40;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip link -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <header class="tool-header">
+        <h1 class="tool-title">KDP Spine Width &amp; Dimensions Calculator</h1>
+        <p class="tool-subtitle">Calculate exact Amazon KDP spine thickness, full-wrap template dimensions, outer bleed, and spine text safety limits.</p>
+        <div class="privacy-badge">🔒 100% Privacy Protected</div>
+        <div style="margin-top: 12px;">
+            <button onclick="openShareModal()" class="btn btn-secondary" style="border-radius: 20px; font-size: 13px; font-weight: 600; padding: 6px 16px; background: rgba(255,255,255,0.9); color: #0044CC;">🔗 Share Page / Screenshot</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main" class="tool-main">
+
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% Client-Side Local Processing</span>
+        </div>
+
+        <section class="tool-workspace">
+
+            <!-- Step 1: Book Details -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 1</span>
+                    <h2 class="step-title">Book Specifications</h2>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="trimSize">Trim Size</label>
+                        <select id="trimSize" class="control-select">
+                            <option value="5x8">5" × 8"</option>
+                            <option value="5.06x7.81">5.06" × 7.81"</option>
+                            <option value="5.25x8">5.25" × 8"</option>
+                            <option value="5.5x8.5" selected>5.5" × 8.5"</option>
+                            <option value="6x9">6" × 9"</option>
+                            <option value="6.14x9.21">6.14" × 9.21"</option>
+                            <option value="6.69x9.61">6.69" × 9.61"</option>
+                            <option value="7x10">7" × 10"</option>
+                            <option value="7.44x9.69">7.44" × 9.69"</option>
+                            <option value="7.5x9.25">7.5" × 9.25"</option>
+                            <option value="8x10">8" × 10"</option>
+                            <option value="8.5x8.5">8.5" × 8.5"</option>
+                            <option value="8.5x11">8.5" × 11"</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="paperStock">Paper Stock &amp; Color</label>
+                        <select id="paperStock" class="control-select">
+                            <option value="white" selected>White Paper (0.002252" / page)</option>
+                            <option value="cream">Cream Paper (0.0025" / page)</option>
+                            <option value="whitepremium">White Premium Color (0.002252" / page)</option>
+                            <option value="colorstd">Color Standard (0.002347" / page)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-row-2">
+                    <div class="control-group">
+                        <label class="control-label" for="pagesInput">Interior Page Count</label>
+                        <input type="number" id="pagesInput" class="control-input" min="24" max="828" value="200" inputmode="numeric">
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="coverType">Binding Type</label>
+                        <select id="coverType" class="control-select">
+                            <option value="paperback" selected>Paperback (Softcover)</option>
+                            <option value="hardcover">Case Laminate (Hardcover)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Calculated Dimensions -->
+            <div class="form-step-card">
+                <div class="step-header">
+                    <span class="step-badge">Step 2</span>
+                    <h2 class="step-title">Calculated KDP Cover Dimensions</h2>
+                </div>
+
+                <div class="spec-badge-grid">
+                    <div class="spec-card">
+                        <div class="lbl">Spine Width</div>
+                        <div class="val" id="spineWidthVal">0.450"</div>
+                    </div>
+                    <div class="spec-card">
+                        <div class="lbl">Full Wrap Width</div>
+                        <div class="val" id="fullWidthVal">11.700"</div>
+                    </div>
+                    <div class="spec-card">
+                        <div class="lbl">Full Wrap Height</div>
+                        <div class="val" id="fullHeightVal">8.750"</div>
+                    </div>
+                    <div class="spec-card">
+                        <div class="lbl">Spine Text Status</div>
+                        <div class="val" id="spineTextVal" style="font-size: 1.2rem; color: #16A34A;">ALLOWED</div>
+                    </div>
+                </div>
+
+                <div class="spine-visual-box">
+                    <div style="font-size: 13px; font-weight: 700; color: #94A3B8; text-transform: uppercase;">Interactive Full-Wrap Mockup</div>
+                    <div class="spine-mockup-wrapper">
+                        <div class="mock-cover">BACK COVER<br><span style="font-size:11px; font-weight:400; opacity:0.8;">(Left Panel)</span></div>
+                        <div class="mock-spine" id="mockSpineEl">SPINE TEXT</div>
+                        <div class="mock-cover">FRONT COVER<br><span style="font-size:11px; font-weight:400; opacity:0.8;">(Right Panel)</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick PDF Redirect -->
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="/tools/kdp_cover_generator.html" class="btn btn-primary" style="padding: 12px 24px; border-radius: 8px; font-size: 15px;">
+                    ✨ Create Full-Wrap KDP Cover PDF Now →
+                </a>
+            </div>
+
+        </section>
+
+        <aside class="tool-sidebar">
+            <div class="tool-info">
+                <h3>📘 Related KDP Tools</h3>
+                <div class="kdp-links-list">
+                    <a href="/tools/kdp_cover_generator.html">📐 KDP Cover &amp; Spine PDF Generator</a>
+                    <a href="/tools/kdp_royalty_calculator.html">💰 KDP Royalty &amp; Printing Calculator</a>
+                    <a href="/tools/kdp_keyword_generator.html">🔍 KDP 7-Backend Keywords &amp; Formatter</a>
+                    <a href="/tools/categories/kdp.html">📘 KDP Self-Publishing Suite Category</a>
+                </div>
+            </div>
+
+            <!-- AdSense -->
+            <div class="adsense-tool">
+                <div>
+                    <div>›  Advertisement</div>
+                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
+                </div>
+            </div>
+        </aside>
+
+                        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--color-neutral-400);">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        "use strict";
+
+        const PAPER_MULT = {
+            white: 0.002252,
+            cream: 0.0025,
+            whitepremium: 0.002252,
+            colorstd: 0.002347
+        };
+
+        const TRIM_DIM = {
+            "5x8": [5, 8],
+            "5.06x7.81": [5.06, 7.81],
+            "5.25x8": [5.25, 8],
+            "5.5x8.5": [5.5, 8.5],
+            "6x9": [6, 9],
+            "6.14x9.21": [6.14, 9.21],
+            "6.69x9.61": [6.69, 9.61],
+            "7x10": [7, 10],
+            "7.44x9.69": [7.44, 9.69],
+            "7.5x9.25": [7.5, 9.25],
+            "8x10": [8, 10],
+            "8.5x8.5": [8.5, 8.5],
+            "8.5x11": [8.5, 11]
+        };
+
+        const trimSelect = document.getElementById('trimSize');
+        const paperSelect = document.getElementById('paperStock');
+        const pagesInput = document.getElementById('pagesInput');
+        const coverType = document.getElementById('coverType');
+
+        const spineWidthVal = document.getElementById('spineWidthVal');
+        const fullWidthVal = document.getElementById('fullWidthVal');
+        const fullHeightVal = document.getElementById('fullHeightVal');
+        const spineTextVal = document.getElementById('spineTextVal');
+        const mockSpineEl = document.getElementById('mockSpineEl');
+
+        function updateSpineCalc() {
+            const pages = Math.max(0, parseInt(pagesInput.value || '0', 10));
+            const paper = paperSelect.value;
+            const trimKey = trimSelect.value;
+            const binding = coverType.value;
+
+            const [tw, th] = TRIM_DIM[trimKey] || [5.5, 8.5];
+            const spineIn = pages * (PAPER_MULT[paper] || 0.002252);
+            const bleed = 0.125;
+
+            let wrapW = tw * 2 + spineIn + bleed * 2;
+            let wrapH = th + bleed * 2;
+
+            if (binding === 'hardcover') {
+                wrapW += 0.35; // Extra wrap hinge allowance for hardcover
+                wrapH += 0.35;
+            }
+
+            spineWidthVal.textContent = spineIn.toFixed(3) + '"';
+            fullWidthVal.textContent = wrapW.toFixed(3) + '"';
+            fullHeightVal.textContent = wrapH.toFixed(3) + '"';
+
+            if (pages >= 24 && spineIn >= 0.0625) {
+                spineTextVal.textContent = 'ALLOWED';
+                spineTextVal.style.color = '#16A34A';
+                mockSpineEl.textContent = 'SPINE TEXT (OK)';
+            } else {
+                spineTextVal.textContent = 'NO (Too Thin)';
+                spineTextVal.style.color = '#DC2626';
+                mockSpineEl.textContent = 'NO TEXT';
+            }
+
+            const mockWidthPx = Math.max(20, Math.min(100, Math.round(spineIn * 120)));
+            mockSpineEl.style.minWidth = mockWidthPx + 'px';
+        }
+
+        [trimSelect, paperSelect, pagesInput, coverType].forEach(el => {
+            el.addEventListener('change', updateSpineCalc);
+            el.addEventListener('input', updateSpineCalc);
+        });
+
+        updateSpineCalc();
+    })();
+    </script>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

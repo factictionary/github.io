@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDP Self-Publishing Tools Suite | Amazon KDP Tools | Factictionary</title>
+    <meta name="description" content="Free, private, browser-based utilities for Amazon KDP authors and self-publishers. Generate cover PDFs, calculate spine width, estimate royalties, and format backend keywords.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .category-header {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #1E1B4B 100%);
+            color: white;
+            padding: var(--spacing-4xl) var(--spacing-lg);
+            text-align: center;
+        }
+        .tools-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 24px; 
+            margin-top: 32px; 
+        }
+        .tool-card { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 24px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            flex-direction: column; 
+            border: 1px solid var(--color-neutral-200); 
+            transition: all 0.2s; 
+            box-sizing: border-box; 
+            min-width: 0; 
+            width: 100%; 
+        }
+        .tool-card:hover { 
+            transform: translateY(-4px); 
+            border-color: var(--color-primary-500); 
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.12); 
+        }
+        .tool-icon { font-size: 2.2rem; margin-bottom: 12px; }
+        .tool-title { font-weight: 700; font-size: 1.15rem; margin-bottom: 8px; color: var(--color-neutral-900); }
+        .tool-desc { font-size: 0.9rem; color: var(--color-neutral-600); line-height: 1.5; flex: 1; }
+        .tool-badge { margin-top: 14px; display: inline-flex; align-items: center; font-size: 0.78rem; font-weight: 700; color: #0066FF; text-transform: uppercase; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-backdrop"></div>
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/blog/" class="nav-link">Articles</a></li>
+            <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+            <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/about.html" class="nav-link">About</a></li>
+            <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+        </ul>
+    </div>
+
+    <header class="category-header">
+        <h1 class="tool-title" style="font-size: 2.4rem; color: white;">📘 KDP Self-Publishing Tools Suite</h1>
+        <p class="tool-subtitle" style="color: #94A3B8; font-size: 1.1rem; max-width: 680px; margin: 12px auto 0;">Free, 100% private, browser-based utilities for Amazon KDP authors & indie publishers.</p>
+        <div class="privacy-badge" style="margin-top: 16px;">🔒 100% Client-Side Processing</div>
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: var(--spacing-md); flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="openShareModal()" style="padding: 8px 16px; font-size: 0.9rem; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;">
+                🔗 Share Category / Screenshot
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="container" style="padding-top: 40px; padding-bottom: 60px;">
+        <div class="tools-grid">
+            <a href="/tools/kdp_cover_generator.html" class="tool-card">
+                <div class="tool-icon">📐</div>
+                <div class="tool-title">KDP Cover & Spine PDF Generator</div>
+                <div class="tool-desc">Generate print-ready full-wrap paperback cover PDFs with accurate spine calculations, barcode positioning & live canvas preview.</div>
+                <div class="tool-badge">Launch Tool →</div>
+            </a>
+            
+            <a href="/tools/kdp_royalty_calculator.html" class="tool-card">
+                <div class="tool-icon">💰</div>
+                <div class="tool-title">KDP Royalty & Printing Cost Calculator</div>
+                <div class="tool-desc">Calculate Amazon KDP printing fees, 60% royalties & net profit margins across all Amazon marketplaces & list prices.</div>
+                <div class="tool-badge">Launch Tool →</div>
+            </a>
+            
+            <a href="/tools/kdp_spine_calculator.html" class="tool-card">
+                <div class="tool-icon">📏</div>
+                <div class="tool-title">KDP Spine Width & Dimensions Calculator</div>
+                <div class="tool-desc">Calculate exact spine thickness, full trim wrap dimensions & safe text margins for Paperback & Hardcover editions.</div>
+                <div class="tool-badge">Launch Tool →</div>
+            </a>
+            
+            <a href="/tools/kdp_keyword_generator.html" class="tool-card">
+                <div class="tool-icon">🔍</div>
+                <div class="tool-title">KDP 7-Backend Keywords & HTML Description Formatter</div>
+                <div class="tool-desc">Check 50-character limits across 7 search keyword boxes & generate clean, Amazon-compliant HTML book descriptions.</div>
+                <div class="tool-badge">Launch Tool →</div>
+            </a>
+        </div>
+
+        <!-- Donation Banner Card -->
+                <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,943 +1,1823 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>High-Demand Web Utilities Directory | Factictionary</title>
-    <meta name="description" content="Explore 50+ free, privacy-first web utilities for PDF processing, image editing, video trimming, audio conversion, and developer tasks. 100% browser-based.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css">
-</head>
-<body>
-    <nav class="navbar" role="navigation">
-        <div class="nav-container">
-            <a href="/" class="logo">Factictionary</a>
-            <ul class="nav-links">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/blog/" class="nav-link">Articles</a></li>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>High-Demand Web Utilities Directory | Factictionary</title>
+
+    <meta name="description" content="Explore 50+ free, privacy-first web utilities for PDF processing, image editing, video trimming, audio conversion, and developer tasks. 100% browser-based.">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body>
+
+    <nav class="navbar" role="navigation">
+
+        <div class="nav-container">
+
+            <a href="/" class="logo">Factictionary</a>
+
+            <ul class="nav-links">
+
+                <li><a href="/" class="nav-link">Home</a></li>
+
+                <li><a href="/blog/" class="nav-link">Articles</a></li>
+
                 <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-                <li><a href="/games/" class="nav-link">Games</a></li>
-                <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
-                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1200px;">
-        <div class="text-center">
-            <div class="privacy-shield-bar">
-                <span class="pulse-dot"></span>
-                <span>0 Bytes Server Storage — 100% In-Browser Privacy Protection</span>
-            </div>
-
-            <h1 style="font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800;">High-Demand <span style="color: var(--color-primary-500);">Web Utilities</span></h1>
-            <p class="lead-text" style="max-width: 650px; margin: 12px auto 0; color: var(--color-neutral-700);">
-                Instant browser tools designed for maximum privacy, batch file processing, and zero server uploads.
-            </p>
-
-            <!-- Search Bar -->
-            <div style="max-width: 600px; margin: 24px auto 0; position: relative;">
-                <input type="text" id="tool-search" class="hero-search-input" placeholder="🔍 Search utilities by name or keyword (e.g. merge, compress, background, json)..." style="padding-left: 24px;" aria-label="Search tools">
-            </div>
-
-            <!-- Category Filter Tabs -->
-            <div class="category-filter-nav">
-                <button class="cat-tab-btn active" onclick="filterCategory('all', this)">All Utilities (50+)</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-pdf', this)">📄 PDF Suite</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-image', this)">🖼️ Image Tools</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-video', this)">🎬 Video & GIF</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-audio', this)">🎵 Audio Studio</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-dev', this)">⚡ Dev & Text</button>
-                <button class="cat-tab-btn" onclick="filterCategory('cat-games', this)">🎮 Games & Focus</button>
-            </div>
-        </div>
-
-        <!-- Tools Grid -->
-        <div class="grid grid-3" id="tools-catalog-grid" style="gap: 24px;">
-            <!-- Custom Stylized QR Studio -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎨</span>
-                    <span class="value-badge pro-preset">WiFi / vCard</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Custom Stylized QR Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate custom QR codes for WiFi, vCard, WhatsApp, and URLs with high-res PNG export.</p>
-                <a href="/tools/qr_generator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- SVG to PNG / WebP Converter -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎨</span>
-                    <span class="value-badge offline">High DPI Scale</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">SVG to PNG / WebP Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert SVG vector files or raw SVG code to PNG, JPG, or WebP with resolution scaling.</p>
-                <a href="/tools/svg_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Background Remover -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🖼️</span>
-                    <span class="value-badge offline">AI On-Device</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Background Remover</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Automatically erase photo backgrounds with AI detection and transparent PNG export.</p>
-                <a href="/tools/image_background_remover.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Compressor & WebP -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">⚡</span>
-                    <span class="value-badge batch">Batch Convert</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Compressor & WebP</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compress JPEG/PNG files up to 90% without quality loss and export to modern WebP.</p>
-                <a href="/tools/image_compressor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Format Converter -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">PNG / JPG / WebP</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Format Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert images between PNG, JPG, WebP, GIF, and BMP formats instantly.</p>
-                <a href="/tools/image_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Resizer & Dimension Tool -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📐</span>
-                    <span class="value-badge batch">Aspect Lock</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Resizer & Dimension Tool</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Resize image dimensions by pixels or percentage with aspect ratio preservation.</p>
-                <a href="/tools/image_resizer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Cropper & Social Aspect -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✂ ️</span>
-                    <span class="value-badge pro-preset">Preset Aspect</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Cropper & Social Aspect</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Crop photos for Instagram (1:1), YouTube (16:9), and LinkedIn (4:5).</p>
-                <a href="/tools/image_cropper.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Enhancer & Sharpener -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✨</span>
-                    <span class="value-badge batch">Lighting & Clarity</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Enhancer & Sharpener</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Enhance photo lighting, sharpness, contrast, and color balance in your browser.</p>
-                <a href="/tools/image_enhancer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Filter & FX Studio -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎨</span>
-                    <span class="value-badge batch">Instant Filters</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Filter & FX Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply vintage, sepia, grayscale, blur, and color adjustment filters to photos.</p>
-                <a href="/tools/image_filters.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- HDR Photo Effect Generator -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🌅</span>
-                    <span class="value-badge batch">Tone Mapping</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">HDR Photo Effect Generator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Simulate high dynamic range (HDR) tone mapping on your photos.</p>
-                <a href="/tools/image_hdr.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Color Space Converter -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎨</span>
-                    <span class="value-badge batch">RGB / CMYK / HSL</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Color Space Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert image color spaces between RGB, HSL, Grayscale, and CMYK simulations.</p>
-                <a href="/tools/image_color_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Combiner & Photo Stitcher -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🧩</span>
-                    <span class="value-badge batch">Photo Collage</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Combiner & Photo Stitcher</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Combine multiple images vertically or horizontally into a single photo collage.</p>
-                <a href="/tools/image_stitcher.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image to PDF Converter -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📄</span>
-                    <span class="value-badge batch">Multi-Image PDF</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image to PDF Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert JPG, PNG, and WebP images into clean compiled PDF documents.</p>
-                <a href="/tools/image_to_pdf.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Image Watermark Protection -->
-            <div class="tool-card filter-item cat-image">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🏷️</span>
-                    <span class="value-badge batch">Logo / Text</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Watermark Protection</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply custom logo stamps or text watermarks across photos.</p>
-                <a href="/tools/image_watermark.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Merger & Combiner -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📄</span>
-                    <span class="value-badge batch">Batch Mode</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Merger & Combiner</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Merge multiple PDF documents into a single file with custom page reordering.</p>
-                <a href="/tools/pdf_merger.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Compressor -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📉</span>
-                    <span class="value-badge pro-preset">DPI Presets</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Compressor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reduce PDF file sizes for email attachments and web upload limits.</p>
-                <a href="/tools/pdf_compressor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF OCR Text Extractor -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔍</span>
-                    <span class="value-badge batch">Tesseract OCR</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF OCR Text Extractor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract searchable text from scanned PDF documents and image files.</p>
-                <a href="/tools/pdf_ocr.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Splitter & Page Extractor -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✂ ️</span>
-                    <span class="value-badge batch">Page Range</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Splitter & Page Extractor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Split PDF files into individual pages or extract specific page ranges.</p>
-                <a href="/tools/pdf_splitter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Page Rotator -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">90° / 180°</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Page Rotator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Rotate PDF pages clockwise, counter-clockwise, or invert pages permanently.</p>
-                <a href="/tools/pdf_rotator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF to Image Converter -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🖼️</span>
-                    <span class="value-badge batch">PNG / JPG</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF to Image Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert PDF document pages into high-quality PNG or JPG image files.</p>
-                <a href="/tools/pdf_to_image.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Watermark Tool -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🏷️</span>
-                    <span class="value-badge batch">Custom Text</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Watermark Tool</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add text or image watermarks to protect your PDF documents.</p>
-                <a href="/tools/pdf_watermark.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Password Protect / Unlock -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔒</span>
-                    <span class="value-badge batch">AES Encrypt</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Password Protect / Unlock</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encrypt PDF files with passwords or unlock protected documents.</p>
-                <a href="/tools/pdf_password.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Metadata Tag Editor -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📋</span>
-                    <span class="value-badge batch">Tag Editor</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Metadata Tag Editor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">View and edit PDF title, author, subject, keywords, and creation tags.</p>
-                <a href="/tools/pdf_metadata.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Bookmark Manager -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔖</span>
-                    <span class="value-badge batch">TOC Manager</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Bookmark Manager</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add, edit, or clean outline bookmarks and tables of contents in PDFs.</p>
-                <a href="/tools/pdf_bookmark.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- PDF Document Analyzer -->
-            <div class="tool-card filter-item cat-pdf">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📊</span>
-                    <span class="value-badge batch">Font & Structure</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Document Analyzer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Analyze PDF font embedding, page dimensions, color spaces, and file health.</p>
-                <a href="/tools/pdf_analyzer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Screen & Webcam Recorder -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📹</span>
-                    <span class="value-badge batch">Zero Watermark</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Screen & Webcam Recorder</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Record screen, browser tabs, or webcam with audio. No time limits or watermarks.</p>
-                <a href="/tools/screen_recorder.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Trimmer & Cutter -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✂ ️</span>
-                    <span class="value-badge batch">Precision Cut</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Trimmer & Cutter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Trim and cut video start/end points with real-time preview playback.</p>
-                <a href="/tools/video_trimmer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Compressor -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📉</span>
-                    <span class="value-badge batch">FFmpeg Wasm</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Compressor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reduce video file sizes for Discord, email, and web publishing limits.</p>
-                <a href="/tools/video_compressor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Format Converter -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">MP4 / WebM / AVI</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Format Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert video files between MP4, WebM, AVI, and MOV formats.</p>
-                <a href="/tools/video_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video to Animated GIF Maker -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎞️</span>
-                    <span class="value-badge batch">FPS Control</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video to Animated GIF Maker</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert video clips into animated GIF files with custom frame rate controls.</p>
-                <a href="/tools/video_to_gif.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Audio Extractor -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔊</span>
-                    <span class="value-badge batch">MP3 / WAV</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Audio Extractor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract sound and background music from video files into MP3 or WAV audio.</p>
-                <a href="/tools/video_audio_extractor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Resizer & Aspect Crop -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📐</span>
-                    <span class="value-badge batch">Reels (9:16)</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Resizer & Aspect Crop</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Resize video dimensions for TikTok (9:16), YouTube (16:9), and Instagram.</p>
-                <a href="/tools/video_resizer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Rotator & Flip Tool -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">90° / 180°</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Rotator & Flip Tool</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Rotate sideways video clips 90°, 180°, 270°, or flip horizontally.</p>
-                <a href="/tools/video_rotation.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Speed & Slow-Mo Studio -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">⏩</span>
-                    <span class="value-badge batch">0.25x to 4x</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Speed & Slow-Mo Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Speed up videos or create smooth slow-motion clips with pitch preservation.</p>
-                <a href="/tools/video_speed.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Loop Creator -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔁</span>
-                    <span class="value-badge batch">Seamless Loop</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Loop Creator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Repeat video clips seamlessly for social media stories and background screens.</p>
-                <a href="/tools/video_looper.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Filter & Color Studio -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎨</span>
-                    <span class="value-badge batch">Visual FX</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Filter & Color Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply visual color filters, saturation, contrast, and brightness to video clips.</p>
-                <a href="/tools/video_filter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Subtitle & Caption Tool -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">💬</span>
-                    <span class="value-badge batch">SRT / VTT</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Subtitle & Caption Tool</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add, edit, and burn subtitles into video clips or export SRT captions.</p>
-                <a href="/tools/video_subtitle.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Quality Enhancer -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✨</span>
-                    <span class="value-badge batch">Clarity & FX</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Quality Enhancer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Enhance video clarity, contrast, and noise reduction in your browser.</p>
-                <a href="/tools/video_enhancer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Thumbnail Frame Grabber -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🖼️</span>
-                    <span class="value-badge batch">PNG Snapshot</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Thumbnail Frame Grabber</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Capture high-resolution still frame images from any video file.</p>
-                <a href="/tools/video_preview.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Watermark Protection -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🏷️</span>
-                    <span class="value-badge batch">Logo Overlay</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Watermark Protection</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Overlay custom text or transparent PNG logos across video clips.</p>
-                <a href="/tools/video_watermark.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Video Joiner & Merger -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎞️</span>
-                    <span class="value-badge batch">Sequence Merge</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Joiner & Merger</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Combine multiple video clips into a single continuous video file.</p>
-                <a href="/tools/video_merger.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- GIF & Video Frame Extractor -->
-            <div class="tool-card filter-item cat-video">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎞️</span>
-                    <span class="value-badge batch">Zip Export</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">GIF & Video Frame Extractor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract all individual image frames from GIFs or video clips into a ZIP file.</p>
-                <a href="/tools/frame_extractor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text-to-Speech Voice Reader -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🗣️</span>
-                    <span class="value-badge batch">Natural Voices</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text-to-Speech Voice Reader</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Read text aloud using natural browser voices with customizable pitch and speech rate.</p>
-                <a href="/tools/text_to_speech.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Format Converter -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎵</span>
-                    <span class="value-badge batch">MP3 / WAV / OGG</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Format Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert audio files between MP3, WAV, OGG, M4A, and AAC formats.</p>
-                <a href="/tools/audio_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Trimmer & Ringtone Cutter -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">✂ ️</span>
-                    <span class="value-badge batch">Waveform Cut</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Trimmer & Ringtone Cutter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Cut audio files, create ringtones, and trim silence with visual waveform playback.</p>
-                <a href="/tools/audio_trimmer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Track Mixer Studio -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎛️</span>
-                    <span class="value-badge batch">Multi-Track</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Track Mixer Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Mix multiple audio tracks, adjust individual volume levels, and export composite sound.</p>
-                <a href="/tools/audio_mixer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Waveform Editor -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎶</span>
-                    <span class="value-badge offline">Gain & Fade</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Waveform Editor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Edit audio waveforms, apply fade-in/fade-out, and adjust master gain.</p>
-                <a href="/tools/audio_editor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio FX & 10-Band Equalizer -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎚️</span>
-                    <span class="value-badge batch">Bass Boost EQ</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio FX & 10-Band Equalizer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply 10-band equalizer presets, reverb, bass boost, and treble adjustments.</p>
-                <a href="/tools/audio_effects.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Volume Normalizer -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔊</span>
-                    <span class="value-badge offline">Peak Gain</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Volume Normalizer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Normalize audio volume levels to prevent quiet tracks or clipping distortion.</p>
-                <a href="/tools/audio_normalizer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Speed & Pitch Changer -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">⚡</span>
-                    <span class="value-badge batch">Pitch Lock</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Speed & Pitch Changer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Change playback tempo and pitch independently for music and voice clips.</p>
-                <a href="/tools/audio_speed_changer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Audio Spectrum Analyzer -->
-            <div class="tool-card filter-item cat-audio">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📊</span>
-                    <span class="value-badge batch">FFT Visualizer</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Spectrum Analyzer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Visualize audio frequencies, peak decibels, and spectrum analysis in real-time.</p>
-                <a href="/tools/audio_analyzer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- ATS Resume & CV Matcher -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📄</span>
-                    <span class="value-badge batch">ATS Score %</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">ATS Resume & CV Matcher</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compare resumes against job descriptions, calculate match %, and highlight missing keywords.</p>
-                <a href="/tools/ats_resume_matcher.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Instant Invoice & Receipt Pro -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🧾</span>
-                    <span class="value-badge pro-preset">Save Profile</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Instant Invoice & Receipt Pro</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Create professional PDF invoices with logo upload, itemized calculations, and PDF download.</p>
-                <a href="/tools/invoice_generator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Markdown Live Studio -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📝</span>
-                    <span class="value-badge batch">HTML Export</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Markdown Live Studio</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Write Markdown with real-time split preview, word counter, and 1-click HTML export.</p>
-                <a href="/tools/markdown_editor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- JSON Formatter & Validator -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">💻</span>
-                    <span class="value-badge batch">Tree Inspection</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">JSON Formatter & Validator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Prettify, validate, minify, and inspect JSON data structures with syntax highlighting.</p>
-                <a href="/tools/json_formatter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Base64 Encoder / Decoder -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔒</span>
-                    <span class="value-badge batch">Binary & Text</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Base64 Encoder / Decoder</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encode text and files into Base64 strings or decode Base64 back into raw data.</p>
-                <a href="/tools/base64_encoder.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- URL Encoder / Decoder -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔗</span>
-                    <span class="value-badge batch">Query Sanitizer</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">URL Encoder / Decoder</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encode special characters into URL percent-encoding or decode URL query strings.</p>
-                <a href="/tools/url_encoder.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Hash Generator (SHA256 / MD5) -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔑</span>
-                    <span class="value-badge batch">Crypto Hashes</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Hash Generator (SHA256 / MD5)</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate SHA-256, SHA-512, SHA-1, and MD5 cryptographic hashes for text or files.</p>
-                <a href="/tools/hash_generator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text Case Converter -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔤</span>
-                    <span class="value-badge batch">camel / snake</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Case Converter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert text case between UPPERCASE, lowercase, Title Case, camelCase, and snake_case.</p>
-                <a href="/tools/case_converter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text Diff & Comparison Tool -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">Side-by-Side</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Diff & Comparison Tool</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compare two text snippets or code files side-by-side to highlight line differences.</p>
-                <a href="/tools/text_diff.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Word & Character Counter -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📊</span>
-                    <span class="value-badge batch">Reading Time</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Word & Character Counter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Count words, characters, sentences, paragraphs, and estimated reading time.</p>
-                <a href="/tools/word_counter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Space & Line Cleaner -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🧹</span>
-                    <span class="value-badge batch">Whitespace Strip</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Space & Line Cleaner</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Remove extra whitespaces, trailing spaces, empty lines, and tabs from text.</p>
-                <a href="/tools/remove_spaces.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text Flipper & Reverser -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔄</span>
-                    <span class="value-badge batch">Mirror Text</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Flipper & Reverser</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reverse text characters, words, or lines for fun, encoding, or testing.</p>
-                <a href="/tools/reverse_text.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text Cleaner & Formatter -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📝</span>
-                    <span class="value-badge batch">Strip HTML</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Cleaner & Formatter</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Clean HTML tags, indent code, strip line breaks, and format raw text.</p>
-                <a href="/tools/text_formatter.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Text & Sentiment Analyzer -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🧠</span>
-                    <span class="value-badge batch">Density Analysis</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text & Sentiment Analyzer</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Analyze text readability scores, keyword density, and word frequency.</p>
-                <a href="/tools/text_analyzer.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Lorem Ipsum Generator -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📜</span>
-                    <span class="value-badge batch">Dummy Text</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Lorem Ipsum Generator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate custom placeholder text by paragraphs, words, or sentences for design.</p>
-                <a href="/tools/lorem_ipsum.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Batch File Processor -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📦</span>
-                    <span class="value-badge batch">Multi-File</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Batch File Processor</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Batch rename, compress, and convert multiple files in a single click.</p>
-                <a href="/tools/batch_processor.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Product Copy Generator -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🛒</span>
-                    <span class="value-badge batch">E-Commerce</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Product Copy Generator</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate high-converting e-commerce product titles and feature bullet points.</p>
-                <a href="/tools/auto-product-generator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Product Description Maker -->
-            <div class="tool-card filter-item cat-dev">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">📦</span>
-                    <span class="value-badge batch">SEO Copy</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Product Description Maker</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Create structured product descriptions and specs for online stores.</p>
-                <a href="/tools/product-generator.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Brain Teasers & Riddles -->
-            <div class="tool-card filter-item cat-games">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🧩</span>
-                    <span class="value-badge batch">Logic Puzzles</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Brain Teasers & Riddles</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Interactive daily logic riddles and brain teaser puzzles to train focus.</p>
-                <a href="/tools/brain_teasers.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Memory Matrix & Recall Game -->
-            <div class="tool-card filter-item cat-games">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🎮</span>
-                    <span class="value-badge batch">Cognitive Score</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Memory Matrix & Recall Game</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Test and train your visual memory with progressive pattern grids.</p>
-                <a href="/tools/memory_games.html" class="btn-tool-card">Open Tool</a>
-            </div>
-
-            <!-- Wordle & Vocab Challenge -->
-            <div class="tool-card filter-item cat-games">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-size: 2rem;">🔤</span>
-                    <span class="value-badge offline">Daily Wordle</span>
-                </div>
-                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Wordle & Vocab Challenge</h3>
-                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Daily 5-letter word puzzle challenge to improve vocabulary and focus.</p>
-                <a href="/tools/word_games.html" class="btn-tool-card">Open Tool</a>
-            </div>
-        </div>
-
-        <!-- Donation Banner -->
-        <div class="donation-banner-card">
-            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">Support Open Web Utilities</span>
-            <h3>Enjoying Our Free Utilities?</h3>
-            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Help us build more high-demand web utilities by supporting us!</p>
-            
-            <div class="donation-btn-group">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
-                    💳 Support via PayPal
-                </a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn-donate-gh">
-                    💖 GitHub Sponsors
-                </a>
-                <button onclick="openDonationModal()" class="btn-donate-crypto">
-                    🪙 Crypto / UPI Donation
-                </button>
-            </div>
-        </div>
-
-        <!-- Crypto Modal -->
-        <div id="donation-modal" class="modal-backdrop">
-            <div class="modal-content">
-                <button onclick="closeDonationModal()" class="modal-close-btn" aria-label="Close modal">&times;</button>
-                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;">Support Factictionary</h3>
-                <p style="color: var(--color-neutral-700); font-size: 0.95rem; margin-bottom: 20px;">Thank you for supporting privacy-first open web tools!</p>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">PayPal Me Link:</label>
-                    <div class="crypto-wallet-box">
-                        <span>https://paypal.me/mgarg1102</span>
-                        <button onclick="copyCryptoAddress(this, 'https://paypal.me/mgarg1102')" class="copy-wallet-btn">Copy Link</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Bitcoin (BTC) Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>bc1qfactictionarybtcwalletaddress2026</span>
-                        <button onclick="copyCryptoAddress(this, 'bc1qfactictionarybtcwalletaddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 16px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">Ethereum / USDT Address:</label>
-                    <div class="crypto-wallet-box">
-                        <span>0xFactictionaryEthUsdtWalletAddress2026</span>
-                        <button onclick="copyCryptoAddress(this, '0xFactictionaryEthUsdtWalletAddress2026')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="margin-bottom: 20px;">
-                    <label style="font-weight: 600; font-size: 0.85rem;">UPI / Direct ID:</label>
-                    <div class="crypto-wallet-box">
-                        <span>factictionary@upi</span>
-                        <button onclick="copyCryptoAddress(this, 'factictionary@upi')" class="copy-wallet-btn">Copy</button>
-                    </div>
-                </div>
-
-                <div style="text-align: center; border-top: 1px solid var(--color-neutral-200); padding-top: 16px;">
-                    <button onclick="closeDonationModal()" class="btn btn-secondary" style="border-radius: 20px;">Close</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer" style="margin-top: 60px;">
-        <div class="container text-center">
-            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
-        </div>
-    </footer>
-
-    <script src="/assets/js/main.js"></script>
-    <script>
-        function filterCategory(cat, btn) {
-            document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const cards = document.querySelectorAll('.tool-card');
-            cards.forEach(card => {
-                if (cat === 'all' || card.classList.contains(cat)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
-</body>
-</html>
-
+                <li><a href="/games/" class="nav-link">Games</a></li>
+
+                <li><a href="/about.html" class="nav-link">About</a></li>
+
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+
+                <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+
+    <main id="main" class="container" style="padding-top: 50px; padding-bottom: 80px; max-width: 1200px;">
+
+        <div class="text-center">
+
+            <div class="privacy-shield-bar">
+
+                <span class="pulse-dot"></span>
+
+                <span>0 Bytes Server Storage — 100% In-Browser Privacy Protection</span>
+
+            </div>
+
+
+
+            <h1 style="font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 800;">High-Demand <span style="color: var(--color-primary-500);">Web Utilities</span></h1>
+
+            <p class="lead-text" style="max-width: 650px; margin: 12px auto 0; color: var(--color-neutral-700);">
+
+                Instant browser tools designed for maximum privacy, batch file processing, and zero server uploads.
+
+            </p>
+
+
+
+            <!-- Search Bar -->
+
+            <div style="max-width: 600px; margin: 24px auto 0; position: relative;">
+
+                <input type="text" id="tool-search" class="hero-search-input" placeholder="🔍 Search utilities by name or keyword (e.g. merge, compress, background, json)..." style="padding-left: 24px;" aria-label="Search tools">
+
+            </div>
+
+
+
+            <!-- Category Filter Tabs -->
+
+            <div class="category-filter-nav">
+
+                <button class="cat-tab-btn active" onclick="filterCategory('all', this)">All Utilities (50+)</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-kdp', this)">📘 KDP Self-Publishing</button>
+                <button class="cat-tab-btn" onclick="filterCategory('cat-pdf', this)">📄 PDF Suite</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-image', this)">🖼️ Image Tools</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-video', this)">🎬 Video & GIF</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-audio', this)">🎵 Audio Studio</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-dev', this)">⚡ Dev & Text</button>
+
+                <button class="cat-tab-btn" onclick="filterCategory('cat-games', this)">🎮 Games & Focus</button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Tools Grid -->
+
+        <div class="grid grid-3" id="tools-catalog-grid" style="gap: 24px;">
+            <!-- KDP Cover & Spine PDF Generator -->
+            <div class="tool-card filter-item cat-kdp">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 2rem;">📐</span>
+                    <span class="value-badge batch">Paperback Cover</span>
+                </div>
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">KDP Cover & Spine PDF Generator</h3>
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate print-ready full-wrap paperback cover PDFs with auto-calculated spine width.</p>
+                <a href="/tools/kdp_cover_generator.html" class="btn-tool-card">Open Tool</a>
+            </div>
+
+            <!-- KDP Royalty & Printing Cost Calculator -->
+            <div class="tool-card filter-item cat-kdp">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 2rem;">💰</span>
+                    <span class="value-badge pro-preset">Royalty & Profit</span>
+                </div>
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">KDP Royalty & Printing Calculator</h3>
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Calculate Amazon KDP printing fees, 60% paperback royalties, and net profit margins.</p>
+                <a href="/tools/kdp_royalty_calculator.html" class="btn-tool-card">Open Tool</a>
+            </div>
+
+            <!-- KDP Spine Width Calculator -->
+            <div class="tool-card filter-item cat-kdp">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 2rem;">📏</span>
+                    <span class="value-badge offline">Spine Dimensions</span>
+                </div>
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">KDP Spine Width & Dimensions Calculator</h3>
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Calculate spine thickness, full wrap dimensions & text limits for paperback/hardcover.</p>
+                <a href="/tools/kdp_spine_calculator.html" class="btn-tool-card">Open Tool</a>
+            </div>
+
+            <!-- KDP 7-Backend Keywords & Description Formatter -->
+            <div class="tool-card filter-item cat-kdp">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-size: 2rem;">🔍</span>
+                    <span class="value-badge batch">SEO & Keywords</span>
+                </div>
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">KDP 7-Backend Keywords & HTML Formatter</h3>
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Format 7 backend search keyword boxes (50 char limit) & build clean Amazon KDP HTML descriptions.</p>
+                <a href="/tools/kdp_keyword_generator.html" class="btn-tool-card">Open Tool</a>
+            </div>
+
+
+            <!-- Custom Stylized QR Studio -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎨</span>
+
+                    <span class="value-badge pro-preset">WiFi / vCard</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Custom Stylized QR Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate custom QR codes for WiFi, vCard, WhatsApp, and URLs with high-res PNG export.</p>
+
+                <a href="/tools/qr_generator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- SVG to PNG / WebP Converter -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎨</span>
+
+                    <span class="value-badge offline">High DPI Scale</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">SVG to PNG / WebP Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert SVG vector files or raw SVG code to PNG, JPG, or WebP with resolution scaling.</p>
+
+                <a href="/tools/svg_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Background Remover -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🖼️</span>
+
+                    <span class="value-badge offline">AI On-Device</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Background Remover</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Automatically erase photo backgrounds with AI detection and transparent PNG export.</p>
+
+                <a href="/tools/image_background_remover.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Compressor & WebP -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">⚡</span>
+
+                    <span class="value-badge batch">Batch Convert</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Compressor & WebP</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compress JPEG/PNG files up to 90% without quality loss and export to modern WebP.</p>
+
+                <a href="/tools/image_compressor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Format Converter -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">PNG / JPG / WebP</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Format Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert images between PNG, JPG, WebP, GIF, and BMP formats instantly.</p>
+
+                <a href="/tools/image_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Resizer & Dimension Tool -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📐</span>
+
+                    <span class="value-badge batch">Aspect Lock</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Resizer & Dimension Tool</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Resize image dimensions by pixels or percentage with aspect ratio preservation.</p>
+
+                <a href="/tools/image_resizer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Cropper & Social Aspect -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✂ ️</span>
+
+                    <span class="value-badge pro-preset">Preset Aspect</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Cropper & Social Aspect</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Crop photos for Instagram (1:1), YouTube (16:9), and LinkedIn (4:5).</p>
+
+                <a href="/tools/image_cropper.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Enhancer & Sharpener -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✨</span>
+
+                    <span class="value-badge batch">Lighting & Clarity</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Enhancer & Sharpener</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Enhance photo lighting, sharpness, contrast, and color balance in your browser.</p>
+
+                <a href="/tools/image_enhancer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Filter & FX Studio -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎨</span>
+
+                    <span class="value-badge batch">Instant Filters</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Filter & FX Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply vintage, sepia, grayscale, blur, and color adjustment filters to photos.</p>
+
+                <a href="/tools/image_filters.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- HDR Photo Effect Generator -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🌅</span>
+
+                    <span class="value-badge batch">Tone Mapping</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">HDR Photo Effect Generator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Simulate high dynamic range (HDR) tone mapping on your photos.</p>
+
+                <a href="/tools/image_hdr.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Color Space Converter -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎨</span>
+
+                    <span class="value-badge batch">RGB / CMYK / HSL</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Color Space Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert image color spaces between RGB, HSL, Grayscale, and CMYK simulations.</p>
+
+                <a href="/tools/image_color_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Combiner & Photo Stitcher -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🧩</span>
+
+                    <span class="value-badge batch">Photo Collage</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Combiner & Photo Stitcher</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Combine multiple images vertically or horizontally into a single photo collage.</p>
+
+                <a href="/tools/image_stitcher.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image to PDF Converter -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📄</span>
+
+                    <span class="value-badge batch">Multi-Image PDF</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image to PDF Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert JPG, PNG, and WebP images into clean compiled PDF documents.</p>
+
+                <a href="/tools/image_to_pdf.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Image Watermark Protection -->
+
+            <div class="tool-card filter-item cat-image">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🏷️</span>
+
+                    <span class="value-badge batch">Logo / Text</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Image Watermark Protection</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply custom logo stamps or text watermarks across photos.</p>
+
+                <a href="/tools/image_watermark.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Merger & Combiner -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📄</span>
+
+                    <span class="value-badge batch">Batch Mode</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Merger & Combiner</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Merge multiple PDF documents into a single file with custom page reordering.</p>
+
+                <a href="/tools/pdf_merger.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Compressor -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📉</span>
+
+                    <span class="value-badge pro-preset">DPI Presets</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Compressor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reduce PDF file sizes for email attachments and web upload limits.</p>
+
+                <a href="/tools/pdf_compressor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF OCR Text Extractor -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔍</span>
+
+                    <span class="value-badge batch">Tesseract OCR</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF OCR Text Extractor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract searchable text from scanned PDF documents and image files.</p>
+
+                <a href="/tools/pdf_ocr.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Splitter & Page Extractor -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✂ ️</span>
+
+                    <span class="value-badge batch">Page Range</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Splitter & Page Extractor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Split PDF files into individual pages or extract specific page ranges.</p>
+
+                <a href="/tools/pdf_splitter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Page Rotator -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">90° / 180°</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Page Rotator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Rotate PDF pages clockwise, counter-clockwise, or invert pages permanently.</p>
+
+                <a href="/tools/pdf_rotator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF to Image Converter -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🖼️</span>
+
+                    <span class="value-badge batch">PNG / JPG</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF to Image Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert PDF document pages into high-quality PNG or JPG image files.</p>
+
+                <a href="/tools/pdf_to_image.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Watermark Tool -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🏷️</span>
+
+                    <span class="value-badge batch">Custom Text</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Watermark Tool</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add text or image watermarks to protect your PDF documents.</p>
+
+                <a href="/tools/pdf_watermark.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Password Protect / Unlock -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔒</span>
+
+                    <span class="value-badge batch">AES Encrypt</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Password Protect / Unlock</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encrypt PDF files with passwords or unlock protected documents.</p>
+
+                <a href="/tools/pdf_password.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Metadata Tag Editor -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📋</span>
+
+                    <span class="value-badge batch">Tag Editor</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Metadata Tag Editor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">View and edit PDF title, author, subject, keywords, and creation tags.</p>
+
+                <a href="/tools/pdf_metadata.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Bookmark Manager -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔖</span>
+
+                    <span class="value-badge batch">TOC Manager</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Bookmark Manager</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add, edit, or clean outline bookmarks and tables of contents in PDFs.</p>
+
+                <a href="/tools/pdf_bookmark.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- PDF Document Analyzer -->
+
+            <div class="tool-card filter-item cat-pdf">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📊</span>
+
+                    <span class="value-badge batch">Font & Structure</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">PDF Document Analyzer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Analyze PDF font embedding, page dimensions, color spaces, and file health.</p>
+
+                <a href="/tools/pdf_analyzer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Screen & Webcam Recorder -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📹</span>
+
+                    <span class="value-badge batch">Zero Watermark</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Screen & Webcam Recorder</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Record screen, browser tabs, or webcam with audio. No time limits or watermarks.</p>
+
+                <a href="/tools/screen_recorder.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Trimmer & Cutter -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✂ ️</span>
+
+                    <span class="value-badge batch">Precision Cut</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Trimmer & Cutter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Trim and cut video start/end points with real-time preview playback.</p>
+
+                <a href="/tools/video_trimmer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Compressor -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📉</span>
+
+                    <span class="value-badge batch">FFmpeg Wasm</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Compressor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reduce video file sizes for Discord, email, and web publishing limits.</p>
+
+                <a href="/tools/video_compressor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Format Converter -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">MP4 / WebM / AVI</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Format Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert video files between MP4, WebM, AVI, and MOV formats.</p>
+
+                <a href="/tools/video_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video to Animated GIF Maker -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎞️</span>
+
+                    <span class="value-badge batch">FPS Control</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video to Animated GIF Maker</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert video clips into animated GIF files with custom frame rate controls.</p>
+
+                <a href="/tools/video_to_gif.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Audio Extractor -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔊</span>
+
+                    <span class="value-badge batch">MP3 / WAV</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Audio Extractor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract sound and background music from video files into MP3 or WAV audio.</p>
+
+                <a href="/tools/video_audio_extractor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Resizer & Aspect Crop -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📐</span>
+
+                    <span class="value-badge batch">Reels (9:16)</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Resizer & Aspect Crop</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Resize video dimensions for TikTok (9:16), YouTube (16:9), and Instagram.</p>
+
+                <a href="/tools/video_resizer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Rotator & Flip Tool -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">90° / 180°</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Rotator & Flip Tool</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Rotate sideways video clips 90°, 180°, 270°, or flip horizontally.</p>
+
+                <a href="/tools/video_rotation.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Speed & Slow-Mo Studio -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">⏩</span>
+
+                    <span class="value-badge batch">0.25x to 4x</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Speed & Slow-Mo Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Speed up videos or create smooth slow-motion clips with pitch preservation.</p>
+
+                <a href="/tools/video_speed.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Loop Creator -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔁</span>
+
+                    <span class="value-badge batch">Seamless Loop</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Loop Creator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Repeat video clips seamlessly for social media stories and background screens.</p>
+
+                <a href="/tools/video_looper.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Filter & Color Studio -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎨</span>
+
+                    <span class="value-badge batch">Visual FX</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Filter & Color Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply visual color filters, saturation, contrast, and brightness to video clips.</p>
+
+                <a href="/tools/video_filter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Subtitle & Caption Tool -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">💬</span>
+
+                    <span class="value-badge batch">SRT / VTT</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Subtitle & Caption Tool</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Add, edit, and burn subtitles into video clips or export SRT captions.</p>
+
+                <a href="/tools/video_subtitle.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Quality Enhancer -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✨</span>
+
+                    <span class="value-badge batch">Clarity & FX</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Quality Enhancer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Enhance video clarity, contrast, and noise reduction in your browser.</p>
+
+                <a href="/tools/video_enhancer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Thumbnail Frame Grabber -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🖼️</span>
+
+                    <span class="value-badge batch">PNG Snapshot</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Thumbnail Frame Grabber</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Capture high-resolution still frame images from any video file.</p>
+
+                <a href="/tools/video_preview.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Watermark Protection -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🏷️</span>
+
+                    <span class="value-badge batch">Logo Overlay</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Watermark Protection</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Overlay custom text or transparent PNG logos across video clips.</p>
+
+                <a href="/tools/video_watermark.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Video Joiner & Merger -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎞️</span>
+
+                    <span class="value-badge batch">Sequence Merge</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Video Joiner & Merger</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Combine multiple video clips into a single continuous video file.</p>
+
+                <a href="/tools/video_merger.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- GIF & Video Frame Extractor -->
+
+            <div class="tool-card filter-item cat-video">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎞️</span>
+
+                    <span class="value-badge batch">Zip Export</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">GIF & Video Frame Extractor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Extract all individual image frames from GIFs or video clips into a ZIP file.</p>
+
+                <a href="/tools/frame_extractor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text-to-Speech Voice Reader -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🗣️</span>
+
+                    <span class="value-badge batch">Natural Voices</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text-to-Speech Voice Reader</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Read text aloud using natural browser voices with customizable pitch and speech rate.</p>
+
+                <a href="/tools/text_to_speech.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Format Converter -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎵</span>
+
+                    <span class="value-badge batch">MP3 / WAV / OGG</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Format Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert audio files between MP3, WAV, OGG, M4A, and AAC formats.</p>
+
+                <a href="/tools/audio_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Trimmer & Ringtone Cutter -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">✂ ️</span>
+
+                    <span class="value-badge batch">Waveform Cut</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Trimmer & Ringtone Cutter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Cut audio files, create ringtones, and trim silence with visual waveform playback.</p>
+
+                <a href="/tools/audio_trimmer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Track Mixer Studio -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎛️</span>
+
+                    <span class="value-badge batch">Multi-Track</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Track Mixer Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Mix multiple audio tracks, adjust individual volume levels, and export composite sound.</p>
+
+                <a href="/tools/audio_mixer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Waveform Editor -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎶</span>
+
+                    <span class="value-badge offline">Gain & Fade</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Waveform Editor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Edit audio waveforms, apply fade-in/fade-out, and adjust master gain.</p>
+
+                <a href="/tools/audio_editor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio FX & 10-Band Equalizer -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎚️</span>
+
+                    <span class="value-badge batch">Bass Boost EQ</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio FX & 10-Band Equalizer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Apply 10-band equalizer presets, reverb, bass boost, and treble adjustments.</p>
+
+                <a href="/tools/audio_effects.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Volume Normalizer -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔊</span>
+
+                    <span class="value-badge offline">Peak Gain</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Volume Normalizer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Normalize audio volume levels to prevent quiet tracks or clipping distortion.</p>
+
+                <a href="/tools/audio_normalizer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Speed & Pitch Changer -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">⚡</span>
+
+                    <span class="value-badge batch">Pitch Lock</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Speed & Pitch Changer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Change playback tempo and pitch independently for music and voice clips.</p>
+
+                <a href="/tools/audio_speed_changer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Audio Spectrum Analyzer -->
+
+            <div class="tool-card filter-item cat-audio">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📊</span>
+
+                    <span class="value-badge batch">FFT Visualizer</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Audio Spectrum Analyzer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Visualize audio frequencies, peak decibels, and spectrum analysis in real-time.</p>
+
+                <a href="/tools/audio_analyzer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- ATS Resume & CV Matcher -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📄</span>
+
+                    <span class="value-badge batch">ATS Score %</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">ATS Resume & CV Matcher</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compare resumes against job descriptions, calculate match %, and highlight missing keywords.</p>
+
+                <a href="/tools/ats_resume_matcher.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Instant Invoice & Receipt Pro -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🧾</span>
+
+                    <span class="value-badge pro-preset">Save Profile</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Instant Invoice & Receipt Pro</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Create professional PDF invoices with logo upload, itemized calculations, and PDF download.</p>
+
+                <a href="/tools/invoice_generator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Markdown Live Studio -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📝</span>
+
+                    <span class="value-badge batch">HTML Export</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Markdown Live Studio</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Write Markdown with real-time split preview, word counter, and 1-click HTML export.</p>
+
+                <a href="/tools/markdown_editor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- JSON Formatter & Validator -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">💻</span>
+
+                    <span class="value-badge batch">Tree Inspection</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">JSON Formatter & Validator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Prettify, validate, minify, and inspect JSON data structures with syntax highlighting.</p>
+
+                <a href="/tools/json_formatter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Base64 Encoder / Decoder -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔒</span>
+
+                    <span class="value-badge batch">Binary & Text</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Base64 Encoder / Decoder</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encode text and files into Base64 strings or decode Base64 back into raw data.</p>
+
+                <a href="/tools/base64_encoder.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- URL Encoder / Decoder -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔗</span>
+
+                    <span class="value-badge batch">Query Sanitizer</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">URL Encoder / Decoder</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Encode special characters into URL percent-encoding or decode URL query strings.</p>
+
+                <a href="/tools/url_encoder.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Hash Generator (SHA256 / MD5) -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔑</span>
+
+                    <span class="value-badge batch">Crypto Hashes</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Hash Generator (SHA256 / MD5)</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate SHA-256, SHA-512, SHA-1, and MD5 cryptographic hashes for text or files.</p>
+
+                <a href="/tools/hash_generator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text Case Converter -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔤</span>
+
+                    <span class="value-badge batch">camel / snake</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Case Converter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Convert text case between UPPERCASE, lowercase, Title Case, camelCase, and snake_case.</p>
+
+                <a href="/tools/case_converter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text Diff & Comparison Tool -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">Side-by-Side</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Diff & Comparison Tool</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Compare two text snippets or code files side-by-side to highlight line differences.</p>
+
+                <a href="/tools/text_diff.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Word & Character Counter -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📊</span>
+
+                    <span class="value-badge batch">Reading Time</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Word & Character Counter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Count words, characters, sentences, paragraphs, and estimated reading time.</p>
+
+                <a href="/tools/word_counter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Space & Line Cleaner -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🧹</span>
+
+                    <span class="value-badge batch">Whitespace Strip</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Space & Line Cleaner</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Remove extra whitespaces, trailing spaces, empty lines, and tabs from text.</p>
+
+                <a href="/tools/remove_spaces.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text Flipper & Reverser -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔄</span>
+
+                    <span class="value-badge batch">Mirror Text</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Flipper & Reverser</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Reverse text characters, words, or lines for fun, encoding, or testing.</p>
+
+                <a href="/tools/reverse_text.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text Cleaner & Formatter -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📝</span>
+
+                    <span class="value-badge batch">Strip HTML</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text Cleaner & Formatter</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Clean HTML tags, indent code, strip line breaks, and format raw text.</p>
+
+                <a href="/tools/text_formatter.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Text & Sentiment Analyzer -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🧠</span>
+
+                    <span class="value-badge batch">Density Analysis</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Text & Sentiment Analyzer</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Analyze text readability scores, keyword density, and word frequency.</p>
+
+                <a href="/tools/text_analyzer.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Lorem Ipsum Generator -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📜</span>
+
+                    <span class="value-badge batch">Dummy Text</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Lorem Ipsum Generator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate custom placeholder text by paragraphs, words, or sentences for design.</p>
+
+                <a href="/tools/lorem_ipsum.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Batch File Processor -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📦</span>
+
+                    <span class="value-badge batch">Multi-File</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Batch File Processor</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Batch rename, compress, and convert multiple files in a single click.</p>
+
+                <a href="/tools/batch_processor.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Product Copy Generator -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🛒</span>
+
+                    <span class="value-badge batch">E-Commerce</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Product Copy Generator</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Generate high-converting e-commerce product titles and feature bullet points.</p>
+
+                <a href="/tools/auto-product-generator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Product Description Maker -->
+
+            <div class="tool-card filter-item cat-dev">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">📦</span>
+
+                    <span class="value-badge batch">SEO Copy</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Product Description Maker</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Create structured product descriptions and specs for online stores.</p>
+
+                <a href="/tools/product-generator.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Brain Teasers & Riddles -->
+
+            <div class="tool-card filter-item cat-games">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🧩</span>
+
+                    <span class="value-badge batch">Logic Puzzles</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Brain Teasers & Riddles</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Interactive daily logic riddles and brain teaser puzzles to train focus.</p>
+
+                <a href="/tools/brain_teasers.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Memory Matrix & Recall Game -->
+
+            <div class="tool-card filter-item cat-games">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🎮</span>
+
+                    <span class="value-badge batch">Cognitive Score</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Memory Matrix & Recall Game</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Test and train your visual memory with progressive pattern grids.</p>
+
+                <a href="/tools/memory_games.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+
+
+            <!-- Wordle & Vocab Challenge -->
+
+            <div class="tool-card filter-item cat-games">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+
+                    <span style="font-size: 2rem;">🔤</span>
+
+                    <span class="value-badge offline">Daily Wordle</span>
+
+                </div>
+
+                <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Wordle & Vocab Challenge</h3>
+
+                <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Daily 5-letter word puzzle challenge to improve vocabulary and focus.</p>
+
+                <a href="/tools/word_games.html" class="btn-tool-card">Open Tool</a>
+
+            </div>
+
+        </div>
+
+
+
+                        <!-- Donation Banner -->
+        <div class="donation-banner-card">
+            <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
+            <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
+            <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
+            
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px;">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-razorpay">
+                    ⚡ Pay via UPI / GPay / PhonePe / Cards
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-paypal">
+                    💳 Support via PayPal
+                </a>
+                <button onclick="openDonationModal()" class="btn btn-secondary" style="border-radius: 30px; font-size: 13.5px; font-weight: 700;">
+                    ☕ More Support Options
+                </button>
+            </div>
+        </div>
+
+</main>
+
+
+
+    <footer class="footer" style="margin-top: 60px;">
+
+        <div class="container text-center">
+
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script src="/assets/js/main.js"></script>
+
+    <script>
+
+        function filterCategory(cat, btn) {
+
+            document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+
+            btn.classList.add('active');
+
+
+
+            const cards = document.querySelectorAll('.tool-card');
+
+            cards.forEach(card => {
+
+                if (cat === 'all' || card.classList.contains(cat)) {
+
+                    card.style.display = 'flex';
+
+                } else {
+
+                    card.style.display = 'none';
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+
+
