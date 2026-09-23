@@ -65,6 +65,11 @@ jobs:
             ../website-repo \
             --decrypt
 
+      - name: Update Sitemap
+        working-directory: website-repo
+        run: |
+          python scripts/generate_sitemap.py
+
       - name: Commit and push to website repo
         working-directory: website-repo
         run: |

@@ -1,1688 +1,226 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
-
-
 <head>
-
-
     <meta charset="UTF-8">
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>Brain Teasers | Free Browser Tool | Factictionary</title>
-
-
-    
-
-
-    <!-- SEO Meta Tags -->
-
-
-    <meta name="description" content="Challenge your mind with puzzles, logic games, and brain-training exercises designed to boost cognitive skills. - Professional browser-based tool. No uploads required, 100% privacy-protected.">
-
-
-    <meta name="keywords" content="browser tool, brain teasers, games, free, online, privacy-first">
-
-
+    <title>Logic & Brain Teasers Suite | Free Browser Games | Factictionary</title>
+    <meta name="description" content="Play free, privacy-first browser logic games: 15-Slide Tile Puzzle, Speed Math Brain Challenge, and Interactive Logic Riddles. 100% free, no downloads required.">
+    <meta name="keywords" content="brain teasers, 15 puzzle, sliding tile puzzle, math logic games, logic riddles, brain games, focus tools">
     <meta name="author" content="Factictionary Team">
-
-
-    <meta name="robots" content="index, follow">
-
-
     <link rel="canonical" href="https://factictionary.github.io/tools/brain_teasers.html">
-
-
-    
-
-
-    <!-- Open Graph Tags -->
-
-
-    <meta property="og:title" content="Brain Teasers | Factictionary Tools">
-
-
-    <meta property="og:description" content="Challenge your mind with puzzles, logic games, and brain-training exercises designed to boost cognitive skills. - 100% privacy-protected.">
-
-
-    <meta property="og:type" content="website">
-
-
-    <meta property="og:url" content="https://factictionary.github.io/tools/brain_teasers.html">
-
-
-    <meta property="og:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-
-
-    
-
-
-    <!-- Twitter Card Tags -->
-
-
-    <meta name="twitter:card" content="summary_large_image">
-
-
-    <meta name="twitter:title" content="Brain Teasers | Factictionary Tools">
-
-
-    <meta name="twitter:description" content="Challenge your mind with puzzles, logic games, and brain-training exercises designed to boost cognitive skills. - 100% privacy-protected.">
-
-
-    <meta name="twitter:image" content="https://factictionary.github.io/assets/images/modern_technology_innovation_circuit_board_illustration.jpg">
-
-
-    
-
-
-    <!-- Fonts -->
-
-
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-    
-
-
-    <!-- Styles -->
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
 
-
-    
-
-
-    <!-- Tool-specific styles -->
-
-
     <style>
-
-
-        .tool-header {
-
-
-            background: linear-gradient(135deg, #8B5CF6 0%, #8B5CF6CC 100%);
-
-
-            color: white;
-
-
-            padding: 16px 20px;
-
-
-            text-align: center;
-
-
-            
-
-
-            
-
-
-        }
-
-
-        
-
-
-        .tool-title {
-
-
-            font-size: var(--font-size-title);
-
-
-            font-weight: var(--font-weight-bold);
-
-
-            margin-bottom: var(--spacing-md);
-
-
-            line-height: var(--line-height-tight);
-
-
-        }
-
-
-        
-
-
-        .tool-subtitle {
-
-
-            font-size: var(--font-size-subtitle);
-
-
-            font-weight: var(--font-weight-medium);
-
-
-            opacity: 0.9;
-
-
-            margin-bottom: var(--spacing-xl);
-
-
-        }
-
-
-        
-
-
-        .tool-main {
-
-
-            max-width: 1400px;
-
-
-            margin: 0 auto;
-
-
-            padding: var(--spacing-3xl) var(--spacing-lg);
-
-
-            display: grid;
-
-
-            grid-template-columns: 2fr 1fr;
-
-
-            gap: var(--spacing-3xl);
-
-
-        }
-
-
-        
-
-
-        .tool-workspace {
-
-
-            background: var(--color-surface);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-2xl);
-
-
-            box-shadow: var(--shadow-card);
-
-
-            min-height: 600px;
-
-
-        }
-
-
-        
-
-
-        .tool-sidebar {
-
-
+        .game-tabs {
             display: flex;
-
-
-            flex-direction: column;
-
-
-            gap: var(--spacing-lg);
-
-
-        }
-
-
-        
-
-
-        .tool-info {
-
-
-            background: var(--color-surface);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-xl);
-
-
-            box-shadow: var(--shadow-card);
-
-
-        }
-
-
-        
-
-
-        .tool-info h3 {
-
-
-            font-size: var(--font-size-body-large);
-
-
-            font-weight: var(--font-weight-semibold);
-
-
-            color: var(--color-neutral-900);
-
-
-            margin-bottom: var(--spacing-md);
-
-
-        }
-
-
-        
-
-
-        .tool-feature {
-
-
-            display: flex;
-
-
-            align-items: flex-start;
-
-
-            gap: var(--spacing-sm);
-
-
-            margin-bottom: var(--spacing-sm);
-
-
-        }
-
-
-        
-
-
-        .tool-feature-icon {
-
-
-            color: #8B5CF6;
-
-
-            font-weight: var(--font-weight-bold);
-
-
-            margin-top: 2px;
-
-
-        }
-
-
-        
-
-
-        .tool-feature-text {
-
-
-            color: var(--color-neutral-700);
-
-
-            font-size: var(--font-size-small);
-
-
-        }
-
-
-        
-
-
-        .drop-zone {
-
-
-            border: 3px dashed #8B5CF640;
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-3xl);
-
-
-            text-align: center;
-
-
-            background: #F5F3FF;
-
-
-            transition: all var(--duration-standard) var(--easing-standard);
-
-
-            margin-bottom: var(--spacing-xl);
-
-
-        }
-
-
-        
-
-
-        .drop-zone:hover,
-
-
-        .drop-zone.drag-over {
-
-
-            border-color: #8B5CF6;
-
-
-            background: #F5F3FFCC;
-
-
-        }
-
-
-        
-
-
-        .drop-zone-icon {
-
-
-            font-size: 4rem;
-
-
-            color: #8B5CF6;
-
-
-            margin-bottom: var(--spacing-md);
-
-
-        }
-
-
-        
-
-
-        .drop-zone-text {
-
-
-            font-size: var(--font-size-body);
-
-
-            color: var(--color-neutral-600);
-
-
-            margin-bottom: var(--spacing-lg);
-
-
-        }
-
-
-        
-
-
-        .btn-file-input {
-
-
-            background: #8B5CF6;
-
-
-            color: white;
-
-
-            border: none;
-
-
-            padding: var(--spacing-md) var(--spacing-xl);
-
-
-            border-radius: var(--radius-button);
-
-
-            font-size: var(--font-size-body);
-
-
-            font-weight: var(--font-weight-medium);
-
-
-            cursor: pointer;
-
-
-            transition: background-color var(--duration-fast) var(--easing-standard);
-
-
-        }
-
-
-        
-
-
-        .btn-file-input:hover {
-
-
-            background: #8B5CF6E6;
-
-
-        }
-
-
-        
-
-
-        .tool-controls {
-
-
-            background: var(--color-neutral-50);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-xl);
-
-
-            margin-bottom: var(--spacing-xl);
-
-
-        }
-
-
-        
-
-
-        .control-group {
-
-
-            margin-bottom: var(--spacing-lg);
-
-
-        }
-
-
-        
-
-
-        .control-label {
-
-
-            display: block;
-
-
-            font-weight: var(--font-weight-semibold);
-
-
-            color: var(--color-neutral-700);
-
-
-            margin-bottom: var(--spacing-xs);
-
-
-        }
-
-
-        
-
-
-        .control-input {
-
-
-            width: 100%;
-
-
-            padding: var(--spacing-sm) var(--spacing-md);
-
-
-            border: 2px solid var(--color-neutral-200);
-
-
-            border-radius: var(--radius-input);
-
-
-            font-size: var(--font-size-body);
-
-
-            transition: border-color var(--duration-fast) var(--easing-standard);
-
-
-        }
-
-
-        
-
-
-        .control-input:focus {
-
-
-            outline: none;
-
-
-            border-color: #8B5CF6;
-
-
-        }
-
-
-        
-
-
-        .control-slider {
-
-
-            width: 100%;
-
-
-            margin: var(--spacing-sm) 0;
-
-
-        }
-
-
-        
-
-
-        .control-slider input[type="range"] {
-
-
-            width: 100%;
-
-
-            height: 8px;
-
-
-            background: var(--color-neutral-200);
-
-
-            border-radius: 4px;
-
-
-            outline: none;
-
-
-            opacity: 0.7;
-
-
-            transition: opacity 0.2s;
-
-
-        }
-
-
-        
-
-
-        .control-slider input[type="range"]:hover {
-
-
-            opacity: 1;
-
-
-        }
-
-
-        
-
-
-        .control-slider input[type="range"]::-webkit-slider-thumb {
-
-
-            appearance: none;
-
-
-            width: 20px;
-
-
-            height: 20px;
-
-
-            background: #8B5CF6;
-
-
-            border-radius: 50%;
-
-
-            cursor: pointer;
-
-
-        }
-
-
-        
-
-
-        .control-slider input[type="range"]::-moz-range-thumb {
-
-
-            width: 20px;
-
-
-            height: 20px;
-
-
-            background: #8B5CF6;
-
-
-            border-radius: 50%;
-
-
-            cursor: pointer;
-
-
-            border: none;
-
-
-        }
-
-
-        
-
-
-        .tool-output {
-
-
-            background: var(--color-neutral-50);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-xl);
-
-
-            margin-bottom: var(--spacing-xl);
-
-
-            min-height: 200px;
-
-
-            display: none;
-
-
-        }
-
-
-        
-
-
-        .output-preview {
-
-
-            max-width: 100%;
-
-
-            max-height: 400px;
-
-
-            border-radius: var(--radius-card);
-
-
-        }
-
-
-        
-
-
-        .output-text {
-
-
-            background: white;
-
-
-            border: 1px solid var(--color-neutral-200);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-lg);
-
-
-            font-family: monospace;
-
-
-            white-space: pre-wrap;
-
-
-            word-wrap: break-word;
-
-
-            max-height: 300px;
-
-
-            overflow-y: auto;
-
-
-        }
-
-
-        
-
-
-        .tool-actions {
-
-
-            display: flex;
-
-
-            gap: var(--spacing-md);
-
-
-            justify-content: center;
-
-
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-
-
-        }
-
-
-        
-
-
-        .btn-tool {
-
-
-            background: var(--color-neutral-900);
-
-
-            color: white;
-
-
-            border: none;
-
-
-            padding: var(--spacing-md) var(--spacing-xl);
-
-
-            border-radius: var(--radius-button);
-
-
-            font-size: var(--font-size-body);
-
-
-            font-weight: var(--font-weight-medium);
-
-
-            cursor: pointer;
-
-
-            transition: all var(--duration-fast) var(--easing-standard);
-
-
-            min-width: 120px;
-
-
-        }
-
-
-        
-
-
-        .btn-tool:hover {
-
-
-            background: var(--color-neutral-700);
-
-
-            transform: translateY(-1px);
-
-
-        }
-
-
-        
-
-
-        .btn-tool:disabled {
-
-
-            background: var(--color-neutral-400);
-
-
-            cursor: not-allowed;
-
-
-            transform: none;
-
-
-        }
-
-
-        
-
-
-        .privacy-badge {
-
-
-            background: var(--color-success);
-
-
-            color: white;
-
-
-            padding: var(--spacing-xs) var(--spacing-sm);
-
-
-            border-radius: var(--radius-button);
-
-
-            font-size: var(--font-size-small);
-
-
-            font-weight: var(--font-weight-medium);
-
-
-            display: inline-flex;
-
-
-            align-items: center;
-
-
-            gap: var(--spacing-xs);
-
-
-        }
-
-
-        
-
-
-        .stats-grid {
-
-
-            display: grid;
-
-
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-
-
-            gap: var(--spacing-md);
-
-
-            margin-top: var(--spacing-xl);
-
-
-        }
-
-
-        
-
-
-        .stat-card {
-
-
-            background: var(--color-surface);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-lg);
-
-
-            text-align: center;
-
-
-            box-shadow: var(--shadow-card);
-
-
-        }
-
-
-        
-
-
-        .stat-number {
-
-
-            font-size: var(--font-size-title);
-
-
-            font-weight: var(--font-weight-bold);
-
-
-            color: #8B5CF6;
-
-
-            margin-bottom: var(--spacing-xs);
-
-
-        }
-
-
-        
-
-
-        .stat-label {
-
-
-            color: var(--color-neutral-600);
-
-
-            font-size: var(--font-size-small);
-
-
-        }
-
-
-        
-
-
-        .adsense-tool {
-
-
-            background: var(--color-neutral-100);
-
-
-            border: 2px dashed var(--color-neutral-300);
-
-
-            border-radius: var(--radius-card);
-
-
-            padding: var(--spacing-lg);
-
-
-            text-align: center;
-
-
-            color: var(--color-neutral-500);
-
-
-            font-size: var(--font-size-small);
-
-
-            min-height: 200px;
-
-
-            display: flex;
-
-
-            align-items: center;
-
-
             justify-content: center;
-
-
+        }
+        .game-tab-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--color-neutral-200);
+            background: white;
+            color: var(--color-neutral-700);
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .game-tab-btn:hover { background: #F1F5F9; border-color: #CBD5E1; }
+        .game-tab-btn.active {
+            background: #10B981;
+            color: white;
+            border-color: #10B981;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
 
-
-        
-
-
-        /* Responsive Design */
-
-
-        @media (max-width: 768px) {
-
-
-            .tool-main {
-
-
-                grid-template-columns: 1fr;
-
-
-                padding: var(--spacing-lg) var(--spacing-sm);
-
-
-            }
-
-
-            
-
-
-            .tool-title {
-
-
-                font-size: var(--font-size-subtitle);
-
-
-            }
-
-
-            
-
-
-            .tool-actions {
-
-
-                flex-direction: column;
-
-
-            }
-
-
-            
-
-
-            .btn-tool {
-
-
-                width: 100%;
-
-
-            }
-
-
+        .game-card-container {
+            background: white;
+            border: 1px solid var(--color-neutral-200);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            text-align: center;
         }
 
-
-        
-
-
-        @media (max-width: 480px) {
-
-
-            .tool-header {
-
-
-                padding: var(--spacing-2xl) var(--spacing-sm);
-
-
-                
-
-
-            }
-
-
-            
-
-
-            .tool-workspace {
-
-
-                padding: var(--spacing-lg);
-
-
-            }
-
-
+        /* 15 Puzzle Grid */
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-width: 340px;
+            margin: 20px auto;
+            background: #0F172A;
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .puzzle-tile {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #0066FF 0%, #0044CC 100%);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.15s ease, background 0.2s;
+        }
+        .puzzle-tile:hover { transform: scale(0.97); }
+        .puzzle-tile.empty {
+            background: transparent;
+            cursor: default;
         }
 
-
+        .game-status-msg {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 12px 0;
+            min-height: 28px;
+        }
     </style>
-
-
-    
-
-
-    <!-- Structured Data -->
-
-
-    <script type="application/ld+json">
-
-
-    {
-
-
-        "@context": "https://schema.org",
-
-
-        "@type": "SoftwareApplication",
-
-
-        "name": "Brain Teasers",
-
-
-        "description": "Challenge your mind with puzzles, logic games, and brain-training exercises designed to boost cognitive skills.",
-
-
-        "applicationCategory": "UtilityApplication",
-
-
-        "operatingSystem": "Web Browser",
-
-
-        "offers": {
-
-
-            "@type": "Offer",
-
-
-            "price": "0",
-
-
-            "priceCurrency": "USD"
-
-
-        },
-
-
-        "provider": {
-
-
-            "@type": "Organization",
-
-
-            "name": "Factictionary"
-
-
-        },
-
-
-        "aggregateRating": {
-
-
-            "@type": "AggregateRating",
-
-
-            "ratingValue": "4.8",
-
-
-            "reviewCount": "1250"
-
-
-        }
-
-
-    }
-
-
-    </script>
-
-
 </head>
-
-
 <body>
-
-
-    <!-- Skip to main content -->
-
-
-    <a href="#main" class="skip-link">Skip to main content</a>
-
-
-    
-
-
-    <!-- Navigation -->
-
-
-            <nav class="navbar" role="navigation">
-
-
+    <nav class="navbar" role="navigation">
         <div class="nav-container">
-
-
             <a href="/" class="logo">Factictionary</a>
-
-
             <ul class="nav-links">
-
-
                 <li><a href="/" class="nav-link">Home</a></li>
-
-
                 <li><a href="/blog/" class="nav-link">Articles</a></li>
-
-
                 <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-
-
+                <li><a href="/games/" class="nav-link">Games</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
-
-
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
-
-
                 <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-
-
             </ul>
-
-
-            <button class="menu-toggle" aria-label="Toggle menu">
-
-
-                <span></span>
-
-
-                <span></span>
-
-
-                <span></span>
-
-
-            </button>
-
-
         </div>
-
-
     </nav>
 
-
-
-
-
-    <!-- Mobile Menu Drawer -->
-
-
     <div class="mobile-menu-backdrop"></div>
-
-
     <div class="mobile-menu">
-
-
         <ul class="nav-links">
-
-
             <li><a href="/" class="nav-link">Home</a></li>
-
-
             <li><a href="/blog/" class="nav-link">Articles</a></li>
-
-
             <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
-
-
+            <li><a href="/games/" class="nav-link">Games</a></li>
             <li><a href="/about.html" class="nav-link">About</a></li>
-
-
             <li><a href="/contact.html" class="nav-link">Contact</a></li>
-
-
             <li><a href="/privacy.html" class="nav-link">Privacy</a></li>
-
-
         </ul>
-
-
-    </div><!-- Tool Header -->
-
+    </div>
 
     <header class="tool-header">
-
-
-        <h1 class="tool-title">Brain Teasers</h1>
-
-
-        <p class="tool-subtitle">Challenge your mind with puzzles, logic games, and brain-training exercises designed to boost cognitive skills.</p>
-
-
-        <div class="privacy-badge">
-
-
-            🔒 100% Privacy Protected
-
-
+        <h1 class="tool-title">💡 Logic & Brain Teasers Suite</h1>
+        <p class="tool-subtitle">Exercise your logical reasoning, problem-solving, and mental agility with 100% free interactive brain puzzles.</p>
+        <div class="privacy-badge">🔒 100% Client-Side In-Browser Gameplay</div>
+        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 10px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="openShareModal()" style="padding: 6px 14px; font-size: 0.85rem; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;">
+                🔗 Share Game / Screenshot
+            </button>
         </div>
-
-
     </header>
 
-
-    
-
-
-    <!-- Main Tool Content -->
-
-
     <main id="main" class="tool-main">
-
-
-            <div class="privacy-shield-bar">
-
-
-                <span class="pulse-dot"></span>
-
-
-                <span>0 Bytes Uploaded — 100% Client-Side In-Browser Processing</span>
-
-
-            </div>
-
-
-        <!-- Tool Workspace -->
-
+        <div class="privacy-shield-bar">
+            <span class="pulse-dot"></span>
+            <span>0 Bytes Uploaded — 100% Browser Interactive Processing</span>
+        </div>
 
         <section class="tool-workspace">
+            <div class="game-tabs">
+                <button class="game-tab-btn active" onclick="switchGame('slide')">🧩 15-Slide Tile Puzzle</button>
+                <button class="game-tab-btn" onclick="switchGame('math')">⚡ Speed Math Challenge</button>
+                <button class="game-tab-btn" onclick="switchGame('riddle')">❓ Logic Riddles</button>
+            </div>
 
-
-            <div class="drop-zone" id="dropZone">
-
-
-                <div class="drop-zone-icon">📄</div>
-
-
-                <div class="drop-zone-text">
-
-
-                    Drop your games files here or click to browse
-
-
+            <!-- Game 1: 15 Puzzle -->
+            <div id="game-slide" class="game-card-container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="font-weight: 800; color: #0F172A;">Arrange Numbers 1 to 15 in Order</h3>
+                    <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">Moves: <span id="puzzleMoves">0</span></div>
                 </div>
 
-
-                <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.webp,.mp4,.avi,.mov,.mp3,.wav,.m4a" style="display: none;">
-
-
-                <button class="btn-file-input" onclick="document.getElementById('fileInput').click()">
-
-
-                    Choose Files
-
-
-                </button>
-
-
-            </div>
-
-
-            
-
-
-            <div class="tool-controls">
-
-
-                <h3>Settings</h3>
-
-
-                
-
-
-        <div class="control-group">
-
-
-            <label class="control-label">Game Difficulty</label>
-
-
-            <select class="control-input" id="difficultySelect">
-
-
-                <option value="easy">Easy</option>
-
-
-                <option value="medium">Medium</option>
-
-
-                <option value="hard">Hard</option>
-
-
-                <option value="expert">Expert</option>
-
-
-            </select>
-
-
-        </div>
-
-
-        <div class="control-group">
-
-
-            <label class="control-label">Time Limit</label>
-
-
-            <select class="control-input" id="timeLimitSelect">
-
-
-                <option value="none">No Limit</option>
-
-
-                <option value="5min">5 Minutes</option>
-
-
-                <option value="10min">10 Minutes</option>
-
-
-                <option value="30min">30 Minutes</option>
-
-
-            </select>
-
-
-        </div>
-
-
-        <div class="control-group">
-
-
-            <label class="control-label">Hints</label>
-
-
-            <select class="control-input" id="hintsSelect">
-
-
-                <option value="on">Enabled</option>
-
-
-                <option value="off">Disabled</option>
-
-
-            </select>
-
-
-        </div>
-
-
-        
-
-
-            </div>
-
-
-            
-
-
-            <div class="tool-output" id="toolOutput">
-
-
-                <h3>Result</h3>
-
-
-                <div id="outputContent"></div>
-
-
-            </div>
-
-
-            
-
-
-            <div class="tool-actions">
-
-
-                <button class="btn-tool" id="processBtn" disabled>
-
-
-                    Process Games
-
-
-                </button>
-
-
-                <button class="btn-tool" id="downloadBtn" disabled>
-
-
-                    Download
-
-
-                </button>
-
-
-                <button class="btn-tool" id="resetBtn">
-
-
-                    Reset
-
-
-                </button>
-
-
-            </div>
-
-
-        </section>
-
-
-        
-
-
-        <!-- Tool Sidebar -->
-
-
-        <aside class="tool-sidebar">
-
-
-            <!-- Tool Information -->
-
-
-            <div class="tool-info">
-
-
-                <h3>Features</h3>
-
-
-                
-
-
-            <div class="tool-feature">
-
-
-                <div class="tool-feature-icon">âœ“</div>
-
-
-                <div class="tool-feature-text">Logic puzzles</div>
-
-
-            </div>
-
-
-        
-
-
-            <div class="tool-feature">
-
-
-                <div class="tool-feature-icon">âœ“</div>
-
-
-                <div class="tool-feature-text">Brain training</div>
-
-
-            </div>
-
-
-        
-
-
-            <div class="tool-feature">
-
-
-                <div class="tool-feature-icon">âœ“</div>
-
-
-                <div class="tool-feature-text">Multiple difficulty levels</div>
-
-
-            </div>
-
-
-        
-
-
-            <div class="tool-feature">
-
-
-                <div class="tool-feature-icon">âœ“</div>
-
-
-                <div class="tool-feature-text">Progress tracking</div>
-
-
-            </div>
-
-
-        
-
-
-            </div>
-
-
-            
-
-
-            <!-- AdSense Container -->
-
-
-            <div class="adsense-tool">
-
+                <div class="puzzle-grid" id="puzzleGrid">
+                    <!-- Tiles generated by JS -->
+                </div>
+
+                <div class="game-status-msg" id="puzzleMsg">Click adjacent tiles to slide them into the empty space!</div>
 
                 <div>
-
-
-                    <div>›  Advertisement</div>
-
-
-                    <div style="font-size: 10px; margin-top: 8px;">Google AdSense</div>
-
-
+                    <button class="btn btn-primary" onclick="initPuzzle()">🔀 Scramble Tiles</button>
                 </div>
-
-
             </div>
 
-
-            
-
-
-            <!-- Category Navigation -->
-
-
-            <div class="tool-info">
-
-
-                <h3>Related Tools</h3>
-
-
-                <div style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
-
-
-                    <a href="/brain_teasers.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Brain Teasers</a><a href="/word_games.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Word Games</a><a href="/memory_games.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Memory Games</a><a href="/logic_puzzles.html" style="color: var(--color-primary-500); text-decoration: none; padding: var(--spacing-xs); border-radius: 6px; transition: background-color 0.2s;">Logic Puzzles</a>
-
-
+            <!-- Game 2: Speed Math -->
+            <div id="game-math" class="game-card-container" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="font-weight: 800; color: #0F172A;">Speed Mental Arithmetic</h3>
+                    <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">Score: <span id="mathScore">0</span> | Time: <span id="mathTimer">30</span>s</div>
                 </div>
 
+                <div style="background: #F0FDF4; border: 2px dashed #86EFAC; border-radius: 16px; padding: 24px; margin: 20px 0;">
+                    <div id="mathEquation" style="font-size: 2.8rem; font-weight: 900; color: #065F46;">7 × 8 = ?</div>
+                </div>
 
+                <div style="margin: 16px auto; max-width: 320px;">
+                    <input type="number" id="mathInput" class="control-input" placeholder="Type answer..." style="font-size: 1.5rem; text-align: center; font-weight: 800;" autocomplete="off">
+                    <button class="btn btn-primary" onclick="checkMathAnswer()" style="margin-top: 12px; width: 100%;">Submit Answer</button>
+                </div>
+
+                <div class="game-status-msg" id="mathMsg">Click Start Game to begin 30-second challenge!</div>
+
+                <div>
+                    <button class="btn btn-primary" id="mathStartBtn" onclick="startMathGame()">▶️ Start 30s Challenge</button>
+                </div>
             </div>
 
+            <!-- Game 3: Riddles -->
+            <div id="game-riddle" class="game-card-container" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                    <h3 style="font-weight: 800; color: #0F172A;">Logic Riddles & Teasers</h3>
+                    <div style="font-size: 0.9rem; font-weight: 700; color: #10B981;">Score: <span id="riddleScore">0</span> / <span id="riddleTotal">0</span></div>
+                </div>
 
-        </aside>
+                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; margin: 16px 0; text-align: left;">
+                    <h4 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 10px;" id="riddleQuestion">Riddle Question</h4>
 
+                    <div id="riddleOptions" style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 16px;">
+                        <!-- Options generated by JS -->
+                    </div>
+                </div>
 
-            <section class="tool-documentation container" style="margin-top: 40px; margin-bottom: 40px; padding: 32px; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #eaeaea;">
+                <div class="game-status-msg" id="riddleMsg">Select your answer above!</div>
 
-
-            <h2 style="font-size: 1.8rem; margin-bottom: 16px; color: #111;">How to Use the Brain Teasers</h2>
-
-
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Brain Teasers is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
-
-
-            
-
-
-            <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-
-
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Brain Teasers leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-
-
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
-
-
+                <div>
+                    <button class="btn btn-primary" id="riddleNextBtn" onclick="nextRiddle()" style="display: none;">Next Riddle ➔</button>
+                </div>
+            </div>
         </section>
 
+        <aside class="tool-sidebar">
+            <div class="tool-info">
+                <h3>🎮 Factictionary Brain Games</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="/tools/word_games.html" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">🔤 Vocabulary & Word Games</a>
+                    <a href="/tools/memory_games.html" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">🧠 Memory Training Games</a>
+                    <a href="/tools/brain_teasers.html" style="color: #0066FF; font-weight: 700; text-decoration: none; padding: 8px 12px; background: #ECFDF5; border-radius: 8px; border: 1px solid #10B981;">💡 Logic & Brain Teasers</a>
+                    <a href="/games/" style="color: #0066FF; font-weight: 600; text-decoration: none; padding: 8px 12px; background: #F8FAFC; border-radius: 8px; border: 1px solid #E2E8F0;">📱 Android Apps Portfolio (Google Play)</a>
+                </div>
+            </div>
+        </aside>
 
-                            <!-- Donation Banner -->
-        <div class="donation-banner-card">
+        <!-- Donation Banner Card -->
+        <div class="donation-banner-card" style="grid-column: 1 / -1;">
             <span style="background: rgba(255,221,0,0.2); color: #FFDD00; font-size: 0.8rem; font-weight: 700; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; margin-bottom: 14px;">100% Free Privacy Tools</span>
             <h3>☕ Buy Us a Coffee — Support Free Web Utilities</h3>
             <p>Factictionary is hosted on GitHub Pages with zero corporate funding. Small voluntary contributions keep our privacy-first tools free for everyone!</p>
@@ -1699,334 +237,259 @@
                 </button>
             </div>
         </div>
+    </main>
 
-</main>
-
-
-    
-
-
-    <!-- Tool Statistics -->
-
-
-    <section class="section-lg">
-
-
-        <div class="container">
-
-
-            <div class="stats-grid">
-
-
-                <div class="stat-card">
-
-
-                    <div class="stat-number">50+</div>
-
-
-                    <div class="stat-label">Tools Available</div>
-
-
-                </div>
-
-
-                <div class="stat-card">
-
-
-                    <div class="stat-number">0</div>
-
-
-                    <div class="stat-label">Files Uploaded</div>
-
-
-                </div>
-
-
-                <div class="stat-card">
-
-
-                    <div class="stat-number">âž</div>
-
-
-                    <div class="stat-label">Unlimited Usage</div>
-
-
-                </div>
-
-
-                <div class="stat-card">
-
-
-                    <div class="stat-number">100%</div>
-
-
-                    <div class="stat-label">Privacy Protected</div>
-
-
-                </div>
-
-
-            </div>
-
-
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: var(--color-neutral-500);">Sitemap</a></p>
         </div>
-
-
-    </section>
-
-
-    
-
-
-    <!-- JavaScript -->
-
+    </footer>
 
     <script>
-
-
-        // Tool functionality will be implemented here
-
-
-        // This is a placeholder for the actual tool logic
-
-
-        
-
-
-        const dropZone = document.getElementById('dropZone');
-
-
-        const fileInput = document.getElementById('fileInput');
-
-
-        const processBtn = document.getElementById('processBtn');
-
-
-        const downloadBtn = document.getElementById('downloadBtn');
-
-
-        const resetBtn = document.getElementById('resetBtn');
-
-
-        const outputSection = document.getElementById('toolOutput');
-
-
-        
-
-
-        let selectedFiles = [];
-
-
-        
-
-
-        // Drag and drop functionality
-
-
-        dropZone.addEventListener('dragover', (e) => {
-
-
-            e.preventDefault();
-
-
-            dropZone.classList.add('drag-over');
-
-
-        });
-
-
-        
-
-
-        dropZone.addEventListener('dragleave', () => {
-
-
-            dropZone.classList.remove('drag-over');
-
-
-        });
-
-
-        
-
-
-        dropZone.addEventListener('drop', (e) => {
-
-
-            e.preventDefault();
-
-
-            dropZone.classList.remove('drag-over');
-
-
-            handleFiles(e.dataTransfer.files);
-
-
-        });
-
-
-        
-
-
-        dropZone.addEventListener('click', () => {
-
-
-            fileInput.click();
-
-
-        });
-
-
-        
-
-
-        fileInput.addEventListener('change', (e) => {
-
-
-            handleFiles(e.target.files);
-
-
-        });
-
-
-        
-
-
-        function handleFiles(files) {
-
-
-            selectedFiles = Array.from(files);
-
-
-            if (selectedFiles.length > 0) {
-
-
-                processBtn.disabled = false;
-
-
-                dropZone.querySelector('.drop-zone-text').textContent = 
-
-
-                    `${selectedFiles.length} file(s) selected`;
-
-
+        // ─── TAB SWITCHING ──────────────────────────────────────────
+        function switchGame(gameId) {
+            document.querySelectorAll('.game-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.game-card-container').forEach(card => card.style.display = 'none');
+
+            if (gameId === 'slide') {
+                document.querySelectorAll('.game-tab-btn')[0].classList.add('active');
+                document.getElementById('game-slide').style.display = 'block';
+            } else if (gameId === 'math') {
+                document.querySelectorAll('.game-tab-btn')[1].classList.add('active');
+                document.getElementById('game-math').style.display = 'block';
+            } else if (gameId === 'riddle') {
+                document.querySelectorAll('.game-tab-btn')[2].classList.add('active');
+                document.getElementById('game-riddle').style.display = 'block';
             }
-
-
         }
 
+        // ─── GAME 1: 15-SLIDE PUZZLE ────────────────────────────────
+        let puzzleGrid = [];
+        let puzzleMoves = 0;
 
-        
+        function initPuzzle() {
+            puzzleGrid = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+            
+            // Perform 80 random valid moves to scramble solvably
+            for (let i = 0; i < 80; i++) {
+                const emptyIdx = puzzleGrid.indexOf(0);
+                const validNeighbors = getValidNeighbors(emptyIdx);
+                const randomMove = validNeighbors[Math.floor(Math.random() * validNeighbors.length)];
+                [puzzleGrid[emptyIdx], puzzleGrid[randomMove]] = [puzzleGrid[randomMove], puzzleGrid[emptyIdx]];
+            }
 
+            puzzleMoves = 0;
+            document.getElementById('puzzleMoves').textContent = 0;
+            document.getElementById('puzzleMsg').textContent = "Click adjacent tiles to slide them into the empty space!";
+            document.getElementById('puzzleMsg').style.color = "#0F172A";
+            renderPuzzleGrid();
+        }
 
-        processBtn.addEventListener('click', () => {
+        function getValidNeighbors(idx) {
+            const row = Math.floor(idx / 4);
+            const col = idx % 4;
+            const neighbors = [];
+            if (row > 0) neighbors.push(idx - 4);
+            if (row < 3) neighbors.push(idx + 4);
+            if (col > 0) neighbors.push(idx - 1);
+            if (col < 3) neighbors.push(idx + 1);
+            return neighbors;
+        }
 
+        function renderPuzzleGrid() {
+            const gridEl = document.getElementById('puzzleGrid');
+            gridEl.innerHTML = '';
+            puzzleGrid.forEach((val, idx) => {
+                const tile = document.createElement('div');
+                tile.className = 'puzzle-tile' + (val === 0 ? ' empty' : '');
+                tile.textContent = val === 0 ? '' : val;
+                tile.onclick = () => moveTile(idx);
+                gridEl.appendChild(tile);
+            });
+        }
 
-            // Placeholder for actual processing logic
+        function moveTile(idx) {
+            const emptyIdx = puzzleGrid.indexOf(0);
+            const neighbors = getValidNeighbors(emptyIdx);
 
+            if (neighbors.includes(idx)) {
+                [puzzleGrid[emptyIdx], puzzleGrid[idx]] = [puzzleGrid[idx], puzzleGrid[emptyIdx]];
+                puzzleMoves++;
+                document.getElementById('puzzleMoves').textContent = puzzleMoves;
+                renderPuzzleGrid();
+                checkPuzzleWin();
+            }
+        }
 
-            outputSection.style.display = 'block';
+        function checkPuzzleWin() {
+            const solution = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0];
+            const isWin = puzzleGrid.every((val, i) => val === solution[i]);
+            if (isWin) {
+                document.getElementById('puzzleMsg').textContent = `🎉 Solved! Cleared in ${puzzleMoves} moves!`;
+                document.getElementById('puzzleMsg').style.color = "#16A34A";
+            }
+        }
 
+        // ─── GAME 2: SPEED MATH CHALLENGE ───────────────────────────
+        let mathActive = false;
+        let mathScore = 0;
+        let mathTimeLeft = 30;
+        let mathTimerInterval = null;
+        let currentAns = 0;
 
-            outputSection.querySelector('#outputContent').innerHTML = 
+        function startMathGame() {
+            mathActive = true;
+            mathScore = 0;
+            mathTimeLeft = 30;
+            document.getElementById('mathScore').textContent = 0;
+            document.getElementById('mathTimer').textContent = 30;
+            document.getElementById('mathStartBtn').style.display = 'none';
+            document.getElementById('mathInput').focus();
 
+            nextMathProblem();
 
-                '<div class="output-text">Processing completed! (This is a demo - implement actual tool logic here)</div>';
+            if (mathTimerInterval) clearInterval(mathTimerInterval);
+            mathTimerInterval = setInterval(() => {
+                mathTimeLeft--;
+                document.getElementById('mathTimer').textContent = mathTimeLeft;
+                if (mathTimeLeft <= 0) {
+                    clearInterval(mathTimerInterval);
+                    mathActive = false;
+                    document.getElementById('mathMsg').textContent = `⏰ Time's up! Final Score: ${mathScore} correct answers!`;
+                    document.getElementById('mathMsg').style.color = "#DC2626";
+                    document.getElementById('mathStartBtn').style.display = 'inline-block';
+                }
+            }, 1000);
+        }
 
+        function nextMathProblem() {
+            const ops = ['+', '-', '×'];
+            const op = ops[Math.floor(Math.random() * ops.length)];
+            let n1 = Math.floor(Math.random() * 20) + 1;
+            let n2 = Math.floor(Math.random() * 20) + 1;
 
-            downloadBtn.disabled = false;
+            if (op === '+') currentAns = n1 + n2;
+            else if (op === '-') {
+                if (n1 < n2) [n1, n2] = [n2, n1];
+                currentAns = n1 - n2;
+            } else if (op === '×') {
+                n1 = Math.floor(Math.random() * 12) + 2;
+                n2 = Math.floor(Math.random() * 12) + 2;
+                currentAns = n1 * n2;
+            }
 
+            document.getElementById('mathEquation').textContent = `${n1} ${op} ${n2} = ?`;
+            document.getElementById('mathInput').value = '';
+        }
 
+        function checkMathAnswer() {
+            if (!mathActive) return;
+            const inputVal = parseInt(document.getElementById('mathInput').value, 10);
+            if (inputVal === currentAns) {
+                mathScore += 10;
+                document.getElementById('mathScore').textContent = mathScore;
+                document.getElementById('mathMsg').textContent = "✓ Correct! (+10 pts)";
+                document.getElementById('mathMsg').style.color = "#16A34A";
+                nextMathProblem();
+            } else {
+                document.getElementById('mathMsg').textContent = "❌ Wrong! Try again.";
+                document.getElementById('mathMsg').style.color = "#DC2626";
+            }
+        }
+
+        document.getElementById('mathInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') checkMathAnswer();
         });
 
+        // ─── GAME 3: LOGIC RIDDLES QUIZ ──────────────────────────────
+        const RIDDLES = [
+            {
+                q: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+                opts: ["An Echo", "A Shadow", "A Cloud", "A Clock"],
+                correct: 0
+            },
+            {
+                q: "A man describes his daughters: 'They are all blonde, but two; all brunette, but two; and all redheaded, but two.' How many daughters does he have?",
+                opts: ["6 daughters", "3 daughters", "4 daughters", "2 daughters"],
+                correct: 1
+            },
+            {
+                q: "The person who makes it has no need of it; the person who buys it has no use for it. The person who uses it can neither see nor feel it. What is it?",
+                opts: ["A Coffin", "A Present", "A Car", "A Secret"],
+                correct: 0
+            },
+            {
+                q: "If you have me, you want to share me. If you share me, you haven't got me. What am I?",
+                opts: ["A Secret", "A Coin", "Knowledge", "A Joke"],
+                correct: 0
+            }
+        ];
 
-        
+        let riddleIdx = 0;
+        let riddleScore = 0;
+        let riddleTotal = 0;
 
+        function loadRiddle() {
+            if (riddleIdx >= RIDDLES.length) riddleIdx = 0;
+            const r = RIDDLES[riddleIdx];
 
-        downloadBtn.addEventListener('click', () => {
+            document.getElementById('riddleQuestion').textContent = r.q;
+            document.getElementById('riddleMsg').textContent = "Select your answer above!";
+            document.getElementById('riddleMsg').style.color = "#0F172A";
+            document.getElementById('riddleNextBtn').style.display = 'none';
 
+            const optsEl = document.getElementById('riddleOptions');
+            optsEl.innerHTML = '';
 
-            // Placeholder for download functionality
+            r.opts.forEach((text, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-secondary';
+                btn.style.textAlign = 'left';
+                btn.style.padding = '12px 16px';
+                btn.style.fontSize = '1rem';
+                btn.style.borderRadius = '8px';
+                btn.textContent = `${String.fromCharCode(65 + i)}. ${text}`;
+                btn.onclick = () => checkRiddleAnswer(i, r.correct);
+                optsEl.appendChild(btn);
+            });
+        }
 
+        function checkRiddleAnswer(selected, correct) {
+            riddleTotal++;
+            const btns = document.querySelectorAll('#riddleOptions button');
+            btns.forEach(b => b.disabled = true);
 
-            alert('Download would start here (implement actual download logic)');
+            if (selected === correct) {
+                riddleScore++;
+                btns[selected].style.background = '#10B981';
+                btns[selected].style.color = 'white';
+                document.getElementById('riddleMsg').textContent = "🎉 Correct! Clever thinking!";
+                document.getElementById('riddleMsg').style.color = "#16A34A";
+            } else {
+                btns[selected].style.background = '#EF4444';
+                btns[selected].style.color = 'white';
+                btns[correct].style.background = '#10B981';
+                btns[correct].style.color = 'white';
+                document.getElementById('riddleMsg').textContent = "❌ Not quite!";
+                document.getElementById('riddleMsg').style.color = "#DC2626";
+            }
 
+            document.getElementById('riddleScore').textContent = riddleScore;
+            document.getElementById('riddleTotal').textContent = riddleTotal;
+            document.getElementById('riddleNextBtn').style.display = 'inline-block';
+        }
 
+        function nextRiddle() {
+            riddleIdx++;
+            loadRiddle();
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initPuzzle();
+            loadRiddle();
         });
-
-
-        
-
-
-        resetBtn.addEventListener('click', () => {
-
-
-            selectedFiles = [];
-
-
-            fileInput.value = '';
-
-
-            processBtn.disabled = true;
-
-
-            downloadBtn.disabled = true;
-
-
-            outputSection.style.display = 'none';
-
-
-            dropZone.querySelector('.drop-zone-text').textContent = 
-
-
-                'Drop your games files here or click to browse';
-
-
-        });
-
-
-        
-
-
-        // Mobile menu functionality
-
-
-        const menuToggle = document.querySelector('.menu-toggle');
-
-
-        const navLinks = document.querySelector('.nav-links');
-
-
-        
-
-
-        menuToggle.addEventListener('click', () => {
-
-
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-
-
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-
-
-            navLinks.classList.toggle('active');
-
-
-        });
-
-
     </script>
-
-
     <script src="/assets/js/main.js"></script>
-
-
 </body>
-
-
 </html>
-
-
-
-
-
