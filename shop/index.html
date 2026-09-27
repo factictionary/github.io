@@ -11,6 +11,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Payhip Official JS for In-Page Checkout Overlay -->
+    <script src="https://payhip.com/payhip.js"></script>
+
     <style>
         :root {
             --primary: #0066FF;
@@ -43,13 +47,33 @@
         .breadcrumb-inner a:hover { text-decoration: underline; }
 
         /* Hero */
-        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #7c3aed 100%); color: white; padding: 70px 0; text-align: center; }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e40af 50%, #7c3aed 100%); color: white; padding: 75px 0; text-align: center; }
         .hero-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 50px; padding: 6px 18px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.5px; }
         .hero h1 { font-size: 2.8rem; margin-bottom: 16px; font-weight: 800; line-height: 1.2; }
         .hero p { font-size: 1.2rem; opacity: 0.92; margin-bottom: 32px; max-width: 620px; margin-left: auto; margin-right: auto; }
 
+        .hero-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            color: #0066FF;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.25s ease;
+        }
+        .hero-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0,0,0,0.3);
+            background: #f8fafc;
+        }
+
         /* Product type pills */
-        .product-types { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .product-types { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
         .type-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 7px 16px; font-size: 0.85rem; font-weight: 500; }
 
         /* Trust bar */
@@ -58,29 +82,49 @@
         .trust-item { display: flex; align-items: center; gap: 7px; color: var(--gray); font-size: 0.88rem; font-weight: 500; }
         .trust-item span:first-child { font-size: 1.2rem; }
 
-        /* Store section */
-        .store-section { padding: 60px 0; background: white; }
-        .section-header { text-align: center; margin-bottom: 40px; }
-        .section-header h2 { font-size: 2.2rem; margin-bottom: 12px; color: var(--dark); }
-        .section-header p { font-size: 1.05rem; color: var(--gray); }
-        .open-tab-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--primary); font-weight: 600; font-size: 0.9rem; text-decoration: none; }
-        .open-tab-link:hover { text-decoration: underline; }
-
-        /* Iframe */
-        .iframe-wrapper { border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.10); border: 1px solid var(--border); background: #fff; }
-        #payhip-store-frame { display: none; min-height: 950px; width: 100%; background: #fff; }
-        #iframe-loading { text-align: center; padding: 60px 0; color: var(--gray); }
-        .spinner { font-size: 2.5rem; display: inline-block; animation: spin 1.2s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Store Highlight Banner Section */
+        .store-highlight-section { padding: 60px 0; background: white; }
+        .payhip-banner-card {
+            background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+            border: 2px solid #BFDBFE;
+            border-radius: 20px;
+            padding: 48px 32px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .payhip-banner-card h2 { font-size: 2.2rem; color: #1E3A8A; margin-bottom: 12px; font-weight: 800; }
+        .payhip-banner-card p { font-size: 1.1rem; color: #1E40AF; max-width: 640px; margin: 0 auto 28px; line-height: 1.6; }
+        .btn-payhip-direct {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0066FF;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+            transition: all 0.25s ease;
+        }
+        .btn-payhip-direct:hover {
+            background: #0052CC;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 102, 255, 0.45);
+        }
 
         /* What's inside section */
         .catalog-section { padding: 60px 0; background: var(--light); }
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 36px; }
-        .catalog-card { background: white; border-radius: var(--radius); padding: 24px 20px; text-align: center; box-shadow: var(--shadow); border: 2px solid transparent; transition: all 0.25s; }
-        .catalog-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .catalog-icon { font-size: 2.5rem; margin-bottom: 12px; }
-        .catalog-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; }
-        .catalog-desc { color: var(--gray); font-size: 0.82rem; line-height: 1.5; }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 36px; }
+        .catalog-card { background: white; border-radius: var(--radius); padding: 28px 24px; text-align: center; box-shadow: var(--shadow); border: 2px solid transparent; transition: all 0.25s; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; }
+        .catalog-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+        .catalog-icon { font-size: 2.8rem; margin-bottom: 14px; }
+        .catalog-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: var(--dark); }
+        .catalog-desc { color: var(--gray); font-size: 0.88rem; line-height: 1.5; margin-bottom: 16px; flex-grow: 1; }
+        .catalog-cta { color: var(--primary); font-weight: 700; font-size: 0.9rem; }
 
         /* How it works */
         .how-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 60px 0; }
@@ -166,6 +210,11 @@
             <div class="hero-badge">🛒 INSTANT DIGITAL DOWNLOADS</div>
             <h1>Factictionary Digital Store</h1>
             <p>AI-curated digital products — eBooks, guides, templates, printables &amp; more. Pay once, download instantly.</p>
+            
+            <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="hero-action-btn">
+                🛍️ Open Official Payhip Store ➔
+            </a>
+
             <div class="product-types">
                 <span class="type-pill">📚 eBooks</span>
                 <span class="type-pill">📋 Guides</span>
@@ -190,46 +239,16 @@
         </div>
     </div>
 
-    <!-- Payhip Store iframe -->
-    <section class="store-section">
+    <!-- Direct Store Banner Section -->
+    <section class="store-highlight-section">
         <div class="container">
-            <div class="section-header">
-                <h2>🛍️ Browse All Products</h2>
-                <p>All products load automatically — new items appear here as soon as they're published</p>
-                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="open-tab-link">
-                    ↗ Open full store in new tab
+            <div class="payhip-banner-card">
+                <h2>🏬 Visit Our Official Payhip Store</h2>
+                <p>Browse our complete catalog of eBooks, publishing guides, digital tools, and templates with instant delivery after payment.</p>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="btn-payhip-direct">
+                    🚀 Browse Full Catalog on Payhip ➔
                 </a>
             </div>
-
-            <!-- Loading spinner -->
-            <div id="iframe-loading">
-                <div class="spinner">⏳</div>
-                <p style="margin-top:12px;">Loading store…</p>
-            </div>
-
-            <!-- Payhip iframe — loads ALL products from payhip.com/factictionary automatically -->
-            <div class="iframe-wrapper">
-                <iframe
-                    id="payhip-store-frame"
-                    src="https://payhip.com/factictionary"
-                    width="100%"
-                    height="950"
-                    frameborder="0"
-                    scrolling="yes"
-                    allowtransparency="true"
-                    loading="lazy"
-                    title="Factictionary Digital Store on Payhip"
-                    onload="document.getElementById('iframe-loading').style.display='none'; this.style.display='block';">
-                </iframe>
-            </div>
-
-            <p style="text-align:center; margin-top:14px; font-size:0.85rem; color:var(--gray);">
-                Can't see the store?
-                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" style="color:var(--primary); font-weight:600;">Open it directly on Payhip →</a>
-            </p>
-            <p style="text-align:center; margin-top:6px; font-size:0.82rem; color:var(--gray);">
-                🔒 Secure payments powered by <a href="https://payhip.com" target="_blank" rel="noopener" style="color:var(--primary);">Payhip</a> — PayPal, Visa, Mastercard &amp; more accepted.
-            </p>
         </div>
     </section>
 
@@ -237,40 +256,46 @@
     <section class="catalog-section">
         <div class="container">
             <div class="section-header">
-                <h2>What's in the Store?</h2>
-                <p>A growing catalog of AI-curated digital products across multiple categories</p>
+                <h2>Explore Digital Categories</h2>
+                <p>Curated digital products designed to help you write, learn, create, and grow</p>
             </div>
             <div class="catalog-grid">
-                <div class="catalog-card">
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">📚</div>
-                    <div class="catalog-title">eBooks</div>
+                    <div class="catalog-title">eBooks &amp; Novels</div>
                     <p class="catalog-desc">Fiction, non-fiction, guides &amp; reference books in PDF/ePub format</p>
-                </div>
-                <div class="catalog-card">
+                    <span class="catalog-cta">Browse Books ➔</span>
+                </a>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">📋</div>
-                    <div class="catalog-title">Guides &amp; How-Tos</div>
-                    <p class="catalog-desc">Step-by-step practical guides on KDP publishing, AI tools, blogging &amp; more</p>
-                </div>
-                <div class="catalog-card">
+                    <div class="catalog-title">Publishing Guides</div>
+                    <p class="catalog-desc">Step-by-step guides on Amazon KDP, self-publishing, and writing strategies</p>
+                    <span class="catalog-cta">Browse Guides ➔</span>
+                </a>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">🖨️</div>
-                    <div class="catalog-title">Printables</div>
+                    <div class="catalog-title">Printables &amp; Planners</div>
                     <p class="catalog-desc">Planners, journals, worksheets &amp; activity sheets — print &amp; use instantly</p>
-                </div>
-                <div class="catalog-card">
+                    <span class="catalog-cta">Browse Printables ➔</span>
+                </a>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">📝</div>
                     <div class="catalog-title">Templates</div>
-                    <p class="catalog-desc">Ready-made templates for content creation, KDP covers, social media &amp; more</p>
-                </div>
-                <div class="catalog-card">
+                    <p class="catalog-desc">Ready-made templates for content creation, KDP covers, and writing</p>
+                    <span class="catalog-cta">Browse Templates ➔</span>
+                </a>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">🤖</div>
-                    <div class="catalog-title">AI Content Packs</div>
-                    <p class="catalog-desc">Curated AI-generated content bundles — prompts, scripts, articles &amp; more</p>
-                </div>
-                <div class="catalog-card">
+                    <div class="catalog-title">AI Content Bundles</div>
+                    <p class="catalog-desc">Curated AI-generated content packages — prompts, scripts, and articles</p>
+                    <span class="catalog-cta">Browse Bundles ➔</span>
+                </a>
+                <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="catalog-card">
                     <div class="catalog-icon">🎁</div>
                     <div class="catalog-title">Free Downloads</div>
-                    <p class="catalog-desc">Free sample products — no payment needed, just enter your email &amp; download</p>
-                </div>
+                    <p class="catalog-desc">Free sample products &amp; lead magnets — instant email delivery</p>
+                    <span class="catalog-cta">Get Freebies ➔</span>
+                </a>
             </div>
         </div>
     </section>
@@ -285,23 +310,23 @@
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-num">1</div>
-                    <div class="step-title">Browse the Store</div>
-                    <p class="step-desc">Scroll through the store above and click on any product you'd like.</p>
+                    <div class="step-title">Choose Your Product</div>
+                    <p class="step-desc">Browse our Payhip store and select the book, guide, or template you want.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">2</div>
                     <div class="step-title">Pay Securely</div>
-                    <p class="step-desc">Pay with PayPal or credit/debit card via Payhip's secure checkout.</p>
+                    <p class="step-desc">Pay safely with PayPal or credit/debit card via Payhip's encrypted checkout.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">3</div>
-                    <div class="step-title">Get Download Link</div>
-                    <p class="step-desc">Payhip instantly emails you a download link — no waiting, no manual steps.</p>
+                    <div class="step-title">Instant Delivery</div>
+                    <p class="step-desc">Payhip automatically sends your download link to your email address.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">4</div>
                     <div class="step-title">Download &amp; Enjoy</div>
-                    <p class="step-desc">Download your file and use it on any device — phone, tablet, or PC.</p>
+                    <p class="step-desc">Download your files and access them anytime on your phone, tablet, or PC.</p>
                 </div>
             </div>
         </div>
@@ -311,33 +336,29 @@
     <section class="faq-section">
         <div class="container">
             <div class="section-header">
-                <h2>❓ FAQs</h2>
-                <p>Everything you need to know about buying digital products</p>
+                <h2>❓ Frequently Asked Questions</h2>
+                <p>Everything you need to know about purchasing digital products</p>
             </div>
             <div style="max-width:700px; margin:0 auto;">
                 <details>
                     <summary>How do I receive my product after purchase?</summary>
-                    <p>After payment, Payhip automatically sends a download link to your email address. You can download immediately — no waiting!</p>
+                    <p>After checkout, Payhip automatically emails you a direct download link. You can download your files immediately!</p>
                 </details>
                 <details>
                     <summary>Which payment methods are accepted?</summary>
-                    <p>We accept PayPal, Visa, Mastercard, and other major debit/credit cards through Payhip's secure checkout.</p>
+                    <p>We accept PayPal, Visa, Mastercard, American Express, and major debit/credit cards through Payhip.</p>
                 </details>
                 <details>
-                    <summary>What file formats are products in?</summary>
-                    <p>It depends on the product — eBooks come as PDF or ePub, templates as PDF/Canva links, printables as high-res PDF, and content packs as ZIP or PDF. Each product listing shows the format clearly.</p>
+                    <summary>What file formats are products delivered in?</summary>
+                    <p>eBooks come as PDF or ePub, printables as high-resolution PDFs, templates as editable documents/links, and bundles as ZIP files.</p>
                 </details>
                 <details>
-                    <summary>Can I re-download my purchase?</summary>
-                    <p>Yes! Payhip gives you lifetime access to your purchases. Log in to Payhip with your email anytime to re-download.</p>
+                    <summary>Can I re-download my purchase later?</summary>
+                    <p>Yes! Payhip gives you lifetime access. You can access your download link in your email anytime.</p>
                 </details>
                 <details>
-                    <summary>Are these AI-generated products?</summary>
-                    <p>Some products are AI-assisted and are clearly labeled. All content is reviewed and curated by our team before publishing to ensure quality and usefulness.</p>
-                </details>
-                <details>
-                    <summary>I didn't receive my download email — what do I do?</summary>
-                    <p>Check your spam/junk folder first. If it's not there, <a href="/contact.html" style="color:var(--primary);">contact us</a> with your order details and we'll sort it out within 24 hours.</p>
+                    <summary>I didn't receive my email — what should I do?</summary>
+                    <p>Please check your Spam/Junk folder first. If it's not there, <a href="/contact.html" style="color:var(--primary);">contact us</a> and we will re-send your files within 24 hours.</p>
                 </details>
             </div>
         </div>
@@ -346,10 +367,10 @@
     <!-- CTA -->
     <section class="cta-section">
         <div class="container">
-            <h2>🚀 Start Exploring the Store</h2>
-            <p>New products added regularly. Bookmark this page to stay updated!</p>
-            <a href="#store" onclick="document.querySelector('.store-section').scrollIntoView({behavior:'smooth'}); return false;" class="btn btn-white">⬆ Back to Store</a>
-            <a href="/blog/" class="btn btn-outline">📝 Read Free Articles</a>
+            <h2>🚀 Visit the Factictionary Payhip Store</h2>
+            <p>New books, guides, and templates added regularly.</p>
+            <a href="https://payhip.com/factictionary" target="_blank" rel="noopener" class="btn btn-white">🛍️ Go to Payhip Store ➔</a>
+            <a href="/blog/" class="btn btn-outline">📝 Read Articles</a>
         </div>
     </section>
 
@@ -388,8 +409,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>📧 Issues with your order? <a href="/contact.html" style="color:var(--primary);">Contact us</a> — we'll help within 24 hours.</p>
-                <p style="margin-top:8px;">© 2026 Factictionary. All rights reserved. | Secure payments by <a href="https://payhip.com" target="_blank" rel="noopener" style="color:var(--primary);">Payhip</a></p>
+                <p>📧 Need help with an order? <a href="/contact.html" style="color:var(--primary);">Contact Support</a></p>
+                <p style="margin-top:8px;">© 2026 Factictionary. All rights reserved. | Powered by <a href="https://payhip.com" target="_blank" rel="noopener" style="color:var(--primary);">Payhip</a></p>
             </div>
         </div>
     </footer>
