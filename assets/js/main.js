@@ -666,6 +666,17 @@ if ('PerformanceObserver' in window) {
         }
     ];
 
+    function upgradeShareButtonsOnPage() {
+        document.querySelectorAll('button[onclick*="openShareModal"], a[onclick*="openShareModal"]').forEach(btn => {
+            if (btn.innerHTML.includes('🔗')) {
+                btn.innerHTML = btn.innerHTML.replace(/🔗/g, '<span class="material-symbols-outlined" style="font-size:16px; vertical-align:middle;">share</span>');
+                btn.style.display = 'inline-flex';
+                btn.style.alignItems = 'center';
+                btn.style.gap = '6px';
+            }
+        });
+    }
+
     function initToolsNavigationHub() {
         // Automatically inject Google Material Symbols font stylesheet if not present
         if (!document.querySelector('link[href*="Material+Symbols"]') && !document.querySelector('link[href*="Material+Icons"]')) {
@@ -677,6 +688,7 @@ if ('PerformanceObserver' in window) {
 
         // Automatically attach share buttons with deep links to all tool cards
         initToolCardShareButtons();
+        upgradeShareButtonsOnPage();
 
         // Automatically inject Coffee Pill into site navbar on all pages
         const navLinksUl = document.querySelector('.navbar .nav-links');
