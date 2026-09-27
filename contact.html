@@ -1,12 +1,82 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Factictionary</title>
+    <title>Contact Us & Support | Factictionary</title>
+    <meta name="description" content="Get in touch with Factictionary — direct email support (factictionary@gmail.com), tool feedback, business inquiries, and support donation options via PayPal and Razorpay.">
+    <meta name="keywords" content="Contact Factictionary, support email, factictionary@gmail.com, tool support, Razorpay donation, PayPal donation">
+    <link rel="canonical" href="https://factictionary.in/contact.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            --border: #E2E8F0;
+            --radius: 14px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.7; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero */
+        .contact-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #1E1B4B 100%); color: white; padding: 75px 0; text-align: center; }
+        .contact-badge { display: inline-block; background: rgba(0, 102, 255, 0.2); border: 1px solid rgba(96, 165, 250, 0.4); border-radius: 50px; padding: 6px 18px; font-size: 0.85rem; font-weight: 700; color: #60A5FA; margin-bottom: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .contact-hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 900; line-height: 1.2; margin-bottom: 18px; }
+        .contact-hero p { font-size: 1.15rem; color: #94A3B8; max-width: 680px; margin: 0 auto; line-height: 1.65; }
+
+        /* Layout Grid */
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin: 50px 0 80px; }
+        @media (min-width: 800px) {
+            .contact-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .contact-card { background: white; border-radius: var(--radius); border: 1px solid var(--border); padding: 36px; box-shadow: 0 4px 14px rgba(0,0,0,0.03); }
+        .contact-card h2 { font-size: 1.5rem; font-weight: 800; color: var(--dark); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #F1F5F9; }
+        .contact-card p { font-size: 0.98rem; color: #334155; margin-bottom: 20px; }
+
+        /* Direct Email Box */
+        .email-box { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px; padding: 20px; margin-bottom: 24px; text-align: center; }
+        .email-box h3 { font-size: 1.1rem; font-weight: 700; color: #1E3A8A; margin-bottom: 6px; }
+        .email-box a { font-size: 1.25rem; font-weight: 800; color: #0066FF; text-decoration: none; word-break: break-all; }
+        .email-box a:hover { text-decoration: underline; }
+
+        /* Contact Form */
+        .form-group { margin-bottom: 18px; }
+        .form-label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 14px; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.95rem; font-family: inherit; background: white; color: var(--dark); box-sizing: border-box; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: #0066FF; box-shadow: 0 0 0 3px rgba(0,102,255,0.15); }
+        .btn-submit { width: 100%; background: #0066FF; color: white; padding: 14px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: #0052CC; }
+
+        /* Support Box */
+        .support-card { background: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%); color: white; border-radius: 18px; padding: 40px; text-align: center; margin: 40px 0; box-shadow: 0 10px 30px rgba(0,102,255,0.2); }
+        .support-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+        .support-card p { font-size: 1.05rem; color: #DBEAFE; max-width: 600px; margin: 0 auto 24px; }
+        .btn-support-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-donate-rzp { background: #0066FF; color: white; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; }
+        .btn-donate-rzp:hover { background: #0052CC; transform: translateY(-2px); }
+        .btn-donate-pp { background: #0070BA; color: white; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; }
+        .btn-donate-pp:hover { background: #005EA6; transform: translateY(-2px); }
+
+        /* FAQ */
+        details { background: #F8FAFC; padding: 16px 20px; border-radius: 10px; border: 1px solid #E2E8F0; margin-bottom: 12px; cursor: pointer; }
+        summary { font-weight: 700; color: var(--dark); font-size: 0.98rem; }
+        details p { margin-top: 10px; font-size: 0.9rem; color: var(--gray); margin-bottom: 0; }
+
+        /* Footer */
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; color: var(--gray); font-size: 0.9rem; }
+    </style>
 </head>
 <body>
+
+    <!-- Navigation -->
     <nav class="navbar" role="navigation">
         <div class="nav-container">
             <a href="/" class="logo">Factictionary</a>
@@ -14,14 +84,13 @@
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/tools/" class="nav-link">Tools</a></li>
-                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
                 <li><a href="/contact.html" class="nav-link active">Contact</a></li>
             </ul>
             <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
@@ -33,94 +102,164 @@
             <li><a href="/" class="nav-link">Home</a></li>
             <li><a href="/shop/" class="nav-link">Shop</a></li>
             <li><a href="/tools/" class="nav-link">Tools</a></li>
-                <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/guides/" class="nav-link">Guides</a></li>
+            <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
             <li><a href="/about.html" class="nav-link">About</a></li>
             <li><a href="/contact.html" class="nav-link active">Contact</a></li>
         </ul>
     </div>
 
-    <main class="container" style="max-width: 800px; margin: 60px auto; padding: 20px;">
-        <h1 style="font-size: 3rem; margin-bottom: 24px;">Contact & Community</h1>
-        <p style="font-size: 1.2rem; line-height: 1.8;">We'd love to hear from you! Have a suggestion for a new high-demand web utility or need assistance with one of our client-side tools?</p>
+    <!-- Hero -->
+    <header class="contact-hero">
+        <div class="container">
+            <span class="contact-badge">Contact &amp; Support</span>
+            <h1>Get in Touch with Factictionary</h1>
+            <p>Have a question about our tools, Payhip store orders, Google Play apps, or technical suggestions? We're here to help.</p>
+        </div>
+    </header>
+
+    <div class="container">
         
-        <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-top: 30px; border: 1px solid var(--color-neutral-200);">
-            <h3>📧 Direct Email Support</h3>
-            <p style="margin-top: 8px;">For inquiries, feedback, or custom web tool suggestions: <a href="mailto:contact@factictionary.in" style="color: var(--color-primary-500); font-weight: bold;">contact@factictionary.in</a></p>
+        <div class="contact-grid">
+            
+            <!-- Left Column: Info & Details -->
+            <div class="contact-card">
+                <h2>📫 Direct Email Support</h2>
+                <p>For official support, order inquiries, tool feedback, or business partnerships, reach out directly to our support inbox:</p>
+                
+                <div class="email-box">
+                    <h3>✉️ Primary Support Email</h3>
+                    <a href="mailto:factictionary@gmail.com">factictionary@gmail.com</a>
+                </div>
+
+                <p style="font-size: 0.9rem; color: var(--gray);"><strong>Response Time:</strong> We typically respond to all legitimate inquiries within 24 to 48 business hours.</p>
+
+                <h2 style="margin-top: 36px;">❓ Contact FAQs</h2>
+                <details>
+                    <summary>I purchased a Payhip digital download — where is my file?</summary>
+                    <p>Payhip emails your download link automatically after payment. Check your Spam/Junk folder. If you still cannot find it, email us with your order email address and we will resend the link.</p>
+                </details>
+                <details>
+                    <summary>Are my uploaded files stored on your servers?</summary>
+                    <p>No! All our tools (PDF, Image, Video, Audio) operate 100% client-side in your browser memory via WebAssembly. Zero files are uploaded to any server.</p>
+                </details>
+                <details>
+                    <summary>Can I suggest a new web tool or feature?</summary>
+                    <p>Yes! We welcome suggestions for useful calculators, converters, or developer tools. Send us an email with your idea.</p>
+                </details>
+            </div>
+
+            <!-- Right Column: Contact Form -->
+            <div class="contact-card">
+                <h2>📝 Send Us a Message</h2>
+                <p>Fill out the form below and our team will get back to you promptly.</p>
+                
+                <form action="mailto:factictionary@gmail.com" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label class="form-label" for="contact-name">Your Full Name</label>
+                        <input type="text" id="contact-name" name="Name" class="form-input" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contact-email">Your Email Address</label>
+                        <input type="email" id="contact-email" name="Email" class="form-input" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contact-category">Subject / Inquiry Type</label>
+                        <select id="contact-category" name="Category" class="form-select">
+                            <option value="General Support">General Support</option>
+                            <option value="Payhip Order Help">Payhip Store Order Assistance</option>
+                            <option value="Web Tool Suggestion">Web Tool Suggestion / Bug Report</option>
+                            <option value="Google Play App Feedback">Google Play App Feedback</option>
+                            <option value="Business Partnership">Business Partnership</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contact-message">Your Message</label>
+                        <textarea id="contact-message" name="Message" rows="5" class="form-textarea" placeholder="Describe your question or suggestion in detail..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">📧 Send Message via Email</button>
+                </form>
+            </div>
+
         </div>
 
-        <div style="background: linear-gradient(135deg, #1E1E38, #0F0F23); color: white; padding: 30px; border-radius: 12px; margin-top: 30px;">
-            <h3 style="color: white; margin-bottom: 8px;">💳 Support Our Free Platform</h3>
-            <p style="color: #A0A0C0; margin-bottom: 16px;">Support our mission to build open, zero-upload privacy tools for everyone.</p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn btn-primary" style="background: #0070BA; color: #FFF; font-weight: 700; border-radius: 30px; border: none;">Support via PayPal</a>
-                <a href="https://github.com/sponsors/factictionary" target="_blank" rel="noopener" class="btn btn-secondary" style="border-radius: 30px; color: white; border-color: rgba(255,255,255,0.3);">GitHub Sponsors</a>
+        <!-- Support Card -->
+        <div class="support-card">
+            <h3>☕ Support Our Free Platform</h3>
+            <p>Factictionary is hosted independently on GitHub Pages with zero corporate funding. Voluntary contributions keep our privacy-first tools free for everyone worldwide!</p>
+            <div class="btn-support-group">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-rzp">
+                    ⚡ Pay via UPI / GPay / Cards (Razorpay)
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-pp">
+                    💳 Support via PayPal
+                </a>
             </div>
         </div>
-    </main>
 
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 36px; margin-bottom: 36px;">
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Content &amp; Tools</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
-                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Latest Posts</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/tools/" style="color: #666; text-decoration: none;">Tools Hub</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/guides/" style="color: #666; text-decoration: none;">Pillar Guides</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/games/" style="color: #666; text-decoration: none;">Games &amp; Apps</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Store</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
-                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
-                        <li><a href="mailto:factictionary@gmail.com" style="color: #666; text-decoration: none;">Email</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/shop/" style="color: #666; text-decoration: none;">Digital Store</a></li>
+                        <li style="margin-bottom: 7px;"><a href="https://payhip.com/factictionary" target="_blank" style="color: #666; text-decoration: none;">Payhip Store</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Company</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
-                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
-                        <li><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/contact.html" style="color: #666; text-decoration: none;">Contact Us</a></li>
+                        <li style="margin-bottom: 7px;"><a href="mailto:factictionary@gmail.com" style="color: #666; text-decoration: none;">factictionary@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 7px;"><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
-            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
+            <div style="border-top: 1px solid #eee; padding-top: 22px; text-align: center;">
                 <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: #666;">Sitemap</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Menu Toggle Script -->
+    <!-- Mobile Menu Script -->
     <script>
     (function() {
         const menuToggle = document.querySelector('.menu-toggle');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileMenuBackdrop = document.querySelector('.mobile-menu-backdrop');
-        const body = document.body;
 
         function toggleMenu() {
             menuToggle.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             mobileMenuBackdrop.classList.toggle('active');
-            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }
 
         menuToggle.addEventListener('click', toggleMenu);
         mobileMenuBackdrop.addEventListener('click', toggleMenu);
-
-        // Close menu when clicking on a link
-        const mobileMenuLinks = mobileMenu.querySelectorAll('.nav-link');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
-        // Close menu on window resize if open
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768 && mobileMenu.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
     })();
     </script>
 </body>

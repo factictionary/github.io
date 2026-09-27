@@ -1,12 +1,65 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Factictionary</title>
+    <title>About Us | Factictionary - Digital Tools, Apps & Guides</title>
+    <meta name="description" content="Learn about Factictionary — an independent web platform delivering privacy-first browser utilities, mobile applications, digital products, and evergreen guides.">
+    <meta name="keywords" content="About Factictionary, privacy tools, web utilities, KDP tools, mobile apps, digital products">
+    <link rel="canonical" href="https://factictionary.in/about.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            --border: #E2E8F0;
+            --radius: 14px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.7; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* Hero */
+        .about-hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #1E1B4B 100%); color: white; padding: 75px 0; text-align: center; }
+        .about-badge { display: inline-block; background: rgba(0, 102, 255, 0.2); border: 1px solid rgba(96, 165, 250, 0.4); border-radius: 50px; padding: 6px 18px; font-size: 0.85rem; font-weight: 700; color: #60A5FA; margin-bottom: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .about-hero h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 900; line-height: 1.2; margin-bottom: 18px; }
+        .about-hero p { font-size: 1.15rem; color: #94A3B8; max-width: 680px; margin: 0 auto; line-height: 1.65; }
+
+        /* Content Sections */
+        .content-card { background: white; border-radius: var(--radius); border: 1px solid var(--border); padding: 40px; margin: 40px 0; box-shadow: 0 4px 14px rgba(0,0,0,0.03); }
+        .content-card h2 { font-size: 1.7rem; font-weight: 800; color: var(--dark); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #F1F5F9; }
+        .content-card h3 { font-size: 1.2rem; font-weight: 700; color: #1E293B; margin: 24px 0 10px; }
+        .content-card p { font-size: 1.02rem; color: #334155; margin-bottom: 16px; }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 24px; }
+        .feature-box { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 22px; }
+        .feature-box .icon { font-size: 2.2rem; margin-bottom: 12px; }
+        .feature-box h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--dark); }
+        .feature-box p { font-size: 0.9rem; color: var(--gray); margin-bottom: 0; }
+
+        /* Support Box */
+        .support-card { background: linear-gradient(135deg, #0F172A 0%, #1E40AF 100%); color: white; border-radius: 18px; padding: 40px; text-align: center; margin: 40px 0; box-shadow: 0 10px 30px rgba(0,102,255,0.2); }
+        .support-card h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+        .support-card p { font-size: 1.05rem; color: #DBEAFE; max-width: 600px; margin: 0 auto 24px; }
+        .btn-support-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-donate-rzp { background: #0066FF; color: white; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; }
+        .btn-donate-rzp:hover { background: #0052CC; transform: translateY(-2px); }
+        .btn-donate-pp { background: #0070BA; color: white; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: all 0.2s; }
+        .btn-donate-pp:hover { background: #005EA6; transform: translateY(-2px); }
+
+        /* Footer */
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0 20px; color: var(--gray); font-size: 0.9rem; }
+    </style>
 </head>
 <body>
+
+    <!-- Navigation -->
     <nav class="navbar" role="navigation">
         <div class="nav-container">
             <a href="/" class="logo">Factictionary</a>
@@ -14,14 +67,13 @@
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/tools/" class="nav-link">Tools</a></li>
-                <li><a href="/games/" class="nav-link">Games</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
                 <li><a href="/about.html" class="nav-link active">About</a></li>
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
             </ul>
             <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </div>
     </nav>
@@ -33,86 +85,151 @@
             <li><a href="/" class="nav-link">Home</a></li>
             <li><a href="/shop/" class="nav-link">Shop</a></li>
             <li><a href="/tools/" class="nav-link">Tools</a></li>
-                <li><a href="/games/" class="nav-link">Games</a></li>
+            <li><a href="/guides/" class="nav-link">Guides</a></li>
+            <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
             <li><a href="/about.html" class="nav-link active">About</a></li>
             <li><a href="/contact.html" class="nav-link">Contact</a></li>
         </ul>
     </div>
 
-    <main class="container" style="max-width: 800px; margin: 60px auto; padding: 20px;">
-        <h1 style="font-size: 3rem; margin-bottom: 24px;">About Factictionary</h1>
-        <p style="font-size: 1.2rem; line-height: 1.8;">Factictionary is a privacy-first web platform dedicated to delivering high-demand browser utilities (PDF, Image, Video, Audio, and Developer tools) with 100% on-device processing. Hosted on GitHub Pages, we ensure your files never touch an external server.</p>
+    <!-- Hero -->
+    <header class="about-hero">
+        <div class="container">
+            <span class="about-badge">About Factictionary</span>
+            <h1>Independent Digital Utilities, Apps &amp; Knowledge Hub</h1>
+            <p>Empowering self-publishers, creators, developers, and learners worldwide with privacy-first web tools, high-converting digital assets, and mobile applications.</p>
+        </div>
+    </header>
+
+    <div class="container">
         
-        <h2 style="margin-top: 40px;">Our Privacy-First Architecture</h2>
-        <p style="font-size: 1.1rem; line-height: 1.8;">Traditional cloud converters require you to upload confidential documents and photos to remote servers. Factictionary leverages WebAssembly, HTML5 Canvas, and Web Audio APIs to process your files locally right inside your web browser. Zero bytes uploaded, zero data collection.</p>
+        <!-- Section 1: Mission -->
+        <section class="content-card">
+            <h2>Our Mission &amp; Vision</h2>
+            <p>Founded with a commitment to open web utility, <strong>Factictionary</strong> bridges the gap between complex software and simple browser accessibility. We build lightweight, high-performance web applications and educational resources that empower users to solve technical tasks without installing bloated software or subscribing to expensive software services.</p>
+            <p>Whether you are calculating Amazon KDP royalties, converting PDF files, designing printables, or discovering engaging Android mobile games, Factictionary provides trusted, accessible solutions.</p>
 
-        <h2 style="margin-top: 40px;">Community & Open Support</h2>
-        <p style="font-size: 1.1rem; line-height: 1.8;">All utilities on Factictionary are completely free and open to everyone worldwide. We rely on community donations (via Buy Me a Coffee, GitHub Sponsors, and Crypto/UPI) to maintain and build new high-demand utilities. Thank you for supporting open web privacy!</p>
-    </main>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="icon">🔒</div>
+                    <h4>100% Privacy First</h4>
+                    <p>Client-side WebAssembly processing ensures confidential files never leave your browser.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon">⚡</div>
+                    <h4>Zero Installation</h4>
+                    <p>Instant browser tools accessible on any device—PC, tablet, or smartphone.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon">📖</div>
+                    <h4>Deep Knowledge</h4>
+                    <p>In-depth, step-by-step guides for KDP self-publishing and app development.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon">🌐</div>
+                    <h4>Global Community</h4>
+                    <p>Serving thousands of creators, authors, and users across 120+ countries.</p>
+                </div>
+            </div>
+        </section>
 
+        <!-- Section 2: What We Offer -->
+        <section class="content-card">
+            <h2>What We Build &amp; Offer</h2>
+            
+            <h3>🛠️ 1. Privacy-First Web Utilities (Tools Hub)</h3>
+            <p>Our comprehensive suite of online tools covers KDP Publishing (Royalty Calculator, Spine Width Calculator, 7-Backend Keywords Generator), PDF Management, Image Conversion, and Developer Utilities. Powered by WebAssembly and modern HTML5 APIs, your data is processed 100% locally in memory with zero cloud uploads.</p>
+
+            <h3>📱 2. Mobile Applications &amp; Games</h3>
+            <p>Our official Google Play showcase features top-rated Android applications spanning trivia, brain puzzles, card games, language learning, and utility tools—including <em>Quizziest</em>, <em>4 Color Card Game</em>, <em>Puzzle Mania</em>, and developer tools like <em>Test Pilot Pro</em>.</p>
+
+            <h3>🛒 3. Payhip Digital Store</h3>
+            <p>We curate digital products for self-publishers and digital creators, including eBooks, step-by-step publishing field guides, printables, and templates with instant email delivery powered by Payhip.</p>
+
+            <h3>📚 4. Evergreen Pillar Handbooks</h3>
+            <p>Our technical handbooks provide clear, actionable guidance on self-publishing, Amazon KDP formatting, digital product business models, and mobile app monetization.</p>
+        </section>
+
+        <!-- Section 3: Technology -->
+        <section class="content-card">
+            <h2>Privacy &amp; Security Architecture</h2>
+            <p>Traditional online file converters require users to upload sensitive documents to remote servers, introducing security vulnerabilities and privacy risks. Factictionary takes the opposite approach: we push the processing engine directly to your browser.</p>
+            <p>By leveraging HTML5 Canvas, Web Audio API, JavaScript WebAssembly, and CSS3, file transformations occur entirely on your local CPU/GPU. Once you close your browser tab, all temporary memory is automatically wiped.</p>
+        </section>
+
+        <!-- Support Card -->
+        <div class="support-card">
+            <h3>☕ Support Our Free Web Platform</h3>
+            <p>Factictionary is hosted independently on GitHub Pages with zero corporate funding. Voluntary contributions keep our privacy-first tools free for everyone worldwide!</p>
+            <div class="btn-support-group">
+                <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="btn-donate-rzp">
+                    ⚡ Pay via UPI / GPay / Cards (Razorpay)
+                </a>
+                <a href="https://paypal.me/mgarg1102" target="_blank" rel="noopener" class="btn-donate-pp">
+                    💳 Support via PayPal
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 36px; margin-bottom: 36px;">
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Content &amp; Tools</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
-                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Latest Posts</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/tools/" style="color: #666; text-decoration: none;">Tools Hub</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/guides/" style="color: #666; text-decoration: none;">Pillar Guides</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/games/" style="color: #666; text-decoration: none;">Games &amp; Apps</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Company</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Store</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
-                        <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
-                        <li><a href="mailto:factictionary@gmail.com" style="color: #666; text-decoration: none;">Email</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/shop/" style="color: #666; text-decoration: none;">Digital Store</a></li>
+                        <li style="margin-bottom: 7px;"><a href="https://payhip.com/factictionary" target="_blank" style="color: #666; text-decoration: none;">Payhip Store</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Legal</h4>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Company</h4>
                     <ul style="list-style: none; padding: 0;">
-                        <li><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
-                        <li><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
-                        <li><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/about.html" style="color: #666; text-decoration: none;">About Us</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/contact.html" style="color: #666; text-decoration: none;">Contact Us</a></li>
+                        <li style="margin-bottom: 7px;"><a href="mailto:factictionary@gmail.com" style="color: #666; text-decoration: none;">factictionary@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 14px; color: var(--dark); font-weight: 700;">Legal</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 7px;"><a href="/privacy.html" style="color: #666; text-decoration: none;">Privacy Policy</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/terms.html" style="color: #666; text-decoration: none;">Terms of Service</a></li>
+                        <li style="margin-bottom: 7px;"><a href="/disclaimer.html" style="color: #666; text-decoration: none;">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
-            <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
+            <div style="border-top: 1px solid #eee; padding-top: 22px; text-align: center;">
                 <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved. | <a href="/sitemap.xml" style="color: #666;">Sitemap</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Menu Toggle Script -->
+    <!-- Mobile Menu Script -->
     <script>
     (function() {
         const menuToggle = document.querySelector('.menu-toggle');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileMenuBackdrop = document.querySelector('.mobile-menu-backdrop');
-        const body = document.body;
 
         function toggleMenu() {
             menuToggle.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             mobileMenuBackdrop.classList.toggle('active');
-            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }
 
         menuToggle.addEventListener('click', toggleMenu);
         mobileMenuBackdrop.addEventListener('click', toggleMenu);
-
-        // Close menu when clicking on a link
-        const mobileMenuLinks = mobileMenu.querySelectorAll('.nav-link');
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', toggleMenu);
-        });
-
-        // Close menu on window resize if open
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 768 && mobileMenu.classList.contains('active')) {
-                toggleMenu();
-            }
-        });
     })();
     </script>
 </body>
