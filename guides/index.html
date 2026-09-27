@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pillar Guides & Handbooks | Factictionary</title>
+    <meta name="description" content="In-depth, evergreen guides on Amazon KDP publishing, digital product creation on Payhip, and mobile app development.">
+    <link rel="canonical" href="https://factictionary.in/guides/">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066FF;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            --border: #E2E8F0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Navbar */
+        .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+        .hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; padding: 70px 0; text-align: center; }
+        .hero h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 12px; }
+        .hero p { font-size: 1.15rem; color: #94A3B8; max-width: 600px; margin: 0 auto; }
+
+        .guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; padding: 60px 0 80px; }
+        .guide-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-decoration: none; color: inherit; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .guide-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
+        .guide-tag { font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 12px; }
+        .guide-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+        .guide-desc { color: var(--gray); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
+        .guide-read { font-weight: 700; color: var(--primary); font-size: 0.9rem; }
+
+        .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--gray); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/shop/" class="nav-link">Shop</a></li>
+                <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>📚 EverGreen Guides &amp; Handbooks</h1>
+            <p>Comprehensive, deep-dive reference guides for self-publishing, digital product creation, and app development.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="guides-grid">
+            
+            <a href="/guides/kdp-publishing-guide.html" class="guide-card">
+                <div>
+                    <div class="guide-tag">📖 Self-Publishing</div>
+                    <h2 class="guide-title">The Complete Amazon KDP Self-Publishing Handbook</h2>
+                    <p class="guide-desc">Formatting trim sizes, spine width calculation math, royalty pricing formulas, and 7-backend keyword optimization.</p>
+                </div>
+                <span class="guide-read">Read Handbook ➔</span>
+            </a>
+
+            <a href="/guides/digital-products-payhip-guide.html" class="guide-card">
+                <div>
+                    <div class="guide-tag">🛒 Digital Business</div>
+                    <h2 class="guide-title">How to Build &amp; Sell Digital Products on Payhip</h2>
+                    <p class="guide-desc">Niche selection, pricing strategies, automated PDF delivery, and storefront optimization for digital downloads.</p>
+                </div>
+                <span class="guide-read">Read Guide ➔</span>
+            </a>
+
+            <a href="/guides/mobile-game-app-monetization.html" class="guide-card">
+                <div>
+                    <div class="guide-tag">📱 Mobile Apps</div>
+                    <h2 class="guide-title">Mobile App Development &amp; Google Play Testing Guide</h2>
+                    <p class="guide-desc">Closed testing requirements (12 testers / 14 days), privacy-first UI design, and AdMob monetization strategies.</p>
+                </div>
+                <span class="guide-read">Read Guide ➔</span>
+            </a>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--primary);">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
