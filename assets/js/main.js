@@ -667,11 +667,22 @@ if ('PerformanceObserver' in window) {
     ];
 
     function initToolsNavigationHub() {
+        // Automatically inject Google Material Symbols font stylesheet if not present
+        if (!document.querySelector('link[href*="Material+Symbols"]') && !document.querySelector('link[href*="Material+Icons"]')) {
+            const fontLink = document.createElement('link');
+            fontLink.rel = 'stylesheet';
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0';
+            document.head.appendChild(fontLink);
+        }
+
+        // Automatically attach share buttons with deep links to all tool cards
+        initToolCardShareButtons();
+
         // Automatically inject Coffee Pill into site navbar on all pages
         const navLinksUl = document.querySelector('.navbar .nav-links');
         if (navLinksUl && !navLinksUl.querySelector('.coffee-nav-pill')) {
             const coffeeLi = document.createElement('li');
-            coffeeLi.innerHTML = `<a href="javascript:void(0)" onclick="openDonationModal()" class="coffee-nav-pill">☕ Buy Me a Coffee</a>`;
+            coffeeLi.innerHTML = `<a href="javascript:void(0)" onclick="openDonationModal()" class="coffee-nav-pill"><span class="material-symbols-outlined" style="font-size:16px; vertical-align:middle;">local_cafe</span> Buy Me a Coffee</a>`;
             navLinksUl.appendChild(coffeeLi);
         }
 
@@ -683,14 +694,15 @@ if ('PerformanceObserver' in window) {
             dockBar.className = 'tools-dock-bar';
             dockBar.innerHTML = `
                 <button class="tools-dock-btn" onclick="openToolsDrawer()">
-                    <span>🧰 Tools Hub</span>
+                    <span class="material-symbols-outlined" style="font-size:18px;">handyman</span>
+                    <span>Tools Hub</span>
                     <span class="tools-dock-kbd">Ctrl+K</span>
                 </button>
                 <button class="share-dock-btn" onclick="openShareModal()" title="Share Web Page">
-                    🔗
+                    <span class="material-symbols-outlined">share</span>
                 </button>
                 <button class="share-dock-btn" onclick="openDonationModal()" title="Buy Me a Coffee / Support Us" style="background:#FFF8E7; color:#B4712B; border-color:#FFE0B2;">
-                    ☕
+                    <span class="material-symbols-outlined">local_cafe</span>
                 </button>
             `;
             document.body.appendChild(dockBar);
@@ -732,7 +744,7 @@ if ('PerformanceObserver' in window) {
                 <div class="tools-drawer-modal" onclick="event.stopPropagation()">
                     <div class="tools-drawer-header">
                         <div class="tools-search-box">
-                            <span class="tools-search-icon">🔍</span>
+                            <span class="tools-search-icon"><span class="material-symbols-outlined" style="font-size:18px;">search</span></span>
                             <input type="text" id="tools-search-input" class="tools-search-input" placeholder="Search 75+ tools by name, keyword, or category..." autocomplete="off">
                         </div>
                         <button class="tools-drawer-close" onclick="closeToolsDrawer()">&times;</button>
@@ -741,7 +753,7 @@ if ('PerformanceObserver' in window) {
                         ${categoriesHtml}
                     </div>
                     <div class="tools-drawer-footer">
-                        <span>💡 Tip: Press <kbd style="background:#E2E8F0; padding:2px 6px; border-radius:4px;">Ctrl + K</kbd> anywhere on any tool page</span>
+                        <span><span class="material-symbols-outlined" style="font-size:15px; vertical-align:middle; color:#0066FF;">lightbulb</span> Tip: Press <kbd style="background:#E2E8F0; padding:2px 6px; border-radius:4px;">Ctrl + K</kbd> anywhere on any tool page</span>
                         <span>Factictionary Open Utilities</span>
                     </div>
                 </div>
@@ -776,6 +788,44 @@ if ('PerformanceObserver' in window) {
                 });
             });
         }
+
+        // Helper: Open share modal specifically for a tool card with direct deep link
+        window.openShareModalForTool = function(toolData) {
+            const title = (toolData.title || 'Factictionary Tool').replace(/\s*\|\s*Factictionary/gi, '').replace(/\s*-\s*Factictionary/gi, '').trim();
+            const excerpt = toolData.excerpt || 'Discover free, browser-based privacy utilities on Factictionary.';
+            const icon = toolData.icon || '🛠️';
+
+            let deepUrl = toolData.url || window.location.href;
+            if (deepUrl.startsWith('/')) {
+                deepUrl = window.location.origin + deepUrl;
+            } else if (!deepUrl.startsWith('http')) {
+                deepUrl = window.location.origin + '/tools/' + deepUrl;
+            }
+
+            let tag = 'WebTools';
+            const lowerUrl = deepUrl.toLowerCase();
+            if (lowerUrl.includes('kdp')) tag = 'KDP';
+            else if (lowerUrl.includes('pdf')) tag = 'PDFTools';
+            else if (lowerUrl.includes('image')) tag = 'ImageTools';
+            else if (lowerUrl.includes('video')) tag = 'VideoTools';
+            else if (lowerUrl.includes('audio')) tag = 'AudioTools';
+            else if (lowerUrl.includes('text') || lowerUrl.includes('word') || lowerUrl.includes('markdown')) tag = 'TextTools';
+
+            const postText = `${icon} ${title}\n─────────────────────────\n${excerpt}\n\n🔗 Direct Link:\n${deepUrl}\n\n🏷️ #${tag} #Factictionary #FreeTools #PrivacyFirst`;
+
+            const modal = document.getElementById('share-tool-modal');
+            if (modal) {
+                const textarea = document.getElementById('share-post-textarea');
+                if (textarea) textarea.value = postText;
+
+                const input = document.getElementById('share-link-input');
+                if (input) input.value = deepUrl;
+
+                window.updateShareLinks(postText, deepUrl);
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
 
         // Helper: Generate pre-formatted social post write-up with embedded link
         window.generateSharePostText = function() {
@@ -812,11 +862,12 @@ if ('PerformanceObserver' in window) {
             else if (lowerUrl.includes('blog') || lowerUrl.includes('article')) categoryEmoji = '📰';
             else if (lowerUrl.includes('game')) categoryEmoji = '🎮';
 
-            return `${categoryEmoji} ${cleanTitle}\n\n${desc}\n\n👉 Try it here: ${currentUrl}\n\n#Factictionary #FreeTools #PrivacyFirst`;
+            return `${categoryEmoji} ${cleanTitle}\n─────────────────────────\n${desc}\n\n🔗 Direct Link:\n${currentUrl}\n\n🏷️ #Factictionary #FreeTools #PrivacyFirst`;
         };
 
-        window.updateShareLinks = function(postText) {
-            const pageUrl = encodeURIComponent(window.location.href);
+        window.updateShareLinks = function(postText, targetUrl) {
+            const deepUrl = targetUrl || window.location.href;
+            const pageUrl = encodeURIComponent(deepUrl);
             const encodedText = encodeURIComponent(postText || window.generateSharePostText());
             const pageTitle = encodeURIComponent(document.title);
 
@@ -851,6 +902,50 @@ if ('PerformanceObserver' in window) {
             }
         };
 
+        // Auto-enhance tool cards with direct share buttons
+        function initToolCardShareButtons() {
+            document.querySelectorAll('.tool-card').forEach(card => {
+                if (card.querySelector('.btn-tool-share')) return;
+
+                const link = card.querySelector('a.btn-tool-card, a[href]');
+                if (!link) return;
+
+                const title = card.querySelector('.card-title')?.textContent.trim() || 'Tool';
+                const excerpt = card.querySelector('.card-excerpt')?.textContent.trim() || '';
+                
+                // Find icon span or emoji in card
+                const firstChild = card.firstElementChild;
+                let icon = '🛠️';
+                if (firstChild) {
+                    const iconSpan = firstChild.querySelector('span[style*="font-size"]');
+                    if (iconSpan) icon = iconSpan.textContent.trim();
+                }
+                const url = link.getAttribute('href');
+
+                // Ensure actions container
+                let actionsContainer = card.querySelector('.tool-card-actions');
+                if (!actionsContainer) {
+                    actionsContainer = document.createElement('div');
+                    actionsContainer.className = 'tool-card-actions';
+                    link.parentNode.insertBefore(actionsContainer, link);
+                    actionsContainer.appendChild(link);
+                }
+
+                const shareBtn = document.createElement('button');
+                shareBtn.type = 'button';
+                shareBtn.className = 'btn-tool-share';
+                shareBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px;">share</span>';
+                shareBtn.title = `Share glimpse & deep link for ${title}`;
+                shareBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.openShareModalForTool({ title, excerpt, url, icon });
+                });
+
+                actionsContainer.appendChild(shareBtn);
+            });
+        }
+
         // Inject Social Share Modal Dialog
         if (!document.querySelector('#share-tool-modal')) {
             const shareModal = document.createElement('div');
@@ -862,18 +957,18 @@ if ('PerformanceObserver' in window) {
             shareModal.innerHTML = `
                 <div class="share-modal-dialog" onclick="event.stopPropagation()">
                     <button class="tools-drawer-close" onclick="closeShareModal()" style="position:absolute; top:20px; right:20px;">&times;</button>
-                    <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:4px;">🔗 Share Page &amp; Pre-formatted Post</h3>
+                    <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; gap:8px;"><span class="material-symbols-outlined" style="color:#0066FF; font-size:26px;">share</span> Share Page &amp; Pre-formatted Post</h3>
                     <p style="font-size:13.5px; color:#64748B; margin-bottom:16px;">Copy a ready-to-post write-up with embedded link or download a visual image card.</p>
                     
                     <div class="share-post-card">
                         <div class="share-post-header">
-                            <span class="share-post-title">📝 Pre-formatted Social Post Write-Up</span>
-                            <button onclick="refreshSharePostText()" style="background:none; border:none; color:#0066FF; font-size:12px; font-weight:600; cursor:pointer;" title="Reset write-up">🔄 Reset</button>
+                            <span class="share-post-title" style="display:flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px; color:#0066FF;">post_add</span> Pre-formatted Social Post Write-Up</span>
+                            <button onclick="refreshSharePostText()" style="background:none; border:none; color:#0066FF; font-size:12px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:4px;" title="Reset write-up"><span class="material-symbols-outlined" style="font-size:14px;">refresh</span> Reset</button>
                         </div>
                         <textarea id="share-post-textarea" class="share-post-textarea" rows="4">${initialPostText}</textarea>
                         <div class="share-post-actions">
                             <button class="share-post-copy-btn" onclick="copyPostText(this)">
-                                📋 Copy Post &amp; Embedded Link
+                                <span class="material-symbols-outlined" style="font-size:18px;">content_copy</span> Copy Post &amp; Embedded Link
                             </button>
                         </div>
                     </div>
@@ -882,17 +977,17 @@ if ('PerformanceObserver' in window) {
                         <!-- Populated by updateShareLinks -->
                     </div>
 
-                    <label style="font-size:12.5px; font-weight:600; color:#334155;">Direct Web Page Link:</label>
+                    <label style="font-size:12.5px; font-weight:600; color:#334155; display:flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:16px;">link</span> Direct Web Page Link:</label>
                     <div class="share-copy-box">
                         <input type="text" readonly class="share-copy-input" id="share-link-input" value="${window.location.href}">
-                        <button class="btn btn-primary" onclick="copyPageLink(this)" style="font-size:13px; padding:8px 16px;">📋 Copy Link</button>
+                        <button class="btn btn-primary" onclick="copyPageLink(this)" style="font-size:13px; padding:8px 16px; display:inline-flex; align-items:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:16px;">content_copy</span> Copy Link</button>
                     </div>
 
                     <div class="share-screenshot-card">
-                        <h4 style="font-size:14px; font-weight:700; color:#0F172A; margin-bottom:4px;">📸 Share as Visual Image Card</h4>
+                        <h4 style="font-size:14px; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px; color:#0066FF;">photo_camera</span> Share as Visual Image Card</h4>
                         <p style="font-size:12px; color:#64748B; margin-bottom:10px;">Generate a branded preview image card of this tool page for social posts.</p>
-                        <button class="btn btn-secondary" onclick="generatePageScreenshot()" style="font-size:13px; border-radius:20px; width:100%;">
-                            ✨ Generate &amp; Download Image Card
+                        <button class="btn btn-secondary" onclick="generatePageScreenshot()" style="font-size:13px; border-radius:20px; width:100%; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+                            <span class="material-symbols-outlined" style="font-size:16px; color:#0066FF;">auto_awesome</span> Generate &amp; Download Image Card
                         </button>
                         <div class="screenshot-preview-holder" id="screenshot-holder"></div>
                     </div>
