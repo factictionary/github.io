@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Teleprompter &amp; Speech Pacing Calculator (Mirror Mode) | Factictionary</title>
+    <meta name="description" content="Free browser teleprompter with adjustable scroll speed, eye-line focus band, mirror flip for physical beam-splitter rigs, WPM speech timer, and filler-word detector.">
+    <meta name="keywords" content="free online teleprompter, browser teleprompter no download, speech time calculator words per minute, teleprompter for youtube reels">
+    <link rel="canonical" href="https://factictionary.in/tools/online_teleprompter.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .prompter-stage {
+            background: #090D16; color: #F8FAFC; border-radius: 18px; position: relative;
+            height: 420px; overflow: hidden; border: 2px solid #1E293B; margin-bottom: 24px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+        }
+        .eyeline-band {
+            position: absolute; top: 32%; left: 0; right: 0; height: 68px;
+            background: rgba(56, 189, 248, 0.12); border-top: 2px dashed rgba(56, 189, 248, 0.5);
+            border-bottom: 2px dashed rgba(56, 189, 248, 0.5); pointer-events: none; z-index: 2;
+        }
+        .prompter-scroll {
+            height: 100%; overflow-y: auto; padding: 140px 40px 260px;
+            font-size: 30px; font-weight: 700; line-height: 1.55; text-align: center;
+            scroll-behavior: auto;
+        }
+        .prompter-scroll.mirrored { transform: scaleX(-1); }
+        .controls-bar {
+            background: white; border: 1px solid #E2E8F0; border-radius: 14px; padding: 18px 24px;
+            display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .panel-card {
+            background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px;
+            margin-bottom: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+        .app-banner {
+            background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: white;
+            border-radius: 18px; padding: 28px; margin-bottom: 28px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1060px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 28px;">
+            <span style="background: #E0E7FF; color: #3730A3; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">🎙️ CREATOR STUDIO UTILITY · ZERO UPLOADS</span>
+            <h1 style="font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 900; margin: 12px 0 8px;">Free Online Teleprompter &amp; Speech Pacing Calculator</h1>
+            <p style="color: #475569; max-width: 700px; margin: 0 auto;">Read video scripts smoothly with an eye-line focus band, mirror mode, WPM speaking duration timer, and automatic script formatting.</p>
+        </div>
+
+        <!-- Google Play Funnel Banner -->
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #38BDF8; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">RECORDING REELS OR SHORTS ON YOUR PHONE?</span>
+                <h2 style="color: white; font-size: 1.35rem; margin: 8px 0 4px;">Record Camera + Floating Teleprompter Together on Android</h2>
+                <p style="color: #E0E7FF; margin: 0; font-size: 0.92rem;">Pin your script right next to your phone's selfie lens with AI speech pacing using <strong>Teleprompter &amp; AI Speech Coach</strong> and add effects with <strong>ShortsFX</strong>.</p>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.speak_smart" target="_blank" rel="noopener" style="background: #10B981; padding: 12px 20px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">🎙️ Teleprompter App (Play Store)</a>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.shortsfx" target="_blank" rel="noopener" style="background: #6366F1; padding: 12px 20px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">🎬 ShortsFX Reel Maker</a>
+            </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="toggleScroll()" id="playBtn" style="padding: 10px 22px; border-radius: 10px; background: #0066FF; color: white; font-weight: 800; border: none; cursor: pointer;">▶️ Start Prompter</button>
+                <button onclick="resetPrompter()" style="padding: 10px 16px; border-radius: 10px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">⏮️ Top</button>
+                <button onclick="toggleMirror()" id="mirrorBtn" style="padding: 10px 16px; border-radius: 10px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">🪞 Mirror: OFF</button>
+            </div>
+            <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap; font-size: 0.9rem; font-weight: 600;">
+                <label>Speed: <input type="range" id="speedRange" min="1" max="10" value="3" style="vertical-align: middle;"></label>
+                <label>Font Size: <input type="range" id="fontRange" min="20" max="54" value="30" oninput="updateFontSize(this.value)" style="vertical-align: middle;"></label>
+            </div>
+        </div>
+
+        <!-- Teleprompter Display Stage -->
+        <div class="prompter-stage">
+            <div class="eyeline-band"></div>
+            <div class="prompter-scroll" id="prompterView">
+                Welcome to Factictionary's Browser Teleprompter.<br><br>
+                Keep your eyes inside the blue highlight band near the top of your screen so your gaze stays locked near your webcam.<br><br>
+                Paste your own YouTube, Instagram Reel, or presentation script in the editor box below.<br><br>
+                Remember to pause briefly at every line break and emphasize bold keywords naturally!
+            </div>
+        </div>
+
+        <!-- Script Editor & WPM Stats -->
+        <div class="panel-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+                <h3 style="font-size: 1.2rem; font-weight: 800; margin: 0;">✍️ Paste &amp; Format Your Video Script</h3>
+                <div style="font-size: 0.9rem; color: #475569; background: #F8FAFC; padding: 6px 14px; border-radius: 20px; border: 1px solid #E2E8F0;">
+                    Words: <strong id="wordCount">48</strong> &nbsp;|&nbsp; Est. Reel/Video Time (140 WPM): <strong id="estTime">21 sec</strong>
+                </div>
+            </div>
+            <textarea id="scriptInput" oninput="syncScript()" style="width: 100%; min-height: 150px; padding: 14px; border-radius: 12px; border: 1px solid #CBD5E1; font-family: inherit; font-size: 0.98rem; margin-bottom: 12px;">Welcome to Factictionary's Browser Teleprompter.
+
+Keep your eyes inside the blue highlight band near the top of your screen so your gaze stays locked near your webcam.
+
+Paste your own YouTube, Instagram Reel, or presentation script in the editor box below.
+
+Remember to pause briefly at every line break and emphasize bold keywords naturally!</textarea>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button onclick="chunkLines()" style="padding: 10px 18px; border-radius: 10px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">✂️ Auto-Break into 5-Word Breath Lines</button>
+                <a href="/guides/short-form-video-reels-teleprompter-creator-guide.html" style="padding: 10px 18px; border-radius: 10px; background: #EFF6FF; color: #0066FF; font-weight: 700; text-decoration: none;">📖 Read our Camera Eye-Contact Guide →</a>
+            </div>
+        </div>
+
+        <!-- Rich Documentation for AdSense & SEO -->
+        <div class="panel-card">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 14px;">How to Read a Teleprompter Without Viewers Noticing Eye Movement</h2>
+            <p style="color: #334155; margin-bottom: 14px;">Whether you are recording a 60-second Instagram Reel, a YouTube tutorial, or delivering a Zoom keynote, reading wide paragraphs across a laptop monitor creates a telltale horizontal "windshield-wiper" eye motion. Follow these three broadcast studio adjustments to eliminate eye darting:</p>
+            <ol style="margin-left: 22px; margin-bottom: 20px; color: #334155; line-height: 1.8;">
+                <li><strong>Use the "Auto-Break into 5-Word Breath Lines" Button:</strong> Narrowing each line to 4–6 words allows your foveal vision to capture the entire phrase in a single center fixation without sweeping left to right.</li>
+                <li><strong>Read Exclusively Inside the Top Eye-Line Band:</strong> Never chase words down to the bottom of the window. Adjust the <strong>Speed</strong> slider so the text rises into the blue highlight band at your natural 135–150 Words Per Minute speaking cadence.</li>
+                <li><strong>Step Back 3 Feet (or Use Our Mobile App):</strong> Increasing the distance between your eyes and the lens cuts the angular offset in half. If you shoot vertically on a smartphone, install <a href="https://play.google.com/store/apps/details?id=in.factictionary.speak_smart" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">Teleprompter &amp; AI Speech Coach</a> to overlay your script right beside the top selfie camera.</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let scrolling = false;
+        let timer = null;
+
+        function syncScript() {
+            const raw = document.getElementById('scriptInput').value;
+            document.getElementById('prompterView').innerHTML = raw.replace(/\n/g, '<br>');
+            const words = raw.trim() ? raw.trim().split(/\s+/).length : 0;
+            document.getElementById('wordCount').textContent = words;
+            const secs = Math.round((words / 140) * 60);
+            document.getElementById('estTime').textContent = secs < 60 ? `${secs} sec` : `${Math.floor(secs/60)}m ${secs%60}s`;
+        }
+
+        function toggleScroll() {
+            const btn = document.getElementById('playBtn');
+            const view = document.getElementById('prompterView');
+            if (scrolling) {
+                clearInterval(timer);
+                scrolling = false;
+                btn.textContent = '▶️ Start Prompter';
+            } else {
+                scrolling = true;
+                btn.textContent = '⏸️ Pause Prompter';
+                timer = setInterval(() => {
+                    const spd = parseInt(document.getElementById('speedRange').value, 10);
+                    view.scrollTop += spd * 0.45;
+                    if (view.scrollTop + view.clientHeight >= view.scrollHeight - 2) {
+                        toggleScroll();
+                    }
+                }, 30);
+            }
+        }
+
+        function resetPrompter() {
+            if (scrolling) toggleScroll();
+            document.getElementById('prompterView').scrollTop = 0;
+        }
+
+        function toggleMirror() {
+            const view = document.getElementById('prompterView');
+            view.classList.toggle('mirrored');
+            document.getElementById('mirrorBtn').textContent = view.classList.contains('mirrored') ? '🪞 Mirror: ON' : '🪞 Mirror: OFF';
+        }
+
+        function updateFontSize(val) {
+            document.getElementById('prompterView').style.fontSize = val + 'px';
+        }
+
+        function chunkLines() {
+            const words = document.getElementById('scriptInput').value.trim().split(/\s+/);
+            const lines = [];
+            for (let i = 0; i < words.length; i += 5) {
+                lines.push(words.slice(i, i + 5).join(' '));
+            }
+            document.getElementById('scriptInput').value = lines.join('\n');
+            syncScript();
+        }
+    </script>
+</body>
+</html>

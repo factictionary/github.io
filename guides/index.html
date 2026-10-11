@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pillar Guides & Handbooks | Factictionary</title>
-    <meta name="description" content="In-depth, evergreen guides on Amazon KDP publishing, digital product creation on Payhip, and mobile app development.">
+    <title>Pillar Guides, Handbooks & App Tutorials | Factictionary</title>
+    <meta name="description" content="In-depth reference guides on Google Play closed testing (12 testers/14 days), Tambola 1-90 number calling nicknames, coaching class management, detective riddles, mobile teleprompters, client-side PDF privacy, and Amazon KDP.">
     <link rel="canonical" href="https://factictionary.in/guides/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,31 +17,33 @@
             --light: #F8FAFC;
             --gray: #64748B;
             --border: #E2E8F0;
-            --radius: 12px;
+            --radius: 14px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.6; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.65; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
         /* Navbar */
         .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-container { max-width: 1140px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; flex-wrap: wrap; }
         .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; }
         .nav-link:hover, .nav-link.active { color: var(--primary); }
 
         .hero { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; padding: 70px 0; text-align: center; }
-        .hero h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 12px; }
-        .hero p { font-size: 1.15rem; color: #94A3B8; max-width: 600px; margin: 0 auto; }
+        .hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 14px; }
+        .hero p { font-size: 1.12rem; color: #94A3B8; max-width: 680px; margin: 0 auto; }
 
-        .guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; padding: 60px 0 80px; }
-        .guide-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-decoration: none; color: inherit; transition: all 0.3s; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .guide-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 12px 28px rgba(0,0,0,0.08); }
-        .guide-tag { font-size: 0.8rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 12px; }
-        .guide-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+        .guides-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; padding: 56px 0 80px; }
+        .guide-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; text-decoration: none; color: inherit; transition: all 0.25s; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .guide-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 14px 30px rgba(0,102,255,0.09); }
+        .guide-tag { display: inline-block; font-size: 0.78rem; font-weight: 800; color: var(--primary); background: #EFF6FF; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; margin-bottom: 14px; letter-spacing: 0.4px; }
+        .guide-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; line-height: 1.35; color: var(--dark); }
         .guide-desc { color: var(--gray); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
-        .guide-read { font-weight: 700; color: var(--primary); font-size: 0.9rem; }
+        .guide-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid #F1F5F9; font-size: 0.88rem; }
+        .guide-read { font-weight: 700; color: var(--primary); }
+        .guide-app-pill { color: #059669; font-weight: 600; font-size: 0.82rem; }
 
         .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--gray); font-size: 0.9rem; }
     </style>
@@ -53,9 +55,10 @@
             <a href="/" class="logo">Factictionary</a>
             <ul class="nav-links">
                 <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/guides/" class="nav-link active">Guides</a></li>
                 <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
                 <li><a href="/contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -64,39 +67,168 @@
 
     <header class="hero">
         <div class="container">
-            <h1>📚 EverGreen Guides &amp; Handbooks</h1>
-            <p>Comprehensive, deep-dive reference guides for self-publishing, digital product creation, and app development.</p>
+            <h1>📚 Evergreen Guides &amp; Playbooks</h1>
+            <p>In-depth, practical handbooks on Android app development, party games, teaching workflows, video creation, document privacy, and digital publishing.</p>
         </div>
     </header>
 
     <div class="container">
         <div class="guides-grid">
-            
+
+            <a href="/guides/mobile-game-app-monetization.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🛠️ Android Developers</span>
+                    <h2 class="guide-title">How to Pass Google Play's 12 Testers for 14 Days Closed Testing Rule (2026)</h2>
+                    <p class="guide-desc">Step-by-step Play Console Google Groups setup, why 40% of first-time production applications get rejected, and how to recruit verified daily testers for $0.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Test Pilot Pro</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/tambola-housie-number-calling-nicknames-rules.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🎲 Party &amp; Family Games</span>
+                    <h2 class="guide-title">Tambola / Housie Number Calling Nicknames (1 to 90 List) &amp; 25+ Winning Patterns</h2>
+                    <p class="guide-desc">Complete 1–90 funny calling rhymes, Bollywood lingo, kitty party dividends (Bamboo, Pyramid, Temperature, Corners), and paperless mobile hosting.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 All-In-One Tambola</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/coaching-institute-tuition-teacher-management-guide.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">📚 Educators &amp; Tutors</span>
+                    <h2 class="guide-title">How Home Tutors &amp; Coaching Institutes Can Automate Test Papers &amp; Fees</h2>
+                    <p class="guide-desc">Create weekly 20-mark chapter tests in 2 minutes, watermark coaching worksheets, revise math/science formulas, and track monthly student tuition fees offline.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Chalkly App</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/detective-riddles-mystery-puzzles-brain-teasers.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🕵️ Brain &amp; Mystery</span>
+                    <h2 class="guide-title">15 Crime Scene Detective Riddles &amp; 60-Second Mystery Puzzles (With Answers)</h2>
+                    <p class="guide-desc">Interactive alibi contradiction cases, forensic logic puzzles with click-to-reveal solutions, and daily 2-minute cognitive training exercises.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Quizziest &amp; MindBites</span>
+                    <span class="guide-read">Solve Cases ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/short-form-video-reels-teleprompter-creator-guide.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🎬 Video Creators</span>
+                    <h2 class="guide-title">How to Record Confident Shorts &amp; Reels Using a Mobile Teleprompter</h2>
+                    <p class="guide-desc">Read scripts on camera with zero eye movement, hit 145 WPM pacing, and export 9:16 vertical videos &amp; WhatsApp statuses without watermarks.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Teleprompter &amp; ShortsFX</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/client-side-pdf-image-privacy-tools-guide.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🔒 Document Privacy</span>
+                    <h2 class="guide-title">How to Merge, Compress &amp; OCR Sensitive PDFs Without Cloud Uploads</h2>
+                    <p class="guide-desc">Why uploading bank statements, IDs, and resumes to cloud PDF sites is risky—and how WebAssembly processes documents 100% locally in your browser.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">🧰 50+ Browser Tools</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/offline-word-games-brain-training-commute-guide.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">✈️ Offline Gaming</span>
+                    <h2 class="guide-title">Best 100% Offline Android Games &amp; Brain Apps for Flights &amp; Commutes</h2>
+                    <p class="guide-desc">Curated guide to Airplane-Mode-ready word games (Crossword &amp; Wordle), Water Sort, Sudoku, Crazy 8s card games, and 12-language travel phrasebooks.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 VocabIQ &amp; Puzzle Mania</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
             <a href="/guides/kdp-publishing-guide.html" class="guide-card">
                 <div>
-                    <div class="guide-tag">📖 Self-Publishing</div>
-                    <h2 class="guide-title">The Complete Amazon KDP Self-Publishing Handbook</h2>
-                    <p class="guide-desc">Formatting trim sizes, spine width calculation math, royalty pricing formulas, and 7-backend keyword optimization.</p>
+                    <span class="guide-tag">📖 Self-Publishing</span>
+                    <h2 class="guide-title">The Complete Amazon KDP Self-Publishing Handbook (2026)</h2>
+                    <p class="guide-desc">Formatting trim sizes, spine width calculation math, royalty pricing formulas, and 7-backend keyword optimization with free KDP calculators.</p>
                 </div>
-                <span class="guide-read">Read Handbook ➔</span>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">🧰 KDP Calculator Suite</span>
+                    <span class="guide-read">Read Handbook ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/crazy-8s-mau-mau-card-game-rules-strategies.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🃏 Card Game Strategy</span>
+                    <h2 class="guide-title">Crazy Eights (Crazy 8s) &amp; Mau Mau: Complete Rules, Action Cards &amp; Winning Strategy</h2>
+                    <p class="guide-desc">Master bridge-card hand architecture, suit-starvation tracking, 1v1 Reverse/Skip combo chains, and tournament scoring for 4-color shedding games.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Duo Cards: Crazy 8s</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/water-sort-sudoku-logic-puzzle-solving-strategies.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🧩 Logic &amp; Algorithms</span>
+                    <h2 class="guide-title">How to Solve Hard Water Sort &amp; 9×9 Sudoku Logic Puzzles Without Getting Stuck</h2>
+                    <p class="guide-desc">Learn LIFO stack theory for Water Sort buffer tubes plus four intermediate-to-expert Sudoku deduction techniques (Snyder Notation, Pointing Pairs, X-Wing).</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Puzzle Mania &amp; Stack Blitz</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/essential-travel-phrases-pronunciation-guide-12-languages.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">🌍 Language &amp; Travel</span>
+                    <h2 class="guide-title">Essential Survival Travel Phrases &amp; Pronunciation Guide Across 12 Languages</h2>
+                    <p class="guide-desc">Master the 50 survival travel chunks for airports, hotels, dining, and emergencies using Native Audio Shadowing across Spanish, French, German, Japanese &amp; Hindi.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">📱 Lingofy AI Speak</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
+            </a>
+
+            <a href="/guides/ats-resume-keywords-formatting-guide-2026.html" class="guide-card">
+                <div>
+                    <span class="guide-tag">📄 Career &amp; ATS Privacy</span>
+                    <h2 class="guide-title">ATS Resume Formatting &amp; Keyword Matching Guide (2026): Why Clean PDFs Win</h2>
+                    <p class="guide-desc">Understand how Workday, Greenhouse, and Lever parse PDF text streams, avoid the 5 layout traps that scramble resumes, and test keyword overlap locally.</p>
+                </div>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">🧰 ATS Resume Matcher</span>
+                    <span class="guide-read">Read Guide ➔</span>
+                </div>
             </a>
 
             <a href="/guides/digital-products-payhip-guide.html" class="guide-card">
                 <div>
-                    <div class="guide-tag">🛒 Digital Business</div>
+                    <span class="guide-tag">🛒 Digital Business</span>
                     <h2 class="guide-title">How to Build &amp; Sell Digital Products on Payhip</h2>
-                    <p class="guide-desc">Niche selection, pricing strategies, automated PDF delivery, and storefront optimization for digital downloads.</p>
+                    <p class="guide-desc">Niche selection, pricing strategies, automated PDF delivery, and storefront optimization for eBooks, printables, and templates.</p>
                 </div>
-                <span class="guide-read">Read Guide ➔</span>
-            </a>
-
-            <a href="/guides/mobile-game-app-monetization.html" class="guide-card">
-                <div>
-                    <div class="guide-tag">📱 Mobile Apps</div>
-                    <h2 class="guide-title">Mobile App Development &amp; Google Play Testing Guide</h2>
-                    <p class="guide-desc">Closed testing requirements (12 testers / 14 days), privacy-first UI design, and AdMob monetization strategies.</p>
+                <div class="guide-footer">
+                    <span class="guide-app-pill">🛍️ Digital Storefront</span>
+                    <span class="guide-read">Read Guide ➔</span>
                 </div>
-                <span class="guide-read">Read Guide ➔</span>
             </a>
 
         </div>
@@ -104,7 +236,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>© 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--primary);">Privacy Policy</a></p>
+            <p>© 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--primary);">Privacy Policy</a> | <a href="/games/" style="color: var(--primary);">Google Play Apps</a> | <a href="/tools/" style="color: var(--primary);">50+ Web Tools</a></p>
         </div>
     </footer>
 

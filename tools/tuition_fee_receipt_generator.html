@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuition &amp; Coaching Fee Receipt Generator (Printable PDF / WhatsApp) | Factictionary</title>
+    <meta name="description" content="Free online Tuition &amp; Coaching Institute Fee Receipt Generator. Create printable student fee receipts with batch details, paid/balance dues, and WhatsApp summary in seconds.">
+    <meta name="keywords" content="tuition fee receipt generator online, coaching class fee receipt maker, student fee receipt template pdf, chalkly tutor app">
+    <link rel="canonical" href="https://factictionary.in/tools/tuition_fee_receipt_generator.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .receipt-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+        @media (min-width: 880px) { .receipt-grid { grid-template-columns: 1fr 1fr; } }
+        .panel-card { background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 28px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); }
+        .form-label { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; color: #1E293B; }
+        .form-input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #CBD5E1; font-family: inherit; font-size: 0.94rem; margin-bottom: 12px; }
+        .receipt-preview {
+            border: 2px dashed #0F172A; border-radius: 12px; padding: 24px; background: #FFFDF7;
+        }
+        .app-banner {
+            background: linear-gradient(135deg, #065F46 0%, #0F172A 100%); color: white;
+            border-radius: 18px; padding: 28px; margin-bottom: 28px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1080px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 28px;">
+            <span style="background: #D1FAE5; color: #065F46; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">📚 EDUCATOR &amp; COACHING UTILITY · 100% PRIVATE</span>
+            <h1 style="font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 8px;">Tuition &amp; Coaching Fee Receipt Generator</h1>
+            <p style="color: #475569; max-width: 720px; margin: 0 auto;">Create printable student fee receipts and 1-click WhatsApp parent confirmation messages in your browser with zero server uploads.</p>
+        </div>
+
+        <!-- Google Play Funnel Banner -->
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #34D399; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">PRIVATE TUTOR OR COACHING TEACHER?</span>
+                <h2 style="color: white; font-size: 1.35rem; margin: 8px 0 4px;">Manage Batches, Tests, Formulas &amp; Student Fees on Android</h2>
+                <p style="color: #D1FAE5; margin: 0; font-size: 0.92rem;">Install <strong>Chalkly: Tutor, Tests &amp; Fees</strong> on Google Play to track monthly batch fees, generate tests, and access math/science formula vaults offline.</p>
+            </div>
+            <div>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" style="background: #10B981; padding: 14px 24px; border-radius: 12px; color: white; font-weight: 800; text-decoration: none; display: inline-block;">📚 Install Chalkly on Google Play</a>
+            </div>
+        </div>
+
+        <div class="receipt-grid">
+            <!-- Form -->
+            <div class="panel-card">
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 14px;">📝 Enter Student &amp; Fee Details</h2>
+                <label class="form-label">Academy / Tutor Name:</label>
+                <input type="text" id="instName" class="form-input" value="Apex Science & Maths Tuition" oninput="updateReceipt()">
+
+                <label class="form-label">Student Full Name:</label>
+                <input type="text" id="stuName" class="form-input" value="Aarav Sharma" oninput="updateReceipt()">
+
+                <label class="form-label">Class / Batch &amp; Subject:</label>
+                <input type="text" id="batchName" class="form-input" value="Class 10 — Mathematics & Physics (Evening Batch)" oninput="updateReceipt()">
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label class="form-label">Fee Month / Period:</label>
+                        <input type="text" id="feeMonth" class="form-input" value="October 2026" oninput="updateReceipt()">
+                    </div>
+                    <div>
+                        <label class="form-label">Payment Mode:</label>
+                        <input type="text" id="payMode" class="form-input" value="UPI / GPay" oninput="updateReceipt()">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label class="form-label">Amount Paid (₹ / $):</label>
+                        <input type="text" id="amtPaid" class="form-input" value="₹2,500" oninput="updateReceipt()">
+                    </div>
+                    <div>
+                        <label class="form-label">Pending Balance Due:</label>
+                        <input type="text" id="amtDue" class="form-input" value="₹0 (Paid in Full)" oninput="updateReceipt()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Printable Receipt & WhatsApp Copy -->
+            <div class="panel-card">
+                <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 14px;">🧾 Live Printable Fee Receipt</h2>
+                <div class="receipt-preview" id="receiptBox">
+                    <div style="display:flex;justify-content:space-between;border-bottom:2px solid #0F172A;padding-bottom:10px;margin-bottom:14px;">
+                        <div>
+                            <div id="rInst" style="font-size:1.2rem;font-weight:900;">Apex Science &amp; Maths Tuition</div>
+                            <div style="font-size:0.8rem;color:#64748B;">OFFICIAL TUITION FEE RECEIPT</div>
+                        </div>
+                        <div style="text-align:right;font-size:0.85rem;">
+                            <div><strong>Receipt #:</strong> <span id="rNo">REC-4821</span></div>
+                            <div><strong>Date:</strong> <span id="rDate">2026-10-11</span></div>
+                        </div>
+                    </div>
+                    <p style="margin:6px 0;"><strong>Student Name:</strong> <span id="rStu">Aarav Sharma</span></p>
+                    <p style="margin:6px 0;"><strong>Batch / Subject:</strong> <span id="rBatch">Class 10 — Mathematics &amp; Physics (Evening Batch)</span></p>
+                    <p style="margin:6px 0;"><strong>Fee Month:</strong> <span id="rMonth">October 2026</span></p>
+                    <p style="margin:6px 0;"><strong>Payment Mode:</strong> <span id="rMode">UPI / GPay</span></p>
+                    <div style="background:#ECFDF5;border:1px solid #A7F3D0;padding:12px;border-radius:8px;margin-top:14px;display:flex;justify-content:space-between;">
+                        <div><strong>Amount Received:</strong> <span id="rPaid" style="color:#065F46;font-weight:900;font-size:1.1rem;">₹2,500</span></div>
+                        <div><strong>Balance Due:</strong> <span id="rDue" style="font-weight:700;">₹0 (Paid in Full)</span></div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+                    <button onclick="window.print()" style="flex: 1; padding: 12px; border-radius: 10px; background: #0066FF; color: white; font-weight: 800; border: none; cursor: pointer;">🖨️ Print / Save as PDF</button>
+                    <button onclick="copyWhatsAppText()" style="flex: 1; padding: 12px; border-radius: 10px; background: #10B981; color: white; font-weight: 800; border: none; cursor: pointer;">💬 Copy WhatsApp Receipt</button>
+                </div>
+                <p id="copyMsg" style="font-size: 0.85rem; color: #059669; font-weight: 700; margin-top: 8px; min-height: 20px;"></p>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;">How Private Tutors &amp; Coaching Institutes Streamline Fee Collection</h2>
+            <p style="color: #334155; margin-bottom: 12px;">Independent home tutors, music/chess instructors, and academic coaching centers often lose 4 to 6 hours every month reconciling UPI screenshots against paper attendance registers. Generating standardized digital fee receipts eliminates parent disputes and improves on-time monthly collections before the 7th of each month.</p>
+            <p style="color: #334155; margin-bottom: 0;">For complete student batch management, test score tracking, and a built-in Mathematics &amp; Science formula reference vault on your phone, read our <a href="/guides/coaching-institute-tuition-teacher-management-guide.html" style="color: #0066FF; font-weight: 700;">Coaching Institute &amp; Private Tuition Teacher Management Guide</a> or install <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">Chalkly on Google Play</a>.</p>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('rDate').textContent = new Date().toISOString().split('T')[0];
+        document.getElementById('rNo').textContent = 'REC-' + Math.floor(1000 + Math.random() * 9000);
+
+        function updateReceipt() {
+            document.getElementById('rInst').textContent = document.getElementById('instName').value;
+            document.getElementById('rStu').textContent = document.getElementById('stuName').value;
+            document.getElementById('rBatch').textContent = document.getElementById('batchName').value;
+            document.getElementById('rMonth').textContent = document.getElementById('feeMonth').value;
+            document.getElementById('rMode').textContent = document.getElementById('payMode').value;
+            document.getElementById('rPaid').textContent = document.getElementById('amtPaid').value;
+            document.getElementById('rDue').textContent = document.getElementById('amtDue').value;
+        }
+
+        function copyWhatsAppText() {
+            const msg = `*Fee Receipt — ${document.getElementById('instName').value}*\n` +
+                `Receipt No: ${document.getElementById('rNo').textContent} | Date: ${document.getElementById('rDate').textContent}\n` +
+                `Student: *${document.getElementById('stuName').value}*\n` +
+                `Batch: ${document.getElementById('batchName').value}\n` +
+                `Month: *${document.getElementById('feeMonth').value}*\n` +
+                `Amount Paid: *${document.getElementById('amtPaid').value}* (${document.getElementById('payMode').value})\n` +
+                `Balance Due: ${document.getElementById('amtDue').value}\n` +
+                `Thank you!`;
+            navigator.clipboard.writeText(msg);
+            document.getElementById('copyMsg').textContent = '✓ WhatsApp Receipt copied to clipboard! Paste directly into WhatsApp.';
+        }
+    </script>
+</body>
+</html>

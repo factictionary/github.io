@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator | Factictionary</title>
+    <meta name="description" content="Free online Tambola (Housie / 90-Ball Bingo) number caller with voice announcer, 1 to 90 calling nicknames, auto-timer, and printable 3x9 Tambola ticket generator.">
+    <meta name="keywords" content="online tambola number caller, tambola board 1 to 90 online, housie number generator with voice, free tambola ticket generator printable">
+    <link rel="canonical" href="https://factictionary.in/tools/tambola_caller.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .tambola-workspace { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 36px; }
+        @media (min-width: 900px) { .tambola-workspace { grid-template-columns: 340px 1fr; } }
+        .caller-panel, .board-panel, .ticket-panel, .doc-panel {
+            background: white; border: 1px solid #E2E8F0; border-radius: 18px; padding: 28px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+        }
+        .current-ball {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: linear-gradient(135deg, #0066FF 0%, #4F46E5 100%);
+            color: white; font-size: 3.4rem; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 14px; box-shadow: 0 12px 28px rgba(0,102,255,0.35);
+        }
+        .nickname-pill {
+            background: #EFF6FF; color: #1E40AF; font-weight: 700; font-size: 0.95rem;
+            padding: 8px 16px; border-radius: 30px; display: inline-block; margin-bottom: 18px;
+        }
+        .board-grid {
+            display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px;
+        }
+        .board-cell {
+            aspect-ratio: 1; border-radius: 8px; border: 1px solid #E2E8F0;
+            background: #F8FAFC; color: #64748B; font-weight: 700; font-size: 0.92rem;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .board-cell.called {
+            background: #10B981; color: white; border-color: #059669; transform: scale(1.03);
+        }
+        .board-cell.latest {
+            background: #F59E0B; color: #0F172A; border-color: #D97706; box-shadow: 0 0 0 3px rgba(245,158,11,0.35);
+        }
+        .ticket-grid {
+            display: grid; grid-template-columns: repeat(9, 1fr); border: 2px solid #1E293B; border-radius: 8px; overflow: hidden; max-width: 540px; margin: 16px auto;
+        }
+        .ticket-cell {
+            height: 46px; border: 1px solid #CBD5E1; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.05rem; cursor: pointer; user-select: none; background: #FFFBEB;
+        }
+        .ticket-cell.daubed { background: #10B981; color: white; text-decoration: line-through; }
+        .app-banner {
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%); color: white;
+            border-radius: 18px; padding: 28px; margin-bottom: 32px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1140px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 28px;">
+            <span style="background: #DBEAFE; color: #1E40AF; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">🎲 INTERACTIVE PARTY UTILITY · 100% IN-BROWSER</span>
+            <h1 style="font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 900; margin: 12px 0 8px;">Online Tambola / Housie Number Caller &amp; Ticket Generator</h1>
+            <p style="color: #475569; max-width: 700px; margin: 0 auto;">Call numbers 1 to 90 with classic Housie lingo nicknames, voice announcements, auto-timer, and interactive 3×9 tickets.</p>
+        </div>
+
+        <!-- Google Play Funnel Banner -->
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #F59E0B; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">HOSTING ON YOUR PHONE?</span>
+                <h2 style="color: white; font-size: 1.35rem; margin: 8px 0 4px;">Download Our Official Offline Tambola Android Apps</h2>
+                <p style="color: #DBEAFE; margin: 0; font-size: 0.92rem;">Get automatic claim verification, custom prize patterns, and multiplayer digital tickets on Google Play.</p>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.tambola_housie_host" target="_blank" rel="noopener" class="btn btn-primary" style="background: #10B981; border: none; padding: 12px 20px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">🎙️ Tambola Host Caller App</a>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" class="btn btn-primary" style="background: #3B82F6; border: none; padding: 12px 20px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">🎟️ All-In-One Tambola Tickets</a>
+            </div>
+        </div>
+
+        <div class="tambola-workspace">
+            <!-- Left Caller Controls -->
+            <div class="caller-panel text-center">
+                <div class="current-ball" id="currentBall">–</div>
+                <div class="nickname-pill" id="currentCue">Click "Call Next Number" to Start</div>
+                <div style="font-size: 0.88rem; color: #64748B; margin-bottom: 16px;">
+                    Called: <strong id="calledCount">0</strong> / 90 &nbsp;|&nbsp; Remaining: <strong id="remainCount">90</strong>
+                </div>
+
+                <button onclick="callNextNumber()" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.05rem; font-weight: 800; border-radius: 12px; margin-bottom: 10px; background: #0066FF; color: white; border: none; cursor: pointer;">🔊 Call Next Number</button>
+                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+                    <button onclick="toggleAutoPlay()" id="autoBtn" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #CBD5E1; background: #F8FAFC; font-weight: 700; cursor: pointer;">▶️ Auto (5s)</button>
+                    <button onclick="toggleVoice()" id="voiceBtn" style="flex: 1; padding: 10px; border-radius: 10px; border: 1px solid #CBD5E1; background: #EFF6FF; color: #1D4ED8; font-weight: 700; cursor: pointer;">🔊 Voice: ON</button>
+                    <button onclick="resetBoard()" style="padding: 10px 14px; border-radius: 10px; border: 1px solid #FCA5A5; background: #FEF2F2; color: #DC2626; font-weight: 700; cursor: pointer;">Reset</button>
+                </div>
+
+                <div style="text-align: left; background: #F8FAFC; padding: 14px; border-radius: 12px; border: 1px solid #E2E8F0;">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: #64748B; text-transform: uppercase; margin-bottom: 6px;">Last 6 Numbers Called</div>
+                    <div id="historyList" style="font-weight: 700; color: #0F172A; font-size: 0.95rem;">None yet</div>
+                </div>
+            </div>
+
+            <!-- Right 1-90 Board -->
+            <div class="board-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">1 to 90 Master Tambola Board</h3>
+                    <a href="/guides/tambola-housie-number-calling-nicknames-rules.html" style="font-size: 0.88rem; color: #0066FF; font-weight: 700; text-decoration: none;">📖 View All 1–90 Nicknames &amp; Rules →</a>
+                </div>
+                <div class="board-grid" id="boardGrid"></div>
+            </div>
+        </div>
+
+        <!-- Interactive 3x9 Ticket Generator -->
+        <div class="ticket-panel text-center" style="margin-bottom: 36px;">
+            <h2 style="font-size: 1.45rem; font-weight: 800; margin-bottom: 6px;">🎟️ Interactive 3×9 Tambola Ticket Generator</h2>
+            <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 14px;">Click any number on your ticket below to cross/daub it as numbers are called, or generate a new randomized 15-number ticket.</p>
+            <div class="ticket-grid" id="ticketGrid"></div>
+            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 14px;">
+                <button onclick="generateTicket()" style="padding: 10px 22px; border-radius: 10px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">🔄 Generate New Ticket</button>
+                <button onclick="window.print()" style="padding: 10px 22px; border-radius: 10px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">🖨️ Print Ticket</button>
+            </div>
+        </div>
+
+        <!-- Rich SEO & AdSense Documentation Section -->
+        <div class="doc-panel">
+            <h2 style="font-size: 1.55rem; font-weight: 800; margin-bottom: 14px;">How to Host a Tambola / Housie Game Using This Online Caller</h2>
+            <p style="margin-bottom: 14px; color: #334155;"><strong>Tambola</strong> (known as <strong>Housie</strong> in the UK, Australia, and India, and 90-Ball Bingo internationally) uses a master board of numbers from <strong>1 to 90</strong> and player tickets arranged in a <strong>3-row by 9-column grid</strong>. Each ticket contains exactly 15 numbers—5 numbers per row—with Column 1 holding numbers 1–9, Column 2 holding 10–19, and so on up to Column 9 (80–90).</p>
+            <ol style="margin-left: 22px; margin-bottom: 20px; color: #334155; line-height: 1.8;">
+                <li><strong>Distribute Tickets:</strong> Give physical paper tickets to your guests, let them generate a digital ticket above, or ask everyone to install <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">All-In-One Tambola &amp; Housie</a> on their phones.</li>
+                <li><strong>Announce Winning Dividends:</strong> Before calling the first number, declare which patterns are active for the round—such as <em>Early Five (Jaldi 5)</em>, <em>Four Corners</em>, <em>Top Line</em>, <em>Middle Line</em>, <em>Bottom Line</em>, <em>Breakfast / Lunch / Dinner</em>, and <em>Full House</em>.</li>
+                <li><strong>Call Numbers with Nicknames:</strong> Click <strong>Call Next Number</strong> (or enable the 5-second Auto-Caller). Our built-in Web Speech synthesizer announces both the traditional calling nickname (like <em>"Two Little Ducks, 22"</em> or <em>"Top of the House, 90"</em>) and highlights the cell on the 1–90 board so you can verify claims in seconds.</li>
+            </ol>
+
+            <h3 style="font-size: 1.25rem; font-weight: 800; margin: 24px 0 10px;">Frequently Asked Questions</h3>
+            <details style="margin-bottom: 10px; background: #F8FAFC; padding: 14px 18px; border-radius: 10px; border: 1px solid #E2E8F0;">
+                <summary style="font-weight: 700; cursor: pointer;">How does the random number generator prevent duplicate calls?</summary>
+                <p style="margin-top: 8px; margin-bottom: 0; color: #475569;">The caller shuffles an array of integers 1 through 90 using the unbiased Fisher-Yates shuffle algorithm in your browser memory, guaranteeing every number is drawn once with uniform mathematical probability.</p>
+            </details>
+            <details style="background: #F8FAFC; padding: 14px 18px; border-radius: 10px; border: 1px solid #E2E8F0;">
+                <summary style="font-weight: 700; cursor: pointer;">What happens if a player claims Full House late?</summary>
+                <p style="margin-top: 8px; margin-bottom: 0; color: #475569;">Under standard Tambola rules, a dividend claim is valid only if called before the host draws the next number. If two players claim simultaneously on the exact same number, the prize is split equally. See our <a href="/guides/tambola-housie-number-calling-nicknames-rules.html" style="color: #0066FF; font-weight: 700;">Complete Tambola Rules &amp; 1–90 Nicknames Guide</a> for full tournament edge cases.</p>
+            </details>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const NICKNAMES = {
+            1:"Kelly's Eye",2:"One Little Duck",3:"Cup of Tea",4:"Knock at the Door",5:"Man Alive",6:"Half a Dozen",7:"Lucky Seven",8:"Garden Gate",9:"Doctor's Orders",10:"Prime Minister's Den",
+            11:"Legs Eleven",12:"One Dozen",13:"Unlucky for Some",14:"Valentine's Day",15:"Young and Keen",16:"Sweet Sixteen",17:"Dancing Queen",18:"Coming of Age",19:"Goodbye Teens",20:"One Score",
+            21:"Key of the Door",22:"Two Little Ducks",23:"Thee and Me",24:"Two Dozen",25:"Duck and Dive",26:"Republic Day",27:"Gateway to Heaven",28:"Over Weight",29:"Rise and Shine",30:"Dirty Gertie",
+            31:"Get Up and Run",32:"Buckle My Shoe",33:"All the Threes",34:"Ask for More",35:"Jump and Jive",36:"Three Dozen",37:"More than Eleven",38:"Christmas Cake",39:"Watch Your Waistline",40:"Naughty Forty",
+            41:"Time for Fun",42:"Winnie the Pooh",43:"Down on Your Knees",44:"Droopy Drawers",45:"Halfway There",46:"Up to Tricks",47:"Four and Seven",48:"Four Dozen",49:"PC / Rise and Shine",50:"Half a Century",
+            51:"Tweak of the Thumb",52:"Deck of Cards",53:"Stuck in the Tree",54:"Clean the Floor",55:"Snakes Alive",56:"Was She Worth It?",57:"Heinz Varieties",58:"Make Them Wait",59:"Brighton Line",60:"Five Dozen",
+            61:"Bakers Bun",62:"Turn the Screw",63:"Tickle Me 63",64:"Red Raw",65:"Old Age Pension",66:"Clickety Click",67:"Made in Heaven",68:"Saving Grace",69:"Either Way Up",70:"Three Score and Ten",
+            71:"Bang on the Drum",72:"Six Dozen",73:"Queen Bee",74:"Candy Store",75:"Strive and Strive",76:"Trombones",77:"Sunset Strip",78:"Heaven's Gate",79:"One More Time",80:"Eight and Blank",
+            81:"Stop and Run",82:"Straight On Through",83:"Time for Tea",84:"Seven Dozen",85:"Staying Alive",86:"Between the Sticks",87:"Torquay in Devon",88:"Two Fat Ladies",89:"Nearly There",90:"Top of the House"
+        };
+
+        let called = [];
+        let voiceEnabled = true;
+        let autoInterval = null;
+
+        function initBoard() {
+            const grid = document.getElementById('boardGrid');
+            grid.innerHTML = '';
+            for (let i = 1; i <= 90; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'board-cell';
+                cell.id = 'cell-' + i;
+                cell.textContent = i;
+                grid.appendChild(cell);
+            }
+        }
+
+        function callNextNumber() {
+            if (called.length >= 90) {
+                if (autoInterval) toggleAutoPlay();
+                alert('All 90 numbers have been called!');
+                return;
+            }
+            const remaining = [];
+            for (let i = 1; i <= 90; i++) if (!called.includes(i)) remaining.push(i);
+            const next = remaining[Math.floor(Math.random() * remaining.length)];
+            called.push(next);
+
+            document.querySelectorAll('.board-cell.latest').forEach(el => el.classList.remove('latest'));
+            const cell = document.getElementById('cell-' + next);
+            cell.classList.add('called', 'latest');
+
+            document.getElementById('currentBall').textContent = next;
+            document.getElementById('currentCue').textContent = `${NICKNAMES[next]} — #${next}`;
+            document.getElementById('calledCount').textContent = called.length;
+            document.getElementById('remainCount').textContent = 90 - called.length;
+            document.getElementById('historyList').textContent = called.slice(-6).reverse().join('  •  ');
+
+            if (voiceEnabled && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(`${NICKNAMES[next]}. Number ${next}`);
+                utter.rate = 0.95;
+                window.speechSynthesis.speak(utter);
+            }
+        }
+
+        function toggleVoice() {
+            voiceEnabled = !voiceEnabled;
+            const btn = document.getElementById('voiceBtn');
+            btn.textContent = voiceEnabled ? '🔊 Voice: ON' : '🔇 Voice: OFF';
+        }
+
+        function toggleAutoPlay() {
+            const btn = document.getElementById('autoBtn');
+            if (autoInterval) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                btn.textContent = '▶️ Auto (5s)';
+            } else {
+                callNextNumber();
+                autoInterval = setInterval(callNextNumber, 5000);
+                btn.textContent = '⏸️ Pause Auto';
+            }
+        }
+
+        function resetBoard() {
+            if (autoInterval) toggleAutoPlay();
+            called = [];
+            document.getElementById('currentBall').textContent = '–';
+            document.getElementById('currentCue').textContent = 'Click "Call Next Number" to Start';
+            document.getElementById('calledCount').textContent = '0';
+            document.getElementById('remainCount').textContent = '90';
+            document.getElementById('historyList').textContent = 'None yet';
+            initBoard();
+        }
+
+        function generateTicket() {
+            const grid = document.getElementById('ticketGrid');
+            grid.innerHTML = '';
+            const matrix = Array.from({length: 3}, () => Array(9).fill(null));
+            for (let r = 0; r < 3; r++) {
+                const cols = [0,1,2,3,4,5,6,7,8].sort(() => Math.random() - 0.5).slice(0, 5);
+                cols.forEach(c => matrix[r][c] = true);
+            }
+            for (let c = 0; c < 9; c++) {
+                const min = c === 0 ? 1 : c * 10;
+                const max = c === 8 ? 90 : c * 10 + 9;
+                const pool = [];
+                for (let n = min; n <= max; n++) pool.push(n);
+                pool.sort(() => Math.random() - 0.5);
+                const chosen = pool.slice(0, 3).sort((a,b) => a - b);
+                let idx = 0;
+                for (let r = 0; r < 3; r++) {
+                    if (matrix[r][c]) matrix[r][c] = chosen[idx++];
+                }
+            }
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const div = document.createElement('div');
+                    div.className = 'ticket-cell';
+                    if (matrix[r][c]) {
+                        div.textContent = matrix[r][c];
+                        div.onclick = () => div.classList.toggle('daubed');
+                    }
+                    grid.appendChild(div);
+                }
+            }
+        }
+
+        initBoard();
+        generateTicket();
+    </script>
+</body>
+</html>

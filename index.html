@@ -10,906 +10,21 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Factictionary - Your Ultimate Guide to Tech, Wealth & Modern Living</title>
-
-
+    <title>Factictionary — 50+ Client-Side Web Utilities, Offline Android Apps &amp; Guides</title>
 
     <!-- SEO Meta Tags -->
-
     <meta name="description"
-
-        content="Factictionary is your ultimate resource for navigating 2026. Discover deep insights into AI, personal finance, remote work, and modern lifestyle.">
-
+        content="Factictionary offers 50+ ultra-fast, 100% client-side browser utilities for PDF, Image, Video, Audio &amp; Developer tasks alongside 14 privacy-first Android apps and games on Google Play.">
     <meta name="keywords"
-
-        content="tech guides 2026, personal finance, career productivity, digital lifestyle, Factictionary, satirical news">
-
+        content="client-side web tools, merge pdf in browser, offline android games, Factictionary apps, Google Play closed testing guide, Tambola caller app, Chalkly tutor app, VocabIQ word games">
     <meta name="author" content="Factictionary Team">
 
-
-
-    <link rel="canonical" href="https://factictionary.in">
-
+    <link rel="canonical" href="https://factictionary.in/">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="/assets/css/style.css">
-
-
-
-    <style>
-
-        /* ─── Satirical News Section Styles ────────────────────────────── */
-
-        .news-section {
-
-            background: #0a0a12;
-
-            padding: 60px 0 80px;
-
-            border-top: 3px solid var(--color-primary-500);
-
-            border-bottom: 3px solid var(--color-primary-500);
-
-        }
-
-
-
-        .news-section .container {
-
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            padding: 0 20px;
-
-        }
-
-
-
-        .news-header {
-
-            text-align: center;
-
-            margin-bottom: 40px;
-
-        }
-
-
-
-        .news-header .satire-badge {
-
-            display: inline-block;
-
-            background: #e94560;
-
-            color: #fff;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 1.5px;
-
-            padding: 4px 16px;
-
-            border-radius: 20px;
-
-            margin-bottom: 12px;
-
-        }
-
-
-
-        .news-header h2 {
-
-            font-size: 2.5rem;
-
-            font-weight: 800;
-
-            color: #fff;
-
-            margin-bottom: 8px;
-
-        }
-
-
-
-        .news-header h2 span {
-
-            color: #e94560;
-
-        }
-
-
-
-        .news-header p {
-
-            color: #888;
-
-            font-size: 1.1rem;
-
-            max-width: 600px;
-
-            margin: 0 auto;
-
-        }
-
-
-
-        /* ─── News Carousel ────────────────────────────────────────────── */
-
-        .news-carousel-wrapper {
-
-            position: relative;
-
-            overflow: hidden;
-
-            border-radius: 16px;
-
-            background: #1a1a2e;
-
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-
-        }
-
-
-
-        .news-carousel-track {
-
-            display: flex;
-
-            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-            will-change: transform;
-
-        }
-
-
-
-        .news-slide {
-
-            flex: 0 0 100%;
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 0;
-
-            min-height: 400px;
-
-            background: #1a1a2e;
-
-        }
-
-
-
-        .news-slide-image {
-
-            position: relative;
-
-            overflow: hidden;
-
-            background: #0a0a12;
-
-            min-height: 300px;
-
-        }
-
-
-
-        .news-slide-image img {
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-
-            display: block;
-
-        }
-
-
-
-        .news-slide-image .image-placeholder {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            height: 100%;
-
-            font-size: 64px;
-
-            color: #444;
-
-            background: #12121f;
-
-        }
-
-
-
-        .news-slide-content {
-
-            padding: 32px 36px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-        }
-
-
-
-        .news-slide-content .badge {
-
-            display: inline-block;
-
-            padding: 4px 14px;
-
-            border-radius: 20px;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.8px;
-
-            background: #e94560;
-
-            color: #fff;
-
-            margin-bottom: 12px;
-
-            align-self: flex-start;
-
-        }
-
-
-
-        .news-slide-content .badge.breaking {
-
-            background: #ff4444;
-
-            animation: pulse-badge 1.5s ease-in-out infinite;
-
-        }
-
-
-
-        @keyframes pulse-badge {
-
-
-
-            0%,
-
-            100% {
-
-                opacity: 1;
-
-            }
-
-
-
-            50% {
-
-                opacity: 0.5;
-
-            }
-
-        }
-
-
-
-        .news-slide-content h3 {
-
-            font-size: 1.5rem;
-
-            font-weight: 700;
-
-            color: #fff;
-
-            line-height: 1.3;
-
-            margin-bottom: 10px;
-
-        }
-
-
-
-        .news-slide-content h3 a {
-
-            color: #fff;
-
-            text-decoration: none;
-
-            transition: color 0.2s;
-
-        }
-
-
-
-        .news-slide-content h3 a:hover {
-
-            color: #e94560;
-
-        }
-
-
-
-        .news-slide-content .summary {
-
-            color: #b0b0c8;
-
-            font-size: 0.95rem;
-
-            line-height: 1.6;
-
-            margin-bottom: 12px;
-
-            font-style: italic;
-
-        }
-
-
-
-        .news-slide-content .meta {
-
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 8px 16px;
-
-            font-size: 12px;
-
-            color: #6a6a8a;
-
-        }
-
-
-
-        .news-slide-content .meta .tag {
-
-            display: inline-block;
-
-            padding: 2px 10px;
-
-            border-radius: 12px;
-
-            background: #2a2a4a;
-
-            color: #b0b0c8;
-
-            font-size: 10px;
-
-        }
-
-
-
-        .news-slide-content .read-more {
-
-            margin-top: 16px;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            color: #e94560;
-
-            text-decoration: none;
-
-            font-weight: 600;
-
-            font-size: 0.9rem;
-
-            transition: gap 0.2s;
-
-        }
-
-
-
-        .news-slide-content .read-more:hover {
-
-            gap: 12px;
-
-        }
-
-
-
-        /* ─── Carousel Controls ────────────────────────────────────────── */
-
-        .carousel-controls {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 16px;
-
-            padding: 20px 24px;
-
-            background: #12121f;
-
-            border-top: 1px solid #2a2a4a;
-
-        }
-
-
-
-        .carousel-controls button {
-
-            background: none;
-
-            border: none;
-
-            color: #888;
-
-            cursor: pointer;
-
-            padding: 8px 12px;
-
-            border-radius: 8px;
-
-            transition: all 0.2s;
-
-            font-size: 20px;
-
-        }
-
-
-
-        .carousel-controls button:hover {
-
-            color: #fff;
-
-            background: #2a2a4a;
-
-        }
-
-
-
-        .carousel-controls button:disabled {
-
-            opacity: 0.3;
-
-            cursor: not-allowed;
-
-        }
-
-
-
-        .carousel-dots {
-
-            display: flex;
-
-            gap: 6px;
-
-        }
-
-
-
-        .carousel-dots .dot {
-
-            width: 8px;
-
-            height: 8px;
-
-            border-radius: 50%;
-
-            background: #2a2a4a;
-
-            border: none;
-
-            cursor: pointer;
-
-            transition: all 0.3s;
-
-            padding: 0;
-
-        }
-
-
-
-        .carousel-dots .dot.active {
-
-            background: #e94560;
-
-            transform: scale(1.3);
-
-        }
-
-
-
-        .carousel-dots .dot:hover {
-
-            background: #6a6a8a;
-
-        }
-
-
-
-        .carousel-counter {
-
-            color: #6a6a8a;
-
-            font-size: 13px;
-
-            min-width: 50px;
-
-            text-align: center;
-
-        }
-
-
-
-        /* App download strip */
-
-        .download-strip {
-
-            margin-top: 36px;
-
-            padding-top: 24px;
-
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-        }
-
-
-
-        .download-label {
-
-            font-size: 11px;
-
-            letter-spacing: 1.2px;
-
-            text-transform: uppercase;
-
-            color: rgba(255, 255, 255, 0.3);
-
-            margin-bottom: 14px;
-
-        }
-
-
-
-        .store-buttons {
-
-            display: flex;
-
-            gap: 12px;
-
-            flex-wrap: wrap;
-
-        }
-
-
-
-        .store-btn {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            background: rgba(255, 255, 255, 0.07);
-
-            border: 1px solid rgba(255, 255, 255, 0.15);
-
-            border-radius: 10px;
-
-            padding: 10px 18px;
-
-            text-decoration: none;
-
-            color: #fff;
-
-            font-size: 13px;
-
-            font-weight: 500;
-
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-
-            cursor: pointer;
-
-        }
-
-
-
-        .store-btn:hover {
-
-            background: rgba(255, 255, 255, 0.13);
-
-            border-color: rgba(255, 255, 255, 0.3);
-
-            transform: translateY(-1px);
-
-        }
-
-
-
-        .store-btn svg {
-
-            opacity: 0.9;
-
-            flex-shrink: 0;
-
-        }
-
-
-
-        /* ─── Disclaimer Section ────────────────────────────────────────── */
-
-        .disclaimer-section {
-
-            background: #f8f5f0;
-
-            padding: 40px 0;
-
-            border-top: 1px solid #e0d8d0;
-
-            border-bottom: 1px solid #e0d8d0;
-
-        }
-
-
-
-        .disclaimer-section .container {
-
-            max-width: 900px;
-
-            margin: 0 auto;
-
-            padding: 0 20px;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box {
-
-            background: #fff;
-
-            border-radius: 12px;
-
-            padding: 32px 40px;
-
-            border-left: 4px solid #e94560;
-
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box h4 {
-
-            font-size: 1rem;
-
-            font-weight: 700;
-
-            color: #1a1a2e;
-
-            margin-bottom: 8px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box h4 .icon {
-
-            font-size: 20px;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box p {
-
-            color: #555;
-
-            font-size: 0.9rem;
-
-            line-height: 1.7;
-
-            margin-bottom: 8px;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box p:last-child {
-
-            margin-bottom: 0;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box ul {
-
-            margin: 8px 0 12px 20px;
-
-            color: #555;
-
-            font-size: 0.9rem;
-
-            line-height: 1.7;
-
-        }
-
-
-
-        .disclaimer-section .disclaimer-box strong {
-
-            color: #1a1a2e;
-
-        }
-
-
-
-        /* ─── Responsive ────────────────────────────────────────────────── */
-
-        @media (max-width: 992px) {
-
-            .news-slide {
-
-                grid-template-columns: 1fr;
-
-            }
-
-
-
-            .news-slide-image {
-
-                min-height: 200px;
-
-                max-height: 280px;
-
-            }
-
-
-
-            .news-slide-content {
-
-                padding: 24px 28px;
-
-            }
-
-
-
-            .news-header h2 {
-
-                font-size: 2rem;
-
-            }
-
-        }
-
-
-
-        @media (max-width: 600px) {
-
-            .news-section {
-
-                padding: 40px 0 60px;
-
-            }
-
-
-
-            .news-slide-content {
-
-                padding: 18px 20px;
-
-            }
-
-
-
-            .news-slide-content h3 {
-
-                font-size: 1.2rem;
-
-            }
-
-
-
-            .news-slide-content .summary {
-
-                font-size: 0.85rem;
-
-            }
-
-
-
-            .news-header h2 {
-
-                font-size: 1.6rem;
-
-            }
-
-
-
-            .carousel-controls {
-
-                flex-wrap: wrap;
-
-                gap: 10px;
-
-                padding: 14px 16px;
-
-            }
-
-
-
-            .disclaimer-section .disclaimer-box {
-
-                padding: 20px 24px;
-
-            }
-
-
-
-            .disclaimer-section .disclaimer-box ul {
-
-                padding-left: 16px;
-
-            }
-
-        }
-
-
-
-        @media (max-width: 400px) {
-
-            .news-slide-content .meta {
-
-                font-size: 10px;
-
-                gap: 4px 10px;
-
-            }
-
-
-
-            .carousel-controls button {
-
-                font-size: 16px;
-
-                padding: 6px 8px;
-
-            }
-
-        }
-
-    </style>
-
 </head>
 
 
@@ -1856,7 +971,121 @@
 
         </section>
 
+        <!-- Featured Google Play Apps & Offline Games Section -->
+        <section class="section" style="padding: 70px 0; background: #0F172A; color: white;">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <span style="color: #38BDF8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Official Android Portfolio</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 6px; color: white;">📱 14 Privacy-First Android Apps &amp; Offline Games</h2>
+                    <p class="lead-text" style="max-width: 660px; margin: 10px auto 0; color: #94A3B8;">From developer testing utilities and tutor hubs to offline word puzzles, detective trivia, and family Tambola.</p>
+                </div>
 
+                <div class="grid grid-3" style="gap: 24px; margin-top: 36px;">
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #38BDF8; text-transform: uppercase; margin-bottom: 8px;">🛠️ Developer Utility</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">Test Pilot Pro - 12T/14D</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Pass Google Play's 12-tester / 14-day closed testing requirement with mutual daily testing and verified streak tracking.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.test_pilot_pro" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/test-pilot-pro.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #34D399; text-transform: uppercase; margin-bottom: 8px;">📚 Education &amp; Tutors</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">Chalkly: Tutor, Tests &amp; Fees</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Pocket teaching assistant &amp; math/science formula vault: automate test papers, homework tracking, and monthly tuition fees.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/chalkly.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #FBBF24; text-transform: uppercase; margin-bottom: 8px;">🎲 Family &amp; Party</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">All-In-One Tambola &amp; Housie</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Host paperless Tambola &amp; Housie games with voice number calling, digital tickets, custom prize patterns, and instant verification.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/tambola.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #FB7185; text-transform: uppercase; margin-bottom: 8px;">🕵️ Brain &amp; Mystery</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">Quizziest: Trivia &amp; Detective</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Solve 60-second crime scene mysteries, spot alibi contradictions, and stretch your mind with rapid deduction &amp; trivia rounds.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.quizziest" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/quizziest.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #A78BFA; text-transform: uppercase; margin-bottom: 8px;">🔤 Offline Word Suite</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">VocabIQ: 6-in-1 Word Games</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Crossword meets Wordle, Word Search, and Anagrams in one clean, 100% offline-capable vocabulary builder.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.crosssearch" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/vocabiq.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+
+                    <div class="tool-card" style="background: #1E293B; border-radius: 16px; padding: 26px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #60A5FA; text-transform: uppercase; margin-bottom: 8px;">🎙️ Video &amp; Speaking</span>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: white; margin-bottom: 8px;">Teleprompter &amp; AI Speech Coach</h3>
+                        <p style="color: #CBD5E1; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 18px;">Record one-take YouTube Shorts and Reels while reading your script next to the selfie lens with zero eye movement.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://play.google.com/store/apps/details?id=in.factictionary.speak_smart" target="_blank" rel="noopener" class="btn-tool-card" style="background: #10B981; color: white; border: none; flex: 1; text-align: center;">Google Play →</a>
+                            <a href="/games/speaksmart.html" class="btn-tool-card" style="background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.2);">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+                    <a href="/games/" class="btn btn-primary btn-lg" style="border-radius: 50px; padding: 14px 32px; background: #0066FF; color: white; text-decoration: none; font-weight: 700;">Explore All 14 Apps &amp; Games →</a>
+                    <a href="https://play.google.com/store/apps/developer?id=Factictionary" target="_blank" rel="noopener" class="btn btn-secondary btn-lg" style="border-radius: 50px; padding: 14px 28px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.25); text-decoration: none; font-weight: 700;">▶ Official Google Play Store Page</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Evergreen Guides & Playbooks Section -->
+        <section class="section" style="padding: 70px 0; background: #F8FAFC; border-bottom: 1px solid #E2E8F0;">
+            <div class="container">
+                <div class="text-center mb-lg">
+                    <span style="color: var(--color-primary-600); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">Deep-Dive Reference Handbooks</span>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 6px;">📚 Popular Guides &amp; Playbooks</h2>
+                    <p class="lead-text" style="max-width: 640px; margin: 0 auto; color: var(--color-neutral-700);">Step-by-step tutorials on Android app testing, party game hosting, teaching workflows, and client-side privacy.</p>
+                </div>
+
+                <div class="grid grid-3" style="gap: 24px; margin-top: 32px;">
+                    <a href="/guides/mobile-game-app-monetization.html" style="background: white; border-radius: 16px; padding: 26px; border: 1px solid #E2E8F0; text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #6D28D9; text-transform: uppercase; margin-bottom: 8px;">🛠️ Android Developers</span>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: #0F172A;">How to Pass Google Play's 12 Testers / 14 Days Closed Testing Rule</h3>
+                        <p style="color: #64748B; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 14px;">Exact Google Groups setup, avoiding production access rejection, and recruiting verified daily testers for $0.</p>
+                        <span style="color: #0066FF; font-weight: 700; font-size: 0.9rem;">Read Developer Guide →</span>
+                    </a>
+
+                    <a href="/guides/tambola-housie-number-calling-nicknames-rules.html" style="background: white; border-radius: 16px; padding: 26px; border: 1px solid #E2E8F0; text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #D97706; text-transform: uppercase; margin-bottom: 8px;">🎲 Party &amp; Family Games</span>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: #0F172A;">Tambola / Housie Number Calling Nicknames (1–90) &amp; 25+ Winning Rules</h3>
+                        <p style="color: #64748B; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 14px;">Complete 1 to 90 funny calling rhymes, kitty party dividends, and how to host paperless Tambola on your phone.</p>
+                        <span style="color: #0066FF; font-weight: 700; font-size: 0.9rem;">View 1–90 Nicknames →</span>
+                    </a>
+
+                    <a href="/guides/detective-riddles-mystery-puzzles-brain-teasers.html" style="background: white; border-radius: 16px; padding: 26px; border: 1px solid #E2E8F0; text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+                        <span style="font-size: 0.78rem; font-weight: 700; color: #DC2626; text-transform: uppercase; margin-bottom: 8px;">🕵️ Brain &amp; Mystery</span>
+                        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: #0F172A;">15 Crime Scene Detective Riddles &amp; 60-Second Mystery Logic Cases</h3>
+                        <p style="color: #64748B; font-size: 0.94rem; line-height: 1.55; flex: 1; margin-bottom: 14px;">Spot the physical contradiction in each suspect's alibi with interactive click-to-reveal forensic solutions.</p>
+                        <span style="color: #0066FF; font-weight: 700; font-size: 0.9rem;">Solve Mystery Cases →</span>
+                    </a>
+                </div>
+
+                <div style="text-align: center; margin-top: 28px;">
+                    <a href="/guides/" style="color: #0066FF; font-weight: 700; text-decoration: none; font-size: 1rem;">Browse All 9 Evergreen Handbooks &amp; Guides →</a>
+                </div>
+            </div>
+        </section>
 
         <!-- Community Support & Donation Banner -->
 
@@ -1882,6 +1111,8 @@
                 </button>
             </div>
         </div>
+            </div>
+        </section>
 
 </main>
 
@@ -1892,20 +1123,21 @@
         <div class="container">
 
             <div
-
                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px;">
 
                 <div>
 
-                    <h4 style="margin-bottom: 16px; font-weight: 600;">Content</h4>
+                    <h4 style="margin-bottom: 16px; font-weight: 600;">Products &amp; Guides</h4>
 
                     <ul style="list-style: none; padding: 0;">
 
-                        <li><a href="/tools/" style="color: #666; text-decoration: none;">Tools</a></li>
+                        <li><a href="/tools/" style="color: #666; text-decoration: none;">50+ Browser Tools</a></li>
 
-                        <li><a href="/blog/" style="color: #666; text-decoration: none;">Latest Posts</a></li>
+                        <li><a href="/games/" style="color: #666; text-decoration: none;">Android Apps &amp; Games</a></li>
 
-                        <li><a href="/spoof/" style="color: #666; text-decoration: none;">Satirical News</a></li>
+                        <li><a href="/guides/" style="color: #666; text-decoration: none;">Evergreen Guides</a></li>
+
+                        <li><a href="https://play.google.com/store/apps/developer?id=Factictionary" target="_blank" rel="noopener" style="color: #666; text-decoration: none;">Google Play Store</a></li>
 
                     </ul>
 
@@ -1922,7 +1154,6 @@
                         <li><a href="/contact.html" style="color: #666; text-decoration: none;">Contact</a></li>
 
                         <li><a href="mailto:factictionary@gmail.com"
-
                                 style="color: #666; text-decoration: none;">Email</a></li>
 
                     </ul>
@@ -1950,7 +1181,6 @@
             <div style="border-top: 1px solid #eee; padding-top: 24px; text-align: center;">
 
                 <p style="color: #666; margin: 0;">&copy; 2026 Factictionary. All rights reserved. | <a
-
                         href="/sitemap.xml" style="color: #666;">Sitemap</a></p>
 
             </div>
@@ -2021,744 +1251,5 @@
 
     </script>
 
-
-
-    <!-- ════════════════════════════════════════════════════════════════ -->
-
-    <!-- NEWS CAROUSEL SCRIPT                                            -->
-
-    <!-- ════════════════════════════════════════════════════════════════ -->
-
-    <script>
-
-        (function () {
-
-            'use strict';
-
-
-
-            // ─── CONFIG ──────────────────────────────────────────────────
-
-            const CONFIG = {
-
-                factsBasePath: '/spoof/data/facts/',  // Updated path
-
-                dataIndexPath: '/spoof/data/index.json',  // Updated path
-
-                autoPlayInterval: 6000,
-
-                preloadCount: 2,
-
-            };
-
-
-
-            // ─── STATE ──────────────────────────────────────────────────
-
-            let state = {
-
-                filenames: [],
-
-                currentIndex: 0,
-
-                totalItems: 0,
-
-                isAutoPlaying: true,
-
-                autoPlayTimer: null,
-
-                loadedItems: {},
-
-                isTransitioning: false,
-
-            };
-
-
-
-            // ─── DOM REFS ──────────────────────────────────────────────
-
-            const track = document.getElementById('newsTrack');
-
-            const dotsContainer = document.getElementById('newsDots');
-
-            const counterEl = document.getElementById('newsCounter');
-
-            const prevBtn = document.getElementById('prevBtn');
-
-            const nextBtn = document.getElementById('nextBtn');
-
-            const autoPlayBtn = document.getElementById('autoPlayBtn');
-
-
-
-            // ─── UTILITY ──────────────────────────────────────────────
-
-            function escapeHtml(text) {
-
-                if (!text) return '';
-
-                const div = document.createElement('div');
-
-                div.textContent = text;
-
-                return div.innerHTML;
-
-            }
-
-
-
-            function formatBody(text) {
-
-                if (!text) return '';
-
-                return text.split('\n\n').map(p => `<p>${escapeHtml(p)}</p>`).join('');
-
-            }
-
-
-
-            function getImageUrl(item) {
-
-                return item.imageUrl || '';
-
-            }
-
-
-
-            function slugify(text) {
-
-                if (!text) return 'untitled';
-
-                return text.toLowerCase()
-
-                    .replace(/[^\w\s-]/g, '')
-
-                    .replace(/[\s-]+/g, '-')
-
-                    .replace(/-+/g, '-')
-
-                    .trim('-')
-
-                    .substring(0, 100);
-
-            }
-
-
-
-            // ─── LOAD INDEX ────────────────────────────────────────────
-
-            async function loadIndex() {
-
-                try {
-
-                    const response = await fetch(CONFIG.dataIndexPath);
-
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-                    const data = await response.json();
-
-                    state.filenames = Array.isArray(data) ? data : data.items || [];
-
-                    state.totalItems = state.filenames.length;
-
-                    return state.filenames;
-
-                } catch (error) {
-
-                    console.error('[NewsCarousel] Failed to load index:', error);
-
-                    return [];
-
-                }
-
-            }
-
-
-
-            // ─── LOAD FACT ─────────────────────────────────────────────
-
-            async function loadFact(filename) {
-
-                if (state.loadedItems[filename]) {
-
-                    return state.loadedItems[filename];
-
-                }
-
-                try {
-
-                    // filename is now like "2026-06-04_001.json"
-
-                    const response = await fetch(`${CONFIG.factsBasePath}${filename}`);
-
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-                    const data = await response.json();
-
-                    state.loadedItems[filename] = data;
-
-                    return data;
-
-                } catch (error) {
-
-                    console.error(`[NewsCarousel] Failed to load ${filename}:`, error);
-
-                    return null;
-
-                }
-
-            }
-
-
-
-            // ─── RENDER SLIDE ──────────────────────────────────────────
-
-            // ─── RENDER SLIDE ──────────────────────────────────────────
-
-            function renderSlide(fact, index) {
-
-                const slide = document.createElement('div');
-
-                slide.className = 'news-slide';
-
-                slide.dataset.index = index;
-
-
-
-                const headline = fact.headline || 'Untitled';
-
-                const summary = fact.summary || '';
-
-                const imageUrl = getImageUrl(fact);
-
-                const isBreaking = fact.isBreaking || false;
-
-                const tags = fact.tags || [];
-
-                const publishedAt = fact.publishedAt || '';
-
-                const readTime = fact.readTimeSeconds || 0;
-
-                const slug = slugify(headline);
-
-                const articleUrl = `/spoof/facts/${slug}.html`;  // Updated path
-
-
-
-                slide.innerHTML = `
-
-        <div class="news-slide-image">
-
-            ${imageUrl ? `
-
-                <img src="${imageUrl}" alt="${escapeHtml(headline)}" loading="lazy" 
-
-                     onerror="this.parentElement.innerHTML='<div class=\\'image-placeholder\\'>📰</div>'"
-
-                />
-
-            ` : `
-
-                <div class="image-placeholder">📰</div>
-
-            `}
-
-        </div>
-
-        <div class="news-slide-content">
-
-            ${isBreaking ? `<span class="badge breaking">🔴 Breaking</span>` : `<span class="badge">🎭 Satire</span>`}
-
-            <h3><a href="${articleUrl}">${escapeHtml(headline)}</a></h3>
-
-            ${summary ? `<div class="summary">${escapeHtml(summary)}</div>` : ''}
-
-            <div class="meta">
-
-                ${publishedAt ? `<span>📅 ${escapeHtml(publishedAt)}</span>` : ''}
-
-                ${readTime ? `<span>⏱️ ${readTime}s read</span>` : ''}
-
-                ${tags.length ? tags.slice(0, 3).map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('') : ''}
-
-                ${isBreaking ? `<span class="tag" style="background:#ff4444;color:#fff;">Breaking</span>` : ''}
-
-            </div>
-
-            <a href="${articleUrl}" class="read-more">Read Full Story →</a>
-
-            <div class="download-strip">
-
-                <div class="download-label">Get the app</div>
-
-                    <div class="store-buttons">
-
-                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily" class="store-btn" aria-label="Google Play">
-
-                        <svg width="18" height="20" viewBox="0 0 24 27" fill="currentColor">
-
-                            <path d="M1.5 0L14 12.5 1.5 25C0.6 24.5 0 23.6 0 22.5V2.5C0 1.4.6.5 1.5 0z"/>
-
-                            <path d="M17.5 9L21.5 11.1 17.5 13.2 14 9.7z" opacity=".85"/>
-
-                            <path d="M1.5 0l12.5 12.5-3.5 3.5z" opacity=".7"/>
-
-                            <path d="M1.5 25l12.5-12.5 3.5 3.5z" opacity=".7"/>
-
-                        </svg>
-
-                        Google Play
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-    `;
-
-
-
-                return slide;
-
-            }
-
-
-
-            function createSkeletonSlide(index) {
-
-                const slide = document.createElement('div');
-
-                slide.className = 'news-slide';
-
-                slide.dataset.index = index;
-
-                slide.dataset.loading = 'true';
-
-                slide.innerHTML = `
-
-                    <div class="news-slide-image" style="background:#12121f;display:flex;align-items:center;justify-content:center;">
-
-                        <div style="font-size:32px;color:#444;">📰</div>
-
-                    </div>
-
-                    <div class="news-slide-content">
-
-                        <span class="badge" style="background:#2a2a4a;color:#2a2a4a;width:80px;">Loading</span>
-
-                        <h3 style="background:#2a2a4a;color:#2a2a4a;height:28px;width:80%;border-radius:4px;margin-bottom:10px;">&nbsp;</h3>
-
-                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:95%;border-radius:4px;margin-bottom:6px;">&nbsp;</div>
-
-                        <div style="background:#2a2a4a;color:#2a2a4a;height:16px;width:70%;border-radius:4px;margin-bottom:12px;">&nbsp;</div>
-
-                        <div style="display:flex;gap:8px;">
-
-                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-                            <span style="background:#2a2a4a;color:#2a2a4a;padding:2px 10px;border-radius:12px;font-size:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-                return slide;
-
-            }
-
-
-
-            // ─── CAROUSEL LOGIC ────────────────────────────────────────
-
-            function goTo(index, animate = true) {
-
-                if (state.isTransitioning) return;
-
-                if (index < 0) index = state.totalItems - 1;
-
-                if (index >= state.totalItems) index = 0;
-
-                if (index === state.currentIndex && state.totalItems > 1) return;
-
-
-
-                state.isTransitioning = true;
-
-                state.currentIndex = index;
-
-
-
-                updateCarousel(animate);
-
-                updateControls();
-
-                updateDots();
-
-                updateCounter();
-
-                ensureSlide(index);
-
-
-
-                resetAutoPlayTimer();
-
-
-
-                setTimeout(() => {
-
-                    state.isTransitioning = false;
-
-                }, 550);
-
-            }
-
-
-
-            function updateCarousel(animate = true) {
-
-                const offset = -state.currentIndex * 100;
-
-                track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
-
-                track.style.transform = `translateX(${offset}%)`;
-
-            }
-
-
-
-            function updateControls() {
-
-                prevBtn.disabled = state.totalItems <= 1;
-
-                nextBtn.disabled = state.totalItems <= 1;
-
-            }
-
-
-
-            function updateCounter() {
-
-                counterEl.textContent = `${state.currentIndex + 1} / ${state.totalItems}`;
-
-            }
-
-
-
-            function updateDots() {
-
-                const dots = dotsContainer.querySelectorAll('.dot');
-
-                dots.forEach((dot, i) => {
-
-                    dot.classList.toggle('active', i === state.currentIndex);
-
-                });
-
-            }
-
-
-
-            function ensureSlide(index) {
-
-                const existing = track.querySelector(`.news-slide[data-index="${index}"]`);
-
-                if (existing) return;
-
-
-
-                const filename = state.filenames[index];
-
-                if (!filename) return;
-
-
-
-                const skeleton = createSkeletonSlide(index);
-
-                track.appendChild(skeleton);
-
-
-
-                loadFact(filename).then(fact => {
-
-                    if (!fact) return;
-
-                    const slide = track.querySelector(`.news-slide[data-index="${index}"]`);
-
-                    if (slide) {
-
-                        const newSlide = renderSlide(fact, index);
-
-                        slide.replaceWith(newSlide);
-
-                    }
-
-                }).catch(() => { });
-
-            }
-
-
-
-            // ─── AUTO-PLAY ─────────────────────────────────────────────
-
-            function toggleAutoPlay() {
-
-                if (state.isAutoPlaying) {
-
-                    stopAutoPlay();
-
-                } else {
-
-                    startAutoPlay();
-
-                }
-
-            }
-
-
-
-            function startAutoPlay() {
-
-                if (state.totalItems <= 1) return;
-
-                state.isAutoPlaying = true;
-
-                autoPlayBtn.textContent = '⏸';
-
-                resetAutoPlayTimer();
-
-            }
-
-
-
-            function stopAutoPlay() {
-
-                state.isAutoPlaying = false;
-
-                autoPlayBtn.textContent = '▶ ';
-
-                if (state.autoPlayTimer) {
-
-                    clearTimeout(state.autoPlayTimer);
-
-                    state.autoPlayTimer = null;
-
-                }
-
-            }
-
-
-
-            function resetAutoPlayTimer() {
-
-                if (state.autoPlayTimer) {
-
-                    clearTimeout(state.autoPlayTimer);
-
-                    state.autoPlayTimer = null;
-
-                }
-
-                if (state.isAutoPlaying && state.totalItems > 1) {
-
-                    state.autoPlayTimer = setTimeout(() => {
-
-                        goTo(state.currentIndex + 1);
-
-                    }, CONFIG.autoPlayInterval);
-
-                }
-
-            }
-
-
-
-            // ─── BUILD INITIAL SLIDES ──────────────────────────────────
-
-            function buildInitialSlides() {
-
-                track.innerHTML = '';
-
-                const initialCount = Math.min(3, state.totalItems);
-
-
-
-                for (let i = 0; i < initialCount; i++) {
-
-                    const filename = state.filenames[i];
-
-                    if (!filename) continue;
-
-                    const skeleton = createSkeletonSlide(i);
-
-                    track.appendChild(skeleton);
-
-                    loadFact(filename).then(fact => {
-
-                        if (!fact) return;
-
-                        const slide = track.querySelector(`.news-slide[data-index="${i}"]`);
-
-                        if (slide) {
-
-                            const newSlide = renderSlide(fact, i);
-
-                            slide.replaceWith(newSlide);
-
-                        }
-
-                    }).catch(() => { });
-
-                }
-
-
-
-                // Build dots
-
-                dotsContainer.innerHTML = '';
-
-                for (let i = 0; i < state.totalItems; i++) {
-
-                    const dot = document.createElement('button');
-
-                    dot.className = 'dot' + (i === 0 ? ' active' : '');
-
-                    dot.dataset.index = i;
-
-                    dot.setAttribute('aria-label', `Go to news ${i + 1}`);
-
-                    dot.addEventListener('click', () => goTo(i));
-
-                    dotsContainer.appendChild(dot);
-
-                }
-
-
-
-                updateControls();
-
-                updateCounter();
-
-            }
-
-
-
-            // ─── KEYBOARD SUPPORT ──────────────────────────────────────
-
-            function handleKeydown(e) {
-
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-
-                    e.preventDefault();
-
-                    goTo(state.currentIndex + 1);
-
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-
-                    e.preventDefault();
-
-                    goTo(state.currentIndex - 1);
-
-                }
-
-            }
-
-
-
-            // ─── INIT ──────────────────────────────────────────────────
-
-            async function init() {
-
-                const filenames = await loadIndex();
-
-                if (!filenames || filenames.length === 0) {
-
-                    track.innerHTML = `
-
-                        <div class="news-slide" style="grid-template-columns:1fr;min-height:200px;text-align:center;padding:40px;color:#888;">
-
-                            <div style="grid-column:1;">📭 No satirical news available at the moment. Check back later!</div>
-
-                        </div>
-
-                    `;
-
-                    return;
-
-                }
-
-
-
-                buildInitialSlides();
-
-
-
-                // Event Listeners
-
-                prevBtn.addEventListener('click', () => goTo(state.currentIndex - 1));
-
-                nextBtn.addEventListener('click', () => goTo(state.currentIndex + 1));
-
-                autoPlayBtn.addEventListener('click', toggleAutoPlay);
-
-                document.addEventListener('keydown', handleKeydown);
-
-
-
-                // Pause on hover
-
-                const wrapper = document.querySelector('.news-carousel-wrapper');
-
-                wrapper.addEventListener('mouseenter', () => {
-
-                    if (state.autoPlayTimer) {
-
-                        clearTimeout(state.autoPlayTimer);
-
-                        state.autoPlayTimer = null;
-
-                    }
-
-                });
-
-                wrapper.addEventListener('mouseleave', resetAutoPlayTimer);
-
-
-
-                // Start auto-play
-
-                if (state.totalItems > 1) {
-
-                    startAutoPlay();
-
-                }
-
-            }
-
-
-
-            // ─── START ──────────────────────────────────────────────────
-
-            if (document.readyState === 'loading') {
-
-                document.addEventListener('DOMContentLoaded', init);
-
-            } else {
-
-                init();
-
-            }
-
-        })();
-
-    </script>
-
 </body>
-
-
-
 </html>

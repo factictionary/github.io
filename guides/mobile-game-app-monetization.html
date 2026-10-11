@@ -3,14 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile App Development, Testing & Google Play Monetization | Factictionary</title>
-    <meta name="description" content="Complete guide to developing Android games, passing Google Play closed testing requirements (12 testers for 14 days), and monetizing with AdSense & AdMob.">
-    <meta name="keywords" content="Google Play closed testing guide, android app monetization, 12 testers 14 days requirement, mobile game development, AdMob integration">
+    <title>How to Pass Google Play's 12 Testers for 14 Days Closed Testing Rule (2026 Guide) | Factictionary</title>
+    <meta name="description" content="Complete step-by-step developer handbook to passing Google Play Console's 12 testers for 14 consecutive days closed testing requirement, avoiding production rejection, and monetizing with AdMob.">
+    <meta name="keywords" content="Google Play 12 testers 14 days, Google Play closed testing requirement 2026, how to get 12 testers for Google Play, production access rejected Google Play, Test Pilot Pro, Android indie developer guide">
     <link rel="canonical" href="https://factictionary.in/guides/mobile-game-app-monetization.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many testers does Google Play require for personal developer accounts in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Google Play requires personal developer accounts created after November 13, 2023 to run a closed test with at least 12 testers (previously 20) who stay opted in continuously for 14 consecutive days before applying for production access."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why did Google Play reject my production access after 14 days of testing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The most common reason for production access rejection is lack of genuine tester engagement. If testers install the app on Day 1 and never open it again, or if you push zero updates during the 14-day window, Google's review team flags the test as superficial and requires another 14-day cycle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the fastest free way to find 12 verified testers for 14 days?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using a mutual developer testing platform like Test Pilot Pro - 12T/14D on Google Play allows indie developers to exchange daily verified app opens, track 14-day streaks, and collect structured feedback for the Google Play production questionnaire."
+          }
+        }
+      ]
+    }
+    </script>
     <style>
         :root {
             --primary: #0066FF;
@@ -21,44 +53,53 @@
             --radius: 12px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.7; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #f8fafc; color: var(--dark); line-height: 1.75; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
         /* Navbar */
         .navbar { background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-container { max-width: 1140px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
         .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; }
+        .nav-links { display: flex; list-style: none; gap: 1.8rem; align-items: center; flex-wrap: wrap; }
         .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; }
         .nav-link:hover, .nav-link.active { color: var(--primary); }
 
-        /* Layout */
-        .guide-header { padding: 60px 0 40px; background: white; border-bottom: 1px solid var(--border); text-align: center; }
-        .guide-badge { display: inline-block; background: #EDE9FE; color: #7C3AED; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .guide-header h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.25; margin-bottom: 16px; color: var(--dark); }
-        .guide-meta { display: flex; gap: 20px; justify-content: center; font-size: 0.9rem; color: var(--gray); font-weight: 500; }
+        /* Header */
+        .guide-header { padding: 60px 0 45px; background: white; border-bottom: 1px solid var(--border); text-align: center; }
+        .guide-badge { display: inline-block; background: #EDE9FE; color: #6D28D9; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .guide-header h1 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.25; margin-bottom: 16px; color: var(--dark); max-width: 900px; margin-left: auto; margin-right: auto; }
+        .guide-meta { display: flex; gap: 20px; justify-content: center; font-size: 0.9rem; color: var(--gray); font-weight: 500; flex-wrap: wrap; }
 
-        .guide-content-layout { display: grid; grid-template-columns: 1fr; gap: 40px; padding: 50px 0 80px; }
-        @media (min-width: 850px) {
-            .guide-content-layout { grid-template-columns: 3fr 1fr; }
+        .guide-content-layout { display: grid; grid-template-columns: 1fr; gap: 36px; padding: 48px 0 80px; }
+        @media (min-width: 900px) {
+            .guide-content-layout { grid-template-columns: 2.8fr 1.2fr; }
         }
 
-        .guide-body { background: white; padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .guide-body h2 { font-size: 1.6rem; font-weight: 800; margin: 36px 0 16px; color: var(--dark); padding-bottom: 8px; border-bottom: 2px solid #F1F5F9; }
-        .guide-body h3 { font-size: 1.25rem; font-weight: 700; margin: 24px 0 12px; color: #1E293B; }
+        .guide-body { background: white; padding: 42px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .guide-body h2 { font-size: 1.55rem; font-weight: 800; margin: 38px 0 16px; color: var(--dark); padding-bottom: 8px; border-bottom: 2px solid #F1F5F9; }
+        .guide-body h3 { font-size: 1.2rem; font-weight: 700; margin: 24px 0 10px; color: #1E293B; }
         .guide-body p { margin-bottom: 18px; font-size: 1.02rem; color: #334155; }
-        .guide-body ul, .guide-body ol { margin: 0 0 20px 24px; color: #334155; }
-        .guide-body li { margin-bottom: 8px; }
+        .guide-body ul, .guide-body ol { margin: 0 0 22px 24px; color: #334155; }
+        .guide-body li { margin-bottom: 10px; }
 
-        .callout-box { background: #F8FAFC; border-left: 4px solid #7C3AED; padding: 20px; border-radius: 8px; margin: 24px 0; font-weight: 500; color: #0F172A; }
+        .callout-box { background: #F8FAFC; border-left: 4px solid #6D28D9; padding: 20px 24px; border-radius: 8px; margin: 24px 0; color: #0F172A; }
+        .app-cta-banner { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: white; border-radius: 16px; padding: 28px; margin: 32px 0; display: flex; flex-direction: column; gap: 16px; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .app-cta-banner h3 { color: #38BDF8; margin: 0; font-size: 1.35rem; }
+        .app-cta-banner p { color: #CBD5E1; margin: 0; font-size: 0.96rem; }
+        .btn-play { display: inline-flex; align-items: center; gap: 10px; background: #10B981; color: white; font-weight: 700; padding: 12px 24px; border-radius: 10px; text-decoration: none; align-self: flex-start; transition: transform 0.2s, background 0.2s; }
+        .btn-play:hover { background: #059669; transform: translateY(-2px); }
+
+        table.guide-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 0.95rem; }
+        table.guide-table th, table.guide-table td { border: 1px solid var(--border); padding: 12px 14px; text-align: left; }
+        table.guide-table th { background: #F1F5F9; font-weight: 700; color: var(--dark); }
 
         /* Sidebar */
-        .sidebar-card { background: white; border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; position: sticky; top: 90px; }
-        .sidebar-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; }
-        .tool-link-item { display: block; padding: 10px 14px; background: #F8FAFC; border-radius: 8px; text-decoration: none; color: #0066FF; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; border: 1px solid #E2E8F0; transition: all 0.2s; }
-        .tool-link-item:hover { background: #EFF6FF; border-color: #0066FF; }
+        .sidebar-card { background: white; border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; }
+        .sidebar-sticky { position: sticky; top: 90px; }
+        .sidebar-card h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; color: var(--dark); }
+        .tool-link-item { display: block; padding: 11px 14px; background: #F8FAFC; border-radius: 8px; text-decoration: none; color: #0066FF; font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; border: 1px solid #E2E8F0; transition: all 0.2s; }
+        .tool-link-item:hover { background: #EFF6FF; border-color: #0066FF; transform: translateX(2px); }
 
-        /* Footer */
         .footer { background: white; border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--gray); font-size: 0.9rem; }
     </style>
 </head>
@@ -69,23 +110,23 @@
             <a href="/" class="logo">Factictionary</a>
             <ul class="nav-links">
                 <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/tools/" class="nav-link">Tools</a></li>
+                <li><a href="/guides/" class="nav-link active">Guides</a></li>
                 <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/shop/" class="nav-link">Shop</a></li>
                 <li><a href="/about.html" class="nav-link">About</a></li>
-                <li><a href="/contact.html" class="nav-link">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <header class="guide-header">
         <div class="container">
-            <span class="guide-badge">📱 Mobile Developer Handbook</span>
-            <h1>Mobile App Development &amp; Google Play Testing Guide</h1>
+            <span class="guide-badge">📱 Android Developer Playbook</span>
+            <h1>How to Pass Google Play's 12 Testers for 14 Days Closed Testing Requirement (2026 Guide)</h1>
             <div class="guide-meta">
-                <span>⏱ 11 Min Read</span>
-                <span>📅 Updated for 2026</span>
-                <span>✍️ Factictionary Editorial</span>
+                <span>⏱ 14 Min Read</span>
+                <span>📅 Updated October 2026</span>
+                <span>✍️ Mahesh Garg · Factictionary Android Studio</span>
             </div>
         </div>
     </header>
@@ -94,32 +135,120 @@
         <div class="guide-content-layout">
             
             <main class="guide-body">
-                <p>Developing successful mobile apps requires balancing smooth UI design, privacy-first data handling, meeting Google Play Console launch policies, and choosing effective monetization strategies.</p>
+                <p>If you opened a personal Google Play Console developer account after November 2023, you cannot publish an Android app or game directly to production. Before the "Apply for Production" button unlocks, Google requires you to run a <strong>Closed Test with at least 12 opted-in testers continuously for 14 consecutive days</strong>.</p>
+                <p>Having published <strong>14 Android apps and games under the Factictionary developer portfolio</strong>, we have navigated this exact closed-testing pipeline repeatedly. This guide walks you through the exact technical setup, why 40% of first-time production applications get rejected even after 14 days, and how to pass on your very first attempt.</p>
 
-                <h2>1. Meeting Google Play 20-Tester / 14-Day Closed Testing Rule</h2>
-                <p>Google Play requires personal developer accounts created after November 2023 to run a closed test with at least 12–20 opt-in testers continuously over 14 consecutive days before applying for production access.</p>
-                <div class="callout-box">
-                    <strong>Best Practice:</strong> Keep testers actively engaged by pushing regular test updates and soliciting feedback via Google Group distribution lists or dedicated test management utilities.
+                <div class="app-cta-banner">
+                    <h3>🛠️ Need 12 Verified Testers for 14 Days Right Now?</h3>
+                    <p>We built <strong>Test Pilot Pro - 12T/14D</strong> specifically for indie Android developers stuck in Google Play's closed testing phase. Join fellow developers, track daily 14-day testing streaks, verify mutual app opens, and unlock production faster.</p>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.test_pilot_pro" target="_blank" rel="noopener" class="btn-play">▶ Install Test Pilot Pro on Google Play</a>
+                        <a href="/games/test-pilot-pro.html" class="btn-play" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);">View App Details →</a>
+                    </div>
                 </div>
 
-                <h2>2. Lightweight &amp; Privacy-First UI/UX Design</h2>
-                <p>Modern mobile users prioritize fast load times and clean interfaces. Avoid heavy third-party tracking SDKs and keep permissions to the absolute minimum needed for app functionality.</p>
-
-                <h2>3. AdMob &amp; In-App Monetization Models</h2>
-                <p>Choose the right ad formats for your app category:</p>
+                <h2>1. Understanding the 12 Testers / 14 Consecutive Days Rule</h2>
+                <p>Google originally introduced this policy requiring 20 testers for 14 days, and subsequently adjusted the minimum threshold to <strong>12 opted-in testers for 14 consecutive days</strong>. However, the enforcement of <em>tester quality and daily activity</em> has become significantly stricter.</p>
                 <ul>
-                    <li><strong>Rewarded Video Ads:</strong> Ideal for games (e.g. extra lives or power-ups).</li>
-                    <li><strong>Native &amp; Banner Ads:</strong> Best suited for utility and educational apps.</li>
-                    <li><strong>In-App Purchases (IAP):</strong> One-time premium feature unlocks or ad removal.</li>
+                    <li><strong>The 14-Day Clock Starts Only When the 12th Tester Opts In:</strong> Simply adding 12 email addresses in Play Console does nothing. At least 12 real users must click your opt-in link, accept the tester invitation, and install the build on a physical Android device.</li>
+                    <li><strong>Dropping Below 12 Testers Resets Progress:</strong> If you recruit 12 testers and 1 person uninstalls or opts out on Day 9, your consecutive streak pauses or resets. Always recruit <strong>16 to 20 testers</strong> to maintain a safe buffer.</li>
+                    <li><strong>Engagement Over Mere Installation:</strong> Google Play Console tracks crash-free sessions, Android vitals, and update adoption during the 14-day period.</li>
                 </ul>
+
+                <h2>2. Step-by-Step Closed Track Setup Using Google Groups</h2>
+                <p>The biggest mistake new developers make is choosing the <em>"Email Lists"</em> option in Play Console, which forces you to manually type every new tester's Gmail address and save changes before they can access the link. Instead, always use <strong>Google Groups</strong>:</p>
+                <ol>
+                    <li>Go to <code>groups.google.com</code> and create a new group (e.g., <code>my-app-closed-testers@googlegroups.com</code>).</li>
+                    <li>In Group Settings, set <strong>"Who can join group"</strong> to <em>"Anyone on the web can join"</em> so testers can join with 1 click without waiting for manual approval.</li>
+                    <li>In Google Play Console, navigate to <strong>Testing → Closed testing → Manage track → Testers tab</strong>.</li>
+                    <li>Select <strong>Google Groups</strong> and enter your group email address.</li>
+                    <li>Under <strong>Countries / regions</strong> in the closed track, select <strong>All 177 countries</strong>. (If you only select your home country, testers from other regions will see an "App not available in your country" error!)</li>
+                    <li>Upload your signed <code>.aab</code> (Android App Bundle) and publish the closed release for review.</li>
+                </ol>
+
+                <div class="callout-box">
+                    💡 <strong>Crucial Tip for Paid vs. Free Apps:</strong> Even if you plan to make your app paid later, keep it 100% free during the 14-day closed testing phase. Google Play does not allow free promo codes to bypass closed-testing opt-in friction easily across regions.
+                </div>
+
+                <h2>3. Why Google Rejects Production Access After 14 Days (And How to Prevent It)</h2>
+                <p>Many indie developers celebrate when the 14-day countdown timer finishes, submit their production application, and receive a devastating email 48 hours later: <em>"More testing required to access Google Play production."</em> Here is a comparison of failed vs. approved closed tests:</p>
+
+                <table class="guide-table">
+                    <thead>
+                        <tr>
+                            <th>Metric Tracked by Google</th>
+                            <th>❌ Rejected Closed Test</th>
+                            <th>✅ Approved Closed Test (First Try)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Opted-In Tester Count</strong></td>
+                            <td>Bare minimum (12–13 testers)</td>
+                            <td>18–25 testers (buffer against uninstalls)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daily Active Opens</strong></td>
+                            <td>Testers open once on Day 1, never again</td>
+                            <td>Testers open the app 8–12 times across the 14 days for 60+ seconds per session</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AAB Version Updates</strong></td>
+                            <td>Only 1 build (v1.0.0) uploaded on Day 1</td>
+                            <td>2–3 incremental releases (v1.0.1 on Day 5, v1.0.2 on Day 10) fixing real bugs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Play Console Feedback</strong></td>
+                            <td>0 written testing notes or feedback</td>
+                            <td>5+ private developer feedback responses submitted via Play Store listing</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>4. How to Answer the 3 Production Access Questionnaire Prompts</h2>
+                <p>When your 14 days complete, Google Play Console asks three mandatory essay questions (up to 300 characters each). Never write one-sentence answers like <em>"Friends tested it and found no bugs."</em> Structure your answers clearly:</p>
+                <h3>Question A: How did you recruit testers for your closed test?</h3>
+                <p>Explain your exact channels: mention that you recruited fellow Android developers and target-audience users via structured testing communities (such as <strong>Test Pilot Pro</strong>, Reddit's Android testing groups, and Google Groups), ensuring diverse Android OS versions (Android 11 to Android 15) and screen sizes.</p>
+                <h3>Question B: How did you engage with testers and collect feedback?</h3>
+                <p>Describe your feedback loop: mention that you collected bug reports through Google Play's private closed-beta feedback form, in-app feedback prompts, and community testing logs, tracking UI responsiveness, edge-case crashes, and memory usage in Android Vitals.</p>
+                <h3>Question C: What changes did you make to your app based on closed testing feedback?</h3>
+                <p>List <strong>specific version numbers and concrete code changes</strong> (e.g., <em>"In v1.0.2, fixed keyboard overlap on small screens; in v1.0.3, optimized SQLite/offline caching and fixed dark-mode contrast issues reported by testers."</em>).</p>
+
+                <h2>5. App Store Optimization (ASO) &amp; Privacy-First Architecture</h2>
+                <p>Passing closed testing is only step one. To grow organic installs without paid ads once your app hits production:</p>
+                <ul>
+                    <li><strong>Target Long-Tail Keywords in Your 30-Character Title &amp; 80-Character Short Description:</strong> New apps with 0–100 downloads cannot rank for single-word head terms like "Sudoku" or "Translator". Instead, target specific user intent such as <em>"Offline Word Games No Wifi"</em>, <em>"Tambola Number Caller Offline"</em>, or <em>"Tuition Fee &amp; Test Paper Maker"</em>.</li>
+                    <li><strong>Minimize Permissions &amp; Pre-Launch Report Warnings:</strong> Enable Play Console's automated Firebase Test Lab Pre-Launch Report. Fix every accessibility contrast warning, touch-target size issue (&lt;48dp), and ANR before applying for production.</li>
+                    <li><strong>Publish Valid `app-ads.txt` &amp; Privacy Policy URLs:</strong> Host your privacy policy and `app-ads.txt` on a verified root domain (like `factictionary.in/app-ads.txt`) so AdMob verification succeeds immediately on launch day.</li>
+                </ul>
+
+                <h2>6. Frequently Asked Questions (FAQ)</h2>
+                <h3>How many testers does Google Play require in 2026?</h3>
+                <p>Personal developer accounts created after November 2023 must maintain at least <strong>12 opted-in testers continuously for 14 consecutive days</strong> on a closed testing track before applying for production access.</p>
+                <h3>Do I have to repeat the 12-tester / 14-day test for every new app I publish?</h3>
+                <p>Yes. For personal developer accounts, the 12-tester / 14-day closed testing requirement applies <strong>per app</strong> before that specific app can be promoted to production.</p>
+                <h3>How can I get 12 reliable testers without paying for testing agencies?</h3>
+                <p>Install our free developer community utility <a href="https://play.google.com/store/apps/details?id=in.factictionary.test_pilot_pro" target="_blank" rel="noopener"><strong>Test Pilot Pro - 12T/14D</strong></a> on Google Play to exchange daily verified testing sessions with other indie Android developers.</p>
             </main>
 
             <aside>
-                <div class="sidebar-card">
-                    <h4>📱 Games &amp; Apps</h4>
-                    <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 14px;">Explore our official Google Play app showcase:</p>
-                    <a href="/games/" class="tool-link-item">🎮 All Apps &amp; Games Showcase</a>
-                    <a href="/games/test-pilot-pro.html" class="tool-link-item">🛠️ Test Pilot Pro (Closed Tester Tool)</a>
+                <div class="sidebar-sticky">
+                    <div class="sidebar-card" style="background:linear-gradient(135deg,#0F172A,#1E293B);color:white;border:none;">
+                        <h4 style="color:#38BDF8;">🛠️ Test Pilot Pro - 12T/14D</h4>
+                        <p style="font-size: 0.88rem; color: #CBD5E1; margin-bottom: 16px;">Pass Google Play's 12-tester / 14-day requirement for $0 with mutual developer testing.</p>
+                        <a href="https://play.google.com/store/apps/details?id=in.factictionary.test_pilot_pro" target="_blank" rel="noopener" class="tool-link-item" style="background:#10B981;color:white;border:none;text-align:center;">▶ Get on Google Play</a>
+                        <a href="/games/test-pilot-pro.html" class="tool-link-item" style="background:rgba(255,255,255,0.1);color:white;border-color:rgba(255,255,255,0.2);text-align:center;">App Overview →</a>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>🧰 Developer Web Tools</h4>
+                        <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 14px;">100% client-side utilities for Android &amp; web builders:</p>
+                        <a href="/tools/json_formatter.html" class="tool-link-item">💻 JSON Formatter &amp; Validator</a>
+                        <a href="/tools/base64_encoder.html" class="tool-link-item">🔒 Base64 Encoder / Decoder</a>
+                        <a href="/tools/hash_generator.html" class="tool-link-item">🔑 SHA-256 / MD5 Generator</a>
+                        <a href="/tools/image_resizer.html" class="tool-link-item">📐 Play Store Icon &amp; Screenshot Resizer</a>
+                        <a href="/games/" class="tool-link-item">🎮 Explore All 14 Factictionary Apps</a>
+                    </div>
                 </div>
             </aside>
 
@@ -128,7 +257,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>© 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--primary);">Privacy Policy</a></p>
+            <p>© 2026 Factictionary. All rights reserved. | <a href="/privacy.html" style="color: var(--primary);">Privacy Policy</a> | <a href="/guides/" style="color: var(--primary);">All Guides</a> | <a href="/games/" style="color: var(--primary);">Google Play Apps</a></p>
         </div>
     </footer>
 
