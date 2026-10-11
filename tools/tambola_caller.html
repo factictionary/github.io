@@ -59,6 +59,19 @@
             display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
         }
     </style>
+
+    <link rel="alternate" hreflang="en" href="https://factictionary.in/tools/tambola_caller.html">
+    <link rel="alternate" hreflang="x-default" href="https://factictionary.in/tools/tambola_caller.html">
+    <link rel="manifest" href="/manifest.json">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Factictionary">
+    <meta property="og:title" content="Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator | Factictionary">
+    <meta property="og:description" content="Free online Tambola (Housie / 90-Ball Bingo) number caller with voice announcer, 1 to 90 calling nicknames, auto-timer, and printable 3x9 Tambola ticket generator.">
+    <meta property="og:url" content="https://factictionary.in/tools/tambola_caller.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator | Factictionary">
+    <meta name="twitter:description" content="Free online Tambola (Housie / 90-Ball Bingo) number caller with voice announcer, 1 to 90 calling nicknames, auto-timer, and printable 3x9 Tambola ticket generator.">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator","url":"https://factictionary.in/tools/tambola_caller.html","description":"Free online Tambola (Housie / 90-Ball Bingo) number caller with voice announcer, 1 to 90 calling nicknames, auto-timer, and printable 3x9 Tambola ticket generator.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
 </head>
 <body>
     <nav class="navbar" role="navigation">
@@ -127,14 +140,40 @@
             </div>
         </div>
 
-        <!-- Interactive 3x9 Ticket Generator -->
-        <div class="ticket-panel text-center" style="margin-bottom: 36px;">
-            <h2 style="font-size: 1.45rem; font-weight: 800; margin-bottom: 6px;">🎟️ Interactive 3×9 Tambola Ticket Generator</h2>
-            <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 14px;">Click any number on your ticket below to cross/daub it as numbers are called, or generate a new randomized 15-number ticket.</p>
+        <!-- Interactive 3x9 Ticket Generator & Viral WhatsApp Player Loop -->
+        <div class="ticket-panel text-center" id="playerTicketSection" style="margin-bottom: 36px; border: 2px solid #3B82F6;">
+            <div id="playerModeBanner" style="display: none; background: linear-gradient(135deg, #059669 0%, #0D9488 100%); color: white; padding: 14px 20px; border-radius: 12px; margin-bottom: 18px; text-align: left; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <span style="background: #FEF08A; color: #0F172A; font-weight: 900; font-size: 0.72rem; padding: 3px 8px; border-radius: 12px;">LIVE PLAYER MODE</span>
+                    <div style="font-weight: 800; font-size: 1.05rem; margin-top: 4px;">Tap numbers on your ticket below as the host calls them!</div>
+                </div>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" style="background: white; color: #059669; padding: 8px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; text-decoration: none;">📲 Get Auto-Daub App on Play Store →</a>
+            </div>
+
+            <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px;">
+                <h2 style="font-size: 1.45rem; font-weight: 800; margin: 0;">🎟️ Interactive 3×9 Tambola Ticket</h2>
+                <span id="ticketIdBadge" style="background: #EFF6FF; color: #1D4ED8; font-weight: 800; font-size: 0.82rem; padding: 4px 12px; border-radius: 20px; border: 1px solid #BFDBFE;">Ticket #1001</span>
+            </div>
+            <p style="color: #64748B; font-size: 0.95rem; margin-bottom: 14px;">Tap any number to cross/daub it live, or send an interactive ticket link directly to your players on WhatsApp!</p>
+
+            <!-- Live Dividend Claim Tracker -->
+            <div id="dividendTracker" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 620px; margin: 0 auto 14px;">
+                <span id="statEarly5" style="background: #F1F5F9; color: #475569; font-size: 0.8rem; font-weight: 700; padding: 5px 12px; border-radius: 20px;">Early 5: 0/5</span>
+                <span id="statTopLine" style="background: #F1F5F9; color: #475569; font-size: 0.8rem; font-weight: 700; padding: 5px 12px; border-radius: 20px;">Top Line: 0/5</span>
+                <span id="statMidLine" style="background: #F1F5F9; color: #475569; font-size: 0.8rem; font-weight: 700; padding: 5px 12px; border-radius: 20px;">Middle Line: 0/5</span>
+                <span id="statBotLine" style="background: #F1F5F9; color: #475569; font-size: 0.8rem; font-weight: 700; padding: 5px 12px; border-radius: 20px;">Bottom Line: 0/5</span>
+                <span id="statFullHouse" style="background: #F1F5F9; color: #475569; font-size: 0.8rem; font-weight: 700; padding: 5px 12px; border-radius: 20px;">Full House: 0/15</span>
+            </div>
+
             <div class="ticket-grid" id="ticketGrid"></div>
-            <div style="display: flex; gap: 12px; justify-content: center; margin-top: 14px;">
-                <button onclick="generateTicket()" style="padding: 10px 22px; border-radius: 10px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">🔄 Generate New Ticket</button>
-                <button onclick="window.print()" style="padding: 10px 22px; border-radius: 10px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">🖨️ Print Ticket</button>
+            <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 14px;">Powered by <strong>Factictionary.in</strong> &bull; <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">All-In-One Tambola Android App</a></div>
+
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+                <button onclick="generateTicket()" style="padding: 10px 18px; border-radius: 10px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">🔄 New Random Ticket</button>
+                <button onclick="shareTicketWhatsApp()" style="padding: 10px 18px; border-radius: 10px; background: #16A34A; color: white; font-weight: 800; border: none; cursor: pointer;">📲 Share This Ticket on WhatsApp</button>
+                <button onclick="inviteGroupWhatsApp()" style="padding: 10px 18px; border-radius: 10px; background: #2563EB; color: white; font-weight: 800; border: none; cursor: pointer;">👥 Invite Group (Each Gets Own Ticket)</button>
+                <button onclick="claimOnWhatsApp()" style="padding: 10px 18px; border-radius: 10px; background: #F59E0B; color: #0F172A; font-weight: 800; border: none; cursor: pointer;">🏆 Claim Prize on WhatsApp</button>
+                <button onclick="window.print()" style="padding: 10px 18px; border-radius: 10px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">🖨️ Print</button>
             </div>
         </div>
 
@@ -143,7 +182,7 @@
             <h2 style="font-size: 1.55rem; font-weight: 800; margin-bottom: 14px;">How to Host a Tambola / Housie Game Using This Online Caller</h2>
             <p style="margin-bottom: 14px; color: #334155;"><strong>Tambola</strong> (known as <strong>Housie</strong> in the UK, Australia, and India, and 90-Ball Bingo internationally) uses a master board of numbers from <strong>1 to 90</strong> and player tickets arranged in a <strong>3-row by 9-column grid</strong>. Each ticket contains exactly 15 numbers—5 numbers per row—with Column 1 holding numbers 1–9, Column 2 holding 10–19, and so on up to Column 9 (80–90).</p>
             <ol style="margin-left: 22px; margin-bottom: 20px; color: #334155; line-height: 1.8;">
-                <li><strong>Distribute Tickets:</strong> Give physical paper tickets to your guests, let them generate a digital ticket above, or ask everyone to install <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">All-In-One Tambola &amp; Housie</a> on their phones.</li>
+                <li><strong>Distribute Tickets:</strong> Give physical paper tickets to your guests, click <strong>👥 Invite Group on WhatsApp</strong> above so every guest gets their own live interactive ticket in their browser, or ask everyone to install <a href="https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola" target="_blank" rel="noopener" style="color: #0066FF; font-weight: 700;">All-In-One Tambola &amp; Housie</a> on their phones.</li>
                 <li><strong>Announce Winning Dividends:</strong> Before calling the first number, declare which patterns are active for the round—such as <em>Early Five (Jaldi 5)</em>, <em>Four Corners</em>, <em>Top Line</em>, <em>Middle Line</em>, <em>Bottom Line</em>, <em>Breakfast / Lunch / Dinner</em>, and <em>Full House</em>.</li>
                 <li><strong>Call Numbers with Nicknames:</strong> Click <strong>Call Next Number</strong> (or enable the 5-second Auto-Caller). Our built-in Web Speech synthesizer announces both the traditional calling nickname (like <em>"Two Little Ducks, 22"</em> or <em>"Top of the House, 90"</em>) and highlights the cell on the 1–90 board so you can verify claims in seconds.</li>
             </ol>
@@ -159,6 +198,42 @@
             </details>
         </div>
     </main>
+
+    
+    <!-- Embed Tool Backlink Widget -->
+    <section id="factictionary-embed-widget" style="max-width: 1100px; margin: 24px auto 40px; padding: 0 20px;">
+        <details style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 14px; padding: 16px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+            <summary style="font-weight: 800; color: #0F172A; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                <span>🔗 Embed This Free Tool on Your Website or Blog</span>
+                <span style="background: #DBEAFE; color: #1E40AF; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 700;">Free Widget</span>
+            </summary>
+            <div style="margin-top: 14px; border-top: 1px solid #E2E8F0; padding-top: 14px;">
+                <p style="font-size: 0.88rem; color: #475569; margin: 0 0 10px;">Copy and paste the HTML snippet below to embed <strong>Online Tambola / Housie Number Caller (1–90 Board) & Ticket Generator</strong> directly inside your blog, school portal, or developer website (runs 100% client-side):</p>
+                <textarea id="factictionary-embed-code" readonly style="width: 100%; height: 74px; font-family: monospace; font-size: 0.8rem; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #1E293B; resize: none;">&lt;iframe src=&quot;https://factictionary.in/tools/tambola_caller.html?embed=1&quot; width=&quot;100%&quot; height=&quot;680&quot; style=&quot;border:1px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.05);&quot; loading=&quot;lazy&quot; title=&quot;Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:12px;color:#64748B;text-align:right;margin-top:4px;&quot;&gt;Powered by &lt;a href=&quot;https://factictionary.in/tools/tambola_caller.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; style=&quot;color:#0066FF;font-weight:600;&quot;&gt;Online Tambola / Housie Number Caller (1–90 Board) &amp; Ticket Generator — Factictionary.in&lt;/a&gt;&lt;/p&gt;</textarea>
+                <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
+                    <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('factictionary-embed-code').value); this.textContent='✓ Embed Code Copied!';" style="background: #0066FF; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer;">📋 Copy Embed Code</button>
+                    <a href="/directory.html" style="font-size: 0.82rem; color: #0066FF; font-weight: 600; text-decoration: none;">Browse all 86 embeddable tools →</a>
+                </div>
+            </div>
+        </details>
+    </section>
+    <script>
+        (function(){
+            if (new URLSearchParams(window.location.search).get('embed') === '1') {
+                var nav = document.querySelector('nav, header, .navbar');
+                var foot = document.querySelector('footer, .footer');
+                var wid = document.getElementById('factictionary-embed-widget');
+                if (nav) nav.style.display = 'none';
+                if (foot) foot.style.display = 'none';
+                if (wid) wid.style.display = 'none';
+                var bar = document.createElement('div');
+                bar.style.cssText = 'background:#0F172A;color:white;padding:8px 16px;font-size:12px;display:flex;justify-content:space-between;align-items:center;font-family:Inter,sans-serif;';
+                bar.innerHTML = '<span>⚡ Interactive Tool by <strong>Factictionary.in</strong></span><a href="https://factictionary.in/tools/tambola_caller.html" target="_blank" rel="noopener" style="color:#60A5FA;font-weight:700;text-decoration:none;">Open Full Screen ↗</a>';
+                document.body.insertBefore(bar, document.body.firstChild);
+            }
+        })();
+    </script>
 
     <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
         <div class="container">
@@ -182,6 +257,8 @@
         let called = [];
         let voiceEnabled = true;
         let autoInterval = null;
+        let currentMatrix = null;
+        let currentTicketId = 1001;
 
         function initBoard() {
             const grid = document.getElementById('boardGrid');
@@ -254,13 +331,57 @@
             initBoard();
         }
 
-        function generateTicket() {
+        function renderTicketMatrix(matrix, id) {
+            currentMatrix = matrix;
+            currentTicketId = id || Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('ticketIdBadge').textContent = 'Ticket #' + currentTicketId;
             const grid = document.getElementById('ticketGrid');
             grid.innerHTML = '';
-            const matrix = Array.from({length: 3}, () => Array(9).fill(null));
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const div = document.createElement('div');
+                    div.className = 'ticket-cell';
+                    div.dataset.row = r;
+                    div.dataset.col = c;
+                    if (matrix[r][c]) {
+                        div.textContent = matrix[r][c];
+                        div.dataset.num = matrix[r][c];
+                        div.onclick = () => {
+                            div.classList.toggle('daubed');
+                            updateDividendProgress();
+                        };
+                    }
+                    grid.appendChild(div);
+                }
+            }
+            updateDividendProgress();
+        }
+
+        function updateDividendProgress() {
+            const cells = Array.from(document.querySelectorAll('#ticketGrid .ticket-cell[data-num]'));
+            const daubed = cells.filter(c => c.classList.contains('daubed'));
+            const rowCounts = [0, 0, 0];
+            daubed.forEach(c => rowCounts[Number(c.dataset.row)]++);
+
+            const setPill = (id, label, count, target) => {
+                const el = document.getElementById(id);
+                const done = count >= target;
+                el.textContent = `${done ? '✅ ' : ''}${label}: ${ Math.min(count, target)}/${target}`;
+                el.style.background = done ? '#DCFCE7' : '#F1F5F9';
+                el.style.color = done ? '#166534' : '#475569';
+            };
+            setPill('statEarly5', 'Early 5', daubed.length, 5);
+            setPill('statTopLine', 'Top Line', rowCounts[0], 5);
+            setPill('statMidLine', 'Middle Line', rowCounts[1], 5);
+            setPill('statBotLine', 'Bottom Line', rowCounts[2], 5);
+            setPill('statFullHouse', 'Full House', daubed.length, 15);
+        }
+
+        function generateTicket() {
+            const matrix = Array.from({length: 3}, () => Array(9).fill(0));
             for (let r = 0; r < 3; r++) {
                 const cols = [0,1,2,3,4,5,6,7,8].sort(() => Math.random() - 0.5).slice(0, 5);
-                cols.forEach(c => matrix[r][c] = true);
+                cols.forEach(c => matrix[r][c] = 1);
             }
             for (let c = 0; c < 9; c++) {
                 const min = c === 0 ? 1 : c * 10;
@@ -274,21 +395,65 @@
                     if (matrix[r][c]) matrix[r][c] = chosen[idx++];
                 }
             }
-            for (let r = 0; r < 3; r++) {
-                for (let c = 0; c < 9; c++) {
-                    const div = document.createElement('div');
-                    div.className = 'ticket-cell';
-                    if (matrix[r][c]) {
-                        div.textContent = matrix[r][c];
-                        div.onclick = () => div.classList.toggle('daubed');
-                    }
-                    grid.appendChild(div);
+            renderTicketMatrix(matrix, Math.floor(1000 + Math.random() * 9000));
+        }
+
+        function encodeTicketParam() {
+            const flat = currentMatrix.flat().join('-');
+            return `${currentTicketId}_${flat}`;
+        }
+
+        function shareTicketWhatsApp() {
+            const url = `https://factictionary.in/tools/tambola_caller.html?ticket=${encodeTicketParam()}&play=1`;
+            const text = `🎟️ *Here is your live interactive Tambola Ticket (#${currentTicketId})!*\nTap numbers directly in your browser as they are called:\n👉 ${url}\n\n📲 Prefer auto-daub & voice alerts? Get the free *All-In-One Tambola* app on Google Play: https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function inviteGroupWhatsApp() {
+            const url = `https://factictionary.in/tools/tambola_caller.html?play=1`;
+            const text = `🎲 *We are playing Tambola / Housie!*\nClick below to get your own randomized 3x9 interactive ticket right in your phone browser (no signup needed):\n👉 ${url}\n\n📲 Or download our official *All-In-One Tambola* app on Google Play: https://play.google.com/store/apps/details?id=in.factictionary.virtual_tambola`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function claimOnWhatsApp() {
+            const cells = Array.from(document.querySelectorAll('#ticketGrid .ticket-cell.daubed'));
+            const nums = cells.map(c => c.dataset.num).join(', ') || 'None marked yet';
+            const url = `https://factictionary.in/tools/tambola_caller.html?ticket=${encodeTicketParam()}&play=1`;
+            const text = `🏆 *YES! Claiming Tambola Prize on Ticket #${currentTicketId}!*\n✅ Marked Numbers (${cells.length}/15): ${nums}\n🔍 Verify my ticket grid: ${url}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function checkPlayerUrlMode() {
+            const params = new URLSearchParams(window.location.search);
+            const ticketStr = params.get('ticket');
+            const isPlay = params.get('play') === '1' || Boolean(ticketStr);
+
+            if (ticketStr && ticketStr.includes('_')) {
+                const [idPart, gridPart] = ticketStr.split('_');
+                const nums = gridPart.split('-').map(n => parseInt(n, 10) || 0);
+                if (nums.length === 27) {
+                    const matrix = [nums.slice(0, 9), nums.slice(9, 18), nums.slice(18, 27)];
+                    renderTicketMatrix(matrix, parseInt(idPart, 10) || 1001);
+                } else {
+                    generateTicket();
+                }
+            } else {
+                generateTicket();
+            }
+
+            if (isPlay) {
+                const banner = document.getElementById('playerModeBanner');
+                banner.style.display = 'flex';
+                const ticketSec = document.getElementById('playerTicketSection');
+                const workspace = document.querySelector('.tambola-workspace');
+                if (ticketSec && workspace) {
+                    workspace.parentNode.insertBefore(ticketSec, workspace);
                 }
             }
         }
 
         initBoard();
-        generateTicket();
+        checkPlayerUrlMode();
     </script>
 </body>
 </html>

@@ -190,6 +190,11 @@
     </script>
 
 
+
+    <link rel="alternate" hreflang="en" href="https://factictionary.in/tools/video_looper.html">
+    <link rel="alternate" hreflang="x-default" href="https://factictionary.in/tools/video_looper.html">
+    <link rel="manifest" href="/manifest.json">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Video Looper Tool","url":"https://factictionary.in/tools/video_looper.html","description":"Free online video looper tool. Loop videos with custom repetitions (2x, 3x, 5x, 10x, unlimited). Perfect for social media, presentations, and content creation. 100% privacy-protected, processes locally in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
 </head>
 
 
@@ -1159,7 +1164,43 @@
     <!-- Footer -->
 
 
-            <footer class="footer" style="margin-top: 60px;">
+            
+    <!-- Embed Tool Backlink Widget -->
+    <section id="factictionary-embed-widget" style="max-width: 1100px; margin: 24px auto 40px; padding: 0 20px;">
+        <details style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 14px; padding: 16px 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+            <summary style="font-weight: 800; color: #0F172A; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                <span>🔗 Embed This Free Tool on Your Website or Blog</span>
+                <span style="background: #DBEAFE; color: #1E40AF; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 700;">Free Widget</span>
+            </summary>
+            <div style="margin-top: 14px; border-top: 1px solid #E2E8F0; padding-top: 14px;">
+                <p style="font-size: 0.88rem; color: #475569; margin: 0 0 10px;">Copy and paste the HTML snippet below to embed <strong>Video Looper Tool</strong> directly inside your blog, school portal, or developer website (runs 100% client-side):</p>
+                <textarea id="factictionary-embed-code" readonly style="width: 100%; height: 74px; font-family: monospace; font-size: 0.8rem; padding: 10px; border-radius: 8px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #1E293B; resize: none;">&lt;iframe src=&quot;https://factictionary.in/tools/video_looper.html?embed=1&quot; width=&quot;100%&quot; height=&quot;680&quot; style=&quot;border:1px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.05);&quot; loading=&quot;lazy&quot; title=&quot;Video Looper Tool&quot;&gt;&lt;/iframe&gt;
+&lt;p style=&quot;font-size:12px;color:#64748B;text-align:right;margin-top:4px;&quot;&gt;Powered by &lt;a href=&quot;https://factictionary.in/tools/video_looper.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; style=&quot;color:#0066FF;font-weight:600;&quot;&gt;Video Looper Tool — Factictionary.in&lt;/a&gt;&lt;/p&gt;</textarea>
+                <div style="display: flex; align-items: center; gap: 12px; margin-top: 10px;">
+                    <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('factictionary-embed-code').value); this.textContent='✓ Embed Code Copied!';" style="background: #0066FF; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer;">📋 Copy Embed Code</button>
+                    <a href="/directory.html" style="font-size: 0.82rem; color: #0066FF; font-weight: 600; text-decoration: none;">Browse all 86 embeddable tools →</a>
+                </div>
+            </div>
+        </details>
+    </section>
+    <script>
+        (function(){
+            if (new URLSearchParams(window.location.search).get('embed') === '1') {
+                var nav = document.querySelector('nav, header, .navbar');
+                var foot = document.querySelector('footer, .footer');
+                var wid = document.getElementById('factictionary-embed-widget');
+                if (nav) nav.style.display = 'none';
+                if (foot) foot.style.display = 'none';
+                if (wid) wid.style.display = 'none';
+                var bar = document.createElement('div');
+                bar.style.cssText = 'background:#0F172A;color:white;padding:8px 16px;font-size:12px;display:flex;justify-content:space-between;align-items:center;font-family:Inter,sans-serif;';
+                bar.innerHTML = '<span>⚡ Interactive Tool by <strong>Factictionary.in</strong></span><a href="https://factictionary.in/tools/video_looper.html" target="_blank" rel="noopener" style="color:#60A5FA;font-weight:700;text-decoration:none;">Open Full Screen ↗</a>';
+                document.body.insertBefore(bar, document.body.firstChild);
+            }
+        })();
+    </script>
+
+    <footer class="footer" style="margin-top: 60px;">
 
 
         <div class="container text-center">
