@@ -1,7 +1,7 @@
 // Factictionary Full-Featured PWA Service Worker (PWABuilder Compliant)
 // Supports: Offline Caching, Background Sync ('sync'), Periodic Sync ('periodicsync'), and Push Notifications ('push')
 
-const CACHE_NAME = 'factictionary-pwa-v2';
+const CACHE_NAME = 'factictionary-pwa-v3';
 const OFFLINE_URL = '/index.html';
 const CORE_ASSETS = [
   '/',
@@ -11,9 +11,9 @@ const CORE_ASSETS = [
   '/games/',
   '/directory.html',
   '/manifest.json',
-  '/assets/images/pwa-icon-96.png',
-  '/assets/images/pwa-icon-192.png',
-  '/assets/images/pwa-icon-512.png'
+  '/assets/images/factictionary-logo-96.png',
+  '/assets/images/factictionary-logo-192.png',
+  '/assets/images/factictionary-logo-512.png'
 ];
 
 // 1. Install Event — Pre-cache core app shell
@@ -93,8 +93,8 @@ self.addEventListener('push', (event) => {
   let payload = {
     title: 'Factictionary Tools & Apps',
     body: 'Explore 85+ privacy-first browser utilities and offline Android apps.',
-    icon: '/assets/images/pwa-icon-192.png',
-    badge: '/assets/images/pwa-icon-96.png',
+    icon: '/assets/images/factictionary-logo-192.png',
+    badge: '/assets/images/factictionary-logo-96.png',
     url: 'https://factictionary.in/tools/'
   };
 
