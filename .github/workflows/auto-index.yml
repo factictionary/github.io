@@ -1,0 +1,22 @@
+name: Auto-Submit to Search Engines (IndexNow & Google WebSub)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  submit-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Wait 45s for GitHub Pages CDN Deployment
+        run: sleep 45
+
+      - name: Submit All Sitemap URLs to IndexNow & Google WebSub
+        shell: pwsh
+        run: ./submit_to_search_indexes.ps1
