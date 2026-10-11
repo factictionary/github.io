@@ -1310,6 +1310,6 @@
 
     </script>
 
-    <script>if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {})); }</script>
+    <script>if ('serviceWorker' in navigator) { window.addEventListener('load', async () => { try { const reg = await navigator.serviceWorker.register('/sw.js'); if ('sync' in reg) reg.sync.register('factictionary-sync').catch(() => {}); if ('periodicSync' in reg) reg.periodicSync.register('factictionary-periodic-sync', { minInterval: 86400000 }).catch(() => {}); } catch (e) {} }); }</script>
 </body>
 </html>
