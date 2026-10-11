@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser) | Factictionary</title>
+    <meta name="description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% locally via Mammoth.js.">
+    <meta name="keywords" content="online docx viewer without upload, open word document in browser, docx to clean html converter, kdp word to html converter client side">
+    <link rel="canonical" href="https://factictionary.in/tools/docx_viewer.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Mammoth.js Browser Library for Client-Side DOCX Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .drop-zone {
+            border: 3px dashed #0066FF; background: rgba(0,102,255,0.03); border-radius: 16px;
+            padding: 36px 20px; text-align: center; cursor: pointer; margin-bottom: 24px;
+        }
+        .doc-viewer {
+            background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 40px;
+            min-height: 420px; max-height: 680px; overflow-y: auto; margin-bottom: 24px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.04); line-height: 1.8;
+        }
+        .doc-viewer h1, .doc-viewer h2, .doc-viewer h3 { margin-top: 20px; margin-bottom: 10px; color: #0F172A; }
+        .doc-viewer p { margin-bottom: 14px; color: #1E293B; }
+        .doc-viewer table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .doc-viewer td, .doc-viewer th { border: 1px solid #CBD5E1; padding: 8px 12px; }
+        .panel-card { background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 30px; margin-bottom: 28px; }
+        .app-banner {
+            background: linear-gradient(135deg, #0F172A 0%, #1D4ED8 100%); color: white;
+            border-radius: 18px; padding: 26px; margin-bottom: 26px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1080px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 24px;">
+            <span style="background: #DBEAFE; color: #1E40AF; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">📝 MAMMOTH.JS IN-BROWSER ENGINE · ZERO SERVER UPLOADS</span>
+            <h1 style="font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 8px;">Private Online DOCX Word Viewer &amp; HTML Converter</h1>
+            <p style="color: #475569; max-width: 720px; margin: 0 auto;">Open Microsoft Word (<code>.docx</code>) manuscripts, resumes, and contracts directly in your browser without Office installed—and export clean semantic HTML or plain text.</p>
+        </div>
+
+        <!-- Funnel Banner -->
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #38BDF8; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">RESUME &amp; CLASSROOM TOOLS</span>
+                <h2 style="color: white; font-size: 1.3rem; margin: 8px 0 4px;">Check Your Resume ATS Score or Manage Student Worksheets</h2>
+                <p style="color: #DBEAFE; margin: 0; font-size: 0.9rem;">Compare your resume against any job description with our <a href="/tools/ats_resume_matcher.html" style="color: #FDE047; font-weight: 700;">ATS Resume Matcher</a> or install <strong>Chalkly</strong> on Google Play.</p>
+            </div>
+            <div>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" style="background: #10B981; padding: 12px 20px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">📚 Install Chalkly App</a>
+            </div>
+        </div>
+
+        <div class="drop-zone" onclick="document.getElementById('docxInput').click()" id="dropZone">
+            <div style="font-size: 2.5rem; margin-bottom: 8px;">📄</div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;" id="fileStatus">Drop a .DOCX Word Document Here or Click to Browse</h3>
+            <p style="color: #64748B; font-size: 0.9rem; margin: 0;">Rendered 100% locally via Mammoth.js — contracts, resumes &amp; manuscripts never leave your device.</p>
+            <input type="file" id="docxInput" accept=".docx" style="display: none;" onchange="loadDocx(this.files[0])">
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="font-size: 0.9rem; color: #475569; font-weight: 600;">
+                Words: <strong id="wCount">0</strong> &nbsp;|&nbsp; Characters: <strong id="cCount">0</strong>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button onclick="copyCleanHtml()" style="padding: 9px 16px; border-radius: 8px; background: #0066FF; color: white; font-weight: 700; border: none; cursor: pointer;">📋 Copy Clean HTML</button>
+                <button onclick="copyPlainText()" style="padding: 9px 16px; border-radius: 8px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">📄 Copy Plain Text</button>
+                <button onclick="window.print()" style="padding: 9px 16px; border-radius: 8px; background: #F1F5F9; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">🖨️ Print / Save as PDF</button>
+            </div>
+        </div>
+
+        <article class="doc-viewer" id="docViewer">
+            <h2 style="margin-top:0;">Instant In-Browser Microsoft Word (.DOCX) Document Reader</h2>
+            <p>Select any <code>.docx</code> file above to view its formatted headings, paragraphs, lists, tables, and embedded images right here in your browser tab.</p>
+            <p>Unlike pasting directly from Microsoft Word into a CMS—which pollutes your code with thousands of inline <code>mso-style</code> attributes—Mammoth.js parses the underlying OpenXML structure (`word/document.xml`) and outputs clean, semantic HTML5 tags (`&lt;h1&gt;`, `&lt;p&gt;`, `&lt;ul&gt;`, `&lt;table&gt;`) ready for blogs, eBooks, and documentation sites.</p>
+        </article>
+
+        <div class="panel-card">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;">Why Open &amp; Convert DOCX Files Client-Side?</h2>
+            <p style="color: #334155; margin-bottom: 14px;">Word documents frequently contain sensitive employment contracts, academic manuscripts, legal briefs, or resumes with personal contact information. Cloud-based document viewers upload your `.docx` file to remote storage buckets to render a preview. By executing <strong>Mammoth.js</strong> inside your browser's local JavaScript engine, Factictionary unpacks the OpenXML container in RAM with zero network transmission.</p>
+            <p style="color: #334155; margin-bottom: 0;">Preparing a resume or eBook? Read our <a href="/guides/ats-resume-keywords-formatting-guide-2026.html" style="color: #0066FF; font-weight: 700;">ATS Resume Formatting &amp; Keyword Guide</a> and <a href="/guides/client-side-pdf-image-privacy-tools-guide.html" style="color: #0066FF; font-weight: 700;">Client-Side Document Privacy Guide</a>.</p>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let currentHtml = '';
+        async function loadDocx(file) {
+            if (!file) return;
+            document.getElementById('fileStatus').textContent = 'Rendering ' + file.name + '...';
+            const arrayBuffer = await file.arrayBuffer();
+            const result = await mammoth.convertToHtml({arrayBuffer: arrayBuffer});
+            currentHtml = result.value;
+            const viewer = document.getElementById('docViewer');
+            viewer.innerHTML = currentHtml || '<p>Document is empty.</p>';
+            const txt = viewer.innerText.trim();
+            document.getElementById('wCount').textContent = txt ? txt.split(/\s+/).length : 0;
+            document.getElementById('cCount').textContent = txt.length;
+            document.getElementById('fileStatus').textContent = '📄 ' + file.name;
+        }
+        function copyCleanHtml() {
+            if (!currentHtml) return alert('Load a .docx file first.');
+            navigator.clipboard.writeText(currentHtml);
+            alert('Clean semantic HTML copied to clipboard!');
+        }
+        function copyPlainText() {
+            const txt = document.getElementById('docViewer').innerText;
+            navigator.clipboard.writeText(txt);
+            alert('Plain text copied to clipboard!');
+        }
+    </script>
+</body>
+</html>

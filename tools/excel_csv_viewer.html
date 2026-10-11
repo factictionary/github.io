@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Excel (.XLSX) &amp; CSV Viewer, Filter &amp; JSON Converter | Factictionary</title>
+    <meta name="description" content="Open, search, filter, and convert Excel spreadsheets (.xlsx, .xls) and CSV files directly in your browser without Microsoft Excel. Powered 100% locally by SheetJS.">
+    <meta name="keywords" content="online excel viewer without upload, open xlsx file in browser, excel to json converter client side, csv viewer online free">
+    <link rel="canonical" href="https://factictionary.in/tools/excel_csv_viewer.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- SheetJS Library for 100% In-Browser XLSX / CSV Parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .drop-zone {
+            border: 3px dashed #10B981; background: rgba(16,185,129,0.04); border-radius: 16px;
+            padding: 34px 20px; text-align: center; cursor: pointer; margin-bottom: 24px;
+        }
+        .table-wrap {
+            background: white; border: 1px solid #E2E8F0; border-radius: 16px; overflow: auto;
+            max-height: 540px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+        .sheet-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .sheet-table th, .sheet-table td { border: 1px solid #E2E8F0; padding: 9px 12px; text-align: left; white-space: nowrap; }
+        .sheet-table th { background: #F1F5F9; font-weight: 800; position: sticky; top: 0; color: #0F172A; }
+        .sheet-table tr:nth-child(even) { background: #F8FAFC; }
+        .panel-card { background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 30px; margin-bottom: 28px; }
+        .app-banner {
+            background: linear-gradient(135deg, #065F46 0%, #0F172A 100%); color: white;
+            border-radius: 18px; padding: 26px; margin-bottom: 26px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1140px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 24px;">
+            <span style="background: #D1FAE5; color: #065F46; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">📊 SHEETJS IN-BROWSER ENGINE · ZERO SERVER UPLOADS</span>
+            <h1 style="font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 8px;">Private Online Excel (.XLSX) &amp; CSV Spreadsheet Viewer</h1>
+            <p style="color: #475569; max-width: 720px; margin: 0 auto;">Inspect multi-sheet <code>.xlsx</code>, <code>.xls</code>, and <code>.csv</code> files in your browser, filter rows in real time, and export to JSON or CSV with 100% client-side privacy.</p>
+        </div>
+
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #34D399; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">TRACKING STUDENT FEES OR DEVELOPER METRICS?</span>
+                <h2 style="color: white; font-size: 1.3rem; margin: 8px 0 4px;">Ditch Messy Spreadsheets with Chalkly &amp; Test Pilot Pro</h2>
+                <p style="color: #D1FAE5; margin: 0; font-size: 0.9rem;">Automate student attendance &amp; tuition tracking with <strong>Chalkly</strong> or track 14-day Play Console testing with <strong>Test Pilot Pro</strong>.</p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.chalkly" target="_blank" rel="noopener" style="background: #10B981; padding: 11px 18px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">📚 Chalkly App</a>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.test_pilot_pro" target="_blank" rel="noopener" style="background: #3B82F6; padding: 11px 18px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">🛠️ Test Pilot Pro</a>
+            </div>
+        </div>
+
+        <div class="drop-zone" onclick="document.getElementById('sheetInput').click()">
+            <div style="font-size: 2.5rem; margin-bottom: 8px;">📊</div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;" id="sheetTitle">Drop an .XLSX, .XLS, or .CSV Spreadsheet Here or Click to Browse</h3>
+            <p style="color: #64748B; font-size: 0.9rem; margin: 0;">Financial sheets, KDP royalty reports &amp; student rosters are parsed locally in RAM — never uploaded.</p>
+            <input type="file" id="sheetInput" accept=".xlsx,.xls,.csv,.ods" style="display: none;" onchange="loadWorkbook(this.files[0])">
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <label style="font-weight: 700; font-size: 0.9rem;">Sheet Tab:
+                    <select id="sheetSelect" onchange="renderSelectedSheet()" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #CBD5E1; font-weight: 600;"></select>
+                </label>
+                <input type="text" id="rowSearch" placeholder="🔍 Filter rows..." oninput="filterRows()" style="padding: 8px 14px; border-radius: 8px; border: 1px solid #CBD5E1;">
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button onclick="exportJson()" style="padding: 9px 16px; border-radius: 8px; background: #0066FF; color: white; font-weight: 700; border: none; cursor: pointer;">⬇️ Export to JSON</button>
+                <button onclick="exportCsv()" style="padding: 9px 16px; border-radius: 8px; background: #0F172A; color: white; font-weight: 700; border: none; cursor: pointer;">⬇️ Export to CSV</button>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table class="sheet-table" id="dataTable">
+                <thead>
+                    <tr><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Sample Row 1</td><td>Drop any .xlsx or .csv file above</td><td>100% Local RAM</td><td>Zero Server Uploads</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel-card">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;">How Client-Side Excel &amp; CSV Parsing Protects Financial Data</h2>
+            <p style="color: #334155; margin-bottom: 14px;">Whether you are inspecting an Amazon KDP monthly royalty `.xlsx` report, a bank statement `.csv`, or a coaching institute fee ledger, uploading spreadsheets to cloud viewers exposes sensitive financial rows. Factictionary uses the open-source <strong>SheetJS</strong> engine inside your browser to parse binary BIFF8 (`.xls`), OpenXML (`.xlsx`), and delimited `.csv` workbooks directly in local memory.</p>
+            <p style="color: #334155; margin-bottom: 0;">Need to format or validate the exported JSON output? Open our <a href="/tools/json_formatter.html" style="color: #0066FF; font-weight: 700;">Client-Side JSON Formatter &amp; Validator</a> or read our <a href="/guides/client-side-pdf-image-privacy-tools-guide.html" style="color: #0066FF; font-weight: 700;">Browser Document Privacy Guide</a>.</p>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let wb = null;
+        let currentRows = [];
+
+        async function loadWorkbook(file) {
+            if (!file) return;
+            document.getElementById('sheetTitle').textContent = '📊 ' + file.name;
+            const buf = await file.arrayBuffer();
+            wb = XLSX.read(buf, {type: 'array'});
+            const sel = document.getElementById('sheetSelect');
+            sel.innerHTML = '';
+            wb.SheetNames.forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                sel.appendChild(opt);
+            });
+            renderSelectedSheet();
+        }
+
+        function renderSelectedSheet() {
+            if (!wb) return;
+            const name = document.getElementById('sheetSelect').value;
+            const sheet = wb.Sheets[name];
+            currentRows = XLSX.utils.sheet_to_json(sheet, {header: 1, defval: ''});
+            drawTable(currentRows);
+        }
+
+        function drawTable(rows) {
+            const tbl = document.getElementById('dataTable');
+            if (!rows || !rows.length) {
+                tbl.innerHTML = '<tbody><tr><td>Empty sheet</td></tr></tbody>';
+                return;
+            }
+            const headers = rows[0];
+            let html = '<thead><tr>' + headers.map((h, i) => `<th>${h || ('Col ' + (i+1))}</th>`).join('') + '</tr></thead><tbody>';
+            for (let r = 1; r < Math.min(rows.length, 500); r++) {
+                html += '<tr>' + headers.map((_, c) => `<td>${rows[r][c] !== undefined ? rows[r][c] : ''}</td>`).join('') + '</tr>';
+            }
+            html += '</tbody>';
+            tbl.innerHTML = html;
+        }
+
+        function filterRows() {
+            const q = document.getElementById('rowSearch').value.toLowerCase();
+            if (!currentRows.length) return;
+            if (!q) return drawTable(currentRows);
+            const filtered = [currentRows[0], ...currentRows.slice(1).filter(r => r.join(' ').toLowerCase().includes(q))];
+            drawTable(filtered);
+        }
+
+        function exportJson() {
+            if (!wb) return alert('Load a spreadsheet first.');
+            const sheet = wb.Sheets[document.getElementById('sheetSelect').value];
+            const json = JSON.stringify(XLSX.utils.sheet_to_json(sheet), null, 2);
+            const blob = new Blob([json], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'spreadsheet-data.json';
+            a.click();
+        }
+
+        function exportCsv() {
+            if (!wb) return alert('Load a spreadsheet first.');
+            const sheet = wb.Sheets[document.getElementById('sheetSelect').value];
+            const csv = XLSX.utils.sheet_to_csv(sheet);
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'spreadsheet-data.csv';
+            a.click();
+        }
+    </script>
+</body>
+</html>

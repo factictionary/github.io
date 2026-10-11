@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online CBZ Comic &amp; ZIP Image Archive Reader (In-Browser) | Factictionary</title>
+    <meta name="description" content="Open and read .cbz comic books, manga archives, and .zip image collections directly in your browser with vertical webtoon scroll or page-by-page mode. 100% local via JSZip.">
+    <meta name="keywords" content="online cbz reader in browser, open cbz file online without upload, webtoon vertical comic reader browser, giggl daily comics">
+    <link rel="canonical" href="https://factictionary.in/tools/cbz_comic_reader.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
+        .drop-zone {
+            border: 3px dashed #8B5CF6; background: rgba(139,92,246,0.04); border-radius: 16px;
+            padding: 34px 20px; text-align: center; cursor: pointer; margin-bottom: 24px;
+        }
+        .comic-stage {
+            background: #090D16; color: white; border-radius: 16px; padding: 24px;
+            min-height: 460px; max-height: 760px; overflow-y: auto; text-align: center; margin-bottom: 24px;
+        }
+        .comic-stage img { max-width: 100%; height: auto; border-radius: 6px; margin: 0 auto 14px; display: block; }
+        .panel-card { background: white; border: 1px solid #E2E8F0; border-radius: 16px; padding: 30px; margin-bottom: 28px; }
+        .app-banner {
+            background: linear-gradient(135deg, #4C1D95 0%, #1E1B4B 100%); color: white;
+            border-radius: 18px; padding: 26px; margin-bottom: 26px;
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo">Factictionary</a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 1080px; padding: 40px 20px 80px;">
+        <div class="text-center" style="margin-bottom: 24px;">
+            <span style="background: #EDE9FE; color: #5B21B6; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">😄 COMIC &amp; MANGA ARCHIVE VIEWER · 100% LOCAL</span>
+            <h1 style="font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 8px;">Online CBZ Comic &amp; ZIP Image Reader (In-Browser)</h1>
+            <p style="color: #475569; max-width: 720px; margin: 0 auto;">Open <code>.cbz</code> comic books, graphic novels, and <code>.zip</code> image sequences directly in your browser with Continuous Webtoon Scroll or Single-Page mode.</p>
+        </div>
+
+        <div class="app-banner">
+            <div style="flex: 1; min-width: 260px;">
+                <span style="background: #F472B6; color: #0F172A; font-weight: 800; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;">LOVE DAILY COMICS &amp; WITTY HUMOR?</span>
+                <h2 style="color: white; font-size: 1.3rem; margin: 8px 0 4px;">Install Giggl: Daily Comics, Jokes &amp; Comebacks on Android</h2>
+                <p style="color: #E9D5FF; margin: 0; font-size: 0.9rem;">Get a daily dose of illustrated comic strips, clean jokes, and clever comebacks offline on your phone.</p>
+            </div>
+            <div>
+                <a href="https://play.google.com/store/apps/details?id=in.factictionary.spoof_daily" target="_blank" rel="noopener" style="background: #10B981; padding: 12px 22px; border-radius: 10px; color: white; font-weight: 800; text-decoration: none;">😄 Get Giggl on Google Play</a>
+            </div>
+        </div>
+
+        <div class="drop-zone" onclick="document.getElementById('cbzInput').click()">
+            <div style="font-size: 2.5rem; margin-bottom: 8px;">🦸</div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;" id="cbzTitle">Drop a .CBZ Comic Archive or .ZIP Image Folder Here</h3>
+            <p style="color: #64748B; font-size: 0.9rem; margin: 0;">Supports PNG, JPG, WEBP &amp; GIF pages inside .cbz / .zip files — unpacked 100% locally in RAM.</p>
+            <input type="file" id="cbzInput" accept=".cbz,.zip" style="display: none;" onchange="loadCbz(this.files[0])">
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="display: flex; gap: 8px;">
+                <button onclick="prevPage()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #CBD5E1; background: white; font-weight: 700; cursor: pointer;">← Prev Page</button>
+                <span id="pageIndicator" style="padding: 8px 14px; font-weight: 700; color: #334155;">0 / 0 Pages</span>
+                <button onclick="nextPage()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #CBD5E1; background: white; font-weight: 700; cursor: pointer;">Next Page →</button>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button onclick="setMode('webtoon')" id="modeWebtoon" style="padding: 8px 16px; border-radius: 8px; background: #0066FF; color: white; font-weight: 700; border: none; cursor: pointer;">📜 Webtoon Vertical Scroll</button>
+                <button onclick="setMode('single')" id="modeSingle" style="padding: 8px 16px; border-radius: 8px; background: white; color: #0F172A; font-weight: 700; border: 1px solid #CBD5E1; cursor: pointer;">📖 Single Page</button>
+            </div>
+        </div>
+
+        <div class="comic-stage" id="comicStage">
+            <p style="color: #94A3B8; margin-top: 160px;">Drop a <strong>.cbz</strong> or <strong>.zip</strong> comic file above to render high-resolution pages in your browser.</p>
+        </div>
+
+        <div class="panel-card">
+            <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;">What Is a .CBZ (Comic Book ZIP) File &amp; How Does In-Browser Reading Work?</h2>
+            <p style="color: #334155; margin-bottom: 14px;">A <strong>CBZ (Comic Book ZIP)</strong> file is an industry-standard archive containing sequentially numbered image panels (`.jpg`, `.png`, or `.webp`) used for digital comic books, indie graphic novels, and manga chapters. Our browser reader uses <strong>JSZip</strong> to sort image entries naturally by filename (`page_001.jpg`, `page_002.jpg`, etc.) and generates zero-latency `Blob` URLs inside your device RAM.</p>
+            <p style="color: #334155; margin-bottom: 0;">Want to package your own illustrated comic pages into a single PDF for Amazon KDP or Payhip? Use our <a href="/tools/image_to_pdf.html" style="color: #0066FF; font-weight: 700;">Image to PDF Converter</a> and check out <a href="/games/giggl.html" style="color: #0066FF; font-weight: 700;">Giggl: Daily Comics &amp; Humor</a>.</p>
+        </div>
+    </main>
+
+    <footer class="footer" style="border-top: 1px solid #E2E8F0; padding: 32px 0; text-align: center; background: white;">
+        <div class="container">
+            <p style="color: #64748B;">&copy; 2026 Factictionary. All rights reserved. | <a href="/tools/" style="color: #0066FF;">Tools Hub</a> | <a href="/guides/" style="color: #0066FF;">Guides</a> | <a href="/games/" style="color: #0066FF;">14 Android Apps</a></p>
+        </div>
+    </footer>
+
+    <script>
+        let pages = [];
+        let pageIdx = 0;
+        let viewMode = 'webtoon';
+
+        async function loadCbz(file) {
+            if (!file) return;
+            document.getElementById('cbzTitle').textContent = '🦸 Loading ' + file.name + '...';
+            const zip = await JSZip.loadAsync(file);
+            pages = [];
+            const imgFiles = Object.keys(zip.files)
+                .filter(name => !zip.files[name].dir && /\.(jpe?g|png|webp|gif)$/i.test(name))
+                .sort((a, b) => a.localeCompare(b, undefined, {numeric: true, sensitivity: 'base'}));
+
+            for (const fName of imgFiles) {
+                const blob = await zip.file(fName).async('blob');
+                pages.push(URL.createObjectURL(blob));
+            }
+            pageIdx = 0;
+            document.getElementById('cbzTitle').textContent = `🦸 ${file.name} (${pages.length} Pages)`;
+            renderComic();
+        }
+
+        function renderComic() {
+            const stage = document.getElementById('comicStage');
+            if (!pages.length) return;
+            if (viewMode === 'webtoon') {
+                document.getElementById('pageIndicator').textContent = `All ${pages.length} Pages (Vertical Scroll)`;
+                stage.innerHTML = pages.map((u, i) => `<img src="${u}" alt="Page ${i+1}" loading="lazy">`).join('');
+            } else {
+                document.getElementById('pageIndicator').textContent = `Page ${pageIdx + 1} / ${pages.length}`;
+                stage.innerHTML = `<img src="${pages[pageIdx]}" alt="Page ${pageIdx + 1}">`;
+            }
+            stage.scrollTop = 0;
+        }
+
+        function setMode(m) {
+            viewMode = m;
+            renderComic();
+        }
+        function prevPage() {
+            viewMode = 'single';
+            if (pageIdx > 0) { pageIdx--; renderComic(); }
+        }
+        function nextPage() {
+            viewMode = 'single';
+            if (pageIdx < pages.length - 1) { pageIdx++; renderComic(); }
+        }
+    </script>
+</body>
+</html>
