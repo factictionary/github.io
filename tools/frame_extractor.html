@@ -38,8 +38,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/assets/css/style.css">
 
-    <!-- FFmpeg.wasm Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/util.js"></script>
 
     <!-- Structured Data -->
@@ -66,7 +65,7 @@
     <link rel="alternate" hreflang="en" href="https://factictionary.in/tools/frame_extractor.html">
     <link rel="alternate" hreflang="x-default" href="https://factictionary.in/tools/frame_extractor.html">
     <link rel="manifest" href="/manifest.json">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Frame Extractor Tool","url":"https://factictionary.in/tools/frame_extractor.html","description":"Free online video frame extractor. Extract individual frames from videos in PNG, JPG, or WebP format. Perfect for filmmakers, content creators, and educators. 100% privacy-protected, works entirely in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Frame Extractor Tool","url":"https://factictionary.in/tools/frame_extractor.html","description":"Free online video frame extractor. Extract individual frames from videos in PNG, JPG, or WebP format. Perfect for filmmakers, content creators, and educators. 100% privacy-protected, works entirely in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires a modern web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/factictionary-logo-192.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
@@ -327,14 +326,14 @@
             <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">Using our Frame Extractor is designed to be completely frictionless. Simply upload your files using the drag-and-drop interface or click to browse your device. Once selected, configure the settings to your exact specifications. When ready, click the process button. The operation runs entirely within your browser, ensuring maximum privacy and speed without relying on external servers. Finally, download your processed file directly to your system.</p>
 
             <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Frame Extractor leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote server—which carries significant privacy risks and consumes massive bandwidth—this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithms—such as compression heuristics, codec transformations, or binary manipulation—depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Frame Extractor leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote server—which carries significant privacy risks and consumes massive bandwidth—this tool processes your files locally in your device memory.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you select a file, all processing happens directly on your device with zero server uploads. Once complete, your processed file is ready for instant download—guaranteeing that your private data never leaves your machine.</p>
         </section>
                             
         <!-- SEO & Educational Documentation Block -->
         <section class="seo-guide-block" style="max-width: 1000px; margin: 36px auto; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; box-shadow: 0 4px 14px rgba(0,0,0,0.03);">
             <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 12px;">How to Use frame_extractor Safely in Your Browser (100% Client-Side)</h2>
-            <p style="color: #334155; line-height: 1.75; margin-bottom: 18px;">frame_extractor runs entirely inside your web browser using local JavaScript, HTML5 Canvas, Web Audio, or WebAssembly APIs. Unlike traditional cloud converters that upload your confidential files to remote servers, every byte stays in your device's local RAM.</p>
+            <p style="color: #334155; line-height: 1.75; margin-bottom: 18px;">frame_extractor runs 100% locally inside your web browser on your own device. Unlike traditional cloud converters that upload your confidential files to remote servers, every byte stays in your device's local RAM.</p>
             <h3 style="font-size: 1.18rem; font-weight: 700; color: #1E293B; margin-bottom: 10px;">Step-by-Step Instructions</h3>
             <ol style="margin-left: 22px; color: #334155; line-height: 1.8; margin-bottom: 22px;">
                 <li style="margin-bottom: 6px;">Select, drop, or paste your input into the frame_extractor workspace above.</li>
@@ -513,7 +512,7 @@
             // Show video section
             document.getElementById('videoSection').style.display = 'block';
 
-            showNotification('📹 Video loaded successfully! FFmpeg ready for frame extraction.');
+            showNotification('📹 Video loaded! Ready for frame extraction.');
         }
 
         function cleanupPreviousExtraction() {
@@ -593,11 +592,11 @@
 
                 // Show specific error message
                 if (error.message.includes('WebAssembly')) {
-                    showNotification('☹ WebAssembly not supported. Using Canvas fallback method.');
+                    showNotification('Using standard browser fallback mode.');
                 } else if (error.message.includes('network') || error.message.includes('fetch')) {
-                    showNotification('☹ Network error loading FFmpeg. Using Canvas fallback method.');
+                    showNotification('Using standard browser fallback mode.');
                 } else {
-                    showNotification('☹ FFmpeg initialization failed. Using Canvas fallback method.');
+                    showNotification('Using standard browser fallback mode.');
                 }
             }
         }
@@ -689,7 +688,7 @@
             try {
                 // Ensure FFmpeg is loaded
                 if (!ffmpegLoaded) {
-                    showNotification('⚙️ Initializing FFmpeg...');
+                    showNotification('⚙️ Initializing video processor...');
                     await initializeFFmpeg();
                 }
 
@@ -804,7 +803,7 @@
 
         async function extractFramesWithFFmpeg(frameTimes, format, button) {
             try {
-                showNotification('📹 Processing video with FFmpeg...');
+                showNotification('📹 Processing video...');
 
                 // Write input file to FFmpeg filesystem
                 const inputFileName = 'input_video.' + currentVideoFile.name.split('.').pop();

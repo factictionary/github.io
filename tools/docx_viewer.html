@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser) | Factictionary</title>
-    <meta name="description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% locally via Mammoth.js.">
+    <meta name="description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% privately in your browser with zero file uploads.">
     <meta name="keywords" content="online docx viewer without upload, open word document in browser, docx to clean html converter, kdp word to html converter client side">
     <link rel="canonical" href="https://factictionary.in/tools/docx_viewer.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -12,8 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <!-- Mammoth.js Browser Library for Client-Side DOCX Parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
         .drop-zone {
@@ -43,12 +42,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Factictionary">
     <meta property="og:title" content="Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser) | Factictionary">
-    <meta property="og:description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% locally via Mammoth.js.">
+    <meta property="og:description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% privately in your browser with zero file uploads.">
     <meta property="og:url" content="https://factictionary.in/tools/docx_viewer.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser) | Factictionary">
-    <meta name="twitter:description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% locally via Mammoth.js.">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser)","url":"https://factictionary.in/tools/docx_viewer.html","description":"Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% locally via Mammoth.js.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
+    <meta name="twitter:description" content="Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% privately in your browser with zero file uploads.">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Online DOCX Viewer &amp; Word to Clean HTML / Text Converter (In-Browser)","url":"https://factictionary.in/tools/docx_viewer.html","description":"Open and read Microsoft Word (.docx) documents directly in your browser without Office installed. Convert DOCX manuscripts to clean semantic HTML or plain text 100% privately in your browser with zero file uploads.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires a modern web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/factictionary-logo-192.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
@@ -70,7 +69,7 @@
 
     <main class="container" style="max-width: 1080px; padding: 40px 20px 80px;">
         <div class="text-center" style="margin-bottom: 24px;">
-            <span style="background: #DBEAFE; color: #1E40AF; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">📝 MAMMOTH.JS IN-BROWSER ENGINE · ZERO SERVER UPLOADS</span>
+            <span style="background: #DBEAFE; color: #1E40AF; padding: 6px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 700;">📝 PRIVATE WORD DOCUMENT VIEWER · ZERO SERVER UPLOADS</span>
             <h1 style="font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 8px;">Private Online DOCX Word Viewer &amp; HTML Converter</h1>
             <p style="color: #475569; max-width: 720px; margin: 0 auto;">Open Microsoft Word (<code>.docx</code>) manuscripts, resumes, and contracts directly in your browser without Office installed—and export clean semantic HTML or plain text.</p>
         </div>
@@ -90,7 +89,7 @@
         <div class="drop-zone" onclick="document.getElementById('docxInput').click()" id="dropZone">
             <div style="font-size: 2.5rem; margin-bottom: 8px;">📄</div>
             <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;" id="fileStatus">Drop a .DOCX Word Document Here or Click to Browse</h3>
-            <p style="color: #64748B; font-size: 0.9rem; margin: 0;">Rendered 100% locally via Mammoth.js — contracts, resumes &amp; manuscripts never leave your device.</p>
+            <p style="color: #64748B; font-size: 0.9rem; margin: 0;">Opened 100% privately in your browser — contracts, resumes &amp; manuscripts never leave your device.</p>
             <input type="file" id="docxInput" accept=".docx" style="display: none;" onchange="loadDocx(this.files[0])">
         </div>
 
@@ -108,12 +107,12 @@
         <article class="doc-viewer" id="docViewer">
             <h2 style="margin-top:0;">Instant In-Browser Microsoft Word (.DOCX) Document Reader</h2>
             <p>Select any <code>.docx</code> file above to view its formatted headings, paragraphs, lists, tables, and embedded images right here in your browser tab.</p>
-            <p>Unlike pasting directly from Microsoft Word into a CMS—which pollutes your code with thousands of inline <code>mso-style</code> attributes—Mammoth.js parses the underlying OpenXML structure (`word/document.xml`) and outputs clean, semantic HTML5 tags (`&lt;h1&gt;`, `&lt;p&gt;`, `&lt;ul&gt;`, `&lt;table&gt;`) ready for blogs, eBooks, and documentation sites.</p>
+            <p>Unlike pasting directly from Microsoft Word into a CMS—which pollutes your code with thousands of inline style attributes—this viewer extracts clean, semantic HTML5 tags (`&lt;h1&gt;`, `&lt;p&gt;`, `&lt;ul&gt;`, `&lt;table&gt;`) ready for blogs, eBooks, and documentation sites.</p>
         </article>
 
         <div class="panel-card">
             <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 12px;">Why Open &amp; Convert DOCX Files Client-Side?</h2>
-            <p style="color: #334155; margin-bottom: 14px;">Word documents frequently contain sensitive employment contracts, academic manuscripts, legal briefs, or resumes with personal contact information. Cloud-based document viewers upload your `.docx` file to remote storage buckets to render a preview. By executing <strong>Mammoth.js</strong> inside your browser's local JavaScript engine, Factictionary unpacks the OpenXML container in RAM with zero network transmission.</p>
+            <p style="color: #334155; margin-bottom: 14px;">Word documents frequently contain sensitive employment contracts, academic manuscripts, legal briefs, or resumes with personal contact information. Cloud-based document viewers upload your `.docx` file to remote storage buckets to render a preview. By processing your document directly inside your browser, Factictionary renders your pages in local memory with zero network transmission.</p>
             <p style="color: #334155; margin-bottom: 0;">Preparing a resume or eBook? Read our <a href="/guides/ats-resume-keywords-formatting-guide-2026.html" style="color: #0066FF; font-weight: 700;">ATS Resume Formatting &amp; Keyword Guide</a> and <a href="/guides/client-side-pdf-image-privacy-tools-guide.html" style="color: #0066FF; font-weight: 700;">Client-Side Document Privacy Guide</a>.</p>
         </div>
     </main>

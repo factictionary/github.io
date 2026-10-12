@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Online EPUB Reader in Browser (No Upload, Dark Mode &amp; TTS) | Factictionary</title>
-    <meta name="description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% local via JSZip.">
+    <meta name="description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% private in your browser with zero file uploads.">
     <meta name="keywords" content="online epub reader in browser, open epub file online without uploading, browser ebook reader, epub viewer client side, read epub on pc">
     <link rel="canonical" href="https://factictionary.in/tools/epub_reader.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -12,8 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <!-- JSZip Library for 100% Client-Side EPUB Unpacking -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
         .drop-zone {
@@ -66,12 +65,12 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Factictionary">
     <meta property="og:title" content="Free Online EPUB Reader in Browser (No Upload, Dark Mode &amp; TTS) | Factictionary">
-    <meta property="og:description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% local via JSZip.">
+    <meta property="og:description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% private in your browser with zero file uploads.">
     <meta property="og:url" content="https://factictionary.in/tools/epub_reader.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Online EPUB Reader in Browser (No Upload, Dark Mode &amp; TTS) | Factictionary">
-    <meta name="twitter:description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% local via JSZip.">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Free Online EPUB Reader in Browser (No Upload, Dark Mode &amp; TTS)","url":"https://factictionary.in/tools/epub_reader.html","description":"Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% local via JSZip.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
+    <meta name="twitter:description" content="Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% private in your browser with zero file uploads.">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Free Online EPUB Reader in Browser (No Upload, Dark Mode &amp; TTS)","url":"https://factictionary.in/tools/epub_reader.html","description":"Open and read .epub eBooks directly in your web browser with chapter navigation, Light/Sepia/Dark reading themes, customizable fonts, and Text-to-Speech read-aloud. 100% private in your browser with zero file uploads.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires a modern web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/factictionary-logo-192.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
@@ -116,7 +115,7 @@
         <div class="drop-zone" onclick="document.getElementById('epubInput').click()" id="dropZone">
             <div style="font-size: 2.6rem; margin-bottom: 8px;">📚</div>
             <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;" id="bookTitleHeader">Drop an .EPUB eBook File Here or Click to Browse</h3>
-            <p style="color: #64748B; font-size: 0.9rem; margin: 0;" id="bookMetaSub">Unpacked 100% locally in your browser RAM using JSZip — your eBook never leaves your device.</p>
+            <p style="color: #64748B; font-size: 0.9rem; margin: 0;" id="bookMetaSub">Opened 100% locally in your browser — your eBook never leaves your device.</p>
             <input type="file" id="epubInput" accept=".epub" style="display: none;" onchange="handleEpubFile(this.files[0])">
         </div>
 
@@ -153,7 +152,7 @@
                 <ul>
                     <li><strong>Zero Software Installation:</strong> Read eBooks on Windows, macOS, Linux, or Chromebook without installing heavy desktop e-readers.</li>
                     <li><strong>Eye-Friendly Typography:</strong> Switch between crisp Light mode, warm Paper Sepia, and low-glare OLED Dark mode with Merriweather serif typography.</li>
-                    <li><strong>Integrated Web Speech TTS:</strong> Turn any non-DRM EPUB chapter into an instant audiobook using your browser's speech synthesizer.</li>
+                    <li><strong>Integrated Voice Read-Aloud (TTS):</strong> Turn any non-DRM EPUB chapter into an instant audiobook using your browser's speech synthesizer.</li>
                     <li><strong>KDP Manuscript Inspection:</strong> Self-publishers can inspect compiled EPUB spine order, metadata, and chapter splits before uploading to Amazon KDP or Payhip.</li>
                 </ul>
             </article>

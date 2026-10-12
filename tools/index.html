@@ -128,6 +128,340 @@
 
 
 
+        <!-- START_ECOSYSTEM_WORDCLOUD -->
+        <section id="ecosystem-infographic-map" style="margin: 0 auto 36px; background: radial-gradient(circle at 15% 15%, #172554 0%, #090D16 60%, #0F172A 100%); border: 2px solid #1E293B; border-radius: 22px; padding: 24px; color: #FFFFFF; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);">
+            <style>
+                .wc-bento-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 14px;
+                    margin-top: 18px;
+                }
+                @media (max-width: 1180px) {
+                    .wc-bento-grid { grid-template-columns: repeat(2, 1fr); }
+                }
+                @media (max-width: 640px) {
+                    .wc-bento-grid { grid-template-columns: 1fr; }
+                }
+                .wc-pill {
+                    display: inline-flex;
+                    align-items: center;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    line-height: 1.25;
+                    transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+                }
+                .wc-pill:hover {
+                    transform: translateY(-2px) scale(1.03);
+                    filter: brightness(1.15);
+                    box-shadow: 0 6px 14px rgba(0,0,0,0.4) !important;
+                }
+                .wc-action-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 7px;
+                    padding: 8px 15px;
+                    border-radius: 30px;
+                    font-size: 0.8rem;
+                    font-weight: 800;
+                    text-decoration: none;
+                    cursor: pointer;
+                    transition: transform 0.15s ease, opacity 0.15s ease;
+                    border: none;
+                }
+                .wc-action-btn:hover {
+                    transform: translateY(-1px);
+                    opacity: 0.94;
+                }
+            </style>
+
+            <!-- Top Infographic Header Bar -->
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: rgba(30, 41, 59, 0.85); border: 1px solid #334155; border-radius: 16px; padding: 16px 20px;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <img src="/assets/images/logo-header.png" alt="Factictionary" style="width: 52px; height: 52px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <span style="background: #065F46; border: 1px solid #10B981; color: #ECFDF5; font-size: 0.7rem; font-weight: 800; padding: 2px 10px; border-radius: 20px;">☁️ INTERACTIVE ECOSYSTEM MAP &amp; INFOGRAPHIC</span>
+                            <span style="background: #1E3A8A; border: 1px solid #3B82F6; color: #EFF6FF; font-size: 0.7rem; font-weight: 800; padding: 2px 10px; border-radius: 20px;">🔒 100% LOCAL IN-BROWSER</span>
+                        </div>
+                        <h2 style="font-size: clamp(1.25rem, 2.4vw, 1.65rem); font-weight: 900; color: #FFFFFF; margin: 4px 0 2px; line-height: 1.2;">All 85+ Free Browser Tools at a Glance — Click Any Tool to Launch</h2>
+                        <p style="font-size: 0.85rem; color: #93C5FD; margin: 0;">Organized across 8 specialized studios • ★ Starred tags mark flagship tools • Download or share the single-image cheat sheet below!</p>
+                    </div>
+                </div>
+
+                <!-- Share & Download Poster Buttons -->
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                    <button type="button" onclick="toggleInfographicPosterView()" id="btnTogglePoster" class="wc-action-btn" style="background: #3B82F6; color: #FFFFFF;">
+                        🖼️ Preview Poster Image
+                    </button>
+                    <a href="/assets/images/factictionary-tools-infographic.png" download="Factictionary-85-Free-Tools-Infographic.png" class="wc-action-btn" style="background: #10B981; color: #FFFFFF;">
+                        📥 Download HD Infographic (PNG)
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text=Check%20out%20Factictionary.in%20%E2%80%94%2085%2B%20Free%20Private%20Browser%20Tools%20(EPUB%2FWord%2FExcel%20Readers%2C%20PDF%20Suite%2C%20Teleprompter%2C%20Tambola%2C%20Image%20%26%20Video%20Studio)%20that%20run%20100%25%20locally%20with%20zero%20uploads!%20https%3A%2F%2Ffactictionary.in%2Ftools%2F" target="_blank" rel="noopener" class="wc-action-btn" style="background: #25D366; color: #0F172A;">
+                        📲 Share on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Collapsible Static HD Infographic Image Preview -->
+            <div id="static-poster-preview" style="display: none; margin-top: 16px; background: #060B19; border: 2px solid #3B82F6; border-radius: 16px; padding: 14px; text-align: center;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                    <span style="font-size: 0.85rem; font-weight: 800; color: #93C5FD;">📸 Single-Screenshot HD Infographic (1920×1080) — Right-click or tap "Download HD Infographic" to save &amp; share!</span>
+                    <button type="button" onclick="toggleInfographicPosterView()" style="background: #1E293B; color: #F8FAFC; border: 1px solid #475569; padding: 4px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">✕ Switch Back to Interactive Word Cloud</button>
+                </div>
+                <a href="/assets/images/factictionary-tools-infographic.png" target="_blank" rel="noopener">
+                    <img src="/assets/images/factictionary-tools-infographic.png" alt="Factictionary 85+ Free Browser Tools Infographic &amp; Categorized Word Cloud" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #334155;" loading="lazy">
+                </a>
+            </div>
+
+            <!-- Interactive 8-Category Word Cloud Bento Grid -->
+            <div class="wc-bento-grid" id="interactive-wordcloud-grid">
+
+                <div class="wc-bento-card" data-wc-cat="cat-kdp" style="background:linear-gradient(145deg, #0C2D48 0%, #081E31 100%);border:2px solid #0284C7;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #0284C7;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#38BDF8;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">📚 eBook, Office & Archive Readers</span>
+                            <span style="background:#0F172A;border:1px solid #38BDF8;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">4 Flagship Readers</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/epub_reader.html" class="wc-pill" style="background:#0284C7;border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Online EPUB eBook Reader">★ Online EPUB eBook Reader</a>
+                        <a href="/tools/docx_viewer.html" class="wc-pill" style="background:#0284C7;border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open DOCX Word Document Viewer">★ DOCX Word Document Viewer</a>
+                        <a href="/tools/excel_csv_viewer.html" class="wc-pill" style="background:#0284C7;border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Excel (.XLSX) & CSV Viewer">★ Excel (.XLSX) & CSV Viewer</a>
+                        <a href="/tools/cbz_comic_reader.html" class="wc-pill" style="background:#0284C7;border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open CBZ Comic & Manga Reader">★ CBZ Comic & Manga Reader</a>
+                        <a href="/tools/docx_viewer.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Word to Clean HTML Converter">Word to Clean HTML Converter</a>
+                        <a href="/tools/excel_csv_viewer.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #38BDF8;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Spreadsheet to JSON Exporter">Spreadsheet to JSON Exporter</a>
+                        <a href="/tools/epub_reader.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #0284C7;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Text-to-Speech Chapter Audio">Text-to-Speech Chapter Audio</a>
+                        <a href="/tools/epub_reader.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #0284C7;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Sepia / Dark Reading Themes">Sepia / Dark Reading Themes</a>
+                        <a href="/tools/cbz_comic_reader.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Webtoon Vertical Scroll">Webtoon Vertical Scroll</a>
+                        <a href="/tools/cbz_comic_reader.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open ZIP Image Archive Inspector">ZIP Image Archive Inspector</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#38BDF8;">
+                        ✓ No Microsoft Office or Calibre Required
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-pdf" style="background:linear-gradient(145deg, #3B1219 0%, #260B10 100%);border:2px solid #E11D48;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #E11D48;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#F87171;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">📄 Private PDF Suite</span>
+                            <span style="background:#0F172A;border:1px solid #F87171;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">11 PDF Utilities</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/pdf_merger.html" class="wc-pill" style="background:#E11D48;border:1.5px solid #F87171;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open PDF Merger & Combiner">★ PDF Merger & Combiner</a>
+                        <a href="/tools/pdf_compressor.html" class="wc-pill" style="background:#E11D48;border:1.5px solid #F87171;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open PDF Compressor">★ PDF Compressor</a>
+                        <a href="/tools/pdf_ocr.html" class="wc-pill" style="background:#E11D48;border:1.5px solid #F87171;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Scanned PDF OCR Extractor">★ Scanned PDF OCR Extractor</a>
+                        <a href="/tools/pdf_splitter.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #F87171;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open PDF Splitter & Extractor">★ PDF Splitter & Extractor</a>
+                        <a href="/tools/pdf_to_image.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #F87171;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open PDF to Image (PNG / JPG)">PDF to Image (PNG / JPG)</a>
+                        <a href="/tools/pdf_password.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #F87171;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open PDF Password Protect / Unlock">PDF Password Protect / Unlock</a>
+                        <a href="/tools/pdf_rotator.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #E11D48;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open PDF Page Rotator (90° / 180°)">PDF Page Rotator (90° / 180°)</a>
+                        <a href="/tools/pdf_watermark.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #E11D48;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open PDF Watermark Stamp">PDF Watermark Stamp</a>
+                        <a href="/tools/pdf_metadata.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #E11D48;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open PDF Metadata Tag Editor">PDF Metadata Tag Editor</a>
+                        <a href="/tools/pdf_bookmark.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #E11D48;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open PDF Bookmark & TOC Manager">PDF Bookmark & TOC Manager</a>
+                        <a href="/tools/pdf_analyzer.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open PDF Document Analyzer">PDF Document Analyzer</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#F87171;">
+                        ✓ Safe for Tax, Bank, ID & Legal PDFs
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-video" style="background:linear-gradient(145deg, #2A1245 0%, #1B0B2E 100%);border:2px solid #9333EA;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #9333EA;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#C084FC;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">🎬 Video & Creator Studio</span>
+                            <span style="background:#0F172A;border:1px solid #C084FC;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">18 Video Tools</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/online_teleprompter.html" class="wc-pill" style="background:#9333EA;border:1.5px solid #C084FC;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Studio Teleprompter & WPM">★ Studio Teleprompter & WPM</a>
+                        <a href="/tools/screen_recorder.html" class="wc-pill" style="background:#9333EA;border:1.5px solid #C084FC;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Screen & Webcam Recorder">★ Screen & Webcam Recorder</a>
+                        <a href="/tools/video_compressor.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #C084FC;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Video Compressor">★ Video Compressor</a>
+                        <a href="/tools/video_trimmer.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #C084FC;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Video Trimmer & Cutter">★ Video Trimmer & Cutter</a>
+                        <a href="/tools/video_to_gif.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #C084FC;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Video to GIF Maker">Video to GIF Maker</a>
+                        <a href="/tools/video_converter.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open MP4 / WebM / MOV Converter">MP4 / WebM / MOV Converter</a>
+                        <a href="/tools/video_audio_extractor.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Video Audio Extractor">Video Audio Extractor</a>
+                        <a href="/tools/video_resizer.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Reels 9:16 Aspect Resizer">Reels 9:16 Aspect Resizer</a>
+                        <a href="/tools/video_merger.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Video Joiner & Merger">Video Joiner & Merger</a>
+                        <a href="/tools/video_speed.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Speed & Slow-Mo Studio">Speed & Slow-Mo Studio</a>
+                        <a href="/tools/video_subtitle.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #9333EA;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Subtitle SRT / VTT Tool">Subtitle SRT / VTT Tool</a>
+                        <a href="/tools/video_looper.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Seamless Video Looper">Seamless Video Looper</a>
+                        <a href="/tools/video_preview.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Thumbnail Frame Grabber">Thumbnail Frame Grabber</a>
+                        <a href="/tools/frame_extractor.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open GIF Frame Extractor">GIF Frame Extractor</a>
+                        <a href="/tools/video_enhancer.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Video Quality Enhancer">Video Quality Enhancer</a>
+                        <a href="/tools/video_watermark.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Video Watermark">Video Watermark</a>
+                        <a href="/tools/video_rotation.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Video Rotator">Video Rotator</a>
+                        <a href="/tools/video_filter.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Video Filters">Video Filters</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#C084FC;">
+                        ✓ Zero Watermarks • Reels, Shorts & YouTube
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-image" style="background:linear-gradient(145deg, #092E26 0%, #051F1A 100%);border:2px solid #059669;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #059669;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#34D399;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">🖼️ Image & Vector Studio</span>
+                            <span style="background:#0F172A;border:1px solid #34D399;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">14 Image Tools</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/image_background_remover.html" class="wc-pill" style="background:#059669;border:1.5px solid #34D399;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open AI Background Remover">★ AI Background Remover</a>
+                        <a href="/tools/image_compressor.html" class="wc-pill" style="background:#059669;border:1.5px solid #34D399;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Image Compressor & WebP">★ Image Compressor & WebP</a>
+                        <a href="/tools/qr_generator.html" class="wc-pill" style="background:#059669;border:1.5px solid #34D399;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Custom QR Code Studio">★ Custom QR Code Studio</a>
+                        <a href="/tools/svg_converter.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #34D399;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open SVG to PNG / WebP Converter">★ SVG to PNG / WebP Converter</a>
+                        <a href="/tools/image_resizer.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #34D399;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Image Resizer & DPI Scale">Image Resizer & DPI Scale</a>
+                        <a href="/tools/image_converter.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #34D399;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Image Format Converter">Image Format Converter</a>
+                        <a href="/tools/image_to_pdf.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #059669;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Multi-Image to PDF">Multi-Image to PDF</a>
+                        <a href="/tools/image_cropper.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #059669;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Social Aspect Cropper">Social Aspect Cropper</a>
+                        <a href="/tools/image_enhancer.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #059669;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Photo Clarity Enhancer">Photo Clarity Enhancer</a>
+                        <a href="/tools/image_hdr.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #059669;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open HDR Tone Mapping">HDR Tone Mapping</a>
+                        <a href="/tools/image_stitcher.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #059669;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Photo Collage Stitcher">Photo Collage Stitcher</a>
+                        <a href="/tools/image_color_converter.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Color Space (CMYK/RGB)">Color Space (CMYK/RGB)</a>
+                        <a href="/tools/image_filters.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Image Filters">Image Filters</a>
+                        <a href="/tools/image_watermark.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Image Watermark">Image Watermark</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#34D399;">
+                        ✓ Batch Processing • PNG, JPG, WebP, SVG
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-audio" style="background:linear-gradient(145deg, #362106 0%, #241504 100%);border:2px solid #D97706;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #D97706;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#FBBF24;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">🎵 Audio & Voice Studio</span>
+                            <span style="background:#0F172A;border:1px solid #FBBF24;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">9 Audio Tools</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/text_to_speech.html" class="wc-pill" style="background:#D97706;border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Text-to-Speech Voice Reader">★ Text-to-Speech Voice Reader</a>
+                        <a href="/tools/audio_mixer.html" class="wc-pill" style="background:#D97706;border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Multi-Track Audio Mixer">★ Multi-Track Audio Mixer</a>
+                        <a href="/tools/audio_trimmer.html" class="wc-pill" style="background:#D97706;border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Audio Trimmer & Ringtone Cutter">★ Audio Trimmer & Ringtone Cutter</a>
+                        <a href="/tools/audio_editor.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Audio Waveform Editor">★ Audio Waveform Editor</a>
+                        <a href="/tools/audio_converter.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open MP3 / WAV / OGG Converter">MP3 / WAV / OGG Converter</a>
+                        <a href="/tools/audio_effects.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #FBBF24;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open 10-Band Equalizer & Reverb FX">10-Band Equalizer & Reverb FX</a>
+                        <a href="/tools/audio_normalizer.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #D97706;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Audio Peak Volume Normalizer">Audio Peak Volume Normalizer</a>
+                        <a href="/tools/audio_speed_changer.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #D97706;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Audio Speed & Pitch Shifter">Audio Speed & Pitch Shifter</a>
+                        <a href="/tools/audio_analyzer.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #D97706;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Real-Time FFT Spectrum Analyzer">Real-Time FFT Spectrum Analyzer</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#FBBF24;">
+                        ✓ Podcast, Ringtone & Voiceover Mastering
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-kdp" style="background:linear-gradient(145deg, #3B0D2C 0%, #26081C 100%);border:2px solid #DB2777;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #DB2777;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#F472B6;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">📐 Amazon KDP & Book Publishing</span>
+                            <span style="background:#0F172A;border:1px solid #F472B6;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">4 Author Tools</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/kdp_cover_generator.html" class="wc-pill" style="background:#DB2777;border:1.5px solid #F472B6;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open KDP Cover & Spine PDF Generator">★ KDP Cover & Spine PDF Generator</a>
+                        <a href="/tools/kdp_royalty_calculator.html" class="wc-pill" style="background:#DB2777;border:1.5px solid #F472B6;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open KDP Royalty & Print Cost Calculator">★ KDP Royalty & Print Cost Calculator</a>
+                        <a href="/tools/kdp_spine_calculator.html" class="wc-pill" style="background:#DB2777;border:1.5px solid #F472B6;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Exact Spine Width & Bleed Calculator">★ Exact Spine Width & Bleed Calculator</a>
+                        <a href="/tools/kdp_keyword_generator.html" class="wc-pill" style="background:#DB2777;border:1.5px solid #F472B6;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open KDP 7-Backend Keywords & HTML Formatter">★ KDP 7-Backend Keywords & HTML Formatter</a>
+                        <a href="/tools/kdp_keyword_generator.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #DB2777;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Amazon HTML Book Description Builder">Amazon HTML Book Description Builder</a>
+                        <a href="/tools/kdp_royalty_calculator.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #DB2777;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open US, UK, DE, IN, JP Royalty Estimator">US, UK, DE, IN, JP Royalty Estimator</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#F472B6;">
+                        ✓ 300 DPI Print-Ready Paperback & eBook
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-dev" style="background:linear-gradient(145deg, #11224D 0%, #0B1633 100%);border:2px solid #2563EB;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #2563EB;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#60A5FA;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">💼 Business, Career & Android Dev</span>
+                            <span style="background:#0F172A;border:1px solid #60A5FA;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">7 Pro Utilities</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/play_store_tester_tracker.html" class="wc-pill" style="background:#2563EB;border:1.5px solid #60A5FA;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Google Play 12T/14D Tester Tracker">★ Google Play 12T/14D Tester Tracker</a>
+                        <a href="/tools/tuition_fee_receipt_generator.html" class="wc-pill" style="background:#2563EB;border:1.5px solid #60A5FA;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Tuition & Coaching Fee Receipt (WhatsApp)">★ Tuition & Coaching Fee Receipt (WhatsApp)</a>
+                        <a href="/tools/ats_resume_matcher.html" class="wc-pill" style="background:#2563EB;border:1.5px solid #60A5FA;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open ATS Resume & CV Keyword Matcher">★ ATS Resume & CV Keyword Matcher</a>
+                        <a href="/tools/invoice_generator.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #60A5FA;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Instant Invoice & Receipt Pro">★ Instant Invoice & Receipt Pro</a>
+                        <a href="/tools/batch_processor.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #2563EB;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Batch Multi-File Processor">Batch Multi-File Processor</a>
+                        <a href="/tools/auto-product-generator.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #2563EB;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open E-Commerce Product Copy Generator">E-Commerce Product Copy Generator</a>
+                        <a href="/tools/product-generator.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Product Description Card Maker">Product Description Card Maker</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#60A5FA;">
+                        ✓ WhatsApp Receipts • Play Console 12T/14D
+                    </div>
+                </div>
+
+                <div class="wc-bento-card" data-wc-cat="cat-games" style="background:linear-gradient(145deg, #231542 0%, #160D2B 100%);border:2px solid #7C3AED;border-radius:16px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,0.28);">
+                    <div>
+                        <div style="background:rgba(0,0,0,0.28);border-bottom:1px solid #7C3AED;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <span style="color:#A78BFA;font-size:0.82rem;font-weight:900;text-transform:uppercase;letter-spacing:0.4px;">🧠 Brain Games & Dev Text Tools</span>
+                            <span style="background:#0F172A;border:1px solid #A78BFA;color:#F8FAFC;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:20px;white-space:nowrap;">18 Games & Utils</span>
+                        </div>
+                        <div style="padding:12px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;">
+                        <a href="/tools/tambola_caller.html" class="wc-pill" style="background:#7C3AED;border:1.5px solid #A78BFA;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open Tambola 1–90 Caller & Tickets">★ Tambola 1–90 Caller & Tickets</a>
+                        <a href="/tools/sudoku_water_sort.html" class="wc-pill" style="background:#7C3AED;border:1.5px solid #A78BFA;color:#FFFFFF;font-size:0.84rem;font-weight:800;padding:5px 12px;box-shadow:0 3px 10px rgba(0,0,0,0.28);" title="Open 9×9 Sudoku & Instant Solver">★ 9×9 Sudoku & Instant Solver</a>
+                        <a href="/tools/json_formatter.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #A78BFA;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open JSON Formatter & Validator">★ JSON Formatter & Validator</a>
+                        <a href="/tools/markdown_editor.html" class="wc-pill" style="background:rgba(255,255,255,0.13);border:1.5px solid #A78BFA;color:#FFFFFF;font-size:0.79rem;font-weight:700;padding:4px 11px;" title="Open Markdown Live HTML Studio">★ Markdown Live HTML Studio</a>
+                        <a href="/tools/word_games.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Wordle & Vocab Challenge">Wordle & Vocab Challenge</a>
+                        <a href="/tools/memory_games.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Memory Matrix Game">Memory Matrix Game</a>
+                        <a href="/tools/brain_teasers.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Brain Teasers & Riddles">Brain Teasers & Riddles</a>
+                        <a href="/tools/text_diff.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Side-by-Side Text Diff">Side-by-Side Text Diff</a>
+                        <a href="/tools/base64_encoder.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open Base64 Encoder">Base64 Encoder</a>
+                        <a href="/tools/url_encoder.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open URL Encoder">URL Encoder</a>
+                        <a href="/tools/hash_generator.html" class="wc-pill" style="background:rgba(15,23,42,0.82);border:1px solid #7C3AED;color:#F1F5F9;font-size:0.75rem;font-weight:600;padding:4px 10px;" title="Open SHA-256 / MD5 Hash">SHA-256 / MD5 Hash</a>
+                        <a href="/tools/word_counter.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Word & Reading Counter">Word & Reading Counter</a>
+                        <a href="/tools/case_converter.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Case Converter">Case Converter</a>
+                        <a href="/tools/remove_spaces.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Space Cleaner">Space Cleaner</a>
+                        <a href="/tools/text_analyzer.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Text & Sentiment Analyzer">Text & Sentiment Analyzer</a>
+                        <a href="/tools/text_formatter.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Text Formatter">Text Formatter</a>
+                        <a href="/tools/reverse_text.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Reverse Text">Reverse Text</a>
+                        <a href="/tools/lorem_ipsum.html" class="wc-pill" style="background:rgba(15,23,42,0.6);border:1px solid #475569;color:#CBD5E1;font-size:0.72rem;font-weight:500;padding:3px 9px;" title="Open Lorem Ipsum">Lorem Ipsum</a>
+                        </div>
+                    </div>
+                    <div style="padding:7px 12px;background:rgba(0,0,0,0.22);border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.73rem;font-weight:700;color:#A78BFA;">
+                        ✓ Multiplayer WhatsApp Tambola • Dev Suite
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            
+            // Hook search box & category filter to highlight Word Cloud pills & cards
+            document.addEventListener('DOMContentLoaded', function() {
+                var searchInput = document.getElementById('tool-search');
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        var q = this.value.trim().toLowerCase();
+                        document.querySelectorAll('.wc-pill').forEach(function(pill) {
+                            if (!q) {
+                                pill.style.opacity = '1';
+                                pill.style.outline = 'none';
+                            } else if (pill.textContent.toLowerCase().indexOf(q) !== -1) {
+                                pill.style.opacity = '1';
+                                pill.style.outline = '2px solid #FACC15';
+                            } else {
+                                pill.style.opacity = '0.28';
+                                pill.style.outline = 'none';
+                            }
+                        });
+                    });
+                }
+            });
+
+            function toggleInfographicPosterView() {
+                var poster = document.getElementById('static-poster-preview');
+                var btn = document.getElementById('btnTogglePoster');
+                if (!poster) return;
+                if (poster.style.display === 'none') {
+                    poster.style.display = 'block';
+                    if (btn) btn.textContent = '☁️ Hide Poster Preview';
+                } else {
+                    poster.style.display = 'none';
+                    if (btn) btn.textContent = '🖼️ Preview Poster Image';
+                }
+            }
+        </script>
+<!-- END_ECOSYSTEM_WORDCLOUD -->
+
         <!-- Tools Grid -->
 
         <div class="grid grid-3" id="tools-catalog-grid" style="gap: 24px;">
@@ -135,7 +469,7 @@
             <div class="tool-card filter-item cat-kdp">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-size: 2rem;">📖</span>
-                    <span class="value-badge pro-preset">JSZip + TTS Audio</span>
+                    <span class="value-badge pro-preset">Read Aloud + Themes</span>
                 </div>
                 <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Online EPUB eBook Reader &amp; Inspector</h3>
                 <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Open and read .epub eBooks in your browser with chapter navigation, Sepia/Dark mode, and Text-to-Speech read-aloud.</p>
@@ -146,7 +480,7 @@
             <div class="tool-card filter-item cat-pdf">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-size: 2rem;">📝</span>
-                    <span class="value-badge batch">Mammoth.js Engine</span>
+                    <span class="value-badge batch">Clean HTML Export</span>
                 </div>
                 <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Online DOCX Word Viewer &amp; HTML Converter</h3>
                 <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">Open Microsoft Word (.docx) manuscripts &amp; resumes in your browser and export clean semantic HTML or plain text.</p>
@@ -157,7 +491,7 @@
             <div class="tool-card filter-item cat-dev">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-size: 2rem;">📊</span>
-                    <span class="value-badge offline">SheetJS Engine</span>
+                    <span class="value-badge offline">Multi-Sheet + JSON</span>
                 </div>
                 <h3 class="card-title" style="font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;">Online Excel (.XLSX) &amp; CSV Viewer + JSON Exporter</h3>
                 <p class="card-excerpt" style="color: var(--color-neutral-700); font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">View multi-sheet .xlsx, .xls, and .csv spreadsheets in your browser, filter rows live, and convert to JSON or CSV.</p>
@@ -635,7 +969,7 @@
 
                     <span style="font-size: 2rem;">🔍</span>
 
-                    <span class="value-badge batch">Tesseract OCR</span>
+                    <span class="value-badge batch">Scanned Text OCR</span>
 
                 </div>
 
@@ -877,7 +1211,7 @@
 
                     <span style="font-size: 2rem;">📉</span>
 
-                    <span class="value-badge batch">FFmpeg Wasm</span>
+                    <span class="value-badge batch">HD Video Studio</span>
 
                 </div>
 

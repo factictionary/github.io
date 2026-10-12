@@ -118,8 +118,7 @@
     
 
 
-    <!-- FFmpeg.wasm Library -->
-
+    
 
     <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.min.js"></script>
 
@@ -191,7 +190,7 @@
     <link rel="alternate" hreflang="en" href="https://factictionary.in/tools/video_speed.html">
     <link rel="alternate" hreflang="x-default" href="https://factictionary.in/tools/video_speed.html">
     <link rel="manifest" href="/manifest.json">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Video Speed Controller","url":"https://factictionary.in/tools/video_speed.html","description":"Free online video speed controller tool. Adjust video playback speed from 0.25x to 4x with audio sync options. Perfect for content creators, educators, and students. 100% privacy-protected, works entirely in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires JavaScript and modern HTML5 / WebAssembly browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Video Speed Controller","url":"https://factictionary.in/tools/video_speed.html","description":"Free online video speed controller tool. Adjust video playback speed from 0.25x to 4x with audio sync options. Perfect for content creators, educators, and students. 100% privacy-protected, works entirely in your browser.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (Web Browser)","BrowserRequirements":"Requires a modern web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"Author":{"@type":"Organization","name":"Factictionary","url":"https://factictionary.in/"}}</script>
     <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/factictionary-logo-192.png">
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
@@ -1023,10 +1022,10 @@
             <h2 style="font-size: 1.8rem; margin-top: 32px; margin-bottom: 16px; color: #111;">Technical Explanation</h2>
 
 
-            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Speed leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool utilizes HTML5 File APIs, WebAssembly, and native JavaScript array buffers.</p>
+            <p style="margin-bottom: 16px; line-height: 1.6; color: #444; font-size: 1.1rem;">The Video Speed leverages advanced client-side processing technologies to manipulate data directly on your device. Instead of uploading your sensitive files to a remote serverâ€”which carries significant privacy risks and consumes massive bandwidthâ€”this tool processes your files locally in your device memory.</p>
 
 
-            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you initiate the process, the application reads the file into memory using a FileReader. It then applies complex algorithmsâ€”such as compression heuristics, codec transformations, or binary manipulationâ€”depending on the specific task. The output is dynamically generated as a Blob object, which the browser then prompts you to download. This architecture guarantees that your data never leaves your machine.</p>
+            <p style="line-height: 1.6; color: #444; font-size: 1.1rem;">When you select a file, all processing happens directly on your device with zero server uploads. Once complete, your processed file is ready for instant download—guaranteeing that your private data never leaves your machine.</p>
 
 
         </section>
@@ -1036,7 +1035,7 @@
         <!-- SEO & Educational Documentation Block -->
         <section class="seo-guide-block" style="max-width: 1000px; margin: 36px auto; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; padding: 32px; box-shadow: 0 4px 14px rgba(0,0,0,0.03);">
             <h2 style="font-size: 1.5rem; font-weight: 800; color: #0F172A; margin-bottom: 12px;">How to Use video_speed Safely in Your Browser (100% Client-Side)</h2>
-            <p style="color: #334155; line-height: 1.75; margin-bottom: 18px;">video_speed runs entirely inside your web browser using local JavaScript, HTML5 Canvas, Web Audio, or WebAssembly APIs. Unlike traditional cloud converters that upload your confidential files to remote servers, every byte stays in your device's local RAM.</p>
+            <p style="color: #334155; line-height: 1.75; margin-bottom: 18px;">video_speed runs 100% locally inside your web browser on your own device. Unlike traditional cloud converters that upload your confidential files to remote servers, every byte stays in your device's local RAM.</p>
             <h3 style="font-size: 1.18rem; font-weight: 700; color: #1E293B; margin-bottom: 10px;">Step-by-Step Instructions</h3>
             <ol style="margin-left: 22px; color: #334155; line-height: 1.8; margin-bottom: 22px;">
                 <li style="margin-bottom: 6px;">Select, drop, or paste your input into the video_speed workspace above.</li>
@@ -1219,7 +1218,7 @@
             try {
 
 
-                updateProgress(5, 'Loading FFmpeg...');
+                updateProgress(5, 'Loading media processor...');
 
 
                 ffmpeg = new FFmpeg();
@@ -1276,7 +1275,7 @@
                 
 
 
-                updateProgress(10, 'FFmpeg ready!');
+                updateProgress(10, 'Video processor ready!');
 
 
                 console.log('FFmpeg.wasm loaded successfully');
