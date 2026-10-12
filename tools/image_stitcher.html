@@ -4231,7 +4231,7 @@
         if (menuToggle && navLinks) {
 
 
-            menuToggle.addEventListener('click', () => {
+            if (menuToggle) menuToggle.addEventListener('click', () => {
 
 
                 const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';

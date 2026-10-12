@@ -417,7 +417,7 @@
     <script src="/assets/js/main.js"></script>
 
     <!-- JavaScript -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Global variables
         let currentVideo = null;
         let extractedFrames = [];
@@ -1084,7 +1084,7 @@
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
 
-        menuToggle.addEventListener('click', () => {
+        if (menuToggle) menuToggle.addEventListener('click', () => {
             const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
             menuToggle.setAttribute('aria-expanded', !isExpanded);
             navLinks.classList.toggle('active');
@@ -1614,3 +1614,4 @@
         }
     </style>
 </body>
+</html>

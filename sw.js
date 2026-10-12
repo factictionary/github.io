@@ -1,12 +1,14 @@
 // Factictionary Full-Featured PWA Service Worker (PWABuilder Compliant)
 // Supports: Offline Caching, Background Sync ('sync'), Periodic Sync ('periodicsync'), and Push Notifications ('push')
 
-const CACHE_NAME = 'factictionary-pwa-v3';
-const OFFLINE_URL = '/index.html';
+const CACHE_NAME = 'factictionary-pwa-v4';
+const OFFLINE_URL = '/tools/?app=1';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/tools/',
+  '/assets/js/main.js',
+  '/assets/css/style.css',
   '/guides/',
   '/games/',
   '/directory.html',
