@@ -1,7 +1,7 @@
 // Factictionary Full-Featured PWA Service Worker (PWABuilder Compliant)
 // Supports: Offline Caching, Background Sync ('sync'), Periodic Sync ('periodicsync'), and Push Notifications ('push')
 
-const CACHE_NAME = 'factictionary-pwa-v4';
+const CACHE_NAME = 'factictionary-pwa-v6';
 const OFFLINE_URL = '/tools/?app=1';
 const CORE_ASSETS = [
   '/',
@@ -9,6 +9,8 @@ const CORE_ASSETS = [
   '/tools/',
   '/assets/js/main.js',
   '/assets/css/style.css',
+  '/assets/js/pdf-lib.min.js',
+  '/assets/js/jszip.min.js',
   '/guides/',
   '/games/',
   '/directory.html',
@@ -45,9 +47,13 @@ self.addEventListener('activate', (event) => {
 // 3. Fetch Event — Network-first with Cache & Offline Fallback
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
+  const isHtmlNav = event.request.mode === 'navigate' || event.request.url.endsWith('.html');
+  const fetchPromise = isHtmlNav ? fetch(event.request, { cache: 'no-cache' }) : fetch(event.request);
 
   event.respondWith(
-    fetch(event.request)
+    fetchPromise
       .then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200 && event.request.url.startsWith(self.location.origin)) {
           const responseClone = networkResponse.clone();

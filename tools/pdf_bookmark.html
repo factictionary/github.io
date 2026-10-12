@@ -2962,7 +2962,30 @@
     <!-- Libraries -->
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/assets/js/pdf-lib.min.js"></script>
+    <script>
+        window.__ensurePDFLib = async function() {
+            if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+            const urls = [
+                '/assets/js/pdf-lib.min.js',
+                'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js',
+                'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js'
+            ];
+            for (const u of urls) {
+                try {
+                    await new Promise((res, rej) => {
+                        const s = document.createElement('script');
+                        s.src = u;
+                        s.onload = res;
+                        s.onerror = rej;
+                        document.head.appendChild(s);
+                    });
+                    if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+                } catch (e) {}
+            }
+            throw new Error('Failed to load PDF engine. Please refresh the page.');
+        };
+if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"><\/script>');}</script>
 
 
     
@@ -3511,7 +3534,7 @@
                     const arrayBuffer = await this.selectedFile.arrayBuffer();
 
 
-                    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                    const pdfDoc = await (await window.__ensurePDFLib()).PDFDocument.load(arrayBuffer);
 
 
                     
@@ -4777,7 +4800,7 @@
                     const arrayBuffer = await this.selectedFile.arrayBuffer();
 
 
-                    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                    const pdfDoc = await (await window.__ensurePDFLib()).PDFDocument.load(arrayBuffer);
 
 
                     

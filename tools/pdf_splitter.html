@@ -105,7 +105,30 @@
 
     
 
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="/assets/js/pdf-lib.min.js"></script>
+    <script>
+        window.__ensurePDFLib = async function() {
+            if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+            const urls = [
+                '/assets/js/pdf-lib.min.js',
+                'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js',
+                'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js'
+            ];
+            for (const u of urls) {
+                try {
+                    await new Promise((res, rej) => {
+                        const s = document.createElement('script');
+                        s.src = u;
+                        s.onload = res;
+                        s.onerror = rej;
+                        document.head.appendChild(s);
+                    });
+                    if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+                } catch (e) {}
+            }
+            throw new Error('Failed to load PDF engine. Please refresh the page.');
+        };
+if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"><\/script>');}</script>
 
 
     
@@ -2340,7 +2363,7 @@
                     this.pdfBytes = await file.arrayBuffer();
 
 
-                    this.pdfDoc = await PDFLib.PDFDocument.load(this.pdfBytes);
+                    this.pdfDoc = await (await window.__ensurePDFLib()).PDFDocument.load(this.pdfBytes);
 
 
                     this.pageCount = this.pdfDoc.getPageCount();
@@ -2697,7 +2720,7 @@
                         const pages = pageGroups[i];
 
 
-                        const newPdf = await PDFLib.PDFDocument.create();
+                        const newPdf = await (await window.__ensurePDFLib()).PDFDocument.create();
 
 
                         const copiedPages = await newPdf.copyPages(this.pdfDoc, pages.map(p => p - 1));

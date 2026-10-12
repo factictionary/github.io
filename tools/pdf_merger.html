@@ -16,7 +16,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
     
-        <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+        <script src="/assets/js/pdf-lib.min.js"></script>
+    <script>
+        window.__ensurePDFLib = async function() {
+            if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+            const urls = [
+                '/assets/js/pdf-lib.min.js',
+                'https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js',
+                'https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js'
+            ];
+            for (const u of urls) {
+                try {
+                    await new Promise((res, rej) => {
+                        const s = document.createElement('script');
+                        s.src = u;
+                        s.onload = res;
+                        s.onerror = rej;
+                        document.head.appendChild(s);
+                    });
+                    if (typeof window.PDFLib !== 'undefined') return window.PDFLib;
+                } catch (e) {}
+            }
+            throw new Error('Failed to load PDF engine. Please refresh the page.');
+        };
+if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"><\/script>');}</script>
 
     <style>
         .pdf-tool-card {
@@ -433,7 +456,7 @@
         async function loadPageCount(fileData) {
             try {
                 const buffer = await fileData.file.arrayBuffer();
-                const pdf = await PDFLib.PDFDocument.load(buffer);
+                const pdf = await (await window.__ensurePDFLib()).PDFDocument.load(buffer);
                 fileData.pages = pdf.getPageCount();
                 updateFileList();
             } catch (err) {
@@ -544,11 +567,11 @@
                 processBtn.disabled = true;
                 processBtn.textContent = '⏳ Merging PDFs...';
                 
-                const mergedPdf = await PDFLib.PDFDocument.create();
+                const mergedPdf = await (await window.__ensurePDFLib()).PDFDocument.create();
                 
                 for (let fileData of selectedFiles) {
                     const arrayBuffer = await fileData.file.arrayBuffer();
-                    const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                    const pdf = await (await window.__ensurePDFLib()).PDFDocument.load(arrayBuffer);
                     
                     let pageIndices = pdf.getPageIndices();
                     if (fileData.reversePages) {
