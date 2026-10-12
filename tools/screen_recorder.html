@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -36,13 +36,120 @@
             justify-content: center;
             overflow: hidden;
             position: relative;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 640px) {
+            .rec-card {
+                padding: 18px 14px;
+            }
+            .preview-container {
+                height: 260px;
+            }
         }
 
         #videoPreview {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            display: none;
+        }
+
+        #whiteboardCanvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            cursor: crosshair;
+            touch-action: none;
+            background: #1E293B;
+        }
+
+        #placeholderText {
+            color: #94A3B8;
+            font-size: 1.02rem;
+            padding: 0 20px;
+            text-align: center;
+            line-height: 1.5;
+            pointer-events: none;
+        }
+
+        .rec-mode-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .rec-mode-btn {
+            background: #F1F5F9;
+            color: #334155;
+            border: 1px solid #CBD5E1;
+            padding: 9px 16px;
+            border-radius: 999px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .rec-mode-btn.active {
+            background: #0066FF;
+            color: #FFFFFF;
+            border-color: #0066FF;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+        }
+
+        .rec-options-row {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            font-size: 0.88rem;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .rec-option-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            padding: 6px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .wb-toolbar {
+            display: none;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            padding: 8px 12px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+        }
+
+        .rec-alert-box {
+            display: none;
+            margin: 0 auto 16px;
+            max-width: 680px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            line-height: 1.45;
+            text-align: left;
         }
 
         .rec-status-dot {
@@ -65,7 +172,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #0F172A;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .rec-controls {
@@ -97,11 +204,22 @@
             background: #0F172A;
             color: white;
             font-weight: 700;
-            padding: 14px 32px;
+            padding: 14px 28px;
             border-radius: 50px;
             border: none;
             cursor: pointer;
             font-size: 1rem;
+        }
+
+        .btn-rec-pause {
+            background: #F59E0B;
+            color: white;
+            font-weight: 700;
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
         }
     </style>
 
@@ -170,23 +288,76 @@
 
         <!-- Recorder Workspace -->
         <div class="rec-card text-center">
-            <!-- Video Preview Box -->
+            <!-- Mode Selector Tabs -->
+            <div class="rec-mode-tabs" role="tablist" aria-label="Recording Mode">
+                <button type="button" id="modeScreenBtn" class="rec-mode-btn active" onclick="setRecordMode('screen')">
+                    🖥️ Screen / Tab
+                </button>
+                <button type="button" id="modeCameraBtn" class="rec-mode-btn" onclick="setRecordMode('camera')">
+                    📹 Camera / Webcam
+                </button>
+                <button type="button" id="modeBoardBtn" class="rec-mode-btn" onclick="setRecordMode('whiteboard')">
+                    🎨 Whiteboard + Voice
+                </button>
+            </div>
+
+            <!-- Audio & Camera Options -->
+            <div class="rec-options-row">
+                <label class="rec-option-chip" id="micOptionLabel">
+                    <input type="checkbox" id="recordMicChk" checked style="accent-color:#0066FF; width:16px; height:16px;">
+                    <span>🎙️ Microphone Audio</span>
+                </label>
+                <label class="rec-option-chip" id="sysAudioOptionLabel">
+                    <input type="checkbox" id="recordSysAudioChk" checked style="accent-color:#0066FF; width:16px; height:16px;">
+                    <span>🔊 System / Tab Audio</span>
+                </label>
+                <button type="button" id="flipCamBtn" onclick="toggleCameraFacing()" class="rec-option-chip" style="display:none; color:#0066FF; font-weight:700;">
+                    🔄 Flip Camera (<span id="camFacingLabel">Front</span>)
+                </button>
+            </div>
+
+            <!-- Whiteboard Toolbar (visible in Whiteboard + Voice mode) -->
+            <div class="wb-toolbar" id="wbToolbar">
+                <span style="font-size:0.8rem; font-weight:700; color:#475569;">Pen:</span>
+                <input type="color" id="wbColor" value="#38BDF8" style="width:30px; height:28px; border:none; background:none; cursor:pointer;">
+                <select id="wbSize" style="padding:4px 8px; border-radius:8px; border:1px solid #CBD5E1; font-size:0.82rem; font-weight:600;">
+                    <option value="3">Thin</option>
+                    <option value="6" selected>Medium</option>
+                    <option value="12">Thick</option>
+                </select>
+                <label style="background:#EFF6FF; color:#0066FF; border:1px solid #BFDBFE; padding:5px 10px; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                    🖼️ Load Slide/Image
+                    <input type="file" id="wbBgInput" accept="image/*" style="display:none;" onchange="loadWhiteboardImage(event)">
+                </label>
+                <button type="button" onclick="clearWhiteboard()" style="background:#FEE2E2; color:#DC2626; border:1px solid #FECACA; padding:5px 10px; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer;">
+                    🗑️ Clear Board
+                </button>
+            </div>
+
+            <!-- Status / Alert Banner -->
+            <div id="recAlertBox" class="rec-alert-box"></div>
+
+            <!-- Video / Canvas Preview Box -->
             <div class="preview-container">
                 <video id="videoPreview" autoplay playsinline muted></video>
-                <span id="placeholderText" style="color: #64748B; font-size: 1.1rem;">Click "Start Recording" to select a screen or tab</span>
+                <canvas id="whiteboardCanvas" width="1280" height="720"></canvas>
+                <span id="placeholderText">Click "🔴 Start Recording" to select a screen, window, or browser tab</span>
             </div>
 
             <div class="timer-display" id="timerDisplay">00:00:00</div>
 
             <!-- Controls -->
             <div class="rec-controls">
-                <button id="startBtn" onclick="startRecording()" class="btn-rec-start">
+                <button id="startBtn" type="button" onclick="startRecording()" class="btn-rec-start">
                     🔴 Start Recording
                 </button>
-                <button id="stopBtn" onclick="stopRecording()" class="btn-rec-stop" style="display:none;">
+                <button id="pauseBtn" type="button" onclick="togglePauseRecording()" class="btn-rec-pause" style="display:none;">
+                    ⏸️ Pause
+                </button>
+                <button id="stopBtn" type="button" onclick="stopRecording()" class="btn-rec-stop" style="display:none;">
                     ⏹️ Stop Recording
                 </button>
-                <button id="downloadBtn" onclick="downloadRecording()" class="btn btn-primary" style="border-radius: 50px; padding: 14px 28px; background: #10B981; border: none; font-weight: 700; display:none;">
+                <button id="downloadBtn" type="button" onclick="downloadRecording()" class="btn btn-primary" style="border-radius: 50px; padding: 14px 28px; background: #10B981; border: none; font-weight: 700; display:none;">
                     ⬇️ Download Video File
                 </button>
             </div>
@@ -194,12 +365,12 @@
 
         <!-- Documentation -->
         <div style="background: white; border-radius: 16px; padding: 32px; border: 1px solid var(--color-neutral-200); box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px;">How to Record Screen Online Without Watermark</h2>
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 12px;">How to Record Screen, Webcam, or Whiteboard Online Without Watermark</h2>
             <ol style="margin-left: 20px; line-height: 1.8; color: var(--color-neutral-700);">
-                <li>Click <strong>Start Recording</strong> to prompt your browser's screen sharing picker.</li>
-                <li>Select whether to share your Entire Screen, a Specific Window, or a Chrome Tab.</li>
-                <li>Check <strong>Share System Audio</strong> if you want to record internal computer sounds.</li>
-                <li>Click <strong>Stop Recording</strong> when finished, and click <strong>Download Video File</strong> to save your recording.</li>
+                <li>Select your recording mode: <strong>Screen / Tab</strong> (Desktop), <strong>Camera / Webcam</strong> (Desktop &amp; Mobile), or <strong>Whiteboard + Voice</strong> (Desktop &amp; Mobile).</li>
+                <li>Choose whether to include <strong>Microphone Audio</strong> narration and/or <strong>System Audio</strong>.</li>
+                <li>Click <strong>Start Recording</strong>. You can pause and resume at any time.</li>
+                <li>Click <strong>Stop Recording</strong> when finished to preview your video immediately and click <strong>Download Video File</strong> to save it locally.</li>
             </ol>
         </div>
 
@@ -212,7 +383,7 @@
             <ol style="margin-left: 22px; color: #334155; line-height: 1.8; margin-bottom: 22px;">
                 <li style="margin-bottom: 6px;">Click "Start Recording" and select whether to capture your Entire Screen, a specific Application Window, or a single Browser Tab via your browser's native permission prompt.</li>
                 <li style="margin-bottom: 6px;">Optionally enable system audio or microphone narration for tutorial voiceovers.</li>
-                <li style="margin-bottom: 6px;">When finished, click "Stop Recording" to compile the WebM/MP4 video stream locally in RAM and save it straight to your computer.</li>
+                <li style="margin-bottom: 6px;">When finished, click "Stop Recording" to compile the WebM/MP4 video stream locally in RAM and save it straight to your device.</li>
             </ol>
             <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
                 <div style="flex: 1; min-width: 240px;">
@@ -289,86 +460,459 @@
 
     <script src="/assets/js/main.js"></script>
     <script>
-        let mediaRecorder;
+        let mediaRecorder = null;
         let recordedChunks = [];
-        let stream;
-        let timerInterval;
+        let activeStreams = [];
+        let audioCtx = null;
+        let timerInterval = null;
         let secondsElapsed = 0;
+        let recordMode = 'screen'; // 'screen' | 'camera' | 'whiteboard'
+        let cameraFacing = 'user'; // 'user' | 'environment'
+        let activeMimeType = 'video/webm';
+        let previewBlobUrl = null;
+
+        // Whiteboard state
+        const wbCanvas = document.getElementById('whiteboardCanvas');
+        const wbCtx = wbCanvas.getContext('2d');
+        let wbDrawing = false;
+        let wbLastX = 0;
+        let wbLastY = 0;
+
+        function initWhiteboard() {
+            wbCtx.fillStyle = '#0F172A';
+            wbCtx.fillRect(0, 0, wbCanvas.width, wbCanvas.height);
+            wbCtx.fillStyle = '#334155';
+            wbCtx.font = '600 24px Inter, sans-serif';
+            wbCtx.textAlign = 'center';
+            wbCtx.fillText('Draw, annotate, or load a slide image — recorded at 30 FPS', wbCanvas.width / 2, 46);
+        }
+        initWhiteboard();
+
+        function getCanvasCoords(e) {
+            const rect = wbCanvas.getBoundingClientRect();
+            const scaleX = wbCanvas.width / rect.width;
+            const scaleY = wbCanvas.height / rect.height;
+            const clientX = (e.touches && e.touches[0]) ? e.touches[0].clientX : e.clientX;
+            const clientY = (e.touches && e.touches[0]) ? e.touches[0].clientY : e.clientY;
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDraw(e) {
+            if (recordMode !== 'whiteboard') return;
+            e.preventDefault();
+            wbDrawing = true;
+            const pt = getCanvasCoords(e);
+            wbLastX = pt.x;
+            wbLastY = pt.y;
+        }
+
+        function moveDraw(e) {
+            if (!wbDrawing || recordMode !== 'whiteboard') return;
+            e.preventDefault();
+            const pt = getCanvasCoords(e);
+            wbCtx.strokeStyle = document.getElementById('wbColor').value;
+            wbCtx.lineWidth = parseInt(document.getElementById('wbSize').value, 10) || 6;
+            wbCtx.lineCap = 'round';
+            wbCtx.lineJoin = 'round';
+            wbCtx.beginPath();
+            wbCtx.moveTo(wbLastX, wbLastY);
+            wbCtx.lineTo(pt.x, pt.y);
+            wbCtx.stroke();
+            wbLastX = pt.x;
+            wbLastY = pt.y;
+        }
+
+        function endDraw() {
+            wbDrawing = false;
+        }
+
+        wbCanvas.addEventListener('mousedown', startDraw);
+        wbCanvas.addEventListener('mousemove', moveDraw);
+        window.addEventListener('mouseup', endDraw);
+        wbCanvas.addEventListener('touchstart', startDraw, { passive: false });
+        wbCanvas.addEventListener('touchmove', moveDraw, { passive: false });
+        window.addEventListener('touchend', endDraw);
+
+        function clearWhiteboard() {
+            wbCtx.fillStyle = '#0F172A';
+            wbCtx.fillRect(0, 0, wbCanvas.width, wbCanvas.height);
+        }
+
+        function loadWhiteboardImage(e) {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const img = new Image();
+            img.onload = () => {
+                wbCtx.fillStyle = '#0F172A';
+                wbCtx.fillRect(0, 0, wbCanvas.width, wbCanvas.height);
+                const ratio = Math.min(wbCanvas.width / img.width, wbCanvas.height / img.height);
+                const w = img.width * ratio;
+                const h = img.height * ratio;
+                wbCtx.drawImage(img, (wbCanvas.width - w) / 2, (wbCanvas.height - h) / 2, w, h);
+            };
+            img.src = URL.createObjectURL(file);
+        }
+
+        function showRecAlert(message, type) {
+            const box = document.getElementById('recAlertBox');
+            if (!message) {
+                box.style.display = 'none';
+                return;
+            }
+            box.style.display = 'block';
+            if (type === 'error') {
+                box.style.background = '#FEF2F2';
+                box.style.border = '1px solid #FECACA';
+                box.style.color = '#991B1B';
+            } else if (type === 'info') {
+                box.style.background = '#EFF6FF';
+                box.style.border = '1px solid #BFDBFE';
+                box.style.color = '#1E40AF';
+            } else {
+                box.style.background = '#ECFDF5';
+                box.style.border = '1px solid #A7F3D0';
+                box.style.color = '#065F46';
+            }
+            box.innerHTML = message;
+        }
+
+        function isDisplayMediaSupported() {
+            return !!(navigator.mediaDevices && typeof navigator.mediaDevices.getDisplayMedia === 'function');
+        }
+
+        function setRecordMode(mode) {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                showRecAlert('⚠️ Please stop the current recording before switching modes.', 'error');
+                return;
+            }
+            recordMode = mode;
+            document.getElementById('modeScreenBtn').classList.toggle('active', mode === 'screen');
+            document.getElementById('modeCameraBtn').classList.toggle('active', mode === 'camera');
+            document.getElementById('modeBoardBtn').classList.toggle('active', mode === 'whiteboard');
+
+            document.getElementById('sysAudioOptionLabel').style.display = (mode === 'screen') ? 'inline-flex' : 'none';
+            document.getElementById('flipCamBtn').style.display = (mode === 'camera') ? 'inline-flex' : 'none';
+            document.getElementById('wbToolbar').style.display = (mode === 'whiteboard') ? 'flex' : 'none';
+
+            const videoEl = document.getElementById('videoPreview');
+            const placeholderEl = document.getElementById('placeholderText');
+
+            if (mode === 'whiteboard') {
+                videoEl.style.display = 'none';
+                placeholderEl.style.display = 'none';
+                wbCanvas.style.display = 'block';
+                showRecAlert('🎨 <strong>Whiteboard + Voice Mode:</strong> Draw or load a slide above, then tap <strong>🔴 Start Recording</strong> to capture the board + your microphone!', 'info');
+            } else {
+                wbCanvas.style.display = 'none';
+                if (!videoEl.srcObject && !videoEl.src) {
+                    videoEl.style.display = 'none';
+                    placeholderEl.style.display = 'block';
+                }
+                if (mode === 'camera') {
+                    placeholderEl.textContent = 'Click "🔴 Start Recording" to start Camera + Microphone recording';
+                    showRecAlert('', '');
+                } else {
+                    placeholderEl.textContent = 'Click "🔴 Start Recording" to select a screen, window, or browser tab';
+                    if (!isDisplayMediaSupported()) {
+                        showRecAlert(
+                            '📱 <strong>Note for Mobile Users:</strong> Android &amp; iOS browsers block full-phone screen capture inside web apps for OS security. Use <a href="javascript:void(0)" onclick="setRecordMode(\'camera\')" style="color:#0066FF;text-decoration:underline;font-weight:800;">📹 Camera / Webcam</a> or <a href="javascript:void(0)" onclick="setRecordMode(\'whiteboard\')" style="color:#0066FF;text-decoration:underline;font-weight:800;">🎨 Whiteboard + Voice</a> on mobile, or open on a Desktop browser for Screen Capture.',
+                            'info'
+                        );
+                    } else {
+                        showRecAlert('', '');
+                    }
+                }
+            }
+        }
+
+        function toggleCameraFacing() {
+            cameraFacing = (cameraFacing === 'user') ? 'environment' : 'user';
+            document.getElementById('camFacingLabel').textContent = (cameraFacing === 'user') ? 'Front' : 'Back';
+        }
+
+        function pickSupportedMimeType() {
+            if (typeof MediaRecorder === 'undefined') return '';
+            const candidates = [
+                'video/webm;codecs=vp9,opus',
+                'video/webm;codecs=vp8,opus',
+                'video/webm;codecs=vp9',
+                'video/webm;codecs=vp8',
+                'video/webm',
+                'video/mp4'
+            ];
+            for (const type of candidates) {
+                if (typeof MediaRecorder.isTypeSupported === 'function' && MediaRecorder.isTypeSupported(type)) {
+                    return type;
+                }
+            }
+            return '';
+        }
+
+        function cleanupStreams() {
+            activeStreams.forEach(s => {
+                try {
+                    s.getTracks().forEach(t => t.stop());
+                } catch (e) {}
+            });
+            activeStreams = [];
+            if (audioCtx) {
+                try { audioCtx.close(); } catch (e) {}
+                audioCtx = null;
+            }
+        }
 
         async function startRecording() {
+            showRecAlert('', '');
+            const wantMic = document.getElementById('recordMicChk').checked;
+            const wantSysAudio = document.getElementById('recordSysAudioChk').checked;
+            const videoEl = document.getElementById('videoPreview');
+            const placeholderEl = document.getElementById('placeholderText');
+
+            if (previewBlobUrl) {
+                URL.revokeObjectURL(previewBlobUrl);
+                previewBlobUrl = null;
+                videoEl.removeAttribute('src');
+                videoEl.controls = false;
+            }
+
+            cleanupStreams();
+
             try {
-                stream = await navigator.mediaDevices.getDisplayMedia({
-                    video: { cursor: "always" },
-                    audio: true
-                });
+                let finalStream = null;
 
-                document.getElementById('videoPreview').srcObject = stream;
-                document.getElementById('placeholderText').style.display = 'none';
+                if (recordMode === 'screen') {
+                    if (!isDisplayMediaSupported()) {
+                        showRecAlert(
+                            '⚠️ Your mobile browser does not support OS screen sharing (<code>getDisplayMedia</code>). Switching to <strong>📹 Camera / Webcam</strong> mode — tap <strong>🔴 Start Recording</strong> again, or choose <strong>🎨 Whiteboard + Voice</strong>!',
+                            'info'
+                        );
+                        setRecordMode('camera');
+                        return;
+                    }
 
-                let mimeType = 'video/webm;codecs=vp9';
-                if (!MediaRecorder.isTypeSupported(mimeType)) {
-                    mimeType = 'video/webm';
+                    const displayStream = await navigator.mediaDevices.getDisplayMedia({
+                        video: { cursor: 'always' },
+                        audio: wantSysAudio
+                    });
+                    activeStreams.push(displayStream);
+
+                    if (wantMic && navigator.mediaDevices.getUserMedia) {
+                        try {
+                            const micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                            activeStreams.push(micStream);
+
+                            // Mix display audio (if any) + mic audio via AudioContext
+                            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                            if (AudioContextClass) {
+                                audioCtx = new AudioContextClass();
+                                const dest = audioCtx.createMediaStreamDestination();
+                                if (displayStream.getAudioTracks().length > 0) {
+                                    const sysSource = audioCtx.createMediaStreamSource(new MediaStream(displayStream.getAudioTracks()));
+                                    sysSource.connect(dest);
+                                }
+                                if (micStream.getAudioTracks().length > 0) {
+                                    const micSource = audioCtx.createMediaStreamSource(micStream);
+                                    micSource.connect(dest);
+                                }
+                                finalStream = new MediaStream([
+                                    ...displayStream.getVideoTracks(),
+                                    ...dest.stream.getAudioTracks()
+                                ]);
+                            } else {
+                                finalStream = new MediaStream([
+                                    ...displayStream.getVideoTracks(),
+                                    ...micStream.getAudioTracks()
+                                ]);
+                            }
+                        } catch (micErr) {
+                            // Continue with screen stream even if mic was denied
+                            finalStream = displayStream;
+                        }
+                    } else {
+                        finalStream = displayStream;
+                    }
+
+                    videoEl.srcObject = finalStream;
+                    videoEl.muted = true;
+                    videoEl.style.display = 'block';
+                    wbCanvas.style.display = 'none';
+                    placeholderEl.style.display = 'none';
+                    await videoEl.play().catch(() => {});
+
+                } else if (recordMode === 'camera') {
+                    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                        showRecAlert('❌ Camera access is not available in this browser or requires HTTPS.', 'error');
+                        return;
+                    }
+                    const camStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: cameraFacing, width: { ideal: 1280 }, height: { ideal: 720 } },
+                        audio: wantMic
+                    });
+                    activeStreams.push(camStream);
+                    finalStream = camStream;
+
+                    videoEl.srcObject = finalStream;
+                    videoEl.muted = true;
+                    videoEl.style.display = 'block';
+                    wbCanvas.style.display = 'none';
+                    placeholderEl.style.display = 'none';
+                    await videoEl.play().catch(() => {});
+
+                } else if (recordMode === 'whiteboard') {
+                    const canvasStream = wbCanvas.captureStream ? wbCanvas.captureStream(30) : null;
+                    if (!canvasStream) {
+                        showRecAlert('❌ Canvas video capture is not supported in this browser.', 'error');
+                        return;
+                    }
+                    activeStreams.push(canvasStream);
+
+                    if (wantMic && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                        try {
+                            const micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                            activeStreams.push(micStream);
+                            finalStream = new MediaStream([
+                                ...canvasStream.getVideoTracks(),
+                                ...micStream.getAudioTracks()
+                            ]);
+                        } catch (micErr) {
+                            finalStream = canvasStream;
+                            showRecAlert('ℹ️ Recording whiteboard without microphone (microphone permission was denied).', 'info');
+                        }
+                    } else {
+                        finalStream = canvasStream;
+                    }
+
+                    wbCanvas.style.display = 'block';
+                    videoEl.style.display = 'none';
+                    placeholderEl.style.display = 'none';
                 }
 
-                mediaRecorder = new MediaRecorder(stream, { mimeType });
+                const chosenMime = pickSupportedMimeType();
+                activeMimeType = chosenMime || 'video/webm';
+                mediaRecorder = chosenMime
+                    ? new MediaRecorder(finalStream, { mimeType: chosenMime })
+                    : new MediaRecorder(finalStream);
+
                 recordedChunks = [];
 
                 mediaRecorder.ondataavailable = e => {
-                    if (e.data.size > 0) recordedChunks.push(e.data);
+                    if (e.data && e.data.size > 0) recordedChunks.push(e.data);
                 };
 
                 mediaRecorder.onstop = () => {
+                    clearInterval(timerInterval);
+                    cleanupStreams();
+
+                    const blobType = activeMimeType.split(';')[0] || 'video/webm';
+                    const blob = new Blob(recordedChunks, { type: blobType });
+                    previewBlobUrl = URL.createObjectURL(blob);
+
+                    wbCanvas.style.display = 'none';
+                    placeholderEl.style.display = 'none';
+                    videoEl.srcObject = null;
+                    videoEl.src = previewBlobUrl;
+                    videoEl.muted = false;
+                    videoEl.controls = true;
+                    videoEl.style.display = 'block';
+
                     document.getElementById('downloadBtn').style.display = 'inline-block';
                     document.getElementById('startBtn').style.display = 'inline-block';
+                    document.getElementById('pauseBtn').style.display = 'none';
                     document.getElementById('stopBtn').style.display = 'none';
-                    clearInterval(timerInterval);
+                    showRecAlert('✅ Recording complete! Preview your video below or click <strong>⬇️ Download Video File</strong>.', 'success');
                 };
 
-                // Handle user stopping screen share from browser UI
-                stream.getVideoTracks()[0].onended = () => {
-                    if (mediaRecorder.state !== 'inactive') stopRecording();
-                };
+                if (finalStream.getVideoTracks().length > 0) {
+                    finalStream.getVideoTracks()[0].onended = () => {
+                        if (mediaRecorder && mediaRecorder.state !== 'inactive') stopRecording();
+                    };
+                }
 
-                mediaRecorder.start();
+                mediaRecorder.start(250);
 
                 document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('pauseBtn').style.display = 'inline-block';
+                document.getElementById('pauseBtn').textContent = '⏸️ Pause';
                 document.getElementById('stopBtn').style.display = 'inline-block';
                 document.getElementById('downloadBtn').style.display = 'none';
 
                 secondsElapsed = 0;
+                document.getElementById('timerDisplay').innerHTML = '<span class="rec-status-dot"></span>00:00:00';
+                clearInterval(timerInterval);
                 timerInterval = setInterval(() => {
+                    if (mediaRecorder && mediaRecorder.state === 'paused') return;
                     secondsElapsed++;
                     const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
                     const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
                     const secs = String(secondsElapsed % 60).padStart(2, '0');
-                    document.getElementById('timerDisplay').textContent = `${hrs}:${mins}:${secs}`;
+                    document.getElementById('timerDisplay').innerHTML = `<span class="rec-status-dot"></span>${hrs}:${mins}:${secs}`;
                 }, 1000);
 
             } catch (err) {
-                console.error("Recording error:", err);
+                console.error('Recording error:', err);
+                cleanupStreams();
+                if (err && (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError')) {
+                    showRecAlert('⚠️ Recording cancelled or permission denied. Please allow Screen/Camera/Microphone access when prompted.', 'error');
+                } else if (err && err.name === 'NotFoundError') {
+                    showRecAlert('❌ No compatible camera or microphone device was found on this device.', 'error');
+                } else {
+                    showRecAlert('❌ Could not start recording: ' + (err && err.message ? err.message : 'Unsupported browser feature. Try Camera or Whiteboard mode.'), 'error');
+                }
+            }
+        }
+
+        function togglePauseRecording() {
+            if (!mediaRecorder) return;
+            const pauseBtn = document.getElementById('pauseBtn');
+            if (mediaRecorder.state === 'recording') {
+                mediaRecorder.pause();
+                pauseBtn.textContent = '▶️ Resume';
+                showRecAlert('⏸️ Recording paused.', 'info');
+            } else if (mediaRecorder.state === 'paused') {
+                mediaRecorder.resume();
+                pauseBtn.textContent = '⏸️ Pause';
+                showRecAlert('', '');
             }
         }
 
         function stopRecording() {
             if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
-            }
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
+            } else {
+                cleanupStreams();
             }
         }
 
         function downloadRecording() {
-            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            if (!recordedChunks.length) return;
+            const isMp4 = activeMimeType.indexOf('mp4') !== -1;
+            const ext = isMp4 ? 'mp4' : 'webm';
+            const blobType = isMp4 ? 'video/mp4' : 'video/webm';
+            const blob = new Blob(recordedChunks, { type: blobType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Factictionary_ScreenRecord_${Date.now()}.webm`;
+            a.download = `Factictionary_Recording_${Date.now()}.${ext}`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            setTimeout(() => URL.revokeObjectURL(url), 3000);
         }
+
+        // Auto-select Camera mode on mobile devices where getDisplayMedia is unsupported
+        (function initDefaultMode() {
+            const isMobileUA = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+            if (!isDisplayMediaSupported() || isMobileUA) {
+                setRecordMode('camera');
+                showRecAlert(
+                    '📱 <strong>Mobile Recorder Ready:</strong> Using <strong>📹 Camera / Webcam + Mic</strong> mode (or switch to <strong>🎨 Whiteboard + Voice</strong>). Desktop browsers also support full <strong>🖥️ Screen / Tab</strong> capture.',
+                    'info'
+                );
+            }
+        })();
     </script>
 </body>
 </html>
