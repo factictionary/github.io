@@ -19,4 +19,69 @@ jobs:
 
       - name: Submit All Sitemap URLs to IndexNow & Google WebSub
         shell: pwsh
-        run: ./submit_to_search_indexes.ps1
+        run: |
+          $ErrorActionPreference = "Continue"
+          $SitemapPath = Join-Path $PWD "sitemap.xml"
+
+          Write-Host "1. Reading URLs from $SitemapPath ..." -ForegroundColor Cyan
+          [xml]$xml = Get-Content $SitemapPath
+          $urls = @($xml.urlset.url | ForEach-Object { $_.loc })
+          Write-Host "   Found $($urls.Count) URLs to submit." -ForegroundColor Green
+
+          $payload = @{
+              host        = "factictionary.in"
+              key         = "f8a9c4e2b1d74365a0e9c8b7d6e5f4a3"
+              keyLocation = "https://factictionary.in/f8a9c4e2b1d74365a0e9c8b7d6e5f4a3.txt"
+              urlList     = $urls
+          } | ConvertTo-Json -Depth 4
+
+          $indexNowEndpoints = @(
+              "https://api.indexnow.org/indexnow",
+              "https://www.bing.com/indexnow",
+              "https://yandex.com/indexnow"
+          )
+
+          foreach ($endpoint in $indexNowEndpoints) {
+              try {
+                  Write-Host "2. Submitting $($urls.Count) URLs to $endpoint ..." -ForegroundColor Cyan
+                  $res = Invoke-WebRequest -Uri $endpoint -Method POST -Body $payload -ContentType "application/json; charset=utf-8" -UseBasicParsing -TimeoutSec 20
+                  Write-Host "   -> Success! HTTP Status: $($res.StatusCode)" -ForegroundColor Green
+              } catch {
+                  Write-Host "   -> Response from $endpoint : $($_.Exception.Message)" -ForegroundColor Yellow
+              }
+          }
+
+          $webSubUrls = @(
+              "https://factictionary.in/feed.xml",
+              "https://factictionary.in/sitemap.xml"
+          )
+          foreach ($feedUrl in $webSubUrls) {
+              try {
+                  Write-Host "3. Pinging Google WebSub Hub for $feedUrl ..." -ForegroundColor Cyan
+                  $body = "hub.mode=publish&hub.url=$([uri]::EscapeDataString($feedUrl))"
+                  $res = Invoke-WebRequest -Uri "https://pubsubhubbub.appspot.com/" -Method POST -Body $body -ContentType "application/x-www-form-urlencoded" -UseBasicParsing -TimeoutSec 20
+                  Write-Host "   -> Google WebSub Hub accepted notification! Status: $($res.StatusCode)" -ForegroundColor Green
+              } catch {
+                  Write-Host "   -> WebSub response: $($_.Exception.Message)" -ForegroundColor Yellow
+              }
+          }
+
+          $hubPages = @(
+              "https://factictionary.in/",
+              "https://factictionary.in/guides/",
+              "https://factictionary.in/tools/",
+              "https://factictionary.in/games/",
+              "https://factictionary.in/directory.html",
+              "https://factictionary.in/lang/"
+          )
+          foreach ($hp in $hubPages) {
+              try {
+                  Write-Host "4. Requesting Internet Archive snapshot for $hp ..." -ForegroundColor Cyan
+                  $null = Invoke-WebRequest -Uri "https://web.archive.org/save/$hp" -Method GET -UseBasicParsing -TimeoutSec 15
+                  Write-Host "   -> Archived $hp" -ForegroundColor Green
+              } catch {
+                  Write-Host "   -> Archive queued or rate-limited for $hp" -ForegroundColor Yellow
+              }
+          }
+
+          Write-Host "All search index notifications complete!" -ForegroundColor Green
