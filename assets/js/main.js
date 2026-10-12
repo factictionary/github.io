@@ -1867,6 +1867,63 @@ if ('PerformanceObserver' in window) {
                 -webkit-box-orient: vertical;
             }
 
+            
+/* ===== MOBILE RESULT ROW & DOWNLOAD BUTTON OVERFLOW FIX ===== */
+@media (max-width: 820px) {
+    .tool-workspace, .tool-output, .file-list, .result-list, #resultList, #fileList, .compression-results {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+    .tool-output {
+        padding: 14px !important;
+    }
+    .result-item, .file-item, .metadata-item, .frame-info {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .result-item > div, .file-item > div, .file-name, .result-item strong {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        flex: 1 1 180px !important;
+    }
+    .result-item button, .result-item a.btn, .result-item .btn {
+        width: 100% !important;
+        margin-top: 4px !important;
+        padding: 10px 14px !important;
+        font-size: 0.85rem !important;
+        font-weight: 700 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+    }
+    .tool-actions, .action-buttons, .output-actions, .input-actions {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .tool-actions .btn-tool, .tool-actions button, .tool-actions a.btn {
+        flex: 1 1 calc(50% - 8px) !important;
+        min-width: 120px !important;
+        max-width: 100% !important;
+        padding: 10px 12px !important;
+        font-size: 0.88rem !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+}
+
             /* ===== DESKTOP STUDIO SIDEBAR ===== */
             #f-desktop-sidebar {
                 position: fixed;

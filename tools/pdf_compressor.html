@@ -2368,7 +2368,7 @@
                 <div class="stat-card">
 
 
-                    <div class="stat-number">âž</div>
+                    <div class="stat-number">∞</div>
 
 
                     <div class="stat-label">Unlimited Usage</div>
@@ -2806,7 +2806,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
                                 <div class="file-status" id="status-${file.name}">
 
 
-                                    <span>â³ Ready</span>
+                                    <span>⏳ Ready</span>
 
 
                                 </div>
@@ -2926,7 +2926,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
                     try {
 
 
-                        this.updateStatus(file.name, 'processing', '”„ Compressing...');
+                        this.updateStatus(file.name, 'processing', '🔄 Compressing...');
 
 
                         this.updateProgress(processedFiles / totalFiles * 100, `Compressing ${file.name}...`);
@@ -2983,7 +2983,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
                         console.error(`Error compressing ${file.name}:`, error);
 
 
-                        this.updateStatus(file.name, 'error', 'â Error');
+                        this.updateStatus(file.name, 'error', '❌ Error');
 
 
                         this.resultList.innerHTML += this.createErrorItem(file, error.message);
@@ -3421,7 +3421,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
                             <div style="font-size: 12px; color: #666;">
 
 
-                                ${originalSize} â†’ ${compressedSize} 
+                                ${originalSize} → ${compressedSize} 
 
 
                                 <span style="color: #10B981; font-weight: bold;">(-${savedFormatted}, ${compressionRatio}%)</span>
@@ -3484,7 +3484,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
                         </div>
 
 
-                        <span style="color: #EF4444;">â Failed</span>
+                        <span style="color: #EF4444;">❌ Failed</span>
 
 
                     </div>
@@ -3562,7 +3562,7 @@ if(typeof PDFLib==='undefined'){document.write('<script src="https://cdn.jsdeliv
             downloadSingleFile(fileName) {
 
 
-                const compressedFile = this.compressedFiles.find(f => f.name === fileName);
+                const compressedFile = this.compressedFiles.find(f => f.name === fileName || f.name === this.getCompressedFileName(fileName));
 
 
                 if (!compressedFile) return;
