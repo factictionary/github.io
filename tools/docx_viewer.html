@@ -13,6 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+        <script>
+            if (typeof mammoth === 'undefined') {
+                document.write('<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"><\/script>');
+            }
+        </script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
         .drop-zone {
@@ -163,16 +168,25 @@
         let currentHtml = '';
         async function loadDocx(file) {
             if (!file) return;
+            if (typeof mammoth === 'undefined') {
+                document.getElementById('fileStatus').textContent = '⚠️ Document engine is still loading. Please try again.';
+                return;
+            }
             document.getElementById('fileStatus').textContent = 'Rendering ' + file.name + '...';
-            const arrayBuffer = await file.arrayBuffer();
-            const result = await mammoth.convertToHtml({arrayBuffer: arrayBuffer});
-            currentHtml = result.value;
-            const viewer = document.getElementById('docViewer');
-            viewer.innerHTML = currentHtml || '<p>Document is empty.</p>';
-            const txt = viewer.innerText.trim();
-            document.getElementById('wCount').textContent = txt ? txt.split(/\s+/).length : 0;
-            document.getElementById('cCount').textContent = txt.length;
-            document.getElementById('fileStatus').textContent = '📄 ' + file.name;
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const result = await mammoth.convertToHtml({arrayBuffer: arrayBuffer});
+                currentHtml = result.value;
+                const viewer = document.getElementById('docViewer');
+                viewer.innerHTML = currentHtml || '<p>Document is empty.</p>';
+                const txt = viewer.innerText.trim();
+                document.getElementById('wCount').textContent = txt ? txt.split(/\s+/).length : 0;
+                document.getElementById('cCount').textContent = txt.length;
+                document.getElementById('fileStatus').textContent = '📄 ' + file.name;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('fileStatus').textContent = '❌ Error loading document: ' + err.message;
+            }
         }
         function copyCleanHtml() {
             if (!currentHtml) return alert('Load a .docx file first.');

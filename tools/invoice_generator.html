@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,11 @@
     
     <!-- html2pdf.js for Client-Side PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        if (typeof html2pdf === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"><\/script>');
+        }
+    </script>
 
     <style>
         .invoice-card {
@@ -503,6 +508,10 @@
                 html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
+            if (typeof html2pdf === 'undefined') {
+                alert('PDF generator library is still loading. Please check your connection and try again.');
+                return;
+            }
             html2pdf().set(opt).from(element).save();
         }
 

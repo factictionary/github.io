@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,11 @@
     
     <!-- QRCode.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        if (typeof QRCode === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script>');
+        }
+    </script>
 
     <style>
         .qr-card {
@@ -324,6 +329,11 @@
 
             container.innerHTML = '';
 
+            if (typeof QRCode === 'undefined') {
+                container.innerHTML = '<div style="padding: 20px; color: #DC2626; font-size: 13px;">QR generator loading...</div>';
+                setTimeout(renderQR, 300);
+                return;
+            }
             qrcodeObj = new QRCode(container, {
                 text: text,
                 width: 220,
@@ -335,7 +345,18 @@
         }
 
         function downloadPNG() {
-            const img = document.querySelector('#qrcodeCanvas img');
+            const container = document.getElementById('qrcodeCanvas');
+            const img = container ? container.querySelector('img') : null;
+            const canvas = container ? container.querySelector('canvas') : null;
+            if (canvas && (!img || !img.src)) {
+                const a = document.createElement('a');
+                a.href = canvas.toDataURL('image/png');
+                a.download = `Factictionary_QRCode_${Date.now()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                return;
+            }
             if (img && img.src) {
                 const a = document.createElement('a');
                 a.href = img.src;

@@ -13,6 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script>
+            if (typeof XLSX === 'undefined') {
+                document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"><\/script>');
+            }
+        </script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; line-height: 1.65; }
         .drop-zone {
@@ -171,18 +176,27 @@
 
         async function loadWorkbook(file) {
             if (!file) return;
+            if (typeof XLSX === 'undefined') {
+                alert('Spreadsheet engine (SheetJS) is still loading. Please check your connection and try again.');
+                return;
+            }
             document.getElementById('sheetTitle').textContent = '📊 ' + file.name;
-            const buf = await file.arrayBuffer();
-            wb = XLSX.read(buf, {type: 'array'});
-            const sel = document.getElementById('sheetSelect');
-            sel.innerHTML = '';
-            wb.SheetNames.forEach(name => {
-                const opt = document.createElement('option');
-                opt.value = name;
-                opt.textContent = name;
-                sel.appendChild(opt);
-            });
-            renderSelectedSheet();
+            try {
+                const buf = await file.arrayBuffer();
+                wb = XLSX.read(buf, {type: 'array'});
+                const sel = document.getElementById('sheetSelect');
+                sel.innerHTML = '';
+                wb.SheetNames.forEach(name => {
+                    const opt = document.createElement('option');
+                    opt.value = name;
+                    opt.textContent = name;
+                    sel.appendChild(opt);
+                });
+                renderSelectedSheet();
+            } catch (err) {
+                console.error(err);
+                alert('Error parsing spreadsheet: ' + err.message);
+            }
         }
 
         function renderSelectedSheet() {

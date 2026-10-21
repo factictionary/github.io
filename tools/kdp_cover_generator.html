@@ -34,7 +34,12 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
     <!-- PDF generation library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="/assets/js/pdf-lib.min.js"></script>
+    <script>
+        if (typeof PDFLib === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"><\/script>');
+        }
+    </script>
 
     <!-- Tool-specific styles -->
     <style>
@@ -928,7 +933,9 @@
     (function(){
         "use strict";
 
-        const { PDFDocument, rgb, StandardFonts, degrees } = PDFLib;
+        function getPdfLib() {
+            return (typeof PDFLib !== 'undefined') ? PDFLib : (typeof window.PDFLib !== 'undefined' ? window.PDFLib : null);
+        }
 
         // KDP Paper Multipliers (inches per page)
         const PAPER_MULTIPLIER = {
@@ -1223,6 +1230,12 @@
 
                 const toPt = inches => inches * 72;
 
+                const lib = getPdfLib();
+                if (!lib) {
+                    alert('PDF generation engine (pdf-lib) is still loading. Please check your connection and try again.');
+                    return;
+                }
+                const { PDFDocument, rgb, StandardFonts, degrees } = lib;
                 const pdfDoc = await PDFDocument.create();
                 const page = pdfDoc.addPage([toPt(wrapWIn), toPt(wrapHIn)]);
 

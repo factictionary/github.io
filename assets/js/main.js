@@ -2240,3 +2240,15 @@ if ('PerformanceObserver' in window) {
     }
 })();
 // ===== END DUAL NATIVE APP SHELL =====
+
+// ===== CROSS PROMO MODULE INTEGRATION (Fallback for unfilled Google Ads) =====
+(function() {
+    if (typeof window.CrossPromo === 'undefined' && !document.querySelector('script[src*="cross_promo.js"]')) {
+        const script = document.createElement('script');
+        script.src = '/assets/js/cross_promo.js';
+        script.async = true;
+        document.head.appendChild(script);
+    }
+})();
+// ===== END CROSS PROMO MODULE INTEGRATION =====
+

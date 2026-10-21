@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,11 @@
     
     <!-- Marked.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script>
+        if (typeof marked === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"><\/script>');
+        }
+    </script>
 
     <style>
         .md-card {
@@ -238,7 +243,12 @@
 
         function updatePreview() {
             const mdText = document.getElementById('mdInput').value;
-            const html = marked.parse(mdText);
+            let html;
+            if (typeof marked !== 'undefined' && marked.parse) {
+                html = marked.parse(mdText);
+            } else {
+                html = '<div style="white-space: pre-wrap; font-family: inherit;">' + mdText.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>';
+            }
             document.getElementById('mdPreview').innerHTML = html;
 
             const words = mdText.trim() ? mdText.trim().split(/\s+/).length : 0;
@@ -248,7 +258,8 @@
 
         function downloadHTML() {
             const mdText = document.getElementById('mdInput').value;
-            const htmlContent = `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"><title>Exported Document</title></head>\n<body>\n${marked.parse(mdText)}\n</body>\n</html>`;
+            const rendered = (typeof marked !== 'undefined' && marked.parse) ? marked.parse(mdText) : mdText;
+            const htmlContent = `<!DOCTYPE html>\n<html>\n<head><meta charset="UTF-8"><title>Exported Document</title></head>\n<body>\n${rendered}\n</body>\n</html>`;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
