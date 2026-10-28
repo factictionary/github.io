@@ -971,10 +971,16 @@ if ('PerformanceObserver' in window) {
                     <button class="tools-drawer-close" onclick="closeShareModal()" style="position:absolute; top:20px; right:20px;">&times;</button>
                     <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; gap:8px;"><span class="material-symbols-outlined" style="color:#0066FF; font-size:26px;">share</span> Share Page &amp; Pre-formatted Post</h3>
                     <p style="font-size:13.5px; color:#64748B; margin-bottom:14px;">Copy a ready-to-post write-up with embedded link or download a visual image card.</p>
-                    <button type="button" class="btn btn-primary f-native-share-trigger" onclick="triggerDeviceNativeShare()" style="width:100%;margin-bottom:14px;padding:10px 16px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#0052CC);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 10px rgba(0,102,255,0.25);border:none;color:#FFFFFF;cursor:pointer;">
-                        <span class="material-symbols-outlined" style="font-size:20px;">share</span>
-                        <span>Share via WhatsApp / Mobile Apps</span>
-                    </button>
+                    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+                        <button type="button" class="btn btn-primary f-native-share-img-btn" onclick="shareToolScreenshot(this)" style="width:100%;padding:11px 16px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#0052CC);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 10px rgba(0,102,255,0.25);border:none;color:#FFFFFF;cursor:pointer;font-size:0.92rem;">
+                            <span class="material-symbols-outlined" style="font-size:20px;">photo_camera</span>
+                            <span>📸 Capture &amp; Share Screenshot as Image</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary f-native-share-text-btn" onclick="triggerDeviceNativeShare()" style="width:100%;padding:9px 14px;border-radius:12px;background:#F1F5F9;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #CBD5E1;color:#1E293B;cursor:pointer;font-size:0.85rem;">
+                            <span class="material-symbols-outlined" style="font-size:18px;color:#0066FF;">send_to_mobile</span>
+                            <span>📱 Share Link &amp; Text Write-Up</span>
+                        </button>
+                    </div>
                     
                     <div class="share-post-card">
                         <div class="share-post-header">
@@ -1000,11 +1006,18 @@ if ('PerformanceObserver' in window) {
                     </div>
 
                     <div class="share-screenshot-card">
-                        <h4 style="font-size:14px; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:6px;"><span class="material-symbols-outlined" style="font-size:18px; color:#0066FF;">photo_camera</span> Share as Visual Image Card</h4>
-                        <p style="font-size:12px; color:#64748B; margin-bottom:10px;">Generate a branded preview image card of this tool page for social posts.</p>
-                        <button class="btn btn-secondary" onclick="generatePageScreenshot()" style="font-size:13px; border-radius:20px; width:100%; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
-                            <span class="material-symbols-outlined" style="font-size:16px; color:#0066FF;">auto_awesome</span> Generate &amp; Download Image Card
-                        </button>
+                        <h4 style="font-size:14px; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            <span class="material-symbols-outlined" style="font-size:18px; color:#0066FF;">photo_camera</span> Visual Tool Screenshot Card
+                        </h4>
+                        <p style="font-size:12px; color:#64748B; margin-bottom:10px;">Captures tool workspace with Factictionary branding &amp; directly opens share drawer.</p>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-primary" onclick="shareToolScreenshot(this)" style="font-size:13px; border-radius:10px; flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#0066FF; padding:9px 14px;">
+                                <span class="material-symbols-outlined" style="font-size:16px;">share</span> Share Image
+                            </button>
+                            <button class="btn btn-secondary" onclick="generatePageScreenshot()" style="font-size:13px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:9px 14px;" title="Download PNG">
+                                <span class="material-symbols-outlined" style="font-size:16px;">download</span> Save
+                            </button>
+                        </div>
                         <div class="screenshot-preview-holder" id="screenshot-holder"></div>
                     </div>
                 </div>
@@ -1095,6 +1108,151 @@ if ('PerformanceObserver' in window) {
                 btnElement.textContent = 'Copied Post! ✓';
                 setTimeout(() => { btnElement.textContent = origText; }, 2000);
             }
+        }
+    };
+
+    window.shareToolScreenshot = async function(btnElement) {
+        let origBtnHtml = null;
+        if (btnElement) {
+            origBtnHtml = btnElement.innerHTML;
+            btnElement.disabled = true;
+            btnElement.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px; animation:spin 1s linear infinite;">sync</span> <span>Capturing Screenshot...</span>';
+        }
+
+        let notice = null;
+        if (!btnElement) {
+            notice = document.createElement('div');
+            notice.style.cssText = 'position:fixed;top:65px;left:50%;transform:translateX(-50%);background:#0F172A;color:#FFFFFF;padding:10px 18px;border-radius:24px;box-shadow:0 6px 20px rgba(0,0,0,0.3);z-index:999999;font-size:0.85rem;font-weight:700;display:flex;align-items:center;gap:8px;border:1px solid #3B82F6;';
+            notice.innerHTML = '<span class="material-symbols-outlined" style="font-size:20px;color:#38BDF8;">photo_camera</span><span>Capturing Tool Screenshot...</span>';
+            document.body.appendChild(notice);
+        }
+
+        try {
+            const html2canvas = await loadHtml2Canvas();
+
+            const shareModal = document.getElementById('share-tool-modal');
+            const navDrawer = document.getElementById('tools-nav-drawer');
+            const topbar = document.getElementById('f-native-topbar');
+            const bottomnav = document.getElementById('f-mobile-bottomnav');
+            const dock = document.querySelector('.tools-dock-bar');
+            const donationModal = document.getElementById('donation-modal');
+
+            const wasModalOpen = shareModal && (shareModal.classList.contains('active') || shareModal.style.display !== 'none');
+            if (shareModal) shareModal.style.display = 'none';
+            if (navDrawer) navDrawer.style.display = 'none';
+            if (donationModal) donationModal.style.display = 'none';
+            if (topbar) topbar.style.display = 'none';
+            if (bottomnav) bottomnav.style.display = 'none';
+            if (dock) dock.style.display = 'none';
+
+            // Select clean tool workspace or main container
+            const target = document.querySelector('.tool-workspace') ||
+                           document.querySelector('.tool-main') ||
+                           document.querySelector('.pdf-tool-card') ||
+                           document.querySelector('main') ||
+                           document.body;
+
+            const origScrollX = window.scrollX;
+            const origScrollY = window.scrollY;
+
+            const canvas = await html2canvas(target, {
+                scale: Math.min(window.devicePixelRatio || 1.5, 2),
+                useCORS: true,
+                allowTaint: true,
+                logging: false,
+                backgroundColor: '#F8FAFC'
+            });
+
+            // Restore hidden UI elements
+            window.scrollTo(origScrollX, origScrollY);
+            if (shareModal) shareModal.style.display = '';
+            if (navDrawer) navDrawer.style.display = '';
+            if (donationModal) donationModal.style.display = '';
+            if (topbar) topbar.style.display = '';
+            if (bottomnav) bottomnav.style.display = '';
+            if (dock) dock.style.display = '';
+
+            // Add branded footer ribbon to captured screenshot
+            const brandedCanvas = document.createElement('canvas');
+            const bctx = brandedCanvas.getContext('2d');
+            const ribbonHeight = 46;
+            brandedCanvas.width = canvas.width;
+            brandedCanvas.height = canvas.height + ribbonHeight;
+
+            bctx.drawImage(canvas, 0, 0);
+
+            // Draw sleek dark bottom ribbon
+            bctx.fillStyle = '#0F172A';
+            bctx.fillRect(0, canvas.height, brandedCanvas.width, ribbonHeight);
+
+            bctx.fillStyle = '#FFFFFF';
+            bctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            bctx.textAlign = 'left';
+            bctx.textBaseline = 'middle';
+            bctx.fillText('⚡ Factictionary — 85+ Free Privacy Tools', 16, canvas.height + (ribbonHeight / 2));
+
+            bctx.fillStyle = '#38BDF8';
+            bctx.textAlign = 'right';
+            bctx.fillText('factictionary.in', brandedCanvas.width - 16, canvas.height + (ribbonHeight / 2));
+
+            const dataUrl = brandedCanvas.toDataURL('image/png');
+            const title = document.title ? document.title.replace(/\s*\|\s*Factictionary/gi, '').trim() : 'Factictionary Tool';
+            const shareText = window.generateSharePostText ? window.generateSharePostText() : (title + '\n' + window.location.href);
+            const currentUrl = window.location.href;
+
+            // 1. Android Native App Bridge (Intent.ACTION_SEND with FileProvider image URI)
+            if (window.FactictionaryNative && typeof window.FactictionaryNative.shareImage === 'function') {
+                window.FactictionaryNative.shareImage(dataUrl, title, shareText, currentUrl);
+                if (wasModalOpen && window.closeShareModal) window.closeShareModal();
+                return;
+            }
+            if (window.AndroidAdMob && typeof window.AndroidAdMob.shareImage === 'function') {
+                window.AndroidAdMob.shareImage(dataUrl, title, shareText, currentUrl);
+                if (wasModalOpen && window.closeShareModal) window.closeShareModal();
+                return;
+            }
+
+            // 2. Modern Mobile Browser / PWA (Web Share API Level 2 with files)
+            try {
+                const blob = await (await fetch(dataUrl)).blob();
+                const file = new File([blob], 'factictionary-tool-screenshot.png', { type: 'image/png' });
+
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({
+                        files: [file],
+                        title: title,
+                        text: shareText
+                    });
+                    if (wasModalOpen && window.closeShareModal) window.closeShareModal();
+                    return;
+                }
+            } catch (shareErr) {
+                if (shareErr.name === 'AbortError') return; // User closed native share sheet
+                console.log('[WebShare] Image file share skipped or unsupported:', shareErr);
+            }
+
+            // 3. Fallback: Display preview in modal with download button
+            if (window.openShareModal) window.openShareModal();
+            const holder = document.getElementById('screenshot-holder');
+            if (holder) {
+                holder.style.display = 'block';
+                holder.innerHTML = `
+                    <div style="margin-top:10px; font-size:12px; font-weight:600; color:#10B981;">✅ Screenshot ready! Directly download or share image below:</div>
+                    <img src="${dataUrl}" alt="Tool Screenshot" style="max-height: 280px; width: 100%; object-fit: contain; border-radius: 8px; margin: 8px 0; border: 1px solid #CBD5E1; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <a href="${dataUrl}" download="factictionary-screenshot.png" class="btn btn-primary" style="margin-top:6px; width:100%; border-radius:10px; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <span>📥</span><span>Download Screenshot (.PNG)</span>
+                    </a>
+                `;
+            }
+        } catch (err) {
+            console.error('[ShareScreenshot] Failed to capture tool screenshot:', err);
+            alert('Screenshot capture could not be completed. Please try again.');
+        } finally {
+            if (btnElement && origBtnHtml) {
+                btnElement.disabled = false;
+                btnElement.innerHTML = origBtnHtml;
+            }
+            if (notice) notice.remove();
         }
     };
 
