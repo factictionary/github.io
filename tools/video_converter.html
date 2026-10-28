@@ -120,12 +120,6 @@
 
     
 
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/umd/ffmpeg.js"></script>
-
-
-    
-
-
     <!-- Tool-specific styles -->
 
 
@@ -1497,6 +1491,9 @@
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
     <meta name="twitter:image" content="https://factictionary.in/assets/images/og-banner.png">
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    <script src="/assets/js/ffmpeg-engine.js"></script>
 </head>
 
 
@@ -2220,7 +2217,10 @@
         // Initialize FFmpeg
 
 
+        let ffmpeg = null;
+        let isFFmpegLoaded = false;
         async function initFFmpeg() {
+            const { FFmpeg } = window.FFmpegWASM || window;
 
 
             try {

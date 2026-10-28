@@ -120,12 +120,6 @@
 
     
 
-    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.min.js"></script>
-
-
-    
-
-
     <!-- Structured Data -->
 
 
@@ -195,6 +189,9 @@
     <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
     <meta property="og:image" content="https://factictionary.in/assets/images/og-banner.png">
     <meta name="twitter:image" content="https://factictionary.in/assets/images/og-banner.png">
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+    <script src="/assets/js/ffmpeg-engine.js"></script>
 </head>
 
 
@@ -1896,7 +1893,7 @@
                 // Write input file to FFmpeg filesystem
 
 
-                ffmpeg.FS('writeFile', inputFileName, videoData);
+                await ffmpeg.writeFile(inputFileName, videoData);
 
 
                 
@@ -2070,7 +2067,7 @@
                 // Execute FFmpeg command
 
 
-                await ffmpeg.run(...ffmpegArgs);
+                await ffmpeg.exec(ffmpegArgs);
 
 
                 
@@ -2085,7 +2082,7 @@
                 // Read output file
 
 
-                const outputData = ffmpeg.FS('readFile', outputFileName);
+                const outputData = await ffmpeg.readFile(outputFileName);
 
 
                 
@@ -2106,10 +2103,10 @@
                 // Clean up filesystem
 
 
-                ffmpeg.FS('unlink', inputFileName);
+                try { await ffmpeg.deleteFile(inputFileName); } catch(e){}
 
 
-                ffmpeg.FS('unlink', outputFileName);
+                try { await ffmpeg.deleteFile(outputFileName); } catch(e){}
 
 
                 
@@ -2169,10 +2166,10 @@
                     if (ffmpeg) {
 
 
-                        ffmpeg.FS('unlink', 'input.' + currentVideoFile.name.split('.').pop());
+                        try { await ffmpeg.deleteFile("input." + currentVideoFile.name.split(".").pop()); } catch(e){}
 
 
-                        ffmpeg.FS('unlink', 'output.mp4');
+                        try { await ffmpeg.deleteFile("output.mp4"); } catch(e){}
 
 
                     }
