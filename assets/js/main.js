@@ -970,7 +970,11 @@ if ('PerformanceObserver' in window) {
                 <div class="share-modal-dialog" onclick="event.stopPropagation()">
                     <button class="tools-drawer-close" onclick="closeShareModal()" style="position:absolute; top:20px; right:20px;">&times;</button>
                     <h3 style="font-size:1.3rem; font-weight:700; color:#0F172A; margin-bottom:4px; display:flex; align-items:center; gap:8px;"><span class="material-symbols-outlined" style="color:#0066FF; font-size:26px;">share</span> Share Page &amp; Pre-formatted Post</h3>
-                    <p style="font-size:13.5px; color:#64748B; margin-bottom:16px;">Copy a ready-to-post write-up with embedded link or download a visual image card.</p>
+                    <p style="font-size:13.5px; color:#64748B; margin-bottom:14px;">Copy a ready-to-post write-up with embedded link or download a visual image card.</p>
+                    <button type="button" class="btn btn-primary f-native-share-trigger" onclick="triggerDeviceNativeShare()" style="width:100%;margin-bottom:14px;padding:10px 16px;border-radius:12px;background:linear-gradient(135deg,#0066FF,#0052CC);font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 3px 10px rgba(0,102,255,0.25);border:none;color:#FFFFFF;cursor:pointer;">
+                        <span class="material-symbols-outlined" style="font-size:20px;">share</span>
+                        <span>Share via WhatsApp / Mobile Apps</span>
+                    </button>
                     
                     <div class="share-post-card">
                         <div class="share-post-header">
@@ -1091,6 +1095,35 @@ if ('PerformanceObserver' in window) {
                 btnElement.textContent = 'Copied Post! ✓';
                 setTimeout(() => { btnElement.textContent = origText; }, 2000);
             }
+        }
+    };
+
+    window.triggerDeviceNativeShare = function() {
+        const textarea = document.getElementById('share-post-textarea');
+        const input = document.getElementById('share-link-input');
+        const title = document.title ? document.title.replace(/\s*\|\s*Factictionary/gi, '').trim() : 'Factictionary Tools';
+        const text = textarea ? textarea.value : window.generateSharePostText();
+        const url = input ? input.value : window.location.href;
+
+        if (window.FactictionaryNative && typeof window.FactictionaryNative.share === 'function') {
+            window.FactictionaryNative.share(title, text, url);
+            return;
+        }
+        if (window.AndroidAdMob && typeof window.AndroidAdMob.share === 'function') {
+            window.AndroidAdMob.share(title, text, url);
+            return;
+        }
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: text,
+                url: url
+            }).catch(err => {
+                console.log('[NativeShare] Share dismissed or error:', err);
+            });
+        } else {
+            const copyBtn = document.querySelector('.share-post-copy-btn');
+            if (copyBtn) window.copyPostText(copyBtn);
         }
     };
 
@@ -1705,6 +1738,70 @@ if ('PerformanceObserver' in window) {
             body.f-native-app #f-native-topbar {
                 display: flex;
             }
+            /* ===== NATIVE APP SHARE BUTTONS ===== */
+            .f-top-share-btn {
+                background: linear-gradient(135deg, #0066FF, #0052CC) !important;
+                color: #FFFFFF !important;
+                border-color: #3B82F6 !important;
+                box-shadow: 0 2px 6px rgba(0, 102, 255, 0.3) !important;
+            }
+            @media (max-width: 400px) {
+                .f-top-share-text {
+                    display: none;
+                }
+            }
+            .f-app-tile-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .f-tile-share-btn {
+                position: absolute;
+                top: 0px;
+                right: calc(50% - 28px);
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: #FFFFFF;
+                color: #0066FF;
+                border: 1.5px solid #CBD5E1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                padding: 0;
+                box-shadow: 0 2px 6px rgba(15,23,42,0.18);
+                z-index: 5;
+                transition: transform 0.15s ease, background 0.15s ease;
+            }
+            .f-tile-share-btn:active {
+                transform: scale(0.9);
+                background: #E6F0FF;
+            }
+            .f-tile-share-btn .material-symbols-outlined {
+                font-size: 13px !important;
+                line-height: 1;
+            }
+            .f-suite-share-btn {
+                background: #F1F5F9;
+                border: 1px solid #CBD5E1;
+                border-radius: 8px;
+                padding: 3px 7px;
+                color: #475569;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.72rem;
+                font-weight: 700;
+                gap: 4px;
+            }
+            .f-suite-share-btn:active {
+                background: #E2E8F0;
+                color: #0066FF;
+            }
+
             .f-top-btn {
                 background: #1E293B;
                 color: #F8FAFC;
@@ -2024,6 +2121,10 @@ if ('PerformanceObserver' in window) {
                 </div>
             </div>
             <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+                <button type="button" class="f-top-btn f-top-share-btn" onclick="openShareModal()" title="Share Tool on Social Media">
+                    <span class="material-symbols-outlined" style="font-size:15px;line-height:1;">share</span>
+                    <span class="f-top-share-text">Share</span>
+                </button>
                 <a href="https://razorpay.me/@factictionary5740" target="_blank" rel="noopener" class="f-top-btn" style="background:#FEF3C7;color:#92400E;border-color:#F59E0B;" title="Support via UPI / GPay / Coffee">☕ Tip</a>
                 ${isToolDetail ? '<button type="button" class="f-top-btn" onclick="document.body.classList.toggle(\'f-show-guide\')">📖 Guide</button>' : ''}
                 <button type="button" class="f-top-btn" onclick="openNativeSearchSheet()" title="Search 85+ Tools">🔍</button>
@@ -2052,17 +2153,30 @@ if ('PerformanceObserver' in window) {
                 NATIVE_APP_SUITES.map(s => `<button class="f-app-cat-pill" data-suite="${s.id}">${s.label}</button>`).join('');
 
             const suitesHtml = NATIVE_APP_SUITES.map(s => {
-                const tiles = s.tools.map(t => `
-                    <a href="${t.url}" class="f-app-tile" data-tool-name="${(t.name + ' ' + t.short).toLowerCase()}">
-                        <div class="f-app-squircle" style="background:${s.bg};color:${s.color};">${t.icon}</div>
-                        <span class="f-app-label">${t.short}</span>
-                    </a>
-                `).join('');
+                const tiles = s.tools.map(t => {
+                    const cleanName = t.name.replace(/'/g, "\\'");
+                    return `
+                    <div class="f-app-tile-wrapper">
+                        <a href="${t.url}" class="f-app-tile" data-tool-name="${(t.name + ' ' + t.short).toLowerCase()}">
+                            <div class="f-app-squircle" style="background:${s.bg};color:${s.color};">${t.icon}</div>
+                            <span class="f-app-label">${t.short}</span>
+                        </a>
+                        <button type="button" class="f-tile-share-btn" onclick="event.preventDefault(); event.stopPropagation(); window.openShareModalForTool({ title: '${cleanName}', excerpt: 'Free online ${cleanName} on Factictionary', url: '${t.url}', icon: '${t.icon}' })" title="Share ${cleanName}">
+                            <span class="material-symbols-outlined">share</span>
+                        </button>
+                    </div>
+                `;
+                }).join('');
                 return `
                     <div class="f-suite-box" data-suite-box="${s.id}">
                         <div class="f-suite-hdr">
                             <span class="f-suite-title" style="color:${s.color};">${s.title}</span>
-                            <span style="font-size:0.68rem;font-weight:800;color:#64748B;">${s.tools.length} apps</span>
+                            <div style="display:flex;align-items:center;gap:6px;">
+                                <span style="font-size:0.68rem;font-weight:800;color:#64748B;">${s.tools.length} apps</span>
+                                <button type="button" class="f-suite-share-btn" onclick="window.openShareModalForTool({ title: 'Factictionary ${s.title}', excerpt: 'Free browser-based ${s.title} suite with ${s.tools.length} tools', url: '/tools/?app=1&suite=${s.id}', icon: '⚡' })" title="Share ${s.title}">
+                                    <span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle;">share</span>
+                                </button>
+                            </div>
                         </div>
                         <div class="f-icon-grid">${tiles}</div>
                     </div>
@@ -2103,7 +2217,8 @@ if ('PerformanceObserver' in window) {
                         let visibleCount = 0;
                         box.querySelectorAll('.f-app-tile').forEach(tile => {
                             const match = !q || tile.getAttribute('data-tool-name').includes(q);
-                            tile.style.display = match ? 'flex' : 'none';
+                            const wrapper = tile.closest('.f-app-tile-wrapper') || tile;
+                            wrapper.style.display = match ? 'flex' : 'none';
                             if (match) visibleCount++;
                         });
                         box.style.display = visibleCount > 0 ? 'block' : 'none';
@@ -2136,28 +2251,53 @@ if ('PerformanceObserver' in window) {
         const curSuite = new URLSearchParams(window.location.search).get('suite') || '';
         const bnav = document.createElement('nav');
         bnav.id = 'f-mobile-bottomnav';
-        bnav.innerHTML = `
-            <a href="/tools/?app=1" class="f-bnav-item ${(isToolsHub && !curSuite) ? 'active' : ''}" data-suite-nav="all">
-                <span class="f-bnav-icon">⚡</span>
-                <span>All 85+</span>
-            </a>
-            <a href="/tools/?app=1&suite=readers" class="f-bnav-item ${curSuite === 'readers' || window.location.pathname.includes('epub') || window.location.pathname.includes('docx') || window.location.pathname.includes('excel') ? 'active' : ''}" data-suite-nav="readers">
-                <span class="f-bnav-icon">📚</span>
-                <span>Readers</span>
-            </a>
-            <a href="/tools/?app=1&suite=pdf" class="f-bnav-item ${curSuite === 'pdf' || window.location.pathname.includes('pdf_') ? 'active' : ''}" data-suite-nav="pdf">
-                <span class="f-bnav-icon">📄</span>
-                <span>PDF Suite</span>
-            </a>
-            <a href="/tools/?app=1&suite=video" class="f-bnav-item ${curSuite === 'video' || window.location.pathname.includes('video_') || window.location.pathname.includes('teleprompter') ? 'active' : ''}" data-suite-nav="video">
-                <span class="f-bnav-icon">🎬</span>
-                <span>Media</span>
-            </a>
-            <button type="button" class="f-bnav-item" onclick="openNativeSearchSheet()">
-                <span class="f-bnav-icon">🔍</span>
-                <span>Search</span>
-            </button>
-        `;
+        if (isToolDetail) {
+            bnav.innerHTML = `
+                <a href="/tools/?app=1" class="f-bnav-item" data-suite-nav="all">
+                    <span class="f-bnav-icon">⚡</span>
+                    <span>All 85+</span>
+                </a>
+                <a href="/tools/?app=1&suite=pdf" class="f-bnav-item ${window.location.pathname.includes('pdf_') ? 'active' : ''}" data-suite-nav="pdf">
+                    <span class="f-bnav-icon">📄</span>
+                    <span>PDF Suite</span>
+                </a>
+                <button type="button" class="f-bnav-item f-bnav-share active" onclick="openShareModal()" style="color:#38BDF8;" title="Share this tool with one click">
+                    <span class="f-bnav-icon"><span class="material-symbols-outlined" style="font-size:22px;vertical-align:middle;line-height:1;">share</span></span>
+                    <span style="font-weight:800;color:#38BDF8;">Share</span>
+                </button>
+                <a href="/tools/?app=1&suite=video" class="f-bnav-item ${window.location.pathname.includes('video_') || window.location.pathname.includes('teleprompter') ? 'active' : ''}" data-suite-nav="video">
+                    <span class="f-bnav-icon">🎬</span>
+                    <span>Media</span>
+                </a>
+                <button type="button" class="f-bnav-item" onclick="openNativeSearchSheet()">
+                    <span class="f-bnav-icon">🔍</span>
+                    <span>Search</span>
+                </button>
+            `;
+        } else {
+            bnav.innerHTML = `
+                <a href="/tools/?app=1" class="f-bnav-item ${(isToolsHub && !curSuite) ? 'active' : ''}" data-suite-nav="all">
+                    <span class="f-bnav-icon">⚡</span>
+                    <span>All 85+</span>
+                </a>
+                <a href="/tools/?app=1&suite=readers" class="f-bnav-item ${curSuite === 'readers' || window.location.pathname.includes('epub') || window.location.pathname.includes('docx') || window.location.pathname.includes('excel') ? 'active' : ''}" data-suite-nav="readers">
+                    <span class="f-bnav-icon">📚</span>
+                    <span>Readers</span>
+                </a>
+                <button type="button" class="f-bnav-item f-bnav-share" onclick="openShareModal()" style="color:#38BDF8;" title="Share 85+ Tools on Social Media">
+                    <span class="f-bnav-icon"><span class="material-symbols-outlined" style="font-size:22px;vertical-align:middle;line-height:1;">share</span></span>
+                    <span style="font-weight:800;color:#38BDF8;">Share</span>
+                </button>
+                <a href="/tools/?app=1&suite=video" class="f-bnav-item ${curSuite === 'video' || window.location.pathname.includes('video_') || window.location.pathname.includes('teleprompter') ? 'active' : ''}" data-suite-nav="video">
+                    <span class="f-bnav-icon">🎬</span>
+                    <span>Media</span>
+                </a>
+                <button type="button" class="f-bnav-item" onclick="openNativeSearchSheet()">
+                    <span class="f-bnav-icon">🔍</span>
+                    <span>Search</span>
+                </button>
+            `;
+        }
         document.body.appendChild(bnav);
 
         // If already on the launcher page, make bottom nav tabs switch suites immediately without page reload!
@@ -2206,6 +2346,12 @@ if ('PerformanceObserver' in window) {
             </div>
             <div style="padding:10px 12px 4px;">
                 <input type="search" id="f-desktop-side-filter" placeholder="🔍 Filter 85+ tools..." style="width:100%;padding:7px 10px;border-radius:8px;border:1px solid #334155;background:#1E293B;color:#F8FAFC;font-size:0.78rem;outline:none;">
+            </div>
+            <div style="padding:0 12px 6px;">
+                <button type="button" class="f-side-link" onclick="openShareModal()" style="border:1px solid #1D4ED8;background:#1E3A8A;width:100%;cursor:pointer;color:#FFFFFF;justify-content:center;font-weight:700;">
+                    <span class="material-symbols-outlined" style="font-size:16px;">share</span>
+                    <span>Share This Tool / Page</span>
+                </button>
             </div>
             <div class="f-side-list" id="f-desktop-side-list">
                 <a href="/tools/?app=1" class="f-side-link ${isToolsHub ? 'active' : ''}" style="margin-bottom:6px;border:1px solid #334155;">
