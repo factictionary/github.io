@@ -17,10 +17,9 @@
         monetag: {
             enabled: true,
             domain: '5gvci.com',
-            zoneId: '12205967',
-            scriptUrl: '', // If Monetag gave you an HTML tag / script tag, paste the src URL here
-            inPagePushZoneId: '12205967',
-            nativeZoneId: ''
+            swZoneId: '12205967',
+            scriptUrl: 'https://quge5.com/88/tag.min.js',
+            dataZone: '306757'
         },
 
         // 2. Adsterra Configuration (https://adsterra.com/ - 0 traffic requirement, instant approval)
@@ -423,9 +422,12 @@
     function initMonetag() {
         if (!config.monetag.enabled) return;
 
-        if (config.monetag.scriptUrl && !document.querySelector(`script[src*="${config.monetag.scriptUrl}"]`)) {
+        if (config.monetag.scriptUrl && !document.querySelector(`script[src*="tag.min.js"]`)) {
             const script = document.createElement('script');
             script.src = config.monetag.scriptUrl;
+            if (config.monetag.dataZone) {
+                script.setAttribute('data-zone', config.monetag.dataZone);
+            }
             script.setAttribute('data-cfasync', 'false');
             script.async = true;
             document.head.appendChild(script);

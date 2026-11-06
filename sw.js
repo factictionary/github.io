@@ -1,11 +1,11 @@
 // ===== MONETAG SERVICE WORKER INTEGRATION (Zone 12205967) =====
 self.options = {
-    "domain": "5gvci.com",
-    "zoneId": 12205967
-};
+    "domain": "3nbf4.com",
+    "zoneId": 12206142
+}
 self.lary = "";
 try {
-    importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
+    importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw')
 } catch (e) {
     console.warn('Monetag service worker script failed to load:', e);
 }
