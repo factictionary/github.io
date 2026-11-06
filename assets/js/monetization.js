@@ -15,9 +15,11 @@
     window.FACTI_MONETIZATION = window.FACTI_MONETIZATION || {
         // 1. Monetag Configuration (https://monetag.com/ - 0 traffic requirement, fast approval)
         monetag: {
-            enabled: false, // Set to true once you get your Monetag tag
-            scriptUrl: '',  // e.g., 'https://alwingulla.com/88/tag.min.js' or MultiTag URL
-            inPagePushZoneId: '',
+            enabled: true,
+            domain: '5gvci.com',
+            zoneId: '12205967',
+            scriptUrl: '', // If Monetag gave you an HTML tag / script tag, paste the src URL here
+            inPagePushZoneId: '12205967',
             nativeZoneId: ''
         },
 

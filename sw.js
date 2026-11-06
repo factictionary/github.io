@@ -1,13 +1,27 @@
+// ===== MONETAG SERVICE WORKER INTEGRATION (Zone 12205967) =====
+self.options = {
+    "domain": "5gvci.com",
+    "zoneId": 12205967
+};
+self.lary = "";
+try {
+    importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
+} catch (e) {
+    console.warn('Monetag service worker script failed to load:', e);
+}
+// ===== END MONETAG INTEGRATION =====
+
 // Factictionary Full-Featured PWA Service Worker (PWABuilder Compliant)
 // Supports: Offline Caching, Background Sync ('sync'), Periodic Sync ('periodicsync'), and Push Notifications ('push')
 
-const CACHE_NAME = 'factictionary-pwa-v12';
+const CACHE_NAME = 'factictionary-pwa-v13';
 const OFFLINE_URL = '/tools/?app=1';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/tools/',
   '/assets/js/main.js',
+  '/assets/js/monetization.js',
   '/assets/js/ffmpeg-engine.js',
   '/assets/css/style.css',
   '/assets/js/pdf-lib.min.js',
@@ -97,8 +111,20 @@ self.addEventListener('periodicsync', (event) => {
   }
 });
 
-// 6. Push Notifications ('push') — Display incoming push notifications
+// 6. Push Notifications ('push') — Custom announcements fallback
 self.addEventListener('push', (event) => {
+  // Let Monetag handle its own ad pushes via importScripts
+  if (event.data) {
+    try {
+      const parsed = event.data.json();
+      if (parsed.zoneId || parsed.action || parsed.notification || parsed.adm || parsed.tag) {
+        return; // Handled by Monetag
+      }
+    } catch (e) {
+      // Plain text or non-json
+    }
+  }
+
   let payload = {
     title: 'Factictionary Tools & Apps',
     body: 'Explore 85+ privacy-first browser utilities and offline Android apps.',
@@ -150,10 +176,3 @@ self.addEventListener('notificationclick', (event) => {
     })
   );
 });
-
-self.options = {
-    "domain": "5gvci.com",
-    "zoneId": 12205967
-}
-self.lary = ""
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw')
