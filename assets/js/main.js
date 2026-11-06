@@ -2556,3 +2556,15 @@ if ('PerformanceObserver' in window) {
 })();
 // ===== END CROSS PROMO MODULE INTEGRATION =====
 
+
+
+// ===== UNIFIED MONETIZATION ENGINE (EthicalAds, Monetag & Contextual Affiliates) =====
+(function() {
+    if (typeof window.FACTI_MONETIZATION === 'undefined' && !document.querySelector('script[src*="monetization.js"]')) {
+        const script = document.createElement('script');
+        script.src = '/assets/js/monetization.js';
+        script.async = true;
+        document.head.appendChild(script);
+    }
+})();
+// ===== END UNIFIED MONETIZATION ENGINE =====
