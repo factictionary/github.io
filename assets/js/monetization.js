@@ -24,10 +24,13 @@
 
         // 2. Adsterra Configuration (https://adsterra.com/ - 0 traffic requirement, instant approval)
         adsterra: {
-            enabled: false, // Set to true once you get your Adsterra tag
-            socialBarScriptUrl: '', // Social Bar / In-Page Push script tag URL
-            bannerScriptUrl: '',    // Native banner or 728x90/300x250 script URL
-            bannerContainerId: ''   // Container ID if provided by Adsterra
+            enabled: true,
+            socialBarScriptUrl: 'https://bauval.org/14/0726f33ed738c999a9e9225b8b81e6d0',
+            nativeBannerScriptUrl: 'https://bauval.org/21/eb572ce7a2181b8df4a88738ae9b9ee8',
+            nativeContainerId: 'container-eb572ce7a2181b8df4a88738ae9b9ee8',
+            banner300x250Key: '5910d38e75cc22ebd4eeef064216789a',
+            banner300x250ScriptUrl: 'https://bauval.org/22/5910d38e75cc22ebd4eeef064216789a',
+            smartlinkUrl: 'https://araplhn.org/4/ff672b3b1813aa789aaf3ae1b5be651b'
         },
 
         // 3. EthicalAds Configuration (https://www.ethicalads.io/ - requires 50k+ pageviews/month)
@@ -435,36 +438,106 @@
     }
 
     /**
-     * Initializes Adsterra Ads (0 traffic requirement)
+     * Initializes Adsterra Ads (Social Bar, Native Banner, 300x250 Banner, Smartlink)
      */
     function initAdsterra(container) {
         if (!config.adsterra.enabled) return;
 
-        // Social Bar script
-        if (config.adsterra.socialBarScriptUrl && !document.querySelector(`script[src*="${config.adsterra.socialBarScriptUrl}"]`)) {
+        // 1. Social Bar script (injected into document head once)
+        if (config.adsterra.socialBarScriptUrl && !document.querySelector('script[src*="0726f33ed738c999a9e9225b8b81e6d0"]')) {
             const script = document.createElement('script');
             script.src = config.adsterra.socialBarScriptUrl;
+            script.setAttribute('data-cfasync', 'false');
             script.async = true;
             document.head.appendChild(script);
         }
 
-        // Native / Display banner placement
-        if (config.adsterra.bannerScriptUrl) {
-            const adWrap = document.createElement('div');
-            adWrap.className = 'facti-ad-container';
-            adWrap.innerHTML = '<div class="facti-ad-label">Advertisement</div>';
-            
-            const bannerContainer = document.createElement('div');
-            if (config.adsterra.bannerContainerId) {
-                bannerContainer.id = config.adsterra.bannerContainerId;
-            }
-            adWrap.appendChild(bannerContainer);
-            container.appendChild(adWrap);
+        // 2. Native Banner (Responsive recommendation cards)
+        if (config.adsterra.nativeBannerScriptUrl) {
+            const nativeWrap = document.createElement('div');
+            nativeWrap.className = 'facti-ad-container facti-native-wrap';
+            nativeWrap.style.marginBottom = '20px';
+            nativeWrap.innerHTML = `
+                <div class="facti-ad-label">Sponsored Highlights</div>
+                <div id="${config.adsterra.nativeContainerId || 'container-eb572ce7a2181b8df4a88738ae9b9ee8'}"></div>
+            `;
+            container.appendChild(nativeWrap);
 
-            const script = document.createElement('script');
-            script.src = config.adsterra.bannerScriptUrl;
-            script.async = true;
-            document.head.appendChild(script);
+            if (!document.querySelector('script[src*="eb572ce7a2181b8df4a88738ae9b9ee8"]')) {
+                const script = document.createElement('script');
+                script.src = config.adsterra.nativeBannerScriptUrl;
+                script.async = true;
+                script.setAttribute('data-cfasync', 'false');
+                document.head.appendChild(script);
+            }
+        }
+
+        // 3. Banner 300x250 (Safe friendly iframe rendering to isolate document.write)
+        if (config.adsterra.banner300x250Key && config.adsterra.banner300x250ScriptUrl) {
+            const bannerWrap = document.createElement('div');
+            bannerWrap.className = 'facti-ad-container facti-banner-300x250-wrap';
+            bannerWrap.style.margin = '20px auto';
+            bannerWrap.style.maxWidth = '320px';
+            bannerWrap.innerHTML = '<div class="facti-ad-label">Featured Partner</div>';
+
+            const iframe = document.createElement('iframe');
+            iframe.width = '300';
+            iframe.height = '250';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'hidden';
+            iframe.style.display = 'block';
+            iframe.scrolling = 'no';
+            iframe.title = 'Partner Advertisement';
+
+            bannerWrap.appendChild(iframe);
+            container.appendChild(bannerWrap);
+
+            setTimeout(() => {
+                try {
+                    const doc = iframe.contentWindow || iframe.contentDocument;
+                    const d = doc.document ? doc.document : doc;
+                    d.open();
+                    d.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head><base target="_blank"><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
+                        <body>
+                            <script type="text/javascript">
+                                atOptions = {
+                                    'key' : '${config.adsterra.banner300x250Key}',
+                                    'format' : 'iframe',
+                                    'height' : 250,
+                                    'width' : 300,
+                                    'params' : {}
+                                };
+                            <\/script>
+                            <script type="text/javascript" src="${config.adsterra.banner300x250ScriptUrl}"><\/script>
+                        </body>
+                        </html>
+                    `);
+                    d.close();
+                } catch (e) {
+                    console.warn('Banner 300x250 render issue:', e);
+                }
+            }, 60);
+        }
+
+        // 4. Smartlink button (Non-intrusive high-converting bonus pill inside donation card)
+        if (config.adsterra.smartlinkUrl) {
+            const donationCard = document.querySelector('.donation-banner-card');
+            if (donationCard && !donationCard.querySelector('.btn-smartlink')) {
+                const btnContainer = donationCard.querySelector('.donation-btn-group') || donationCard.querySelector('div:last-child');
+                if (btnContainer) {
+                    const smartBtn = document.createElement('a');
+                    smartBtn.href = config.adsterra.smartlinkUrl;
+                    smartBtn.target = '_blank';
+                    smartBtn.rel = 'noopener sponsored';
+                    smartBtn.className = 'btn btn-smartlink';
+                    smartBtn.style.cssText = 'background:linear-gradient(135deg,#38BDF8,#0284C7);color:#FFFFFF;padding:10px 20px;border-radius:30px;font-weight:700;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(2,132,199,0.3);';
+                    smartBtn.innerHTML = '<span>🚀</span><span>Explore Cloud Partner Tools</span>';
+                    btnContainer.appendChild(smartBtn);
+                }
+            }
         }
     }
 
