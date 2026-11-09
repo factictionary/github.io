@@ -46,10 +46,9 @@
             enabled: true,
             // Replace with your personalized referral / affiliate links
             links: {
-                nordvpn: 'https://go.nordvpn.net/aff_c?offer_id=15&aff_id=factictionary',
+                digitalocean: 'https://m.do.co/c/22866c63f7a5',
                 canva: 'https://partner.canva.com/factictionary',
                 descript: 'https://www.descript.com/?lmref=factictionary',
-                digitalocean: 'https://m.do.co/c/factictionary',
                 fiverr: 'https://go.fiverr.com/visit/?bta=factictionary',
                 publisherRocket: 'https://publisherrocket.com/?ref=factictionary',
                 invideo: 'https://invideo.io/?ref=factictionary',
@@ -81,19 +80,28 @@
     }
 
     /**
+     * Checks if the current page is an interactive web tool (e.g. /tools/pdf_merger.html)
+     * where file uploads, canvas, or audio/video inputs must NEVER be obstructed by popups.
+     */
+    function isToolPage() {
+        const path = window.location.pathname.toLowerCase();
+        return path.includes('/tools/') && !path.endsWith('/tools/') && !path.endsWith('/tools/index.html');
+    }
+
+    /**
      * Category-specific affiliate offers
      */
     const AFFILIATE_OFFERS = {
         pdf: {
-            badge: '🔒 Privacy & Security Recommendation',
+            badge: '☁️ S3 Cloud Storage & CDN',
             badgeBg: '#EFF6FF',
-            badgeColor: '#1D4ED8',
-            title: 'NordVPN — Encrypt & Shield Your Confidential Files',
-            description: 'You care about zero-server client privacy. Pair browser utilities with military-grade internet encryption and malware threat protection.',
-            cta: 'Claim 70% Off + 3 Months Free ➔',
-            linkKey: 'nordvpn',
-            icon: '🛡️',
-            features: ['Zero logs verified audit', 'Threat Protection stops malware', '6,000+ ultra-fast global servers']
+            badgeColor: '#0284C7',
+            title: 'DigitalOcean Spaces — Secure S3 Cloud Storage for Documents',
+            description: 'Need to store, archive, or distribute large PDF files and backups? Get S3-compatible cloud object storage with built-in worldwide CDN and 99.99% uptime.',
+            cta: 'Claim $200 Free Storage Credit ➔',
+            linkKey: 'digitalocean',
+            icon: '🗄️',
+            features: ['$200 free credit for 60 days', 'S3-compatible API & automatic SSL', 'Built-in global CDN with zero bandwidth fees']
         },
         image: {
             badge: '🎨 Design & Graphic Suite',
@@ -161,16 +169,27 @@
             icon: '🤝',
             features: ['12 Testers / 14 Days testing gigs', 'App icons, ASO & screenshots', '24/7 buyer protection guarantee']
         },
+        readers: {
+            badge: '🚀 Zero-Ops App Platform',
+            badgeBg: '#F0FDF4',
+            badgeColor: '#16A34A',
+            title: 'DigitalOcean App Platform — Deploy Web Apps from GitHub',
+            description: 'Build, host, and scale web applications, APIs, and microservices without managing servers. Auto-deploys on every git push with free automatic SSL.',
+            cta: 'Launch Apps with $200 Credit ➔',
+            linkKey: 'digitalocean',
+            icon: '🌐',
+            features: ['$200 free credit for new accounts', 'Auto-deploys from GitHub/GitLab', 'Zero infrastructure management required']
+        },
         general: {
-            badge: '🛡️ Privacy & Utility Power',
+            badge: '☁️ Cloud Infrastructure Partner',
             badgeBg: '#EFF6FF',
             badgeColor: '#1D4ED8',
-            title: 'NordVPN — Ultimate Privacy for In-Browser Workflows',
-            description: 'Protect your browser activity and data integrity with the world\'s leading privacy shield and threat blocker.',
-            cta: 'Get 70% Off + Threat Protection ➔',
-            linkKey: 'nordvpn',
-            icon: '🔒',
-            features: ['Military-grade encryption', 'Shields against intrusive trackers', 'Works across all desktop & mobile devices']
+            title: 'DigitalOcean — $200 Free Cloud Server & Database Credit',
+            description: 'Supercharge your web projects with developer-friendly cloud infrastructure. Claim $200 in free credit across Droplets, Kubernetes, and Managed Databases.',
+            cta: 'Claim Your $200 Free Credit ➔',
+            linkKey: 'digitalocean',
+            icon: '🚀',
+            features: ['$200 free credit for 60 days', 'Developer-first control panel', '15 global data centers with 99.99% uptime']
         }
     };
 
@@ -189,6 +208,15 @@
                 width: 100%;
                 box-sizing: border-box;
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+
+            /* UX CLICK SHIELD: Ensure tool dropzones, file pickers & buttons are never blocked by ad overlays */
+            .drop-zone, #dropZone, .pdf-tool-card, .file-card, .tool-workspace,
+            .action-button-group, input[type="file"], select, button, .btn,
+            #hero-live-search, .hero-search-wrapper, .search-result-item {
+                position: relative !important;
+                z-index: 100 !important;
+                pointer-events: auto !important;
             }
 
             /* Generic Ad Container (Adsterra / Monetag / EthicalAds) */
@@ -349,6 +377,21 @@
                 color: #FFFFFF !important;
             }
 
+            .facti-affiliate-commission-notice {
+                margin-top: 14px;
+                padding-top: 10px;
+                border-top: 1px dashed #CBD5E1;
+                font-size: 0.74rem;
+                color: #64748B;
+                line-height: 1.5;
+            }
+
+            .facti-affiliate-commission-notice a {
+                color: #0284C7;
+                text-decoration: underline;
+                font-weight: 600;
+            }
+
             @media (max-width: 680px) {
                 .facti-affiliate-card {
                     padding: 20px;
@@ -420,10 +463,17 @@
     }
 
     /**
-     * Initializes Monetag Ads (0 traffic requirement)
+     * Initializes Monetag Ads
+     * UX RULE: Strictly skipped on interactive tool pages to prevent OnClick / Popunder
+     * clickjacking from intercepting file pickers, dropzones, and buttons.
      */
     function initMonetag() {
         if (!config.monetag.enabled) return;
+
+        // CRITICAL UX SHIELD: Never inject MultiTag OnClick/Popunder on tool workspace pages!
+        if (isToolPage()) {
+            return;
+        }
 
         if (config.monetag.scriptUrl && !document.querySelector(`script[src*="tag.min.js"]`)) {
             const script = document.createElement('script');
@@ -438,13 +488,15 @@
     }
 
     /**
-     * Initializes Adsterra Ads (Social Bar, Native Banner, 300x250 Banner, Smartlink)
+     * Initializes Adsterra Ads (Clean Native Banner on tools, Social Bar only on non-tool content)
      */
     function initAdsterra(container) {
         if (!config.adsterra.enabled) return;
 
-        // 1. Social Bar script (injected into document head once)
-        if (config.adsterra.socialBarScriptUrl && !document.querySelector('script[src*="0726f33ed738c999a9e9225b8b81e6d0"]')) {
+        const onTool = isToolPage();
+
+        // 1. Social Bar script (ONLY on non-tool content pages to avoid blocking file inputs)
+        if (!onTool && config.adsterra.socialBarScriptUrl && !document.querySelector('script[src*="0726f33ed738c999a9e9225b8b81e6d0"]')) {
             const script = document.createElement('script');
             script.src = config.adsterra.socialBarScriptUrl;
             script.setAttribute('data-cfasync', 'false');
@@ -452,7 +504,7 @@
             document.head.appendChild(script);
         }
 
-        // 2. Native Banner (Responsive recommendation cards)
+        // 2. Native Banner (Clean recommendation cards placed at the bottom, above donation card)
         if (config.adsterra.nativeBannerScriptUrl) {
             const nativeWrap = document.createElement('div');
             nativeWrap.className = 'facti-ad-container facti-native-wrap';
@@ -472,8 +524,8 @@
             }
         }
 
-        // 3. Banner 300x250 (Safe friendly iframe rendering to isolate document.write)
-        if (config.adsterra.banner300x250Key && config.adsterra.banner300x250ScriptUrl) {
+        // 3. Banner 300x250 (Only show on non-tool pages to avoid ad clutter on tool pages)
+        if (!onTool && config.adsterra.banner300x250Key && config.adsterra.banner300x250ScriptUrl) {
             const bannerWrap = document.createElement('div');
             bannerWrap.className = 'facti-ad-container facti-banner-300x250-wrap';
             bannerWrap.style.margin = '20px auto';
@@ -560,7 +612,7 @@
                 <span class="facti-affiliate-badge" style="background:${offer.badgeBg}; color:${offer.badgeColor};">
                     ${offer.badge}
                 </span>
-                <span class="facti-affiliate-disclosure">Partner Recommendation</span>
+                <span class="facti-affiliate-disclosure">Sponsored • We may earn a commission</span>
             </div>
             <div class="facti-affiliate-body">
                 <div class="facti-affiliate-icon">${offer.icon}</div>
@@ -574,6 +626,9 @@
                         <a href="${targetUrl}" target="_blank" rel="noopener sponsored" class="facti-affiliate-cta-btn">
                             ${offer.cta}
                         </a>
+                    </div>
+                    <div class="facti-affiliate-commission-notice">
+                        💡 <strong>Affiliate Disclosure:</strong> If you sign up or purchase through this partner link, Factictionary may earn a referral commission or credit at zero extra cost to you. This directly funds our infrastructure and keeps our 85+ web utilities 100% free and private. <a href="/disclaimer.html#affiliate" target="_blank" rel="noopener">Learn more</a>
                     </div>
                 </div>
             </div>

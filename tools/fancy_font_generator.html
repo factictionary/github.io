@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Font Generator &amp; Aesthetic Unicode Text for Bio | Factictionary</title>
+    
+    <meta name="description" content="Convert normal text into 40+ fancy Unicode fonts, aesthetic cursive, bold gothic, and decorated symbols. 1-click copy for Instagram bio, TikTok, Twitter/X, and WhatsApp. 100% free.">
+    <meta name="keywords" content="fancy font generator, aesthetic text generator, instagram bio fonts, cursive font generator copy and paste, cool fonts for pubg free fire, unicode text styles">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.in/tools/fancy_font_generator.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        :root {
+            --primary: #EC4899;
+            --primary-dark: #DB2777;
+        }
+
+        .fancy-container {
+            max-width: 900px;
+            margin: 28px auto 60px;
+        }
+
+        .input-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            margin-bottom: 24px;
+        }
+
+        .fancy-textarea {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid #E2E8F0;
+            font-size: 1.1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.2s;
+            background: #F8FAFC;
+        }
+
+        .fancy-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #FFFFFF;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .chip-btn {
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #475569;
+            transition: all 0.2s;
+        }
+
+        .chip-btn.active, .chip-btn:hover {
+            background: #FDF2F8;
+            color: var(--primary);
+            border-color: #FBCFE8;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .font-card {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.15s, border-color 0.15s;
+        }
+
+        .font-card:hover {
+            border-color: #F472B6;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .font-text-wrap {
+            flex: 1;
+            padding-right: 16px;
+            overflow-x: auto;
+        }
+
+        .font-name-badge {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #94A3B8;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .font-styled-output {
+            font-size: 1.25rem;
+            color: #0F172A;
+            word-break: break-all;
+            user-select: all;
+        }
+
+        .btn-copy {
+            background: #FDF2F8;
+            border: 1px solid #FBCFE8;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.84rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0F172A;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" style="display: inline-flex; align-items: center;"><img src="/assets/images/logo-header.png" alt="Factictionary" style="width: 36px; height: 36px; border-radius: 8px; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);"><span>Factictionary</span></a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container fancy-container">
+        <!-- Header -->
+        <div class="tool-header" style="background: linear-gradient(135deg, #BE185D 0%, #4C1D95 100%); border-radius: 18px; padding: 32px 24px; color: white; margin-bottom: 24px; text-align: center;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">📱 Creator &amp; Social Media</span>
+            <h1 style="font-size: clamp(1.8rem, 4vw, 2.7rem); margin: 12px 0 8px; font-weight: 800;">Fancy Unicode Font &amp; Bio Stylizer</h1>
+            <p style="opacity: 0.9; max-width: 650px; margin: 0 auto; font-size: 1.05rem;">Type your text and instantly copy 40+ aesthetic Unicode fonts, bold gothic styles, cursive scripts &amp; decorative gaming nicknames for Instagram, TikTok &amp; WhatsApp.</p>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-card">
+            <label style="font-size: 0.88rem; font-weight: 700; color: #334155; margin-bottom: 8px; display: block;">Type or paste your text here:</label>
+            <textarea id="inputText" class="fancy-textarea" rows="3" placeholder="Type something cool here..." oninput="updateAllFonts()">Hello World</textarea>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.78rem; color:#64748B;">
+                <div><span id="charCount">11</span> characters · <span id="wordCount">2</span> words</div>
+                <button class="chip-btn" onclick="document.getElementById('inputText').value=''; updateAllFonts();">Clear</button>
+            </div>
+
+            <!-- Categories -->
+            <div class="filter-chips">
+                <button class="chip-btn active" onclick="filterCategory('all', this)">✨ All Styles</button>
+                <button class="chip-btn" onclick="filterCategory('aesthetic', this)">🌸 Aesthetic &amp; Cursive</button>
+                <button class="chip-btn" onclick="filterCategory('bold', this)">🔥 Bold &amp; Gothic</button>
+                <button class="chip-btn" onclick="filterCategory('frames', this)">👑 Decorated &amp; Gaming</button>
+                <button class="chip-btn" onclick="filterCategory('symbols', this)">🔮 Cool Symbols</button>
+            </div>
+        </div>
+
+        <!-- Results List -->
+        <div class="results-grid" id="resultsGrid">
+            <!-- Dynamically generated -->
+        </div>
+
+        <div class="toast-msg" id="toastMsg">✓ Copied to clipboard!</div>
+    </main>
+
+    <footer style="background: #0F172A; color: #94A3B8; padding: 40px 20px; text-align: center;">
+        <p>© 2026 Factictionary. 100% Client-Side Privacy Shield: Zero bytes transmitted to external servers.</p>
+    </footer>
+
+    <script>
+        // Unicode character maps
+        const MAPS = {
+            boldSerif: {
+                upper: '𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙',
+                lower: '𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳',
+                num: '𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗'
+            },
+            boldSans: {
+                upper: '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭',
+                lower: '𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇',
+                num: '𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵'
+            },
+            italicSerif: {
+                upper: '𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍',
+                lower: '𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧',
+                num: '0123456789'
+            },
+            scriptCursive: {
+                upper: '𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩',
+                lower: '𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃',
+                num: '0123456789'
+            },
+            frakturGothic: {
+                upper: '𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ',
+                lower: '𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷',
+                num: '0123456789'
+            },
+            boldFraktur: {
+                upper: '𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅',
+                lower: '𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟',
+                num: '0123456789'
+            },
+            doubleStruck: {
+                upper: '𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ',
+                lower: '𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫',
+                num: '𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡'
+            },
+            monospace: {
+                upper: '𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉',
+                lower: '𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣',
+                num: '𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿'
+            },
+            circled: {
+                upper: 'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ',
+                lower: 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ',
+                num: '⓪①②③④⑤⑥⑦⑧⑨'
+            },
+            invertedCircled: {
+                upper: '🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩',
+                lower: '🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩',
+                num: '⓿➊➋➌➍➎➏➐➑➒'
+            },
+            smallCaps: {
+                upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                lower: 'ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ',
+                num: '0123456789'
+            }
+        };
+
+        function mapChars(text, map) {
+            let res = '';
+            for (let i = 0; i < text.length; i++) {
+                const code = text.charCodeAt(i);
+                if (code >= 65 && code <= 90) {
+                    res += Array.from(map.upper)[code - 65] || text[i];
+                } else if (code >= 97 && code <= 122) {
+                    res += Array.from(map.lower)[code - 97] || text[i];
+                } else if (code >= 48 && code <= 57 && map.num) {
+                    res += Array.from(map.num)[code - 48] || text[i];
+                } else {
+                    res += text[i];
+                }
+            }
+            return res;
+        }
+
+        const STYLES_LIST = [
+            { name: "Bold Serif", cat: "bold", fn: t => mapChars(t, MAPS.boldSerif) },
+            { name: "Bold Sans-Serif", cat: "bold", fn: t => mapChars(t, MAPS.boldSans) },
+            { name: "Aesthetic Cursive Script", cat: "aesthetic", fn: t => mapChars(t, MAPS.scriptCursive) },
+            { name: "Fraktur / Gothic", cat: "bold", fn: t => mapChars(t, MAPS.frakturGothic) },
+            { name: "Bold Gothic Fraktur", cat: "bold", fn: t => mapChars(t, MAPS.boldFraktur) },
+            { name: "Double Struck / Blackboard", cat: "aesthetic", fn: t => mapChars(t, MAPS.doubleStruck) },
+            { name: "Monospace Typewriter", cat: "aesthetic", fn: t => mapChars(t, MAPS.monospace) },
+            { name: "Small Capitals", cat: "aesthetic", fn: t => mapChars(t, MAPS.smallCaps) },
+            { name: "Circled Bubble Letters", cat: "aesthetic", fn: t => mapChars(t, MAPS.circled) },
+            { name: "Inverted Dark Circles", cat: "aesthetic", fn: t => mapChars(t, MAPS.invertedCircled) },
+            { name: "Aesthetic Full-Width Spaced", cat: "aesthetic", fn: t => t.split('').join(' ') },
+            { name: "Strikethrough Cross", cat: "symbols", fn: t => t.split('').map(c => c + '\u0336').join('') },
+            { name: "Underline Dash", cat: "symbols", fn: t => t.split('').map(c => c + '\u0332').join('') },
+            { name: "Gaming Wings Nickname", cat: "frames", fn: t => `꧁༒ ${t} ༒꧂` },
+            { name: "Shooting Stars Banner", cat: "frames", fn: t => `★彡 ${t} 彡★` },
+            { name: "Crown Royal Bio", cat: "frames", fn: t => `👑 ${t} 👑` },
+            { name: "Japanese Corner Brackets", cat: "frames", fn: t => `『 ${t} 』` },
+            { name: "Cyberpunk Lightning", cat: "frames", fn: t => `⚡ ${t} ⚡` },
+            { name: "Sparkle Magic Border", cat: "frames", fn: t => `✨ ${t} ✨` },
+            { name: "Heartfelt Love Border", cat: "frames", fn: t => `ღ ${t} ღ` }
+        ];
+
+        let activeFilter = 'all';
+
+        function updateAllFonts() {
+            const raw = document.getElementById('inputText').value || 'Hello World';
+            document.getElementById('charCount').textContent = raw.length;
+            document.getElementById('wordCount').textContent = raw.trim() ? raw.trim().split(/\s+/).length : 0;
+
+            const container = document.getElementById('resultsGrid');
+            container.innerHTML = '';
+
+            STYLES_LIST.forEach(s => {
+                if (activeFilter !== 'all' && s.cat !== activeFilter) return;
+
+                const styledText = s.fn(raw);
+                const card = document.createElement('div');
+                card.className = 'font-card';
+                card.innerHTML = `
+                    <div class="font-text-wrap">
+                        <div class="font-name-badge">${s.name}</div>
+                        <div class="font-styled-output">${escapeHtml(styledText)}</div>
+                    </div>
+                    <button class="btn-copy" onclick="copyText('${escapeAttr(styledText)}')">📋 Copy</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterCategory(cat, el) {
+            activeFilter = cat;
+            document.querySelectorAll('.filter-chips .chip-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            updateAllFonts();
+        }
+
+        function copyText(str) {
+            navigator.clipboard.writeText(str);
+            const toast = document.getElementById('toastMsg');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function escapeAttr(text) {
+            return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAllFonts();
+        });
+    </script>
+</body>
+</html>

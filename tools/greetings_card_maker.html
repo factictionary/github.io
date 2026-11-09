@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festive Greeting Card &amp; Animated Wish Maker | Factictionary</title>
+    
+    <meta name="description" content="Design custom festive greeting cards with drag-and-drop holiday spritesheets, stickers, and animations. Download high-res PNG, export animated video, or generate viral wish links. 100% client-side &amp; free.">
+    <meta name="keywords" content="festive greeting card maker, seasons greetings generator, new year card generator, diwali wish maker, christmas card maker online, animated greeting card, canvas greeting maker">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.in/tools/greetings_card_maker.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Great+Vibes&family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;900&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        :root {
+            --tool-primary: #8B5CF6;
+            --tool-accent: #EC4899;
+        }
+
+        .studio-container {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 24px;
+            margin-top: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 1024px) {
+            .studio-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar-panel {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            max-height: 850px;
+            overflow-y: auto;
+        }
+
+        .canvas-area {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-heading {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1E293B;
+            margin: 16px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .studio-input, .studio-select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #CBD5E1;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            background: #F8FAFC;
+        }
+
+        .studio-input:focus, .studio-select:focus {
+            outline: none;
+            border-color: var(--tool-primary);
+            background: #FFFFFF;
+        }
+
+        /* Preset message chips */
+        .chip-scroll {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .preset-chip {
+            background: #F1F5F9;
+            border: 1px solid #E2E8F0;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #475569;
+        }
+
+        .preset-chip:hover {
+            background: #EDE9FE;
+            color: #6D28D9;
+            border-color: #C4B5FD;
+        }
+
+        /* Spritesheet Drawer */
+        .sprites-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: #F8FAFC;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px dashed #CBD5E1;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .sprite-btn {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 8px 4px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .sprite-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--tool-primary);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+        }
+
+        .sprite-btn span.label {
+            font-size: 0.65rem;
+            color: #64748B;
+            margin-top: 2px;
+        }
+
+        /* Canvas Wrapper */
+        .canvas-container-box {
+            position: relative;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            line-height: 0;
+            touch-action: none;
+        }
+
+        #greetingCanvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* Active object controls */
+        .obj-controls {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .obj-controls.active {
+            display: block;
+        }
+
+        .btn-action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-tool {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary-tool {
+            background: linear-gradient(135deg, #8B5CF6, #EC4899);
+            color: white;
+            box-shadow: 0 4px 14px rgba(236, 72, 153, 0.35);
+        }
+
+        .btn-primary-tool:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+        }
+
+        .btn-secondary-tool {
+            background: #F1F5F9;
+            color: #1E293B;
+            border: 1px solid #CBD5E1;
+        }
+
+        .btn-secondary-tool:hover {
+            background: #E2E8F0;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #20BA5A;
+        }
+
+        .share-link-box {
+            background: #EDE9FE;
+            border: 1px solid #C4B5FD;
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 16px;
+            width: 100%;
+            display: none;
+        }
+
+        .share-link-box.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" style="display: inline-flex; align-items: center;"><img src="/assets/images/logo-header.png" alt="Factictionary" style="width: 36px; height: 36px; border-radius: 8px; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);"><span>Factictionary</span></a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Header Banner -->
+        <div class="tool-header" style="background: linear-gradient(135deg, #4C1D95 0%, #BE185D 100%); border-radius: 18px; padding: 32px 24px; color: white; margin-bottom: 24px; text-align: center;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">🎨 Occasions &amp; Viral Greetings</span>
+            <h1 style="font-size: clamp(1.8rem, 4vw, 2.8rem); margin: 12px 0 8px; font-weight: 800;">Festive Greeting Card &amp; Animated Wish Studio</h1>
+            <p style="opacity: 0.9; max-width: 720px; margin: 0 auto; font-size: 1.05rem;">Create personalized greeting cards with holiday sprites, stickers, festive typography &amp; snow/sparkle animation. Export as HD Image or animated video in seconds.</p>
+        </div>
+
+        <div class="studio-container">
+            <!-- Sidebar Controls -->
+            <div class="sidebar-panel">
+                <div class="section-heading">🎉 1. Select Occasion</div>
+                <select id="occasionSelect" class="studio-select" onchange="onOccasionChange()">
+                    <option value="newyear">Happy New Year 2027</option>
+                    <option value="christmas">Merry Christmas</option>
+                    <option value="diwali">Happy Diwali &amp; Deepavali</option>
+                    <option value="birthday">Happy Birthday</option>
+                    <option value="thanksgiving">Happy Thanksgiving</option>
+                    <option value="valentine">Happy Valentine's Day</option>
+                    <option value="custom">Custom Greeting</option>
+                </select>
+
+                <div class="section-heading">✍️ 2. Names &amp; Message</div>
+                <label style="font-size:0.8rem; font-weight:600; color:#64748B;">Recipient Name (Optional):</label>
+                <input type="text" id="recipientInput" class="studio-input" placeholder="e.g. Alex, Rahul, Mom & Dad" oninput="redrawCanvas()">
+
+                <label style="font-size:0.8rem; font-weight:600; color:#64748B;">Headline / Title:</label>
+                <input type="text" id="headlineInput" class="studio-input" value="Happy New Year 2027" oninput="redrawCanvas()">
+
+                <label style="font-size:0.8rem; font-weight:600; color:#64748B;">Custom Wish / Message:</label>
+                <textarea id="messageInput" class="studio-input" rows="3" style="resize:vertical;" oninput="redrawCanvas()">Wishing you 365 days of joy, prosperity, and endless blessings!</textarea>
+
+                <!-- Quick Preset Chips -->
+                <div class="chip-scroll" id="presetChips">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <label style="font-size:0.8rem; font-weight:600; color:#64748B;">Sender Name:</label>
+                <input type="text" id="senderInput" class="studio-input" placeholder="e.g. With love, Mahesh & Family" oninput="redrawCanvas()">
+
+                <div class="section-heading">🎭 3. Style &amp; Font</div>
+                <select id="fontSelect" class="studio-select" onchange="redrawCanvas()">
+                    <option value="'Cinzel', serif">Cinzel (Royal &amp; Elegant)</option>
+                    <option value="'Great Vibes', cursive">Great Vibes (Romantic Script)</option>
+                    <option value="'Montserrat', sans-serif">Montserrat (Modern &amp; Bold)</option>
+                    <option value="'Pacifico', cursive">Pacifico (Warm &amp; Funky)</option>
+                </select>
+
+                <div class="section-heading">🎨 4. Card Theme &amp; Backdrop</div>
+                <select id="themeSelect" class="studio-select" onchange="onThemeChange()">
+                    <option value="midnight_gold">Midnight Blue &amp; Gold Spark</option>
+                    <option value="festive_red">Ruby Red &amp; Champagne Gold</option>
+                    <option value="emerald_glow">Emerald Green &amp; Silver Frost</option>
+                    <option value="royal_purple">Royal Velvet Purple &amp; Violet</option>
+                    <option value="diwali_lights">Deep Amber &amp; Festive Diya Glow</option>
+                    <option value="rose_elegance">Blush Rose &amp; Romantic Gold</option>
+                </select>
+
+                <div class="section-heading">✨ 5. Add Stickers / Sprites</div>
+                <p style="font-size: 0.78rem; color:#64748B; margin-bottom: 8px;">Click any item below to stamp it onto the card. Drag and resize freely on the canvas!</p>
+                <div class="sprites-grid" id="spritesGrid">
+                    <!-- Populated by JS based on occasion -->
+                </div>
+
+                <!-- Selected Object Controls -->
+                <div class="obj-controls" id="objControls">
+                    <div style="font-size:0.8rem; font-weight:700; color:#1E293B; margin-bottom:6px;">Selected Sticker Controls:</div>
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:6px;">
+                        <span style="font-size:0.75rem;">Scale:</span>
+                        <input type="range" id="objScaleSlider" min="20" max="180" value="60" oninput="updateSelectedScale(this.value)" style="flex:1;">
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center; margin-bottom:8px;">
+                        <span style="font-size:0.75rem;">Rotate:</span>
+                        <input type="range" id="objRotateSlider" min="-180" max="180" value="0" oninput="updateSelectedRotate(this.value)" style="flex:1;">
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="preset-chip" style="color:#DC2626; border-color:#FCA5A5; background:#FEF2F2;" onclick="deleteSelectedObj()">🗑️ Delete</button>
+                        <button class="preset-chip" onclick="bringSelectedToFront()">⬆️ Bring to Front</button>
+                    </div>
+                </div>
+
+                <div class="section-heading">❄️ 6. Motion Effects</div>
+                <label style="display:flex; align-items:center; gap:8px; font-size:0.88rem; cursor:pointer;">
+                    <input type="checkbox" id="particleToggle" checked onchange="toggleParticles()">
+                    <span>Enable Floating Snow / Sparkle Particles</span>
+                </label>
+            </div>
+
+            <!-- Canvas View Area -->
+            <div class="canvas-area">
+                <div class="canvas-container-box">
+                    <canvas id="greetingCanvas" width="800" height="800"></canvas>
+                </div>
+
+                <div class="btn-action-row">
+                    <button class="btn-tool btn-primary-tool" onclick="downloadImage()">
+                        📥 Download HD Card (PNG)
+                    </button>
+                    <button class="btn-tool btn-secondary-tool" id="btnRecordVideo" onclick="recordVideoClip()">
+                        🎬 Export 5s Video (MP4/WebM)
+                    </button>
+                    <button class="btn-tool btn-whatsapp" onclick="shareToWhatsApp()">
+                        💬 Share on WhatsApp
+                    </button>
+                    <button class="btn-tool btn-secondary-tool" onclick="generateViralLink()">
+                        🔗 Copy Magic Wish Link
+                    </button>
+                </div>
+
+                <div class="share-link-box" id="shareLinkBox">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #5B21B6; margin-bottom: 4px;">🎉 Your Magic Greeting Link is Ready!</div>
+                    <p style="font-size: 0.78rem; color: #6D28D9; margin-bottom: 8px;">Anyone opening this link will see your personalized greeting with interactive celebration fireworks:</p>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #C4B5FD; font-size: 0.8rem;">
+                        <button class="btn-tool btn-primary-tool" style="padding: 6px 14px; font-size: 0.8rem;" onclick="copyShareLink()">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Feature Highlights -->
+                <div style="margin-top: 32px; width: 100%; border-top: 1px solid #E2E8F0; padding-top: 24px;">
+                    <h3 style="font-size: 1.1rem; color: #1E293B; margin-bottom: 12px;">🌟 Why Factictionary Greeting Studio?</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; font-size: 0.88rem; color: #475569;">
+                        <div style="background:#F8FAFC; padding:14px; border-radius:10px;">
+                            <strong>🛡️ 100% Client-Side Privacy:</strong> Zero images or names are uploaded to any server. Renders directly in your browser.
+                        </div>
+                        <div style="background:#F8FAFC; padding:14px; border-radius:10px;">
+                            <strong>⚡ Drag &amp; Drop Stickers:</strong> Position festive props, hats, diyas, fireworks and ribbons anywhere with precise scale and rotation.
+                        </div>
+                        <div style="background:#F8FAFC; padding:14px; border-radius:10px;">
+                            <strong>📱 Social Media Ready:</strong> Crisp 800×800 square format perfect for WhatsApp Status, Instagram, and holiday printouts.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: #0F172A; color: #94A3B8; padding: 40px 20px; text-align: center; margin-top: 60px;">
+        <p>© 2026 Factictionary. All rights reserved. 100% Client-Side Web Utilities &amp; Privacy-First Android Apps.</p>
+    </footer>
+
+    <script>
+        // Preset Messages & Stickers per Occasion
+        const OCCASION_DATA = {
+            newyear: {
+                title: "Happy New Year 2027",
+                theme: "midnight_gold",
+                presets: [
+                    "May the New Year bring you renewed strength, joyful adventures, and boundless success!",
+                    "Cheers to another year of great memories, laughs, and new heights together!",
+                    "Wishing you 365 days of prosperity, good health, and abundant smiles!",
+                    "Here is to fresh beginnings and making your dreams reality in 2027!"
+                ],
+                stickers: [
+                    { char: '🥂', name: 'Cheers' }, { char: '🎆', name: 'Fireworks' },
+                    { char: '✨', name: 'Sparkles' }, { char: '🍾', name: 'Champagne' },
+                    { char: '🎉', name: 'Popper' }, { char: '⭐', name: 'Gold Star' },
+                    { char: '🕰️', name: 'Midnight' }, { char: '🥳', name: 'Party' }
+                ]
+            },
+            christmas: {
+                title: "Merry Christmas",
+                theme: "festive_red",
+                presets: [
+                    "May your holidays sparkle with moments of love, laughter, and goodwill!",
+                    "Wishing you a cozy Christmas filled with peace, warmth, and family joy!",
+                    "May the spirit of Christmas fill your home with peace and your heart with happiness!",
+                    "Sending warm hugs and sweetest wishes for a blessed festive season!"
+                ],
+                stickers: [
+                    { char: '🎄', name: 'Tree' }, { char: '🎅', name: 'Santa' },
+                    { char: '🎁', name: 'Gift Box' }, { char: '🔔', name: 'Bell' },
+                    { char: '⛄', name: 'Snowman' }, { char: '🦌', name: 'Reindeer' },
+                    { char: '⭐', name: 'Star' }, { char: '❄️', name: 'Snowflake' }
+                ]
+            },
+            diwali: {
+                title: "Happy Deepavali",
+                theme: "diwali_lights",
+                presets: [
+                    "May the divine light of Diyas illuminate your life with health, wealth, and triumph!",
+                    "Wishing you and your family a glittering, joyful, and prosperous Diwali!",
+                    "May millions of lamps illuminate your life with endless success and blessings!",
+                    "Let the glow of lights banish all shadows and bring eternal cheer to your home!"
+                ],
+                stickers: [
+                    { char: '🪔', name: 'Diya Lamp' }, { char: '✨', name: 'Sparkle' },
+                    { char: '🎆', name: 'Firecracker' }, { char: '🌸', name: 'Marigold' },
+                    { char: '🏵️', name: 'Rangoli' }, { char: '🏮', name: 'Lantern' },
+                    { char: '🎇', name: 'Sparkler' }, { char: '🍬', name: 'Sweets' }
+                ]
+            },
+            birthday: {
+                title: "Happy Birthday!",
+                theme: "royal_purple",
+                presets: [
+                    "Wishing you the happiest of birthdays, filled with lots of love and unforgettable cake!",
+                    "Another year older, bolder, and even more wonderful! Have a fantastic day!",
+                    "May this year ahead be your most rewarding, inspiring, and joyful chapter yet!",
+                    "Cheers to celebrating YOU today! May all your heart's desires come true!"
+                ],
+                stickers: [
+                    { char: '🎂', name: 'Cake' }, { char: '🎈', name: 'Balloons' },
+                    { char: '🧁', name: 'Cupcake' }, { char: '🎁', name: 'Gift' },
+                    { char: '🎉', name: 'Popper' }, { char: '👑', name: 'Crown' },
+                    { char: '🎵', name: 'Music' }, { char: '🌟', name: 'Star' }
+                ]
+            },
+            thanksgiving: {
+                title: "Happy Thanksgiving",
+                theme: "diwali_lights",
+                presets: [
+                    "Giving heartfelt thanks for wonderful friends like you. Happy Thanksgiving!",
+                    "May your home be blessed with delicious feast, hearty laughter, and boundless gratitude!",
+                    "Warmest thoughts and grateful wishes to you and your loved ones this season!"
+                ],
+                stickers: [
+                    { char: '🦃', name: 'Turkey' }, { char: '🍂', name: 'Autumn Leaf' },
+                    { char: '🥧', name: 'Pie' }, { char: '🌽', name: 'Harvest' },
+                    { char: '🍁', name: 'Maple' }, { char: '🕯️', name: 'Candle' }
+                ]
+            },
+            valentine: {
+                title: "Happy Valentine's Day",
+                theme: "rose_elegance",
+                presets: [
+                    "You make my world brighter and my heart happier every single day!",
+                    "Every love story is beautiful, but ours is my absolute favorite!",
+                    "Sending you sweet kisses and warm hugs on this special day of love!"
+                ],
+                stickers: [
+                    { char: '❤️', name: 'Red Heart' }, { char: '🌹', name: 'Rose' },
+                    { char: '💌', name: 'Letter' }, { char: '💘', name: 'Cupid Heart' },
+                    { char: '💖', name: 'Sparkle Heart' }, { char: '💍', name: 'Ring' }
+                ]
+            },
+            custom: {
+                title: "Warm Wishes",
+                theme: "midnight_gold",
+                presets: ["Wishing you all the very best today and always!"],
+                stickers: [
+                    { char: '✨', name: 'Sparkles' }, { char: '⭐', name: 'Star' },
+                    { char: '🎉', name: 'Party' }, { char: '🌸', name: 'Flower' }
+                ]
+            }
+        };
+
+        const canvas = document.getElementById('greetingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // State
+        let canvasObjects = []; // Stickers placed by user: { char, x, y, size, rotation }
+        let selectedObjIndex = -1;
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        let particles = [];
+        let animId = null;
+
+        // Initialize Particles
+        for (let i = 0; i < 45; i++) {
+            particles.push({
+                x: Math.random() * 800,
+                y: Math.random() * 800,
+                radius: Math.random() * 2.5 + 1,
+                speedY: Math.random() * 0.8 + 0.3,
+                speedX: (Math.random() - 0.5) * 0.4,
+                opacity: Math.random() * 0.7 + 0.3
+            });
+        }
+
+        function onOccasionChange() {
+            const occ = document.getElementById('occasionSelect').value;
+            const data = OCCASION_DATA[occ];
+            if (!data) return;
+
+            document.getElementById('headlineInput').value = data.title;
+            if (data.presets.length > 0) {
+                document.getElementById('messageInput').value = data.presets[0];
+            }
+            document.getElementById('themeSelect').value = data.theme;
+
+            // Render Presets
+            const chipsContainer = document.getElementById('presetChips');
+            chipsContainer.innerHTML = '';
+            data.presets.forEach(p => {
+                const btn = document.createElement('button');
+                btn.className = 'preset-chip';
+                btn.textContent = p.substring(0, 32) + '...';
+                btn.title = p;
+                btn.onclick = () => {
+                    document.getElementById('messageInput').value = p;
+                    redrawCanvas();
+                };
+                chipsContainer.appendChild(btn);
+            });
+
+            // Render Stickers Drawer
+            const grid = document.getElementById('spritesGrid');
+            grid.innerHTML = '';
+            data.stickers.forEach(s => {
+                const btn = document.createElement('button');
+                btn.className = 'sprite-btn';
+                btn.innerHTML = `<span>${s.char}</span><span class="label">${s.name}</span>`;
+                btn.onclick = () => addSticker(s.char);
+                grid.appendChild(btn);
+            });
+
+            // Clear objects or add initial corner decor
+            canvasObjects = [
+                { char: data.stickers[0].char, x: 120, y: 150, size: 70, rotation: -0.2 },
+                { char: data.stickers[1]?.char || data.stickers[0].char, x: 680, y: 150, size: 70, rotation: 0.2 }
+            ];
+            selectedObjIndex = -1;
+            updateControlsUI();
+            redrawCanvas();
+        }
+
+        function onThemeChange() {
+            redrawCanvas();
+        }
+
+        function addSticker(char) {
+            canvasObjects.push({
+                char: char,
+                x: 400 + (Math.random() * 100 - 50),
+                y: 650 + (Math.random() * 60 - 30),
+                size: 65,
+                rotation: 0
+            });
+            selectedObjIndex = canvasObjects.length - 1;
+            updateControlsUI();
+            redrawCanvas();
+        }
+
+        function getThemeGradient() {
+            const theme = document.getElementById('themeSelect').value;
+            const grad = ctx.createLinearGradient(0, 0, 800, 800);
+            if (theme === 'festive_red') {
+                grad.addColorStop(0, '#500724');
+                grad.addColorStop(0.5, '#9F1239');
+                grad.addColorStop(1, '#BE123C');
+            } else if (theme === 'emerald_glow') {
+                grad.addColorStop(0, '#064E3B');
+                grad.addColorStop(0.5, '#065F46');
+                grad.addColorStop(1, '#047857');
+            } else if (theme === 'royal_purple') {
+                grad.addColorStop(0, '#2E1065');
+                grad.addColorStop(0.5, '#4C1D95');
+                grad.addColorStop(1, '#6D28D9');
+            } else if (theme === 'diwali_lights') {
+                grad.addColorStop(0, '#381A05');
+                grad.addColorStop(0.5, '#78350F');
+                grad.addColorStop(1, '#B45309');
+            } else if (theme === 'rose_elegance') {
+                grad.addColorStop(0, '#4C0519');
+                grad.addColorStop(0.5, '#831843');
+                grad.addColorStop(1, '#BE185D');
+            } else { // midnight_gold default
+                grad.addColorStop(0, '#0F172A');
+                grad.addColorStop(0.5, '#1E293B');
+                grad.addColorStop(1, '#090D16');
+            }
+            return grad;
+        }
+
+        function drawBackground() {
+            ctx.fillStyle = getThemeGradient();
+            ctx.fillRect(0, 0, 800, 800);
+
+            // Double Gold Festive Border
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.4)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(28, 28, 744, 744);
+
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.85)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(36, 36, 728, 728);
+
+            // Corner Filigree Accents
+            const drawCorner = (x, y, flipX, flipY) => {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.scale(flipX, flipY);
+                ctx.strokeStyle = '#FCD34D';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, 24);
+                ctx.lineTo(0, 0);
+                ctx.lineTo(24, 0);
+                ctx.stroke();
+                ctx.restore();
+            };
+            drawCorner(44, 44, 1, 1);
+            drawCorner(756, 44, -1, 1);
+            drawCorner(44, 756, 1, -1);
+            drawCorner(756, 756, -1, -1);
+        }
+
+        function drawParticles() {
+            if (!document.getElementById('particleToggle').checked) return;
+            particles.forEach(p => {
+                ctx.save();
+                ctx.fillStyle = `rgba(254, 240, 138, ${p.opacity})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                p.y += p.speedY;
+                p.x += p.speedX;
+                if (p.y > 780) { p.y = 20; p.x = Math.random() * 800; }
+                if (p.x > 780) p.x = 20;
+                if (p.x < 20) p.x = 780;
+            });
+        }
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, currentY);
+        }
+
+        function drawTypography() {
+            const recipient = document.getElementById('recipientInput').value.trim();
+            const headline = document.getElementById('headlineInput').value.trim();
+            const message = document.getElementById('messageInput').value.trim();
+            const sender = document.getElementById('senderInput').value.trim();
+            const font = document.getElementById('fontSelect').value;
+
+            ctx.textAlign = 'center';
+
+            // Optional Recipient
+            if (recipient) {
+                ctx.font = `600 24px 'Inter', sans-serif`;
+                ctx.fillStyle = '#E2E8F0';
+                ctx.fillText(`Dearest ${recipient},`, 400, 240);
+            }
+
+            // Headline
+            ctx.save();
+            ctx.font = `800 48px ${font}`;
+            ctx.fillStyle = '#FDE047';
+            ctx.shadowColor = 'rgba(250, 204, 21, 0.6)';
+            ctx.shadowBlur = 18;
+            ctx.fillText(headline, 400, recipient ? 310 : 270);
+            ctx.restore();
+
+            // Divider Line with diamond
+            const divY = recipient ? 345 : 305;
+            ctx.strokeStyle = 'rgba(253, 224, 71, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(250, divY);
+            ctx.lineTo(550, divY);
+            ctx.stroke();
+
+            ctx.fillStyle = '#FDE047';
+            ctx.beginPath();
+            ctx.arc(400, divY, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Message Body
+            ctx.font = `500 24px ${font}`;
+            ctx.fillStyle = '#FFFFFF';
+            const msgY = recipient ? 400 : 360;
+            wrapText(ctx, message, 400, msgY, 620, 36);
+
+            // Sender Signature
+            if (sender) {
+                ctx.font = `600 22px 'Great Vibes', cursive`;
+                ctx.fillStyle = '#FDE047';
+                ctx.fillText(`— ${sender}`, 400, 560);
+            }
+        }
+
+        function drawStickers() {
+            canvasObjects.forEach((obj, idx) => {
+                ctx.save();
+                ctx.translate(obj.x, obj.y);
+                ctx.rotate(obj.rotation);
+                ctx.font = `${obj.size}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(obj.char, 0, 0);
+
+                // Highlight selection box
+                if (idx === selectedObjIndex) {
+                    ctx.strokeStyle = '#38BDF8';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([4, 4]);
+                    const half = obj.size * 0.6;
+                    ctx.strokeRect(-half, -half, half * 2, half * 2);
+                }
+                ctx.restore();
+            });
+        }
+
+        function redrawCanvas() {
+            drawBackground();
+            drawParticles();
+            drawTypography();
+            drawStickers();
+        }
+
+        // Animation Loop
+        function animLoop() {
+            if (document.getElementById('particleToggle').checked) {
+                redrawCanvas();
+            }
+            animId = requestAnimationFrame(animLoop);
+        }
+
+        function toggleParticles() {
+            redrawCanvas();
+        }
+
+        // Drag & Drop / Select Canvas Interactions
+        function getCanvasCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+
+        canvas.addEventListener('mousedown', onPointerDown);
+        canvas.addEventListener('touchstart', onPointerDown, { passive: false });
+        window.addEventListener('mousemove', onPointerMove);
+        window.addEventListener('touchmove', onPointerMove, { passive: false });
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchend', onPointerUp);
+
+        function onPointerDown(e) {
+            const pt = getCanvasCoords(e);
+            let found = -1;
+            // Scan backwards from top objects
+            for (let i = canvasObjects.length - 1; i >= 0; i--) {
+                const obj = canvasObjects[i];
+                const dx = pt.x - obj.x;
+                const dy = pt.y - obj.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist <= obj.size * 0.6) {
+                    found = i;
+                    dragOffset = { x: dx, y: dy };
+                    break;
+                }
+            }
+
+            if (found !== -1) {
+                selectedObjIndex = found;
+                isDragging = true;
+                updateControlsUI();
+                redrawCanvas();
+                if (e.cancelable) e.preventDefault();
+            } else {
+                if (selectedObjIndex !== -1) {
+                    selectedObjIndex = -1;
+                    updateControlsUI();
+                    redrawCanvas();
+                }
+            }
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging || selectedObjIndex === -1) return;
+            const pt = getCanvasCoords(e);
+            const obj = canvasObjects[selectedObjIndex];
+            obj.x = pt.x - dragOffset.x;
+            obj.y = pt.y - dragOffset.y;
+            redrawCanvas();
+            if (e.cancelable) e.preventDefault();
+        }
+
+        function onPointerUp() {
+            isDragging = false;
+        }
+
+        function updateControlsUI() {
+            const box = document.getElementById('objControls');
+            if (selectedObjIndex !== -1 && canvasObjects[selectedObjIndex]) {
+                box.classList.add('active');
+                const obj = canvasObjects[selectedObjIndex];
+                document.getElementById('objScaleSlider').value = obj.size;
+                document.getElementById('objRotateSlider').value = Math.round(obj.rotation * 180 / Math.PI);
+            } else {
+                box.classList.remove('active');
+            }
+        }
+
+        function updateSelectedScale(val) {
+            if (selectedObjIndex === -1) return;
+            canvasObjects[selectedObjIndex].size = parseInt(val, 10);
+            redrawCanvas();
+        }
+
+        function updateSelectedRotate(deg) {
+            if (selectedObjIndex === -1) return;
+            canvasObjects[selectedObjIndex].rotation = parseInt(deg, 10) * Math.PI / 180;
+            redrawCanvas();
+        }
+
+        function deleteSelectedObj() {
+            if (selectedObjIndex === -1) return;
+            canvasObjects.splice(selectedObjIndex, 1);
+            selectedObjIndex = -1;
+            updateControlsUI();
+            redrawCanvas();
+        }
+
+        function bringSelectedToFront() {
+            if (selectedObjIndex === -1) return;
+            const item = canvasObjects.splice(selectedObjIndex, 1)[0];
+            canvasObjects.push(item);
+            selectedObjIndex = canvasObjects.length - 1;
+            redrawCanvas();
+        }
+
+        // Export Functions
+        function downloadImage() {
+            // Deselect any box before snapshot
+            const prevSel = selectedObjIndex;
+            selectedObjIndex = -1;
+            redrawCanvas();
+
+            const link = document.createElement('a');
+            link.download = `greeting_card_${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            selectedObjIndex = prevSel;
+            redrawCanvas();
+        }
+
+        // In-Browser Video Recording (Native canvas.captureStream)
+        function recordVideoClip() {
+            const btn = document.getElementById('btnRecordVideo');
+            if (typeof MediaRecorder === 'undefined') {
+                alert('Video capture is not supported in this browser. Please use the PNG download!');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Recording 4s Video...';
+
+            const stream = canvas.captureStream(30);
+            let mimeType = 'video/webm;codecs=vp9';
+            if (!MediaRecorder.isTypeSupported(mimeType)) {
+                mimeType = 'video/webm';
+            }
+
+            const recorder = new MediaRecorder(stream, { mimeType: mimeType });
+            const recordedChunks = [];
+
+            recorder.ondataavailable = e => {
+                if (e.data.size > 0) recordedChunks.push(e.data);
+            };
+
+            recorder.onstop = () => {
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `animated_greeting_${Date.now()}.webm`;
+                a.click();
+                URL.revokeObjectURL(url);
+                btn.disabled = false;
+                btn.textContent = '🎬 Export 5s Video (MP4/WebM)';
+            };
+
+            recorder.start();
+            setTimeout(() => recorder.stop(), 4000);
+        }
+
+        function shareToWhatsApp() {
+            const headline = document.getElementById('headlineInput').value;
+            const msg = document.getElementById('messageInput').value;
+            const text = encodeURIComponent(`*${headline}*\n\n"${msg}"\n\n✨ Created on Factictionary Greeting Studio: https://factictionary.in/tools/greetings_card_maker.html`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        }
+
+        function generateViralLink() {
+            const occ = document.getElementById('occasionSelect').value;
+            const to = encodeURIComponent(document.getElementById('recipientInput').value || 'Friend');
+            const from = encodeURIComponent(document.getElementById('senderInput').value || 'A Friend');
+            const url = `${window.location.origin}/tools/greetings_card_maker.html#occ=${occ}&to=${to}&from=${from}`;
+            
+            const box = document.getElementById('shareLinkBox');
+            box.classList.add('active');
+            document.getElementById('shareLinkInput').value = url;
+        }
+
+        function copyShareLink() {
+            const inp = document.getElementById('shareLinkInput');
+            inp.select();
+            navigator.clipboard.writeText(inp.value);
+            alert('Magic Greeting Link copied to clipboard! Send it to your friends on WhatsApp or Instagram.');
+        }
+
+        // Initialize from URL Hash if opened as viral wish link
+        function checkUrlHash() {
+            if (window.location.hash) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                if (params.get('occ')) document.getElementById('occasionSelect').value = params.get('occ');
+                if (params.get('to')) document.getElementById('recipientInput').value = decodeURIComponent(params.get('to'));
+                if (params.get('from')) document.getElementById('senderInput').value = decodeURIComponent(params.get('from'));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkUrlHash();
+            onOccasionChange();
+            animLoop();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free HRA Rent Receipt Generator with Revenue Stamp (Printable PDF) | Factictionary</title>
+    
+    <meta name="description" content="Generate free, legally compliant HRA Rent Receipts with revenue stamp for Income Tax exemption. Create monthly and quarterly rent receipts in PDF format instantly. 100% private in-browser tool.">
+    <meta name="keywords" content="hra rent receipt generator, rent receipt online free, rent receipt with revenue stamp, house rent allowance receipt format, income tax rent receipt pdf">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="canonical" href="https://factictionary.in/tools/hra_receipt_generator.html">
+
+    <!-- Fonts & Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- html2pdf.js for Client-Side PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        if (typeof html2pdf === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"><\/script>');
+        }
+    </script>
+
+    <style>
+        :root {
+            --primary: #0284C7;
+            --primary-dark: #0369A1;
+        }
+
+        .hra-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 28px;
+            margin: 28px 0 50px;
+        }
+
+        @media (max-width: 992px) {
+            .hra-container { grid-template-columns: 1fr; }
+        }
+
+        .form-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            height: fit-content;
+        }
+
+        .preview-card {
+            background: #FFFFFF;
+            border-radius: 18px;
+            padding: 28px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid #CBD5E1;
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            background: #F8FAFC;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #FFFFFF;
+        }
+
+        /* Printable Single Receipt Ticket */
+        .receipt-ticket {
+            background: #FFFDF9;
+            border: 2px dashed #94A3B8;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            position: relative;
+            color: #0F172A;
+            font-size: 0.92rem;
+            page-break-inside: avoid;
+        }
+
+        .receipt-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .receipt-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .receipt-body-p {
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+
+        .receipt-fill-text {
+            font-weight: 700;
+            color: #0369A1;
+            border-bottom: 1px dotted #0369A1;
+            padding: 0 4px;
+        }
+
+        .receipt-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 20px;
+        }
+
+        /* Simulated Indian Revenue Stamp */
+        .revenue-stamp-box {
+            width: 95px;
+            height: 115px;
+            border: 2px dashed #991B1B;
+            background: #FEF2F2;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: #991B1B;
+            position: relative;
+            user-select: none;
+        }
+
+        .revenue-stamp-box::after {
+            content: "";
+            position: absolute;
+            width: 110%;
+            height: 1.5px;
+            background: rgba(153, 27, 27, 0.4);
+            transform: rotate(-35deg);
+        }
+
+        .signature-line-box {
+            text-align: right;
+        }
+
+        .signature-line {
+            width: 180px;
+            border-bottom: 1px solid #475569;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+
+        .btn-action {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary-action {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary-action:hover {
+            background: var(--primary-dark);
+        }
+
+        .pan-alert {
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            color: #92400E;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        @media print {
+            body { background: white !important; }
+            .navbar, .form-card, .tool-header, footer, .btn-action-row { display: none !important; }
+            .hra-container { display: block; margin: 0; }
+            .preview-card { border: none !important; box-shadow: none !important; padding: 0 !important; }
+            .receipt-ticket { border: 1px solid #64748B !important; margin-bottom: 25px !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" role="navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" style="display: inline-flex; align-items: center;"><img src="/assets/images/logo-header.png" alt="Factictionary" style="width: 36px; height: 36px; border-radius: 8px; vertical-align: middle; margin-right: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.18);"><span>Factictionary</span></a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools/" class="nav-link active">Tools Hub</a></li>
+                <li><a href="/guides/" class="nav-link">Guides</a></li>
+                <li><a href="/games/" class="nav-link">Games &amp; Apps</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Header -->
+        <div class="tool-header" style="background: linear-gradient(135deg, #0369A1 0%, #0F172A 100%); border-radius: 18px; padding: 32px 24px; color: white; margin-bottom: 24px; text-align: center;">
+            <span style="background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">💼 Business &amp; Tax Utilities</span>
+            <h1 style="font-size: clamp(1.8rem, 4vw, 2.7rem); margin: 12px 0 8px; font-weight: 800;">Free HRA Rent Receipt Generator</h1>
+            <p style="opacity: 0.9; max-width: 720px; margin: 0 auto; font-size: 1.05rem;">Generate legally compliant House Rent Allowance (HRA) receipts with automated revenue stamp for IT exemption under Section 10(13A). 100% private in-browser tool.</p>
+        </div>
+
+        <div class="hra-container">
+            <!-- Form Input Panel -->
+            <div class="form-card">
+                <h2 style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-bottom: 16px;">📝 Rental &amp; Tax Details</h2>
+
+                <label class="form-label">Tenant Full Name:</label>
+                <input type="text" id="tenantName" class="form-input" placeholder="e.g. Rahul Sharma" value="Rahul Sharma" oninput="renderReceipts()">
+
+                <label class="form-label">Landlord Full Name:</label>
+                <input type="text" id="landlordName" class="form-input" placeholder="e.g. Ramesh Kumar" value="Ramesh Kumar" oninput="renderReceipts()">
+
+                <label class="form-label">Landlord PAN (Mandatory if rent &gt; ₹1 Lakh/yr):</label>
+                <input type="text" id="landlordPan" class="form-input" placeholder="e.g. ABCDE1234F" value="ABCDE1234F" style="text-transform:uppercase;" oninput="renderReceipts()">
+                
+                <div id="panAlert" class="pan-alert">
+                    ⚠️ <strong>Note:</strong> Annual rent exceeds ₹1,00,000. Providing Landlord's PAN is mandatory to claim HRA tax exemption.
+                </div>
+
+                <label class="form-label">Rented Property Full Address:</label>
+                <textarea id="rentalAddress" class="form-input" rows="2" style="resize:vertical;" oninput="renderReceipts()">Flat 402, Green Valley Apartments, Outer Ring Road, Bengaluru - 560103</textarea>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label class="form-label">Monthly Rent (₹):</label>
+                        <input type="number" id="monthlyRent" class="form-input" value="18000" min="1000" step="500" oninput="renderReceipts()">
+                    </div>
+                    <div>
+                        <label class="form-label">Payment Mode:</label>
+                        <select id="paymentMode" class="form-select" onchange="renderReceipts()">
+                            <option value="Online Bank Transfer (NEFT/IMPS)">Bank Transfer</option>
+                            <option value="UPI / GPay / PhonePe">UPI Transfer</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Cash">Cash</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label class="form-label">Start Month:</label>
+                        <input type="month" id="startPeriod" class="form-input" value="2026-04" onchange="renderReceipts()">
+                    </div>
+                    <div>
+                        <label class="form-label">End Month:</label>
+                        <input type="month" id="endPeriod" class="form-input" value="2027-03" onchange="renderReceipts()">
+                    </div>
+                </div>
+
+                <label class="form-label">Receipt Grouping:</label>
+                <select id="receiptFrequency" class="form-select" onchange="renderReceipts()">
+                    <option value="monthly">Monthly (12 Separate Receipts)</option>
+                    <option value="quarterly">Quarterly (4 Consolidated Receipts)</option>
+                    <option value="single">Single Consolidated Annual Receipt</option>
+                </select>
+
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button class="btn-action btn-primary-action" style="flex:1;" onclick="saveHraProfile()">💾 Save Info</button>
+                    <button class="btn-action" style="background:#F1F5F9; border:1px solid #CBD5E1;" onclick="clearProfile()">Clear</button>
+                </div>
+            </div>
+
+            <!-- Preview & Print Area -->
+            <div class="preview-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h2 style="font-size: 1.25rem; font-weight: 800; color: #0F172A;">📄 Generated Rent Receipts Preview</h2>
+                        <span id="receiptCountBadge" style="font-size: 0.82rem; color: #64748B;">Showing 12 monthly receipts</span>
+                    </div>
+                    <div style="display:flex; gap: 10px;">
+                        <button class="btn-action btn-primary-action" onclick="downloadHraPdf()">📥 Download PDF</button>
+                        <button class="btn-action" style="background:#0F172A; color:white;" onclick="window.print()">🖨️ Print A4</button>
+                    </div>
+                </div>
+
+                <!-- Printable Container -->
+                <div id="receiptsPrintArea">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: #0F172A; color: #94A3B8; padding: 40px 20px; text-align: center;">
+        <p>© 2026 Factictionary. 100% Client-Side Privacy Shield: Zero bytes transmitted to external servers.</p>
+    </footer>
+
+    <script>
+        // Number to Words for Indian Rupees
+        function numberToWordsINR(num) {
+            const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            num = Math.floor(num);
+            if (num === 0) return 'Zero Only';
+            let str = '';
+            
+            function inWords(n) {
+                let out = '';
+                if (n > 19) {
+                    out += b[Math.floor(n / 10)] + ' ' + a[n % 10];
+                } else {
+                    out += a[n];
+                }
+                return out;
+            }
+
+            const crore = Math.floor(num / 10000000);
+            num %= 10000000;
+            const lakh = Math.floor(num / 100000);
+            num %= 100000;
+            const thousand = Math.floor(num / 1000);
+            num %= 1000;
+            const hundred = Math.floor(num / 100);
+            num %= 100;
+
+            if (crore > 0) str += inWords(crore) + 'Crore ';
+            if (lakh > 0) str += inWords(lakh) + 'Lakh ';
+            if (thousand > 0) str += inWords(thousand) + 'Thousand ';
+            if (hundred > 0) str += inWords(hundred) + 'Hundred ';
+            if (num > 0) str += inWords(num);
+
+            return str.trim() + ' Only';
+        }
+
+        const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        function getMonthList(startStr, endStr) {
+            const list = [];
+            const [sYear, sMonth] = startStr.split('-').map(Number);
+            const [eYear, eMonth] = endStr.split('-').map(Number);
+
+            let cur = new Date(sYear, sMonth - 1, 1);
+            const end = new Date(eYear, eMonth - 1, 1);
+
+            while (cur <= end) {
+                list.push({
+                    month: cur.getMonth(),
+                    year: cur.getFullYear(),
+                    name: `${MONTH_NAMES[cur.getMonth()]} ${cur.getFullYear()}`
+                });
+                cur.setMonth(cur.getMonth() + 1);
+            }
+            return list;
+        }
+
+        function renderReceipts() {
+            const tenant = document.getElementById('tenantName').value.trim() || 'Tenant Name';
+            const landlord = document.getElementById('landlordName').value.trim() || 'Landlord Name';
+            const pan = document.getElementById('landlordPan').value.trim().toUpperCase();
+            const address = document.getElementById('rentalAddress').value.trim() || 'Rental Property Address';
+            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value) || 0;
+            const paymentMode = document.getElementById('paymentMode').value;
+            const freq = document.getElementById('receiptFrequency').value;
+
+            // Annual check
+            const annualRent = monthlyRent * 12;
+            const panAlert = document.getElementById('panAlert');
+            if (annualRent > 100000) {
+                panAlert.style.display = 'block';
+            } else {
+                panAlert.style.display = 'none';
+            }
+
+            const startPeriod = document.getElementById('startPeriod').value;
+            const endPeriod = document.getElementById('endPeriod').value;
+            const months = getMonthList(startPeriod, endPeriod);
+
+            const container = document.getElementById('receiptsPrintArea');
+            container.innerHTML = '';
+
+            let periodsToRender = [];
+
+            if (freq === 'monthly') {
+                periodsToRender = months.map((m, idx) => ({
+                    periodLabel: m.name,
+                    amount: monthlyRent,
+                    receiptNo: `REC-${m.year}-${String(m.month + 1).padStart(2, '0')}`,
+                    date: `05 ${m.name}`
+                }));
+            } else if (freq === 'quarterly') {
+                for (let i = 0; i < months.length; i += 3) {
+                    const chunk = months.slice(i, i + 3);
+                    const label = `${chunk[0].name} to ${chunk[chunk.length - 1].name}`;
+                    const chunkRent = monthlyRent * chunk.length;
+                    periodsToRender.push({
+                        periodLabel: label,
+                        amount: chunkRent,
+                        receiptNo: `QTR-${chunk[0].year}-0${Math.floor(i / 3) + 1}`,
+                        date: `05 ${chunk[0].name}`
+                    });
+                }
+            } else { // Single consolidated
+                if (months.length > 0) {
+                    periodsToRender.push({
+                        periodLabel: `${months[0].name} to ${months[months.length - 1].name}`,
+                        amount: monthlyRent * months.length,
+                        receiptNo: `ANNUAL-${months[0].year}`,
+                        date: `05 ${months[0].name}`
+                    });
+                }
+            }
+
+            document.getElementById('receiptCountBadge').textContent = `Showing ${periodsToRender.length} receipts`;
+
+            periodsToRender.forEach(p => {
+                const words = numberToWordsINR(p.amount);
+                const ticket = document.createElement('div');
+                ticket.className = 'receipt-ticket';
+                ticket.innerHTML = `
+                    <div class="receipt-header-row">
+                        <div>
+                            <div class="receipt-title">RENT RECEIPT</div>
+                            <div style="font-size:0.75rem; color:#64748B;">Section 10(13A) of Income Tax Act</div>
+                        </div>
+                        <div style="text-align:right; font-size:0.84rem;">
+                            <div><strong>Receipt No:</strong> ${p.receiptNo}</div>
+                            <div><strong>Date:</strong> ${p.date}</div>
+                        </div>
+                    </div>
+                    <div class="receipt-body-p">
+                        Received a sum of <span class="receipt-fill-text">₹${p.amount.toLocaleString('en-IN')}</span> 
+                        (Rupees <span class="receipt-fill-text">${words}</span>) from 
+                        <span class="receipt-fill-text">${tenant}</span> towards the rent for residential premises situated at:
+                        <br><strong>${address}</strong><br>
+                        for the period of <span class="receipt-fill-text">${p.periodLabel}</span> paid via 
+                        <strong>${paymentMode}</strong>.
+                    </div>
+                    <div class="receipt-footer-row">
+                        <div class="revenue-stamp-box">
+                            <div>REVENUE<br>STAMP</div>
+                            <div style="font-size:0.55rem; margin-top:2px;">₹1.00</div>
+                            <div style="font-size:0.5rem; color:#475569; margin-top:4px;">(Sign Across)</div>
+                        </div>
+                        <div class="signature-line-box">
+                            <div class="signature-line"></div>
+                            <div style="font-weight:700; color:#0F172A;">${landlord}</div>
+                            <div style="font-size:0.8rem; color:#64748B;">Landlord's Signature</div>
+                            ${pan ? `<div style="font-size:0.8rem; color:#0369A1; font-weight:600;">Landlord PAN: ${pan}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(ticket);
+            });
+        }
+
+        function saveHraProfile() {
+            const data = {
+                tenant: document.getElementById('tenantName').value,
+                landlord: document.getElementById('landlordName').value,
+                pan: document.getElementById('landlordPan').value,
+                address: document.getElementById('rentalAddress').value,
+                rent: document.getElementById('monthlyRent').value
+            };
+            localStorage.setItem('factictionary_hra_profile', JSON.stringify(data));
+            alert('Rental profile saved locally on this browser!');
+        }
+
+        function loadHraProfile() {
+            const saved = localStorage.getItem('factictionary_hra_profile');
+            if (saved) {
+                const d = JSON.parse(saved);
+                if (d.tenant) document.getElementById('tenantName').value = d.tenant;
+                if (d.landlord) document.getElementById('landlordName').value = d.landlord;
+                if (d.pan) document.getElementById('landlordPan').value = d.pan;
+                if (d.address) document.getElementById('rentalAddress').value = d.address;
+                if (d.rent) document.getElementById('monthlyRent').value = d.rent;
+            }
+        }
+
+        function clearProfile() {
+            localStorage.removeItem('factictionary_hra_profile');
+            location.reload();
+        }
+
+        function downloadHraPdf() {
+            const element = document.getElementById('receiptsPrintArea');
+            const tenant = document.getElementById('tenantName').value.trim() || 'HRA';
+            const opt = {
+                margin: 10,
+                filename: `HRA_Rent_Receipts_${tenant.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            if (typeof html2pdf === 'undefined') {
+                window.print();
+                return;
+            }
+            html2pdf().set(opt).from(element).save();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHraProfile();
+            renderReceipts();
+        });
+    </script>
+</body>
+</html>
