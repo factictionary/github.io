@@ -1,20 +1,7 @@
-// ===== MONETAG SERVICE WORKER INTEGRATION (Zone 12205967) =====
-self.options = {
-    "domain": "3nbf4.com",
-    "zoneId": 12206142
-}
-self.lary = "";
-try {
-    importScripts('https://3nbf4.com/act/files/service-worker.min.js?r=sw')
-} catch (e) {
-    console.warn('Monetag service worker script failed to load:', e);
-}
-// ===== END MONETAG INTEGRATION =====
-
 // Factictionary Full-Featured PWA Service Worker (PWABuilder Compliant)
 // Supports: Offline Caching, Background Sync ('sync'), Periodic Sync ('periodicsync'), and Push Notifications ('push')
 
-const CACHE_NAME = 'factictionary-pwa-v13';
+const CACHE_NAME = 'factictionary-pwa-v14';
 const OFFLINE_URL = '/tools/?app=1';
 const CORE_ASSETS = [
   '/',

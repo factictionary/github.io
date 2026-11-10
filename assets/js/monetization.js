@@ -13,24 +13,24 @@
 
     // Global configuration - Easy to toggle and customize
     window.FACTI_MONETIZATION = window.FACTI_MONETIZATION || {
-        // 1. Monetag Configuration (https://monetag.com/ - 0 traffic requirement, fast approval)
+        // 1. Monetag Configuration - PERMANENTLY DISABLED to eliminate popunders / popup ads
         monetag: {
-            enabled: true,
-            domain: '5gvci.com',
-            swZoneId: '12205967',
-            scriptUrl: 'https://quge5.com/88/tag.min.js',
-            dataZone: '306757'
+            enabled: false,
+            domain: null,
+            swZoneId: null,
+            scriptUrl: null,
+            dataZone: null
         },
 
-        // 2. Adsterra Configuration (https://adsterra.com/ - 0 traffic requirement, instant approval)
+        // 2. Adsterra Configuration - ONLY clean static native banner enabled (no popups, no social bar, no smartlinks)
         adsterra: {
             enabled: true,
-            socialBarScriptUrl: 'https://bauval.org/14/0726f33ed738c999a9e9225b8b81e6d0',
-            nativeBannerScriptUrl: 'https://bauval.org/21/eb572ce7a2181b8df4a88738ae9b9ee8',
+            socialBarScriptUrl: null, // Disabled: Social Bar causes floating/popup notifications
+            nativeBannerScriptUrl: 'https://bauval.org/21/eb572ce7a2181b8df4a88738ae9b9ee8', // Clean static in-page recommendation grid
             nativeContainerId: 'container-eb572ce7a2181b8df4a88738ae9b9ee8',
-            banner300x250Key: '5910d38e75cc22ebd4eeef064216789a',
-            banner300x250ScriptUrl: 'https://bauval.org/22/5910d38e75cc22ebd4eeef064216789a',
-            smartlinkUrl: 'https://araplhn.org/4/ff672b3b1813aa789aaf3ae1b5be651b'
+            banner300x250Key: null, // Disabled: Prevent banner popups/redirects
+            banner300x250ScriptUrl: null,
+            smartlinkUrl: null // Disabled: Prevent smartlink CPA redirects
         },
 
         // 3. EthicalAds Configuration (https://www.ethicalads.io/ - requires 50k+ pageviews/month)
@@ -463,48 +463,23 @@
     }
 
     /**
-     * Initializes Monetag Ads
-     * UX RULE: Strictly skipped on interactive tool pages to prevent OnClick / Popunder
-     * clickjacking from intercepting file pickers, dropzones, and buttons.
+     * Initializes Monetag Ads: Permanently disabled.
+     * Monetag MultiTag triggers OnClick popunders and popup tabs that ruin site usability.
      */
     function initMonetag() {
-        if (!config.monetag.enabled) return;
-
-        // CRITICAL UX SHIELD: Never inject MultiTag OnClick/Popunder on tool workspace pages!
-        if (isToolPage()) {
-            return;
-        }
-
-        if (config.monetag.scriptUrl && !document.querySelector(`script[src*="tag.min.js"]`)) {
-            const script = document.createElement('script');
-            script.src = config.monetag.scriptUrl;
-            if (config.monetag.dataZone) {
-                script.setAttribute('data-zone', config.monetag.dataZone);
-            }
-            script.setAttribute('data-cfasync', 'false');
-            script.async = true;
-            document.head.appendChild(script);
-        }
+        return;
     }
 
     /**
-     * Initializes Adsterra Ads (Clean Native Banner on tools, Social Bar only on non-tool content)
+     * Initializes Adsterra Ads
+     * ONLY loads the non-intrusive Native Banner (a static recommendation grid placed
+     * at the bottom of the page above the donation card).
+     * Social Bar, 300x250 iframe, and Smartlinks are completely removed to prevent all popup ads.
      */
     function initAdsterra(container) {
         if (!config.adsterra.enabled) return;
 
-        const onTool = isToolPage();
-
-        // 1. Social Bar script (ONLY on non-tool content pages to avoid blocking file inputs)
-        if (!onTool && config.adsterra.socialBarScriptUrl && !document.querySelector('script[src*="0726f33ed738c999a9e9225b8b81e6d0"]')) {
-            const script = document.createElement('script');
-            script.src = config.adsterra.socialBarScriptUrl;
-            script.setAttribute('data-cfasync', 'false');
-            script.async = true;
-            document.head.appendChild(script);
-        }
-
-        // 2. Native Banner (Clean recommendation cards placed at the bottom, above donation card)
+        // Native Banner (Clean recommendation cards placed at the bottom, above donation card)
         if (config.adsterra.nativeBannerScriptUrl) {
             const nativeWrap = document.createElement('div');
             nativeWrap.className = 'facti-ad-container facti-native-wrap';
@@ -521,74 +496,6 @@
                 script.async = true;
                 script.setAttribute('data-cfasync', 'false');
                 document.head.appendChild(script);
-            }
-        }
-
-        // 3. Banner 300x250 (Only show on non-tool pages to avoid ad clutter on tool pages)
-        if (!onTool && config.adsterra.banner300x250Key && config.adsterra.banner300x250ScriptUrl) {
-            const bannerWrap = document.createElement('div');
-            bannerWrap.className = 'facti-ad-container facti-banner-300x250-wrap';
-            bannerWrap.style.margin = '20px auto';
-            bannerWrap.style.maxWidth = '320px';
-            bannerWrap.innerHTML = '<div class="facti-ad-label">Featured Partner</div>';
-
-            const iframe = document.createElement('iframe');
-            iframe.width = '300';
-            iframe.height = '250';
-            iframe.style.border = 'none';
-            iframe.style.overflow = 'hidden';
-            iframe.style.display = 'block';
-            iframe.scrolling = 'no';
-            iframe.title = 'Partner Advertisement';
-
-            bannerWrap.appendChild(iframe);
-            container.appendChild(bannerWrap);
-
-            setTimeout(() => {
-                try {
-                    const doc = iframe.contentWindow || iframe.contentDocument;
-                    const d = doc.document ? doc.document : doc;
-                    d.open();
-                    d.write(`
-                        <!DOCTYPE html>
-                        <html>
-                        <head><base target="_blank"><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head>
-                        <body>
-                            <script type="text/javascript">
-                                atOptions = {
-                                    'key' : '${config.adsterra.banner300x250Key}',
-                                    'format' : 'iframe',
-                                    'height' : 250,
-                                    'width' : 300,
-                                    'params' : {}
-                                };
-                            <\/script>
-                            <script type="text/javascript" src="${config.adsterra.banner300x250ScriptUrl}"><\/script>
-                        </body>
-                        </html>
-                    `);
-                    d.close();
-                } catch (e) {
-                    console.warn('Banner 300x250 render issue:', e);
-                }
-            }, 60);
-        }
-
-        // 4. Smartlink button (Non-intrusive high-converting bonus pill inside donation card)
-        if (config.adsterra.smartlinkUrl) {
-            const donationCard = document.querySelector('.donation-banner-card');
-            if (donationCard && !donationCard.querySelector('.btn-smartlink')) {
-                const btnContainer = donationCard.querySelector('.donation-btn-group') || donationCard.querySelector('div:last-child');
-                if (btnContainer) {
-                    const smartBtn = document.createElement('a');
-                    smartBtn.href = config.adsterra.smartlinkUrl;
-                    smartBtn.target = '_blank';
-                    smartBtn.rel = 'noopener sponsored';
-                    smartBtn.className = 'btn btn-smartlink';
-                    smartBtn.style.cssText = 'background:linear-gradient(135deg,#38BDF8,#0284C7);color:#FFFFFF;padding:10px 20px;border-radius:30px;font-weight:700;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(2,132,199,0.3);';
-                    smartBtn.innerHTML = '<span>🚀</span><span>Explore Cloud Partner Tools</span>';
-                    btnContainer.appendChild(smartBtn);
-                }
             }
         }
     }
