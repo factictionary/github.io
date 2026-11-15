@@ -89,6 +89,120 @@
     }
 
     /**
+     * Proactively probes for local subnet presence via WebRTC ICE candidates (non-blocking).
+     * If the device belongs to a private network (192.168.*, 10.*, 172.16-31.*), caches it in sessionStorage.
+     */
+    function probeLocalSubnet() {
+        if (!window.RTCPeerConnection) return;
+        try {
+            const pc = new RTCPeerConnection({ iceServers: [] });
+            pc.createDataChannel('facti-dev-probe');
+            pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(() => {});
+            pc.onicecandidate = (event) => {
+                if (!event || !event.candidate || !event.candidate.candidate) return;
+                const cand = event.candidate.candidate;
+                if (/192\.168\.\d{1,3}\.\d{1,3}/.test(cand) ||
+                    /10\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(cand) ||
+                    /172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}/.test(cand) ||
+                    /\.local\b/.test(cand)) {
+                    sessionStorage.setItem('facti_subnet_detected', 'true');
+                    try { pc.close(); } catch (_) {}
+                }
+            };
+            setTimeout(() => { try { pc.close(); } catch (_) {} }, 2500);
+        } catch (_) {}
+    }
+
+    /**
+     * Determines whether the current device is a registered test device, developer machine,
+     * or operating on a local development subnet (192.168.*, 10.*, 172.16-31.*, localhost).
+     * Prevents any Monetag or Adsterra ad calls to eliminate Invalid Traffic (IVT) risks.
+     */
+    function isTestDeviceOrSubnet() {
+        // 1. URL Query Parameter Override (?facti_dev=1 or ?facti_dev=0)
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('facti_dev') || urlParams.has('test_device') || urlParams.has('dev_mode')) {
+                const val = urlParams.get('facti_dev') || urlParams.get('test_device') || urlParams.get('dev_mode');
+                if (val === '1' || val === 'true') {
+                    localStorage.setItem('facti_test_device', 'true');
+                    sessionStorage.setItem('facti_test_device', 'true');
+                    console.info('🛡️ [Factictionary Monetization] Test device REGISTERED. Monetag & Adsterra traffic blocked.');
+                } else if (val === '0' || val === 'false') {
+                    localStorage.removeItem('facti_test_device');
+                    sessionStorage.removeItem('facti_test_device');
+                    sessionStorage.removeItem('facti_subnet_detected');
+                    console.info('🛡️ [Factictionary Monetization] Test device UNREGISTERED.');
+                }
+            }
+        } catch (_) {}
+
+        // 2. Persistent Storage Check
+        try {
+            if (localStorage.getItem('facti_test_device') === 'true' ||
+                sessionStorage.getItem('facti_test_device') === 'true' ||
+                sessionStorage.getItem('facti_subnet_detected') === 'true') {
+                return true;
+            }
+        } catch (_) {}
+
+        // 3. Localhost & Development Domain Checks
+        const hostname = window.location.hostname.toLowerCase();
+        if (hostname === 'localhost' ||
+            hostname === '127.0.0.1' ||
+            hostname === '[::1]' ||
+            hostname.endsWith('.local') ||
+            hostname.endsWith('.internal') ||
+            hostname.endsWith('.lan')) {
+            return true;
+        }
+
+        // 4. Private IPv4 Subnet Hostname Check (e.g. accessing dev server via LAN IP)
+        if (/^10\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+            /^192\.168\.\d{1,3}\.\d{1,3}$/.test(hostname) ||
+            /^172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3}$/.test(hostname)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Secret 5-Tap Gesture on footer to easily toggle Test Device mode on any mobile device
+     */
+    function initSecretTestDeviceToggle() {
+        let tapCount = 0;
+        let lastTap = 0;
+
+        document.addEventListener('click', (e) => {
+            const footer = e.target.closest('footer') || e.target.closest('.site-footer') || e.target.closest('.footer-bottom');
+            if (!footer) return;
+
+            const now = Date.now();
+            if (now - lastTap < 600) {
+                tapCount++;
+                if (tapCount >= 5) {
+                    tapCount = 0;
+                    const isCurrentlyTest = localStorage.getItem('facti_test_device') === 'true';
+                    if (isCurrentlyTest) {
+                        localStorage.removeItem('facti_test_device');
+                        sessionStorage.removeItem('facti_test_device');
+                        alert('ℹ️ [Factictionary] Test Device Mode DISABLED for this device.');
+                    } else {
+                        localStorage.setItem('facti_test_device', 'true');
+                        sessionStorage.setItem('facti_test_device', 'true');
+                        alert('🛡️ [Factictionary] Test Device Mode ENABLED!\n\nMonetag & Adsterra ad network traffic is now blocked on this device to protect your account against Invalid Traffic (IVT) claims.');
+                    }
+                    window.location.reload();
+                }
+            } else {
+                tapCount = 1;
+            }
+            lastTap = now;
+        });
+    }
+
+    /**
      * Category-specific affiliate offers
      */
     const AFFILIATE_OFFERS = {
@@ -479,6 +593,20 @@
     function initAdsterra(container) {
         if (!config.adsterra.enabled) return;
 
+        // GUARD: Completely bypass Adsterra network calls on test devices & subnets to prevent IVT
+        if (isTestDeviceOrSubnet()) {
+            console.info('🛡️ [Factictionary Monetization] Test device/subnet active: Adsterra live ad scripts blocked to prevent Invalid Traffic (IVT).');
+            const testNotice = document.createElement('div');
+            testNotice.className = 'facti-ad-container facti-test-device-card';
+            testNotice.style.cssText = 'border: 2px dashed #0284C7; background: #F0F9FF; border-radius: 12px; padding: 14px 18px; margin: 16px auto; max-width: 680px; text-align: center; color: #0369A1; font-size: 0.88rem;';
+            testNotice.innerHTML = `
+                <div style="font-weight: 700; margin-bottom: 4px;">🛡️ Test Device / Subnet Protected Active</div>
+                <div style="font-size: 0.78rem; color: #0284C7;">Live Monetag &amp; Adsterra ad network scripts are suppressed on this device to protect your account against Invalid Traffic (IVT) claims. (Visiting <code>?facti_dev=0</code> restores live ads)</div>
+            `;
+            container.appendChild(testNotice);
+            return;
+        }
+
         // Native Banner (Clean recommendation cards placed at the bottom, above donation card)
         if (config.adsterra.nativeBannerScriptUrl) {
             const nativeWrap = document.createElement('div');
@@ -549,6 +677,8 @@
      */
     function setupMonetization() {
         injectMonetizationStyles();
+        probeLocalSubnet();
+        initSecretTestDeviceToggle();
         initMonetag();
 
         const category = detectCategory();
